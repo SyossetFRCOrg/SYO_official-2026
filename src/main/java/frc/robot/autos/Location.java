@@ -1,0 +1,40 @@
+package frc.robot.autos;
+
+public enum Location {
+  A,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
+  K,
+  L,
+
+  PREA,
+  PREB,
+  PREC,
+  PRED,
+  PREE,
+  PREF,
+  PREG,
+  PREH,
+  PREI,
+  PREJ,
+  PREK,
+  PREL,
+
+  LEFTFORWARDCORALSTATION,
+  LEFTBACKCORALSTATION,
+  RIGHTFORWARDCORALSTATION,
+  RIGHTBACKCORALSTATION,
+
+  FARLEFTSTART,
+  MIDLEFTSTART,
+  MIDRIGHTSTART,
+  FARRIGHTSTART,
+  NONE,
+}
