@@ -50,6 +50,7 @@ public class VisionIOLimelight implements VisionIO {
     LimelightHelpers.setLEDMode_ForceOff(name);
   }
 
+  //TODO THIS IS A REALLY BUGGY FIX WHERE I PUT A DUMMY VARIABLE FOR THE APRIL TAG, NEEDS TO CHANGE TO NEW ALGORITHIM FOR READING TAGS
   @Override
   public void updateInputs(VisionIOInputs inputs) {
 
@@ -64,7 +65,7 @@ public class VisionIOLimelight implements VisionIO {
       LimelightHelpers.SetFiducialIDFiltersOverride(
           name,
           new int[] {
-            RobotState.getInstance().getNearestReefTagID(RobotState.getInstance().getRobotPose())
+            0 /*RobotState.getInstance().getNearestReefTagID(RobotState.getInstance().getRobotPose())*/
           });
     }
 

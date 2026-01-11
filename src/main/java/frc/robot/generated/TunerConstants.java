@@ -260,18 +260,6 @@ public class TunerConstants {
           driveConfig.maxLinearAcceleration(),
           Units.degreesToRadians(1080.0));
 
-  public static final ModuleLimits moduleLimitsL1Elevator =
-      new ModuleLimits(driveConfig.maxLinearVelocity() * .9, 4, Units.degreesToRadians(1080.0));
-
-  public static final ModuleLimits moduleLimitsL2Elevator =
-      new ModuleLimits(3, 2.5, Units.degreesToRadians(1080.0));
-
-  public static final ModuleLimits moduleLimitsL3Elevator =
-      new ModuleLimits(3, 2.4, Units.degreesToRadians(1080.0));
-
-  public static final ModuleLimits moduleLimitsL4Elevator =
-      new ModuleLimits(1.75, .8, Units.degreesToRadians(1080.0));
-
   // /**
   //  * Creates a CommandSwerveDrivetrain instance.
   //  * This should only be called once in your robot program,.
