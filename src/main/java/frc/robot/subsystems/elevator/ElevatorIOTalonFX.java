@@ -63,7 +63,7 @@ public class ElevatorIOTalonFX implements ElevatorIO {
 
   final DynamicMotionMagicTorqueCurrentFOC elevatorRequest =
       new DynamicMotionMagicTorqueCurrentFOC(
-          0, motionMagicVelocity.get(), motionMagicAcceleration.get(), motionMagicJerk.get());
+          0, motionMagicVelocity.get(), motionMagicAcceleration.get()).withJerk(motionMagicJerk.get());
 
   // final DynamicMotionMagicTorqueCurrentFOC elevatorRequest = new
   // DynamicMotionMagicTorqueCurrentFOC(4, 2, 2, 100);
