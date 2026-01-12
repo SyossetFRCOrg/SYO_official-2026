@@ -1,7 +1,6 @@
 package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
-import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -10,20 +9,14 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.RobotState;
 import frc.robot.subsystems.Superstructure;
-import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.AllianceFlipUtil;
 
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({"UnusedMethod", "UnusedVariable", "EmptyBlockTag"})
 class AutoFactory {
-  private static final double AMPBAR_ZERO_DEGREES = 0.0;
-
   private final DriverStation.Alliance alliance;
 
   private final RobotContainer robotContainer;
