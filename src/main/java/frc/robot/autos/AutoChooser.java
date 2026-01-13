@@ -90,15 +90,15 @@ public class AutoChooser extends SendableChooser<Auto> {
    * edu.wpi.first.wpilibj.shuffleboard.Shuffleboard} under the key <code>Auto/Selected</code>.
    */
   public void update() {
-    var selected = getSelected();
+    // var selected = getSelected();
 
-    Stream.of(DriverStation.Alliance.values())
-        .forEach(
-            alliance -> {
-              commandCache
-                  .get(alliance)
-                  .computeIfAbsent(selected, auto -> loadCommand(alliance, auto));
-            });
+    // Stream.of(DriverStation.Alliance.values())
+    //     .forEach(
+    //         alliance -> {
+    //           commandCache
+    //               .get(alliance)
+    //               .computeIfAbsent(selected, auto -> loadCommand(alliance, auto));
+    //         });
   }
 
   /**
