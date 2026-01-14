@@ -36,20 +36,12 @@ public class RobotContainer {
 
     private final Superstructure superstructure;
 
-    // private final LEDs LEDs;
 
     // Controller
     private final XboxController controller = new XboxController(0);
     private final XboxController buttonboard = new XboxController(1);
 
     private final UsbCamera climbCam;
-
-    // private final HttpCamera climberCamera;
-
-    // private final AutoSelector autoSelector = new AutoSelector("Auto");
-
-    // // Dashboard inputs
-    // private final LoggedDashboardChooser<Command> autoChooser;
 
     /**
      * The container for the robot. Contains subsystems, IO devices, and commands.
@@ -83,17 +75,7 @@ public class RobotContainer {
         climbCam = CameraServer.startAutomaticCapture();
         climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
         climbCam.setResolution(80, 60);
-
-        // climberCamera =
-        // new HttpCamera("ClimberCamera",
-        // "http://roborio-9016-frc.local:1181/?action=stream");
-        // climberCamera.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-        // Shuffleboard.getTab("Match")
-        // .add(climberCamera)
-        // .withWidget(BuiltInWidgets.kCameraStream)
-        // .withSize(2, 2)
-        // .withPosition(4, 0);
-
+        
         Shuffleboard.getTab("Match")
                 .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
                 .withWidget(BuiltInWidgets.kCameraStream)
