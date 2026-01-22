@@ -68,8 +68,8 @@ public class Superstructure extends SubsystemBase {
   public Superstructure(Drive drive, Elevator elevator, Wrist wrist, RobotContainer container) {
     this.drive = drive;
     this.elevator = elevator;
-    this.container = container;
     this.wrist = wrist;
+    this.container = container;
   }
 
   @Override
