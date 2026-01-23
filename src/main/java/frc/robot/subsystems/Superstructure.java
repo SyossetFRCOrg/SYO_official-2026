@@ -74,18 +74,9 @@ public class Superstructure extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // complex logging stuff for later on...? If we want to
-
-    // double percentageOfThreeMetersPerSecond = Math.hypot(
-    //                 RobotState.getInstance().getChassisSpeeds().vxMetersPerSecond,
-    //                 RobotState.getInstance().getChassisSpeeds().vyMetersPerSecond)
-    //         / 3.0;
-    // aimingParameters = RobotState.getInstance()
-    //         .getAimingParameters(0.6 * percentageOfThreeMetersPerSecond, 0.25 *
-    // percentageOfThreeMetersPerSecond);
-
     currentState = handleStateTransitions();
 
+    // Logging ...
     // janky way of logging robotstate values. Robot state @AutoLog doesn't work???
     Logger.recordOutput("RobotState/aboveL1", RobotState.getInstance().isAboveL1());
 
@@ -127,34 +118,6 @@ public class Superstructure extends SubsystemBase {
     Logger.recordOutput("Superstructure/DesiredSuperState", desiredState.toString());
 
     if (currentState == SuperState.STOPPED) handleStopped();
-
-    // Logger.recordOutput("TeleopShotReady/PivotAtSetpoint", pivot.pivotAtSetpoint());
-    // Logger.recordOutput("TeleopShotReady/PivotGreaterThan10", pivot.getCurrentPosition() > 10.0);
-    // Logger.recordOutput("TeleopShotReady/ShooterAtSpeakerSetpoint", shooter.atSpeakerSetpoint());
-    // Logger.recordOutput(
-    //         "TeleopShotReady/AccelerationVectorUnder12",
-    //         RobotState.getInstance().getLastAccelerationVector() < 0.12);
-    // Logger.recordOutput(
-    //         "TeleopShotReady/HasTarget", RobotState.getInstance().hasTarget());
-    // Logger.recordOutput(
-    //         "TeleopShotReady/CameraWithin8Meters",
-    // RobotState.getInstance().getVisionHorizontalDistance() <= 8.0);
-    // Logger.recordOutput(
-    //         "TeleopShotReady/PredictedPoseWithin8Meters",
-    //         aimingParameters.effectiveDistance().getX() <= 8.0);
-
-    // Logger.recordOutput("DesiredSuperstate", desiredState);
-    // if (currentState != previousState) {
-    //     Logger.recordOutput("CurrentSuperstate", currentState);
-    // }
-
-    // Logger.recordOutput(
-    //         "AimingParameters/AdjustedTurretAngleDegrees",
-    //         aimingParameters.turretAimingAngle().getDegrees());
-    // Logger.recordOutput("AimingParameters/EffectiveDistance",
-    // aimingParameters.effectiveDistance());
-
-    // Logger.recordOutput("FeedShotDistance", RobotState.getInstance().getDistanceToFeedTarget());
   }
 
   /**
