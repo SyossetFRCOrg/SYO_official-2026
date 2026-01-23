@@ -1,5 +1,7 @@
 package frc.robot.subsystems.intake;
 
+import static frc.robot.util.PhoenixUtil.*;
+
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -24,7 +26,7 @@ public class IntakeIOTalonFX implements IntakeIO{
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
-    //TODO: MOVE TUNING CONSTANTS TO NEW CONSTANTS.JAVA FILE
+    //TODO: MOVE TUNING CONSTANTS TO NEW CONSTANTS FILE
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", 100);
     // private static final LoggedTunableNumber kI = new LoggedTunableNumber("Arm/Gains/kI", 0);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Intake/Gains/kD", 0);
