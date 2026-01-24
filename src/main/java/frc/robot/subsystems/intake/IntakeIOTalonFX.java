@@ -41,7 +41,6 @@ public class IntakeIOTalonFX implements IntakeIO{
     private static final LoggedTunableNumber motionMagicJerk =
         new LoggedTunableNumber("Intake/maxJerk", .1);
 
-    private final StatusSignal<Angle> intakePosition;
     private final StatusSignal<AngularVelocity> intakeVelocity;
     private final StatusSignal<Voltage> intakeAppliedVolts;
     private final StatusSignal<Current> intakeCurrent;
@@ -80,9 +79,7 @@ public class IntakeIOTalonFX implements IntakeIO{
         //     : InvertedValue.CounterClockwise_Positive;
 
         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-        tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
 
-        intakePosition = talon.getPosition();
         intakeVelocity = talon.getVelocity();
         intakeAppliedVolts = talon.getMotorVoltage();
         intakeCurrent = talon.getSupplyCurrent();
@@ -90,7 +87,6 @@ public class IntakeIOTalonFX implements IntakeIO{
 
         BaseStatusSignal.setUpdateFrequencyForAll(
             50.0,
-            intakePosition,
             intakeVelocity,
             intakeAppliedVolts,
             intakeCurrent,
@@ -129,21 +125,15 @@ public class IntakeIOTalonFX implements IntakeIO{
             motionMagicJerk);
         var talonStatus =
             BaseStatusSignal.refreshAll(
-                intakePosition, intakeVelocity, intakeAppliedVolts, intakeCurrent, intakeTorqueCurrent);
+                intakeVelocity, intakeAppliedVolts, intakeCurrent, intakeTorqueCurrent);
 
         inputs.connected = intakeConnectedDebounce.calculate(talonStatus.isOK());
 
-        inputs.positionRad = Units.rotationsToRadians(intakePosition.getValueAsDouble());
         inputs.velocityRadPerSec =
             Units.rotationsPerMinuteToRadiansPerSecond(intakeVelocity.getValueAsDouble());
         inputs.appliedVolts = intakeAppliedVolts.getValueAsDouble();
         inputs.currentAmps = intakeCurrent.getValueAsDouble();
-    }
-
-    /** Resets the angle of the intake to 0. */
-    public void set(double positionRads) {
-        talon.setPosition(Units.radiansToRotations(positionRads));
-    }
+    }    
 
     /** Run intake with velocity */
     public void setVelocity(double velocityRadPerSec) {

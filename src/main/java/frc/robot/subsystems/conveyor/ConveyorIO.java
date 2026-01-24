@@ -12,7 +12,6 @@ public interface ConveyorIO {
   public static class ConveyorIOInputs 
   {
       public boolean connected = false;
-      public double positionRad = 0.0;
       public double velocityRadPerSec = 0.0;
       public double appliedVolts = 0.0;
       public double currentAmps = 0.0;

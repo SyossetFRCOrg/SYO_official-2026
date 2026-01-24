@@ -20,35 +20,33 @@ import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.util.LoggedTunableNumber;
 
-public class ConveyorIOTalonFX implements ConveyorIO{
+public class ConveyorIOTalonFX implements ConveyorIO {
 
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
-    //TODO: PID tuning constants abstracted
+    // TODO: PID tuning constants abstracted
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Conveyor/Gains/kP", 100);
-    // private static final LoggedTunableNumber kI = new LoggedTunableNumber("Arm/Gains/kI", 0);
+    // private static final LoggedTunableNumber kI = new
+    // LoggedTunableNumber("Arm/Gains/kI", 0);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Conveyor/Gains/kD", 0);
     private static final LoggedTunableNumber kS = new LoggedTunableNumber("Conveyor/Gains/kS", 0);
     // kV is Voltage given per unit of velocity, in this case volts / rad / s
-    private static final LoggedTunableNumber kV =
-        new LoggedTunableNumber("Conveyor/Gains/kV", 12.0 / 5600.0);
+    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Conveyor/Gains/kV", 12.0 / 5600.0);
     // kA is Voltage given per unit of acceleration, volts / rad / s^2
     private static final LoggedTunableNumber kA = new LoggedTunableNumber("Conveyor/Gains/kA", 0);
 
-    private static final LoggedTunableNumber motionMagicAcceleration =
-        new LoggedTunableNumber("Conveyor/maxAcceleration", .1);
-    private static final LoggedTunableNumber motionMagicJerk =
-        new LoggedTunableNumber("Conveyor/maxJerk", .1);
+    private static final LoggedTunableNumber motionMagicAcceleration = new LoggedTunableNumber(
+            "Conveyor/maxAcceleration", .1);
+    private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Conveyor/maxJerk", .1);
 
-    private final StatusSignal<Angle> conveyorPosition;
     private final StatusSignal<AngularVelocity> conveyorVelocity;
     private final StatusSignal<Voltage> conveyorAppliedVolts;
     private final StatusSignal<Current> conveyorCurrent;
     private final StatusSignal<Current> conveyorTorqueCurrent;
-    
+
     private final Debouncer conveyorConnectedDebounce = new Debouncer(0.5);
 
     public ConveyorIOTalonFX() {
@@ -66,7 +64,8 @@ public class ConveyorIOTalonFX implements ConveyorIO{
         talonConfig.Slot0.kV = kV.get();
 
         talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-        // talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
+        // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
+        // motionMagicVelocity.get();
         talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
 
         // talonConfig.TorqueCurrent.PeakForwardTorqueCurrent = constants.SlipCurrent;
@@ -77,67 +76,63 @@ public class ConveyorIOTalonFX implements ConveyorIO{
         talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
         talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        // false // fix this, test this.  Positive should be upward
-        //     ? InvertedValue.Clockwise_Positive
-        //     : InvertedValue.CounterClockwise_Positive;
+        // false // fix this, test this. Positive should be upward
+        // ? InvertedValue.Clockwise_Positive
+        // : InvertedValue.CounterClockwise_Positive;
 
         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
         tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
 
-        conveyorPosition = talon.getPosition();
         conveyorVelocity = talon.getVelocity();
         conveyorAppliedVolts = talon.getMotorVoltage();
         conveyorCurrent = talon.getSupplyCurrent();
         conveyorTorqueCurrent = talon.getTorqueCurrent();
 
         BaseStatusSignal.setUpdateFrequencyForAll(
-            50.0,
-            conveyorPosition,
-            conveyorVelocity,
-            conveyorAppliedVolts,
-            conveyorCurrent,
-            conveyorTorqueCurrent);
+                50.0,
+                conveyorVelocity,
+                conveyorAppliedVolts,
+                conveyorCurrent,
+                conveyorTorqueCurrent);
         ParentDevice.optimizeBusUtilizationForAll(talon);
     }
 
     @Override
     public void updateInputs(ConveyorIOInputs inputs) {
         LoggedTunableNumber.ifChanged(
-            hashCode(),
-            () -> {
-            talonConfig.Slot0.kA = kA.get();
-            talonConfig.Slot0.kD = kD.get();
-            // talonConfig.Slot0.kG = kG.get();
-            talonConfig.Slot0.kP = kP.get();
-            talonConfig.Slot0.kS = kS.get();
-            talonConfig.Slot0.kV = kV.get();
-            tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-            },
-            kA,
-            kD,
-            // kG,
-            kP,
-            kS,
-            kV);
+                hashCode(),
+                () -> {
+                    talonConfig.Slot0.kA = kA.get();
+                    talonConfig.Slot0.kD = kD.get();
+                    // talonConfig.Slot0.kG = kG.get();
+                    talonConfig.Slot0.kP = kP.get();
+                    talonConfig.Slot0.kS = kS.get();
+                    talonConfig.Slot0.kV = kV.get();
+                    tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+                },
+                kA,
+                kD,
+                // kG,
+                kP,
+                kS,
+                kV);
         LoggedTunableNumber.ifChanged(
-            hashCode(),
-            () -> {
-            talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-            // talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
-            talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-            tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-            },
-            motionMagicAcceleration,
-            motionMagicJerk);
-        var talonStatus =
-            BaseStatusSignal.refreshAll(
-                conveyorPosition, conveyorVelocity, conveyorAppliedVolts, conveyorCurrent, conveyorTorqueCurrent);
+                hashCode(),
+                () -> {
+                    talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+                    // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
+                    // motionMagicVelocity.get();
+                    talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+                    tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+                },
+                motionMagicAcceleration,
+                motionMagicJerk);
+        var talonStatus = BaseStatusSignal.refreshAll(
+                conveyorVelocity, conveyorAppliedVolts, conveyorCurrent, conveyorTorqueCurrent);
 
         inputs.connected = conveyorConnectedDebounce.calculate(talonStatus.isOK());
 
-        inputs.positionRad = Units.rotationsToRadians(conveyorPosition.getValueAsDouble());
-        inputs.velocityRadPerSec =
-            Units.rotationsPerMinuteToRadiansPerSecond(conveyorVelocity.getValueAsDouble());
+        inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(conveyorVelocity.getValueAsDouble());
         inputs.appliedVolts = conveyorAppliedVolts.getValueAsDouble();
         inputs.currentAmps = conveyorCurrent.getValueAsDouble();
         // inputs.torqueCurrentAmps = conveyorTorqueCurrent.getValueAsDouble();
@@ -145,7 +140,7 @@ public class ConveyorIOTalonFX implements ConveyorIO{
 
     // @Override
     // public void stop() {
-    //   talon.stopMotor();
+    // talon.stopMotor();
     // }
 
     /** Resets the angle of the conveyor to 0. */

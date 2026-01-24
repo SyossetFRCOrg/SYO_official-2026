@@ -43,7 +43,6 @@ public class ShooterIOTalonFX implements ShooterIO {
   private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Shooter/maxJerk",
       ShooterConstants.maxJerk);
 
-  private final StatusSignal<Angle> shooterPosition;
   private final StatusSignal<AngularVelocity> shooterVelocity;
   private final StatusSignal<Voltage> shooterAppliedVolts;
   private final StatusSignal<Current> shooterCurrent;
@@ -77,14 +76,12 @@ public class ShooterIOTalonFX implements ShooterIO {
     tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
     tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
 
-    shooterPosition = talon.getPosition();
     shooterVelocity = talon.getVelocity();
     shooterAppliedVolts = talon.getMotorVoltage();
     shooterCurrent = talon.getSupplyCurrent();
     shooterTorqueCurrent = talon.getTorqueCurrent();
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
-        shooterPosition,
         shooterVelocity,
         shooterAppliedVolts,
         shooterCurrent,
@@ -123,11 +120,10 @@ public class ShooterIOTalonFX implements ShooterIO {
         motionMagicAcceleration,
         motionMagicJerk);
     var talonStatus = BaseStatusSignal.refreshAll(
-        shooterPosition, shooterVelocity, shooterAppliedVolts, shooterCurrent, shooterTorqueCurrent);
+        shooterVelocity, shooterAppliedVolts, shooterCurrent, shooterTorqueCurrent);
 
     inputs.connected = shooterConnectedDebounce.calculate(talonStatus.isOK());
 
-    inputs.positionRad = Units.rotationsToRadians(shooterPosition.getValueAsDouble());
     inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(shooterVelocity.getValueAsDouble());
     inputs.appliedVolts = shooterAppliedVolts.getValueAsDouble();
     inputs.currentAmps = shooterCurrent.getValueAsDouble();
