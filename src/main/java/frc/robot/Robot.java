@@ -46,7 +46,7 @@ public class Robot extends LoggedRobot {
     autoChooser =
         AutoChooser.create(
             robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
-    Shuffleboard.getTab("Autonomous")
+    Shuffleboard.getTab("Match")
         .add("Auto Program", autoChooser)
         .withSize(6, 3)
         .withPosition(12, 0)

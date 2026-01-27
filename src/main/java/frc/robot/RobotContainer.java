@@ -48,7 +48,7 @@ public class RobotContainer {
 
     // private final AutoSelector autoSelector = new AutoSelector("Auto");
 
-    // // Dashboard inputs
+    // Dashboard inputs
     // private final LoggedDashboardChooser<Command> autoChooser;
 
     /**
