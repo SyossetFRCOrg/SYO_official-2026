@@ -4,8 +4,6 @@
 
 package frc.robot.subsystems.shooter;
 
-import org.littletonrobotics.junction.networktables.LoggedNetworkInput;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
@@ -17,12 +15,10 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.util.LoggedTunableNumber;
-import frc.robot.subsystems.shooter.ShooterConstants;
 import static frc.robot.util.PhoenixUtil.*;
 
 public class ShooterIOTalonFX implements ShooterIO {
