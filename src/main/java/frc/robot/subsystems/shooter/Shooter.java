@@ -13,9 +13,7 @@ import lombok.Setter;
 
 public class Shooter extends SubsystemBase{
     public static enum SubState {
-        IDLE,
-        PREPARING,
-        READY
+        IDLE;
     }
     private static final HashMap<SuperState, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
 
