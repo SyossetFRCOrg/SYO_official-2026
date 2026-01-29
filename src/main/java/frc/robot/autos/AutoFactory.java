@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
@@ -55,6 +56,15 @@ class AutoFactory {
     return Commands.none();
   }
 
+  Command testPath()
+  {
+    PathPlannerPath path = loadSegment("BLUE_DS1_BASIC");
+    preloadTrajectoryClass(path);
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(follow(path));
+    return c;
+  }
+
   // Auto init helpers
   private Command resetPose(final PathPlannerPath segment) {
     return runOnce(
@@ -84,12 +94,6 @@ class AutoFactory {
         });
   }
 
-
-  
-  
-
-  
-  
 
   // Path following
   private Command follow(final Location start, final Location end) {
@@ -127,6 +131,20 @@ class AutoFactory {
     path.preventFlipping = false;
 
     // return new AutoSegment(start, end, name, path);
+    return path;
+  }
+
+  private PathPlannerPath loadSegment(String pathName)
+  {
+    PathPlannerPath path;
+    try {
+      path = PathPlannerPath.fromChoreoTrajectory(pathName);
+    } catch (Exception e)
+    {
+      e.printStackTrace();
+      path = null;
+    }
+    path.preventFlipping = false;
     return path;
   }
 }

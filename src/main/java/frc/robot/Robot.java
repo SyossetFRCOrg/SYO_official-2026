@@ -43,6 +43,7 @@ public class Robot extends LoggedRobot {
 
     Logger.start();
 
+<<<<<<< HEAD
     // autoChooser =
     //     AutoChooser.create(
     //         robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
@@ -51,6 +52,16 @@ public class Robot extends LoggedRobot {
     //     .withSize(6, 3)
     //     .withPosition(12, 0)
     //     .withWidget(BuiltInWidgets.kComboBoxChooser);
+=======
+    autoChooser =
+        AutoChooser.create(
+            robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
+    Shuffleboard.getTab("Match")
+        .add("Auto Program", autoChooser)
+        .withSize(6, 3)
+        .withPosition(12, 0)
+        .withWidget(BuiltInWidgets.kComboBoxChooser);
+>>>>>>> vision
   }
 
   @Override
