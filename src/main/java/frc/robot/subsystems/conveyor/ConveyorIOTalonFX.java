@@ -3,6 +3,7 @@ package frc.robot.subsystems.conveyor;
 import static frc.robot.util.PhoenixUtil.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -23,6 +24,7 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+    private static final CANBus canbus = ConveyorConstants.canbus;
 
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
@@ -50,7 +52,7 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     public ConveyorIOTalonFX() {
         // TODO: device id
-        talon = new TalonFX(0, "rio");
+        talon = new TalonFX(0, canbus);
 
         talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         // talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
