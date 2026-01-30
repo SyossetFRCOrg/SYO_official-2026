@@ -27,19 +27,19 @@ public class ConveyorIOTalonFX implements ConveyorIO {
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
     // TODO: PID tuning constants abstracted
-    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Conveyor/Gains/kP", 100);
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Conveyor/Gains/kP", ConveyorConstants.kP);
     // private static final LoggedTunableNumber kI = new
     // LoggedTunableNumber("Arm/Gains/kI", 0);
-    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Conveyor/Gains/kD", 0);
-    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Conveyor/Gains/kS", 0);
+    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Conveyor/Gains/kD", ConveyorConstants.kD);
+    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Conveyor/Gains/kS", ConveyorConstants.kS);
     // kV is Voltage given per unit of velocity, in this case volts / rad / s
-    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Conveyor/Gains/kV", 12.0 / 5600.0);
+    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Conveyor/Gains/kV", ConveyorConstants.kV);
     // kA is Voltage given per unit of acceleration, volts / rad / s^2
-    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Conveyor/Gains/kA", 0);
+    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Conveyor/Gains/kA", ConveyorConstants.kA);
 
     private static final LoggedTunableNumber motionMagicAcceleration = new LoggedTunableNumber(
-            "Conveyor/maxAcceleration", .1);
-    private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Conveyor/maxJerk", .1);
+            "Conveyor/maxAcceleration", ConveyorConstants.maxAcceleration);
+    private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Conveyor/maxJerk", ConveyorConstants.maxJerk);
 
     private final StatusSignal<AngularVelocity> conveyorVelocity;
     private final StatusSignal<Voltage> conveyorAppliedVolts;

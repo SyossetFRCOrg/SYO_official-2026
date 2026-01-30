@@ -1,12 +1,8 @@
-package frc.robot.subsystems.shooter;
+package frc.robot.subsystems.conveyor;
 
 import com.ctre.phoenix6.CANBus;
 
-//TODO adjust these values
-public class ShooterConstants {
-
-    public static final int motorID = 1;
-
+public class ConveyorConstants {
     public static final double kP = 100;
     public static final double kD = 0;
     public static final double kS = 0;
@@ -17,5 +13,4 @@ public class ShooterConstants {
     public static final double maxJerk = 0.1;
 
     public static final CANBus canbus = new CANBus();
-
 }
