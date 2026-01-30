@@ -58,6 +58,7 @@ class AutoFactory {
 
   Command testPath()
   {
+    // Need to reset pose. c.addCommands(resetPose(firstSegment));
     PathPlannerPath path = loadSegment("BLUE_DS1_BASIC");
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
