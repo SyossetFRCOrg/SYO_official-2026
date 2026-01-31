@@ -14,7 +14,7 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
-  //private AutoChooser autoChooser;
+  private AutoChooser autoChooser;
 
   private final RobotContainer robotContainer;
 
@@ -43,14 +43,14 @@ public class Robot extends LoggedRobot {
 
     Logger.start();
 
-    // autoChooser =
-    //     AutoChooser.create(
-    //         robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
-    // Shuffleboard.getTab("Autonomous")
-    //     .add("Auto Program", autoChooser)
-    //     .withSize(6, 3)
-    //     .withPosition(12, 0)
-    //     .withWidget(BuiltInWidgets.kComboBoxChooser);
+    autoChooser =
+        AutoChooser.create(
+            robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
+    Shuffleboard.getTab("Match")
+        .add("Auto Program", autoChooser)
+        .withSize(6, 3)
+        .withPosition(12, 0)
+        .withWidget(BuiltInWidgets.kComboBoxChooser);
   }
 
   @Override

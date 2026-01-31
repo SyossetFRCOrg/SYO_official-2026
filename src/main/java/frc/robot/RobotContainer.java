@@ -7,10 +7,16 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
@@ -42,6 +48,13 @@ public class RobotContainer {
     private final XboxController buttonboard = new XboxController(1);
 
     private final UsbCamera climbCam;
+
+    // private final HttpCamera climberCamera;
+
+    // private final AutoSelector autoSelector = new AutoSelector("Auto");
+
+    // Dashboard inputs
+    // private final LoggedDashboardChooser<Command> autoChooser;
 
     /**
      * The container for the robot. Contains subsystems, IO devices, and commands.
@@ -93,15 +106,30 @@ public class RobotContainer {
 
     // kinda stupid but it works
 
-    double tempSpeed = 0.35;
+    double tempSpeed = .75;
 
     // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY() * tempSpeed,
-            () -> -controller.getLeftX() * tempSpeed,
+            () -> controller.getLeftY() * tempSpeed,
+            () -> controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
+
+        // Reset gyro to 0° when the menu looking button is pressed
+    Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
+    resetPoseTrigger.onTrue(
+        Commands.runOnce(
+                () ->
+                    drive.setPose(
+                        new Pose2d(
+                            drive.getPose().getX(),
+                            drive.getPose().getY(),
+                            DriverStation.getAlliance().get() == Alliance.Blue
+                                ? Rotation2d.fromRadians(180)
+                                : Rotation2d.fromDegrees(0))),
+                drive)
+            .ignoringDisable(true));
   }
 
     public Drive getDrive() {
