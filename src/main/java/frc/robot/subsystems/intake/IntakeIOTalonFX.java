@@ -3,6 +3,7 @@ package frc.robot.subsystems.intake;
 import static frc.robot.util.PhoenixUtil.*;
 
 import com.ctre.phoenix6.BaseStatusSignal;
+import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
@@ -24,21 +25,22 @@ public class IntakeIOTalonFX implements IntakeIO{
 
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+    private static final CANBus canbus = IntakeConstants.canbus;
 
     //TODO: MOVE TUNING CONSTANTS TO NEW CONSTANTS FILE
-    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", 100);
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", IntakeConstants.kP);
     // private static final LoggedTunableNumber kI = new LoggedTunableNumber("Arm/Gains/kI", 0);
-    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Intake/Gains/kD", 0);
-    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Intake/Gains/kS", 0);
+    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Intake/Gains/kD", IntakeConstants.kD);
+    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Intake/Gains/kS", IntakeConstants.kS);
     // kV is Voltage given per unit of velocity, in this case volts / rad / s
-    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Intake/Gains/kV", 12.0 / 5600.0);
+    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Intake/Gains/kV", IntakeConstants.kV);
     // kA is Voltage given per unit of acceleration, volts / rad / s^2
-    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Intake/Gains/kA", 0);
+    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Intake/Gains/kA", IntakeConstants.kA);
 
     private static final LoggedTunableNumber motionMagicAcceleration = 
-        new LoggedTunableNumber("Intake/maxAcceleration", .1);
+        new LoggedTunableNumber("Intake/maxAcceleration", IntakeConstants.maxAcceleration);
     private static final LoggedTunableNumber motionMagicJerk =
-        new LoggedTunableNumber("Intake/maxJerk", .1);
+        new LoggedTunableNumber("Intake/maxJerk", IntakeConstants.maxJerk);
 
     private final StatusSignal<AngularVelocity> intakeVelocity;
     private final StatusSignal<Voltage> intakeAppliedVolts;
@@ -51,7 +53,7 @@ public class IntakeIOTalonFX implements IntakeIO{
     public IntakeIOTalonFX()
     {
         // TODO: set up device id
-        talon = new TalonFX(0, "rio");
+        talon = new TalonFX(0, canbus);
 
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
         talonConfig.Slot0.kA = kA.get();

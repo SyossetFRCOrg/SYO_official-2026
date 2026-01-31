@@ -38,6 +38,6 @@ public class ShooterConstants {
     public static final double rightMaxAcceleration = 0.1;
     public static final double rightMaxJerk = 0.1;
 
-    public static final CANBus canBus = new CANBus();
+    public static final CANBus canbus = new CANBus();
 
 }

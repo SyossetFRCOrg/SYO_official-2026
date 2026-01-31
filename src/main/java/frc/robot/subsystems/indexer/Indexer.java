@@ -14,11 +14,18 @@ public class Indexer extends SubsystemBase {
         READY
     }
 
-  /** Creates a new Indexer. */
-  public Indexer() {}
+ // declare IO & logs
+    private final IndexerIO indexerIO;
+    private double indexerSpeed;
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+    public Indexer(IndexerIO indexerIO) 
+    {
+        this.indexerIO = indexerIO;
+    }
+
+    @Override
+    public void periodic() {
+        // TODO Auto-generated method stub
+        super.periodic();
+    }
 }

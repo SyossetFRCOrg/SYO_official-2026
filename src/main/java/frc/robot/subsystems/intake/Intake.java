@@ -10,6 +10,11 @@ public class Intake extends SubsystemBase {
         READY
     }
 
+    public static enum SubState {
+        IDLE,
+        INTAKING,
+        
+    }
     // declare IO & logs
     private final IntakeIO intakeIO;
     private double intakeSpeed;

@@ -12,6 +12,11 @@ public class Conveyor extends SubsystemBase{
         READY
     }
     
+    public static enum SubState {
+        IDLE,
+        ROLLING
+    }
+
     // declare IO & logs
     private final ConveyorIO conveyorIO;
     private double conveyorSpeed;

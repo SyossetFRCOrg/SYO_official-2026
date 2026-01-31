@@ -103,9 +103,9 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   /** Creates a new ShooterIOTalonFX. */
   public ShooterIOTalonFX() {
-    leftTalon = new TalonFX(ShooterConstants.leftMotorID, ShooterConstants.canBus);
-    centerTalon = new TalonFX(ShooterConstants.centerMotorID, ShooterConstants.canBus);
-    rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canBus);
+    leftTalon = new TalonFX(ShooterConstants.leftMotorID, ShooterConstants.canbus);
+    centerTalon = new TalonFX(ShooterConstants.centerMotorID, ShooterConstants.canbus);
+    rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canbus);
 
     leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
