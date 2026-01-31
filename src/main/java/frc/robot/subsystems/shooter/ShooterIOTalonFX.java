@@ -25,64 +25,175 @@ public class ShooterIOTalonFX implements ShooterIO {
 
   final VoltageOut VoltageRequest = new VoltageOut(0);
 
-  private final TalonFX talon;
-  private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+  private final TalonFX leftTalon;
+  private final TalonFX centerTalon;
+  private final TalonFX rightTalon;
 
-  private static final LoggedTunableNumber kP = new LoggedTunableNumber("Shooter/Gains/kP", ShooterConstants.kP);
-  private static final LoggedTunableNumber kD = new LoggedTunableNumber("Shooter/Gains/kD", ShooterConstants.kD);
-  private static final LoggedTunableNumber kS = new LoggedTunableNumber("Shooter/Gains/kS", ShooterConstants.kS);
-  private static final LoggedTunableNumber kV = new LoggedTunableNumber("Shooter/Gains/kV", ShooterConstants.kV);
-  private static final LoggedTunableNumber kA = new LoggedTunableNumber("Shooter/Gains/kA", ShooterConstants.kA);
+  private static TalonFXConfiguration leftTalonConfig = new TalonFXConfiguration();
+  private static TalonFXConfiguration centerTalonConfig = new TalonFXConfiguration();
+  private static TalonFXConfiguration rightTalonConfig = new TalonFXConfiguration();
 
-  private static final LoggedTunableNumber motionMagicAcceleration = new LoggedTunableNumber("Shooter/maxAcceleration",
-      ShooterConstants.maxAcceleration);
-  private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Shooter/maxJerk",
-      ShooterConstants.maxJerk);
+  private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
+      ShooterConstants.left_kP);
+  private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
+      ShooterConstants.left_kD);
+  private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS",
+      ShooterConstants.left_kS);
+  private static final LoggedTunableNumber left_kV = new LoggedTunableNumber("Shooter/Gains/left_kV",
+      ShooterConstants.left_kV);
+  private static final LoggedTunableNumber left_kA = new LoggedTunableNumber("Shooter/Gains/left_kA",
+      ShooterConstants.left_kA);
 
-  private final StatusSignal<AngularVelocity> shooterVelocity;
-  private final StatusSignal<Voltage> shooterAppliedVolts;
-  private final StatusSignal<Current> shooterCurrent;
-  private final StatusSignal<Current> shooterTorqueCurrent;
+  private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP",
+      ShooterConstants.center_kP);
+  private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD",
+      ShooterConstants.center_kD);
+  private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS",
+      ShooterConstants.center_kS);
+  private static final LoggedTunableNumber center_kV = new LoggedTunableNumber("Shooter/Gains/center_kV",
+      ShooterConstants.center_kV);
+  private static final LoggedTunableNumber center_kA = new LoggedTunableNumber("Shooter/Gains/center_kA",
+      ShooterConstants.center_kA);
+
+  private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP",
+      ShooterConstants.right_kP);
+  private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD",
+      ShooterConstants.right_kD);
+  private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS",
+      ShooterConstants.right_kS);
+  private static final LoggedTunableNumber right_kV = new LoggedTunableNumber("Shooter/Gains/right_kV",
+      ShooterConstants.right_kV);
+  private static final LoggedTunableNumber right_kA = new LoggedTunableNumber("Shooter/Gains/right_kA",
+      ShooterConstants.right_kA);
+
+  private static final LoggedTunableNumber leftMotionMagicAcceleration = new LoggedTunableNumber(
+      "Shooter/leftMaxAcceleration",
+      ShooterConstants.leftMaxAcceleration);
+  private static final LoggedTunableNumber leftMotionMagicJerk = new LoggedTunableNumber("Shooter/leftMaxJerk",
+      ShooterConstants.leftMaxJerk);
+
+  private static final LoggedTunableNumber centerMotionMagicAcceleration = new LoggedTunableNumber(
+      "Shooter/centerMaxAcceleration",
+      ShooterConstants.centerMaxAcceleration);
+  private static final LoggedTunableNumber centerMotionMagicJerk = new LoggedTunableNumber("Shooter/centerMaxJerk",
+      ShooterConstants.centerMaxJerk);
+
+  private static final LoggedTunableNumber rightMotionMagicAcceleration = new LoggedTunableNumber(
+      "Shooter/rightMaxAcceleration",
+      ShooterConstants.rightMaxAcceleration);
+  private static final LoggedTunableNumber rightMotionMagicJerk = new LoggedTunableNumber("Shooter/rightMaxJerk",
+      ShooterConstants.rightMaxJerk);
+
+  private final StatusSignal<AngularVelocity> leftShooterVelocity;
+  private final StatusSignal<Voltage> leftShooterAppliedVolts;
+  private final StatusSignal<Current> leftShooterCurrent;
+  private final StatusSignal<Current> leftShooterTorqueCurrent;
+
+  private final StatusSignal<AngularVelocity> centerShooterVelocity;
+  private final StatusSignal<Voltage> centerShooterAppliedVolts;
+  private final StatusSignal<Current> centerShooterCurrent;
+  private final StatusSignal<Current> centerShooterTorqueCurrent;
+
+  private final StatusSignal<AngularVelocity> rightShooterVelocity;
+  private final StatusSignal<Voltage> rightShooterAppliedVolts;
+  private final StatusSignal<Current> rightShooterCurrent;
+  private final StatusSignal<Current> rightShooterTorqueCurrent;
 
   private final Debouncer shooterConnectedDebounce = new Debouncer(0.5);
 
   /** Creates a new ShooterIOTalonFX. */
   public ShooterIOTalonFX() {
-    talon = new TalonFX(ShooterConstants.motorID, ShooterConstants.canBus);
+    leftTalon = new TalonFX(ShooterConstants.leftMotorID, ShooterConstants.canBus);
+    centerTalon = new TalonFX(ShooterConstants.centerMotorID, ShooterConstants.canBus);
+    rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canBus);
 
-    talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-    talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-    talonConfig.Slot0.kA = kA.get();
-    talonConfig.Slot0.kD = kD.get();
+    leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+    centerTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    centerTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+    rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    rightTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-    talonConfig.Slot0.kP = kP.get();
-    talonConfig.Slot0.kS = kS.get();
-    talonConfig.Slot0.kV = kV.get();
+    leftTalonConfig.Slot0.kA = left_kA.get();
+    leftTalonConfig.Slot0.kD = left_kD.get();
+    centerTalonConfig.Slot0.kA = center_kA.get();
+    centerTalonConfig.Slot0.kD = center_kD.get();
+    rightTalonConfig.Slot0.kA = right_kA.get();
+    rightTalonConfig.Slot0.kD = right_kD.get();
 
-    talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-    talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+    leftTalonConfig.Slot0.kP = left_kP.get();
+    leftTalonConfig.Slot0.kS = left_kS.get();
+    leftTalonConfig.Slot0.kV = left_kV.get();
+    centerTalonConfig.Slot0.kP = center_kP.get();
+    centerTalonConfig.Slot0.kS = center_kS.get();
+    centerTalonConfig.Slot0.kV = center_kV.get();
+    rightTalonConfig.Slot0.kP = right_kP.get();
+    rightTalonConfig.Slot0.kS = right_kS.get();
+    rightTalonConfig.Slot0.kV = right_kV.get();
 
-    talonConfig.CurrentLimits.StatorCurrentLimit = 60;
-    talonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-    talonConfig.CurrentLimits.SupplyCurrentLimit = 50;
-    talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
+    leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
+    centerTalonConfig.MotionMagic.MotionMagicAcceleration = centerMotionMagicAcceleration.get();
+    centerTalonConfig.MotionMagic.MotionMagicJerk = centerMotionMagicJerk.get();
+    rightTalonConfig.MotionMagic.MotionMagicAcceleration = rightMotionMagicAcceleration.get();
+    rightTalonConfig.MotionMagic.MotionMagicJerk = rightMotionMagicJerk.get();
 
-    talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    leftTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+    leftTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    leftTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+    leftTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    centerTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+    centerTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    centerTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+    centerTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+    rightTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+    rightTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+    rightTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+    rightTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-    tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-    tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
+    leftTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    centerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    rightTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
-    shooterVelocity = talon.getVelocity();
-    shooterAppliedVolts = talon.getMotorVoltage();
-    shooterCurrent = talon.getSupplyCurrent();
-    shooterTorqueCurrent = talon.getTorqueCurrent();
+    tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+    tryUntilOk(5, () -> leftTalon.setPosition(0.0, 0.25));
+    tryUntilOk(5, () -> centerTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+    tryUntilOk(5, () -> centerTalon.setPosition(0.0, 0.25));
+    tryUntilOk(5, () -> rightTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+    tryUntilOk(5, () -> rightTalon.setPosition(0.0, 0.25));
+
+    leftShooterVelocity = leftTalon.getVelocity();
+    leftShooterAppliedVolts = leftTalon.getMotorVoltage();
+    leftShooterCurrent = leftTalon.getSupplyCurrent();
+    leftShooterTorqueCurrent = leftTalon.getTorqueCurrent();
+
+    centerShooterVelocity = centerTalon.getVelocity();
+    centerShooterAppliedVolts = centerTalon.getMotorVoltage();
+    centerShooterCurrent = centerTalon.getSupplyCurrent();
+    centerShooterTorqueCurrent = centerTalon.getTorqueCurrent();
+
+    rightShooterVelocity = rightTalon.getVelocity();
+    rightShooterAppliedVolts = rightTalon.getMotorVoltage();
+    rightShooterCurrent = rightTalon.getSupplyCurrent();
+    rightShooterTorqueCurrent = rightTalon.getTorqueCurrent();
+
     BaseStatusSignal.setUpdateFrequencyForAll(
         50.0,
-        shooterVelocity,
-        shooterAppliedVolts,
-        shooterCurrent,
-        shooterTorqueCurrent);
-    ParentDevice.optimizeBusUtilizationForAll(talon);
+        leftShooterVelocity,
+        leftShooterAppliedVolts,
+        leftShooterCurrent,
+        leftShooterTorqueCurrent,
+        centerShooterVelocity,
+        centerShooterAppliedVolts,
+        centerShooterCurrent,
+        centerShooterTorqueCurrent,
+        rightShooterVelocity,
+        rightShooterAppliedVolts,
+        rightShooterCurrent,
+        rightShooterTorqueCurrent);
+    ParentDevice.optimizeBusUtilizationForAll(leftTalon);
+    ParentDevice.optimizeBusUtilizationForAll(centerTalon);
+    ParentDevice.optimizeBusUtilizationForAll(rightTalon);
   }
 
   @Override
@@ -90,45 +201,84 @@ public class ShooterIOTalonFX implements ShooterIO {
     LoggedTunableNumber.ifChanged(
         hashCode(),
         () -> {
-          talonConfig.Slot0.kA = kA.get();
-          talonConfig.Slot0.kD = kD.get();
+          leftTalonConfig.Slot0.kA = left_kA.get();
+          leftTalonConfig.Slot0.kD = left_kD.get();
           // talonConfig.Slot0.kG = kG.get();
-          talonConfig.Slot0.kP = kP.get();
-          talonConfig.Slot0.kS = kS.get();
-          talonConfig.Slot0.kV = kV.get();
-          tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+          leftTalonConfig.Slot0.kP = left_kP.get();
+          leftTalonConfig.Slot0.kS = left_kS.get();
+          leftTalonConfig.Slot0.kV = left_kV.get();
+          tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
         },
-        kA,
-        kD,
+        left_kA,
+        left_kD,
         // kG,
-        kP,
-        kS,
-        kV);
+        left_kP,
+        left_kS,
+        left_kV);
     LoggedTunableNumber.ifChanged(
         hashCode(),
         () -> {
-          talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-          // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
-          // motionMagicVelocity.get();
-          talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-          tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+          centerTalonConfig.Slot0.kA = center_kA.get();
+          centerTalonConfig.Slot0.kD = center_kD.get();
+          // talonConfig.Slot0.kG = kG.get();
+          centerTalonConfig.Slot0.kP = center_kP.get();
+          centerTalonConfig.Slot0.kS = center_kS.get();
+          centerTalonConfig.Slot0.kV = center_kV.get();
+          tryUntilOk(5, () -> centerTalon.getConfigurator().apply(centerTalonConfig, 0.25));
         },
-        motionMagicAcceleration,
-        motionMagicJerk);
-    var talonStatus = BaseStatusSignal.refreshAll(
-        shooterVelocity, shooterAppliedVolts, shooterCurrent, shooterTorqueCurrent);
+        center_kA,
+        center_kD,
+        // kG,
+        center_kP,
+        center_kS,
+        center_kV);
+    LoggedTunableNumber.ifChanged(
+        hashCode(),
+        () -> {
+          rightTalonConfig.Slot0.kA = right_kA.get();
+          rightTalonConfig.Slot0.kD = right_kD.get();
+          // talonConfig.Slot0.kG = kG.get();
+          rightTalonConfig.Slot0.kP = right_kP.get();
+          rightTalonConfig.Slot0.kS = right_kS.get();
+          rightTalonConfig.Slot0.kV = right_kV.get();
+          tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
+        },
+        right_kA,
+        right_kD,
+        // kG,
+        right_kP,
+        right_kS,
+        right_kV);
+    LoggedTunableNumber.ifChanged(
+        hashCode(),
+        () -> {
+          leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
+          leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
+          tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+        },
+        leftMotionMagicAcceleration,
+        leftMotionMagicJerk);
+    var leftTalonStatus = BaseStatusSignal.refreshAll(
+        leftShooterVelocity, leftShooterAppliedVolts, leftShooterCurrent, leftShooterTorqueCurrent);
 
-    inputs.connected = shooterConnectedDebounce.calculate(talonStatus.isOK());
+    inputs.leftConnected = shooterConnectedDebounce.calculate(leftTalonStatus.isOK());
 
-    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(shooterVelocity.getValueAsDouble());
-    inputs.appliedVolts = shooterAppliedVolts.getValueAsDouble();
-    inputs.currentAmps = shooterCurrent.getValueAsDouble();
+    inputs.leftVelocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(leftShooterVelocity.getValueAsDouble());
+    inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
+    inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
     // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
   }
 
-  public void setVelocity(double velocityRadPerSec) {
-    talon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+  public void setLeftVelocity(double velocityRadPerSec, String motor) {
+    leftTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
   }
 
+  public void setCenterVelocity(double velocityRadPerSec, String motor) {
+    centerTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+  }
+
+  public void setRightVelocity(double velocityRadPerSec, String motor) {
+    rightTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+  }
 
 }

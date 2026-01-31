@@ -12,6 +12,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Shooter extends SubsystemBase{
+
+    public enum Substate {
+        STOPPED,
+        IDLE,
+        REVVING,
+        READY
+    }
+
     public static enum SubState {
         IDLE;
     }
@@ -42,15 +50,11 @@ public class Shooter extends SubsystemBase{
     shooterIO.updateInputs(inputs);
     Logger.processInputs("Shooter", inputs);
 
-    if (shooterSpeeds.containsKey(Superstructure.getCurrentState())) {
-      shooterSpeed = shooterSpeeds.get(Superstructure.getCurrentState()).get();
-    }   
+    // shooterIO.setVelocity(shooterSpeed);
 
-    shooterIO.setVelocity(shooterSpeed);
-
-    if (inputs.currentAmps < 1.5) {
-      debounceTimer.reset();
-    }
+    // if (inputs.currentAmps < 1.5) {
+    //   debounceTimer.reset();
+    // }
     
   }
 

@@ -4,6 +4,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.conveyor.ConveyorIO;
 
 public class Conveyor extends SubsystemBase{
+
+    public enum Substate {
+        STOPPED,
+        IDLE,
+        REVVING,
+        READY
+    }
     
     // declare IO & logs
     private final ConveyorIO conveyorIO;
