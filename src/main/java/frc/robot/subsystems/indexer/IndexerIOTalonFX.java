@@ -47,7 +47,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     private final Debouncer indexerConnectedDebounce = new Debouncer(0.5);
 
     public IndexerIOTalonFX() {
-    talon = new TalonFX(IndexerConstants.motorID, IndexerConstants.canBus);
+    talon = new TalonFX(IndexerConstants.motorID, IndexerConstants.canbus);
 
     talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;

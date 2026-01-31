@@ -24,7 +24,6 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
-    private static final CANBus canbus = ConveyorConstants.canbus;
 
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
@@ -52,7 +51,7 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     public ConveyorIOTalonFX() {
         // TODO: device id
-        talon = new TalonFX(0, canbus);
+        talon = new TalonFX(0, ConveyorConstants.canbus);
 
         talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         // talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;

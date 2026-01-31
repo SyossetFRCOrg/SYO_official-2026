@@ -25,7 +25,6 @@ public class IntakeIOTalonFX implements IntakeIO{
 
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
-    private static final CANBus canbus = IntakeConstants.canbus;
 
     //TODO: MOVE TUNING CONSTANTS TO NEW CONSTANTS FILE
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", IntakeConstants.kP);
@@ -53,7 +52,7 @@ public class IntakeIOTalonFX implements IntakeIO{
     public IntakeIOTalonFX()
     {
         // TODO: set up device id
-        talon = new TalonFX(0, canbus);
+        talon = new TalonFX(0, IntakeConstants.canbus);
 
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
         talonConfig.Slot0.kA = kA.get();
