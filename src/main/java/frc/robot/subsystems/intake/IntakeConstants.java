@@ -3,6 +3,7 @@ package frc.robot.subsystems.intake;
 import com.ctre.phoenix6.CANBus;
 
 public class IntakeConstants {
+    //TODO  to be tuned
     public static final int motorID = 1;
 
     public static final double kP = 100;
