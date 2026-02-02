@@ -50,7 +50,7 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     public ConveyorIOTalonFX() {
         // TODO: device id
-        talon = new TalonFX(0, ConveyorConstants.canbus);
+        talon = new TalonFX(ConveyorConstants.motorID, ConveyorConstants.canbus);
 
         talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         // talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;

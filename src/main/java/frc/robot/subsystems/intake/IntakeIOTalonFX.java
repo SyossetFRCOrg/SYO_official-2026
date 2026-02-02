@@ -50,7 +50,7 @@ public class IntakeIOTalonFX implements IntakeIO{
     public IntakeIOTalonFX()
     {
         // TODO: set up device id
-        talon = new TalonFX(0, IntakeConstants.canbus);
+        talon = new TalonFX(IntakeConstants.motorID, IntakeConstants.canbus);
 
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
         talonConfig.Slot0.kA = kA.get();
