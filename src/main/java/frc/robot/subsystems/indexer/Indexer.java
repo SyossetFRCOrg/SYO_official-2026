@@ -5,17 +5,20 @@
 package frc.robot.subsystems.indexer;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import lombok.Getter;
 
 public class Indexer extends SubsystemBase {
   public enum Substate {
         STOPPED,
-        IDLE,
-        REVVING,
+        PREPARING,
         READY
     }
 
  // declare IO & logs
     private final IndexerIO indexerIO;
+    private @Getter Substate currentSubstate = Substate.STOPPED;
+    private @Getter Substate desiredSubstate = Substate.STOPPED;
+    
     private double indexerSpeed;
 
     public Indexer(IndexerIO indexerIO) 

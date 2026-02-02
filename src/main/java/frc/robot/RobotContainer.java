@@ -14,9 +14,17 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.conveyor.Conveyor;
+import frc.robot.subsystems.conveyor.ConveyorIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.IndexerIOTalonFX;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
+import frc.robot.subsystems.shooter.Shooter;
+import frc.robot.subsystems.shooter.ShooterIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 
@@ -33,6 +41,10 @@ public class RobotContainer {
     // Subsystems
     private final Vision vision;
     private final Drive drive;
+    private final Conveyor conveyor;
+    private final Indexer indexer;
+    private final Intake intake;
+    private final Shooter shooter;
 
     private final Superstructure superstructure;
 
@@ -55,6 +67,11 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
 
+        conveyor = new Conveyor(new ConveyorIOTalonFX());
+        indexer = new Indexer(new IndexerIOTalonFX());
+        intake = new Intake(new IntakeIOTalonFX());
+        shooter = new Shooter(new ShooterIOTalonFX());
+
         // LEDs = new LEDs();
 
         vision = new Vision(
@@ -65,7 +82,7 @@ public class RobotContainer {
                 new VisionIOLimelight(camera2Name, drive::getRotation));
 
 
-        superstructure = new Superstructure(drive, this);
+        superstructure = new Superstructure(this,conveyor,drive,indexer,intake,shooter);
 
         // configureAutos();
 
@@ -102,6 +119,8 @@ public class RobotContainer {
             () -> -controller.getLeftY() * tempSpeed,
             () -> -controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
+
+    
   }
 
     public Drive getDrive() {

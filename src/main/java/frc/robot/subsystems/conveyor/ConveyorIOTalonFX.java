@@ -27,7 +27,6 @@ public class ConveyorIOTalonFX implements ConveyorIO {
 
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
-    // TODO: PID tuning constants abstracted
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Conveyor/Gains/kP", ConveyorConstants.kP);
     // private static final LoggedTunableNumber kI = new
     // LoggedTunableNumber("Arm/Gains/kI", 0);

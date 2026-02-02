@@ -5,24 +5,18 @@ import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
-import lombok.Setter;
 
 public class Shooter extends SubsystemBase{
 
     public enum Substate {
         STOPPED,
-        IDLE,
-        REVVING,
+        PREPARING,
         READY
     }
 
-    public static enum SubState {
-        IDLE;
-    }
     private static final HashMap<SuperState, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
 
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
@@ -36,7 +30,8 @@ public class Shooter extends SubsystemBase{
     }
         
 
-    private @Getter @Setter SubState state = SubState.IDLE;
+    private @Getter Substate currentSubstate = Substate.STOPPED;
+    private @Getter Substate desiredSubstate = Substate.STOPPED;
 
     private double shooterSpeed;
     private final ShooterIO shooterIO;

@@ -2,23 +2,22 @@ package frc.robot.subsystems.conveyor;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.conveyor.ConveyorIO;
+import lombok.Getter;
 
 public class Conveyor extends SubsystemBase{
 
     public enum Substate {
         STOPPED,
-        IDLE,
-        REVVING,
+        PREPARING,
         READY
-    }
-    
-    public static enum SubState {
-        IDLE,
-        ROLLING
     }
 
     // declare IO & logs
     private final ConveyorIO conveyorIO;
+    private @Getter Substate currentSubstate = Substate.STOPPED;
+    private @Getter Substate desiredSubstate = Substate.STOPPED;
+
+
     private double conveyorSpeed;
 
     public Conveyor(ConveyorIO conveyorIO) 
@@ -28,7 +27,6 @@ public class Conveyor extends SubsystemBase{
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
         super.periodic();
     }
 
