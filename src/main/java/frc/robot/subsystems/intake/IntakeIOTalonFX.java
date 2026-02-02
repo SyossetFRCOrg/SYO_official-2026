@@ -26,9 +26,7 @@ public class IntakeIOTalonFX implements IntakeIO{
     private final TalonFX talon;
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
-    //TODO: MOVE TUNING CONSTANTS TO NEW CONSTANTS FILE
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", IntakeConstants.kP);
-    // private static final LoggedTunableNumber kI = new LoggedTunableNumber("Arm/Gains/kI", 0);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Intake/Gains/kD", IntakeConstants.kD);
     private static final LoggedTunableNumber kS = new LoggedTunableNumber("Intake/Gains/kS", IntakeConstants.kS);
     // kV is Voltage given per unit of velocity, in this case volts / rad / s

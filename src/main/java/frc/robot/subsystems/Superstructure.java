@@ -5,7 +5,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
+import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.shooter.Shooter;
+
 import java.util.function.BooleanSupplier;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,53 +23,66 @@ import org.littletonrobotics.junction.Logger;
 public class Superstructure extends SubsystemBase {
   private Drive drive;
   private RobotContainer container;
+  private Conveyor conveyor;
+  private Indexer indexer;
+  private Intake intake;
+  private Shooter shooter;
 
   public static enum SuperState {
     // MANUAL,
     STOPPED,
+    INTAKING,
     DRIVING,
     SHOOTING,
     SHOOTINGPREPARE,
 
   }
 
-  private static @Getter @Setter SuperState desiredState = SuperState.DRIVING;
-  private static @Getter @Setter SuperState currentState = SuperState.DRIVING;
-  private static SuperState previousState = SuperState.DRIVING;
+  private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
+  private static @Getter @Setter SuperState currentSuperState = SuperState.DRIVING;
+  private static SuperState previousSuperState = SuperState.DRIVING;
 
-
-
-  public Superstructure(Drive drive, RobotContainer container) {
+  public Superstructure(RobotContainer container, Conveyor conveyor, Drive drive, Indexer indexer, Intake intake,
+      Shooter shooter) {
     this.drive = drive;
     this.container = container;
+    this.conveyor = conveyor;
+    this.indexer = indexer;
+    this.intake = intake;
+    this.shooter = shooter;
   }
 
   @Override
   public void periodic() {
-    currentState = handleStateTransitions();    
+    currentSuperState = handleStateTransitions();
+    logRoboStateValues();
 
+    if (currentSuperState == SuperState.STOPPED)
+      handleStopped();
+  }
+
+  public void logRoboStateValues() {
     if (RobotState.getInstance().getTuningTempPose() != null) {
       Logger.recordOutput(
           "RobotState/tuningTempPose",
           new double[] {
-            RobotState.getInstance().getTuningTempPose().getX(),
-            RobotState.getInstance().getTuningTempPose().getY(),
-            RobotState.getInstance().getTuningTempPose().getRotation().getDegrees()
+              RobotState.getInstance().getTuningTempPose().getX(),
+              RobotState.getInstance().getTuningTempPose().getY(),
+              RobotState.getInstance().getTuningTempPose().getRotation().getDegrees()
           });
     } else {
-      Logger.recordOutput("RobotState/tuningTempPose", new double[] {0, 0, 0});
+      Logger.recordOutput("RobotState/tuningTempPose", new double[] { 0, 0, 0 });
     }
 
     Logger.recordOutput(
         "Drive/EstimatedPose",
         new double[] {
-          drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
+            drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
         });
 
-    Logger.recordOutput("Superstructure/CurrentSuperState", currentState.toString());
-    Logger.recordOutput("Superstructure/DesiredSuperState", desiredState.toString());
+    Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
+    Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
 
-    if (currentState == SuperState.STOPPED) handleStopped();
   }
 
   /**
@@ -73,27 +91,24 @@ public class Superstructure extends SubsystemBase {
    * @return The current super state
    */
   private SuperState handleStateTransitions() {
-    previousState = currentState;
-    var ready = ready(desiredState);
-    // currentState =
-    //     switch (desiredState) {
-    //       case L1 -> ready ? SuperState.L1 : SuperState.L1PREPARE;
-    //       case L2 -> ready ? SuperState.L2 : SuperState.L2PREPARE;
-    //       case L3 -> ready ? SuperState.L3 : SuperState.L3PREPARE;
-    //       case L4 -> ready ? SuperState.L4 : SuperState.L4PREPARE;
-    //       case INTAKE -> ready ? SuperState.INTAKE : SuperState.INTAKEPREPARE;
-    //       case INTAKELOW -> ready ? SuperState.INTAKELOW : SuperState.INTAKELOWPREPARE;
-    //       default -> desiredState;
-    //     };
+    previousSuperState = currentSuperState;
+    var ready = ready(desiredSuperState);
 
-    return currentState;
+    return currentSuperState;
+  }
+
+  private void applyStates() {
+    switch (currentSuperState) {
+      case STOPPED:
+        drive.stop();
+    }
   }
 
   private void handleStopped() {
     drive.stop();
   }
 
-  //TODO update with 2026 state checker
+  // TODO update with 2026 state checker
   /** Transition check */
   private boolean ready(SuperState state) {
     return switch (state) {
@@ -102,12 +117,12 @@ public class Superstructure extends SubsystemBase {
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
-    return () -> Superstructure.currentState == currentState;
+    return () -> Superstructure.currentSuperState == currentState;
   }
 
   /** State pushers */
   public void setWantedSuperState(SuperState desiredState) {
-    Superstructure.desiredState = desiredState;
+    Superstructure.desiredSuperState = desiredState;
   }
 
   public Command setWantedSuperStateCommand(SuperState desiredState) {
