@@ -106,49 +106,38 @@ public class Superstructure extends SubsystemBase {
     switch (currentSuperState) {
       case STOPPED:
         drive.stop();
-        conveyor.setDesiredSubstate(Conveyor.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case IDLE:
-        conveyor.setDesiredSubstate(Conveyor.Substate.READY);
-        indexer.setDesiredSubstate(Indexer.Substate.READY);
-        intake.setDesiredSubstate(Intake.Substate.READY);
-        shooter.setDesiredSubstate(Shooter.Substate.READY);
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case INTAKING:
-        conveyor.setDesiredSubstate(Conveyor.Substate.READY);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
-        intake.setDesiredSubstate(Intake.Substate.READY);
-        shooter.setDesiredSubstate(Shooter.Substate.READY);
+        intake.setDesiredSubstate(Intake.Substate.ACTIVE);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case SHOOTINGPREPARE:
         drive.stopWithX();
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
-        shooter.setDesiredSubstate(Shooter.Substate.READY);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case SHOOTING:
-        drive.stopWithX();
-        intake.setDesiredSubstate(Intake.Substate.STOPPED);
-        indexer.setDesiredSubstate(Indexer.Substate.READY);
-        shooter.setDesiredSubstate(Shooter.Substate.READY);
+        indexer.setDesiredSubstate(Indexer.Substate.ACTIVE);
         break;
     }
-  }
-
-  private void handleStopped() {
-    drive.stop();
   }
 
   // TODO update with 2026 state checker
   /** Transition check */
   private boolean ready(SuperState state) {
     return switch (state) {
-      case SHOOTING, SHOOTINGPREPARE -> shooter.getCurrentSubstate() == Shooter.Substate.READY &&
-                                        indexer.getCurrentSubstate() == Indexer.Substate.READY;
-      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.READY;
+      case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
+      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
       default -> false;
     };
   }
