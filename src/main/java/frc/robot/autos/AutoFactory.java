@@ -63,6 +63,7 @@ class AutoFactory {
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(follow(path));
+    //.addcommands(shoot)
     return c;
   }
 
@@ -104,6 +105,8 @@ class AutoFactory {
   private Command follow(PathPlannerPath path) {
     return AutoBuilder.followPath(path);
   }
+
+  
 
   private void preloadTrajectoryClass(PathPlannerPath firstSegment) {
     // This is done because Java loads classes lazily. Calling this here loads the
