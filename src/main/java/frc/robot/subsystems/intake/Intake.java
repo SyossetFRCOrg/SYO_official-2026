@@ -31,7 +31,7 @@ public class Intake extends SubsystemBase {
         switch (currentSubstate) {
             case STOPPED: intakeIO.setVelocity(0); 
             case READY: intakeIO.setVelocity(intakeSpeed);
-            case PREPARING: 
+            case PREPARING:
         }
     }
     

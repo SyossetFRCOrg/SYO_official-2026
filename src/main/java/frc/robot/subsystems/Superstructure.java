@@ -80,9 +80,6 @@ public class Superstructure extends SubsystemBase {
       Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
       Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
     }
-
-    
-
   }
 
   /**
