@@ -7,8 +7,7 @@ import lombok.Setter;
 public class Intake extends SubsystemBase {
     public enum Substate {
         STOPPED,
-        PREPARING,
-        READY
+        ACTIVE
     }
 
     // declare IO & logs

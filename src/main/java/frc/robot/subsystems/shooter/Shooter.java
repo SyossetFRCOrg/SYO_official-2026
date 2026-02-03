@@ -15,7 +15,7 @@ public class Shooter extends SubsystemBase {
     public enum Substate {
         STOPPED,
         PREPARING,
-        READY
+        ACTIVE
     }
 
     private static final HashMap<SuperState, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
