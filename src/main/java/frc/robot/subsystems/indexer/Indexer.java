@@ -36,7 +36,6 @@ public class Indexer extends SubsystemBase {
         switch (currentSubstate) {
             case ACTIVE: indexerIO.setVelocity(indexerSpeed);
             case STOPPED: indexerIO.setVelocity(0);
-            default: 
         }
     }
 }
