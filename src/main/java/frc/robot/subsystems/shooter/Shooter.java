@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
+import lombok.Setter;
 
-public class Shooter extends SubsystemBase{
+public class Shooter extends SubsystemBase {
 
     public enum Substate {
         STOPPED,
@@ -28,10 +29,9 @@ public class Shooter extends SubsystemBase{
         var map = new HashMap<SuperState, LoggedTunableNumber>();
         return map;
     }
-        
 
     private @Getter Substate currentSubstate = Substate.STOPPED;
-    private @Getter Substate desiredSubstate = Substate.STOPPED;
+    private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private double shooterSpeed;
     private final ShooterIO shooterIO;
@@ -42,16 +42,8 @@ public class Shooter extends SubsystemBase{
 
     @Override
     public void periodic() {
-    shooterIO.updateInputs(inputs);
-    Logger.processInputs("Shooter", inputs);
+        shooterIO.updateInputs(inputs);
+        Logger.processInputs("Shooter", inputs);
+    }
 
-    // shooterIO.setVelocity(shooterSpeed);
-
-    // if (inputs.currentAmps < 1.5) {
-    //   debounceTimer.reset();
-    // }
-    
-  }
-
-
-}   
+}

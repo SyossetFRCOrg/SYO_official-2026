@@ -6,6 +6,7 @@ package frc.robot.subsystems.indexer;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import lombok.Getter;
+import lombok.Setter;
 
 public class Indexer extends SubsystemBase {
   public enum Substate {
@@ -17,7 +18,7 @@ public class Indexer extends SubsystemBase {
  // declare IO & logs
     private final IndexerIO indexerIO;
     private @Getter Substate currentSubstate = Substate.STOPPED;
-    private @Getter Substate desiredSubstate = Substate.STOPPED;
+    private @Setter Substate desiredSubstate = Substate.STOPPED;
     
     private double indexerSpeed;
 
