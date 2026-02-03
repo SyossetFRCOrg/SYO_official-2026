@@ -27,5 +27,13 @@ public class Intake extends SubsystemBase {
         // TODO Auto-generated method stub
         super.periodic();
     }
+
+    public void applyStates() {
+        switch (currentSubstate) {
+            case STOPPED: intakeIO.setVelocity(0); 
+            case READY: intakeIO.setVelocity(intakeSpeed);
+            case PREPARING: 
+        }
+    }
     
 }

@@ -25,25 +25,31 @@ public interface ShooterIO {
     public default void updateInputs(ShooterIOInputs inputs){}
 
 
+    public default void setVelocity(double velocity){
+        setLeftVelocity(velocity);
+        setCenterVelocity(velocity);
+        setRightVelocity(velocity);
+    }
+
     /**
      * Sets the velocity of the left shooter motor
      * @param velocity rad/sec velocity to set the motor to
      *
      */
-    public default void setLeftVelocity(double velocity, String motor){}
+    private void setLeftVelocity(double velocity){}
 
     /**
      * Sets the velocity of the center shooter motor
      * @param velocity rad/sec velocity to set the motor to
      *
      */
-    public default void setCenterVelocity(double velocity, String motor){}
+    private void setCenterVelocity(double velocity){}
 
     /**
      * Sets the velocity of the right shooter motor
      * @param velocity rad/sec velocity to set the motor to
      *
      */
-    public default void setRightVelocity(double velocity, String motor){}
+    private void setRightVelocity(double velocity){}
 
 }

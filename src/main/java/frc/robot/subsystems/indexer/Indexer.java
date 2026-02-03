@@ -32,4 +32,13 @@ public class Indexer extends SubsystemBase {
         // TODO Auto-generated method stub
         super.periodic();
     }
+
+    public void applyStates() {
+        switch (currentSubstate) {
+            case PREPARING: 
+            case READY: indexerIO.setVelocity(indexerSpeed);
+            case STOPPED: indexerIO.setVelocity(0);
+            default: 
+        }
+    }
 }

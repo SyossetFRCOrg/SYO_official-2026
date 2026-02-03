@@ -8,7 +8,9 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.ctre.phoenix6.BaseStatusSignal;
@@ -32,7 +34,7 @@ public class ShooterIOTalonFX implements ShooterIO {
   private static TalonFXConfiguration leftTalonConfig = new TalonFXConfiguration();
   private static TalonFXConfiguration centerTalonConfig = new TalonFXConfiguration();
   private static TalonFXConfiguration rightTalonConfig = new TalonFXConfiguration();
-
+  
   private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
       ShooterConstants.left_kP);
   private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
@@ -106,6 +108,11 @@ public class ShooterIOTalonFX implements ShooterIO {
     leftTalon = new TalonFX(ShooterConstants.leftMotorID, ShooterConstants.canbus);
     centerTalon = new TalonFX(ShooterConstants.centerMotorID, ShooterConstants.canbus);
     rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canbus);
+     
+    //set right and left motors to followers
+    leftTalon.setControl(new Follower(centerTalon.getDeviceID(),MotorAlignmentValue.Aligned));
+    rightTalon.setControl(new Follower(centerTalon.getDeviceID(),MotorAlignmentValue.Aligned));
+
 
     leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
