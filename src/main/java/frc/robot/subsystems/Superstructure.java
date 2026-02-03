@@ -53,9 +53,8 @@ public class Superstructure extends SubsystemBase {
   public void periodic() {
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
+    applyStates();
 
-    if (currentSuperState == SuperState.STOPPED)
-      handleStopped();
   }
 
   public void logRoboStateValues() {
@@ -76,9 +75,13 @@ public class Superstructure extends SubsystemBase {
         new double[] {
             drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
         });
+    if(currentSuperState != desiredSuperState)
+    {
+      Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
+      Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
+    }
 
-    Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
-    Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
+    
 
   }
 
@@ -89,8 +92,13 @@ public class Superstructure extends SubsystemBase {
    */
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
-    var ready = ready(desiredSuperState);
-
+    boolean ready = ready(desiredSuperState);
+    currentSuperState = 
+      switch(desiredSuperState)
+      {
+        case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
+        default -> ready ? desiredSuperState : currentSuperState;
+      };
     return currentSuperState;
   }
 
@@ -115,7 +123,13 @@ public class Superstructure extends SubsystemBase {
         intake.setDesiredSubstate(Intake.Substate.READY);
         shooter.setDesiredSubstate(Shooter.Substate.READY);
         break;
-      case SHOOTING, SHOOTINGPREPARE:
+      case SHOOTINGPREPARE:
+        drive.stopWithX();
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.READY);
+        break;
+      case SHOOTING:
         drive.stopWithX();
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.READY);
@@ -132,7 +146,9 @@ public class Superstructure extends SubsystemBase {
   /** Transition check */
   private boolean ready(SuperState state) {
     return switch (state) {
-      case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.READY;
+      case SHOOTING, SHOOTINGPREPARE -> shooter.getCurrentSubstate() == Shooter.Substate.READY &&
+                                        indexer.getCurrentSubstate() == Indexer.Substate.READY;
+      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.READY;
       default -> false;
     };
   }
