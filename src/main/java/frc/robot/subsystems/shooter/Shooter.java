@@ -49,8 +49,8 @@ public class Shooter extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED: shooterIO.setVelocity(0);
-            case READY: shooterIO.setVelocity(shooterSpeed);
-            case PREPARING: 
+            case ACTIVE: shooterIO.setVelocity(shooterSpeed);
+            case PREPARING:
         }
     }
 
