@@ -55,8 +55,6 @@ public class RobotContainer {
 
     private final UsbCamera climbCam;
 
-<<<<<<< HEAD
-=======
     // private final HttpCamera climberCamera;
 
     // private final AutoSelector autoSelector = new AutoSelector("Auto");
@@ -64,7 +62,6 @@ public class RobotContainer {
     // Dashboard inputs
     // private final LoggedDashboardChooser<Command> autoChooser;
 
->>>>>>> vision
     /**
      * The container for the robot. Contains subsystems, IO devices, and commands.
      */

@@ -135,6 +135,8 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
+      case STOPPED -> true;
+      case IDLE -> true;
       default -> false;
     };
   }
