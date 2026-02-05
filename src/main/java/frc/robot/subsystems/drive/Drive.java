@@ -13,6 +13,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -46,8 +47,11 @@ import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class Drive extends SubsystemBase {
@@ -440,4 +444,81 @@ public class Drive extends SubsystemBase {
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
+    public Command alignDrive(
+        CommandXboxController controller,
+        Supplier<Pose2d> targetPoseSupplier
+    ) {
+      return run(() -> {
+        // Driver input
+        double vx =
+            -controller.getLeftY()
+                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+        double vy =
+            -controller.getLeftX()
+                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+
+        Pose2d robotPose = getPose();
+        Pose2d targetPose = targetPoseSupplier.get();
+
+        //find desired angle
+        double shooterOffset =
+            -Constants.shooterSideOffset.in(Units.Meters); //ADD THIS LATER
+
+        double distance =
+            robotPose.getTranslation().getDistance(targetPose.getTranslation());
+
+        // Safety guard (prevents NaN when very close)
+        if (distance < 0.01) {
+          runVelocity(new ChassisSpeeds());
+          return;
+        }
+
+        double shooterAngleRad = Math.acos(shooterOffset / distance);
+        Rotation2d shooterAngle = Rotation2d.fromRadians(shooterAngleRad);
+
+        Rotation2d offsetAngle =
+            Rotation2d.kCCW_90deg.minus(shooterAngle);
+
+        Rotation2d desiredAngle =
+            offsetAngle
+                .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle())
+                .plus(Rotation2d.k180deg);
+
+        Rotation2d currentAngle = robotPose.getRotation();
+
+        // Angle
+        double omega =
+            Constants.rotationController.calculate( // Add this from Purdue later
+                currentAngle.getRadians(),
+                desiredAngle.getRadians());
+
+        omega *= Constants.maxAngularRate; //add later
+
+        // Deadband and stopping condition
+        double angleErrorDeg =
+            MathUtil.inputModulus(
+                currentAngle.minus(desiredAngle).getDegrees(),
+                -180.0,
+                180.0);
+
+        if (Math.abs(angleErrorDeg)
+                < Constants.epsilonAngleToGoal.in(Units.Degrees) //Find in Purdue
+            && Math.hypot(vx, vy) < ControlBoardConstants.stickDeadband) { //Find in Purdue
+
+          runVelocity(new ChassisSpeeds());
+          return;
+        }
+
+        // Field centric
+        ChassisSpeeds speeds =
+            ChassisSpeeds.fromFieldRelativeSpeeds(
+                vx,
+                vy,
+                omega,
+                currentAngle);
+
+        runVelocity(speeds);
+      }).withName("AlignDrive");
+    }
+
 }
