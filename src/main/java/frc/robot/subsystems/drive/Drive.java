@@ -447,81 +447,77 @@ public class Drive extends SubsystemBase {
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
-    public Command alignDrive(
-        CommandXboxController controller,
-        Supplier<Pose2d> targetPoseSupplier
-    ) {
-      return run(() -> {
-        // Driver input
-        double vx =
-            -controller.getLeftY()
-                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
-        double vy =
-            -controller.getLeftX()
-                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
 
-        Pose2d robotPose = getPose();
-        Pose2d targetPose = targetPoseSupplier.get();
+  public Command alignDrive(CommandXboxController controller, Supplier<Pose2d> targetPoseSupplier) {
+    return run(() -> {
+      // Driver input
+      double vx =
+          -controller.getLeftY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+      double vy =
+          -controller.getLeftX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
 
-        //find desired angle
-        double shooterOffset =
-            -DriveConstants.shooterSideOffset.in(Units.Meters); //ADD THIS LATER
+      Pose2d robotPose = getPose();
+      Pose2d targetPose = targetPoseSupplier.get();
 
-        double distance =
-            robotPose.getTranslation().getDistance(targetPose.getTranslation());
+      // Offset of shooter from pigeon
+      double shooterOffset = -DriveConstants.shooterSideOffset.in(Units.Meters); //ADD THIS LATER
 
-        // Safety guard (prevents NaN when very close)
-        if (distance < 0.01) {
-          runVelocity(new ChassisSpeeds());
-          return;
-        }
+      // Linear distance from pigeon to target
+      double distance = robotPose.getTranslation().getDistance(targetPose.getTranslation());
 
-        double shooterAngleRad = Math.acos(shooterOffset / distance);
-        Rotation2d shooterAngle = Rotation2d.fromRadians(shooterAngleRad);
+      // Prevents auto-align at small distances
+      if (distance < 0.1) {
+        runVelocity(new ChassisSpeeds());
+        return;
+      }
 
-        Rotation2d offsetAngle =
-            Rotation2d.kCCW_90deg.minus(shooterAngle);
+      // Finds the internal shooter-pigeon-target angle
+      double shooterAngleRad = Math.acos(shooterOffset / distance);
+      Rotation2d shooterAngle = Rotation2d.fromRadians(shooterAngleRad);
 
-        Rotation2d desiredAngle =
-            offsetAngle
-                .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle())
-                .plus(Rotation2d.k180deg);
+      Rotation2d offsetAngle =
+          Rotation2d.kCCW_90deg.minus(shooterAngle);
+      
+      // Finds desired angle robot should be at to align with target. BLACKBOX MATH
+      Rotation2d desiredAngle =
+          offsetAngle
+              .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle())
+              .plus(Rotation2d.k180deg);
 
-        Rotation2d currentAngle = robotPose.getRotation();
+      Rotation2d currentAngle = robotPose.getRotation();
 
-        // Angle
-        double omega =
-            DriveConstants.rotationController.calculate( // Add this from Purdue later
-                currentAngle.getRadians(),
-                desiredAngle.getRadians());
+      // PID Calculated desired voltage
+      double omega =
+          DriveConstants.rotationController.calculate( // Add this from Purdue later
+              currentAngle.getRadians(),
+              desiredAngle.getRadians());
 
-        omega *= DriveConstants.maxAngularRate; //add later
+      omega *= DriveConstants.maxAngularVelocity;
 
-        // Deadband and stopping condition
-        double angleErrorDeg =
-            MathUtil.inputModulus(
-                currentAngle.minus(desiredAngle).getDegrees(),
-                -180.0,
-                180.0);
+      // Deadband and stopping condition
+      double angleErrorDeg =
+          MathUtil.inputModulus(
+              currentAngle.minus(desiredAngle).getDegrees(),
+              -180.0,
+              180.0);
 
-        final double stickDeadband = 0.1;        
-        if (Math.abs(angleErrorDeg)
-                < DriveConstants.epsilonAngleToGoal.in(Units.Degrees) //Find in Purdue
-            && Math.hypot(vx, vy) < stickDeadband) { //Find in Purdue
+      final double stickDeadband = 0.1;      
 
-          runVelocity(new ChassisSpeeds());
-          return;
-        }
+      // Reject auto align if already directed to goal. If moving joystick, auto aim while moving. Else plant yourself.
+      if (Math.abs(angleErrorDeg) < DriveConstants.epsilonAngleToGoal.in(Units.Degrees)
+          && Math.hypot(vx, vy) < stickDeadband) {
+        stopWithX();
+        return;
+      }
+      // Field centric
+      ChassisSpeeds speeds =
+          ChassisSpeeds.fromFieldRelativeSpeeds(
+              vx,
+              vy,
+              omega,
+              currentAngle);
 
-        // Field centric
-        ChassisSpeeds speeds =
-            ChassisSpeeds.fromFieldRelativeSpeeds(
-                vx,
-                vy,
-                omega,
-                currentAngle);
-
-        runVelocity(speeds);
+      runVelocity(speeds);
       }).withName("AlignDrive");
     }
 
