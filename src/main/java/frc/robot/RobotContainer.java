@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
+import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.conveyor.ConveyorIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
@@ -55,8 +57,6 @@ public class RobotContainer {
 
     private final UsbCamera climbCam;
 
-<<<<<<< HEAD
-=======
     // private final HttpCamera climberCamera;
 
     // private final AutoSelector autoSelector = new AutoSelector("Auto");
@@ -64,7 +64,6 @@ public class RobotContainer {
     // Dashboard inputs
     // private final LoggedDashboardChooser<Command> autoChooser;
 
->>>>>>> vision
     /**
      * The container for the robot. Contains subsystems, IO devices, and commands.
      */
@@ -130,7 +129,24 @@ public class RobotContainer {
             () -> -controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
 
+    Trigger intakingWhenAPressed = new Trigger(() -> controller.getAButton());
     
+    intakingWhenAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
+
+
+    //TODO this is a placeholder button value
+    Trigger AutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
+
+    AutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+
+    //TODO add auto align drive implementation
+
+    //TODO this is a placeholder button value
+    Trigger NoAutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && !RobotState.getInstance().isAutoAiming());
+
+    NoAutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+
+
   }
 
     public Drive getDrive() {

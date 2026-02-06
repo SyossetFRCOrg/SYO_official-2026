@@ -33,13 +33,15 @@ public class RobotState {
   @Setter
   private volatile boolean addingVision = true;
 
+  @AutoLogOutput(key = "RobotState/isAutoAiming")
+  @Getter
+  @Setter
+  private volatile boolean isAutoAiming = true;
+
   @AutoLogOutput(key = "RobotState/tuningTempPose")
   @Getter
   @Setter
   private volatile Pose2d tuningTempPose = null;
-
-  // in order, blue A-L and then red A-L
-  public static final int[] tagList = { 18, 17, 22, 21, 20, 19, 7, 8, 9, 10, 11, 6 };
 
   // for practice fields like Arumdaun
 

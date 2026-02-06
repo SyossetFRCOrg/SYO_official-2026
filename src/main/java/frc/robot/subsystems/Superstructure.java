@@ -135,6 +135,8 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
+      case STOPPED -> true;
+      case IDLE -> true;
       default -> false;
     };
   }
@@ -143,15 +145,10 @@ public class Superstructure extends SubsystemBase {
     return () -> Superstructure.currentSuperState == currentState;
   }
 
-  /** State pushers */
-  public void setWantedSuperState(SuperState desiredState) {
-    Superstructure.desiredSuperState = desiredState;
-  }
-
-  public Command setWantedSuperStateCommand(SuperState desiredState) {
+  public Command setDesiredSuperStateCommand(SuperState desiredState) {
     return new InstantCommand(
         () -> {
-          setWantedSuperState(desiredState);
+          setDesiredSuperState(desiredState);
         });
   }
 }
