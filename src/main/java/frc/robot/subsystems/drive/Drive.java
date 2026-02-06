@@ -1,6 +1,16 @@
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Radian;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.Units;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -13,6 +23,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -27,7 +38,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,6 +45,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
@@ -44,10 +55,6 @@ import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.Logger;
 
 
 public class Drive extends SubsystemBase {
@@ -129,7 +136,7 @@ public class Drive extends SubsystemBase {
           rawGyroRotation,
           lastModulePositions,
           new Pose2d(),
-          VecBuilder.fill(0.1, 0.1, Units.degreesToRadians(3)),
+          VecBuilder.fill(0.1, 0.1, Units.Degrees.of(3).in(Radian)),
           VecBuilder.fill(0.9, 0.9, 0.9));
 
   public Drive(
@@ -440,4 +447,82 @@ public class Drive extends SubsystemBase {
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
+    public Command alignDrive(
+        CommandXboxController controller,
+        Supplier<Pose2d> targetPoseSupplier
+    ) {
+      return run(() -> {
+        // Driver input
+        double vx =
+            -controller.getLeftY()
+                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+        double vy =
+            -controller.getLeftX()
+                * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+
+        Pose2d robotPose = getPose();
+        Pose2d targetPose = targetPoseSupplier.get();
+
+        //find desired angle
+        double shooterOffset =
+            -DriveConstants.shooterSideOffset.in(Units.Meters);
+
+        double distance =
+            robotPose.getTranslation().getDistance(targetPose.getTranslation());
+
+        // Safety guard (prevents NaN when very close)
+        if (distance < 0.01) {
+          runVelocity(new ChassisSpeeds());
+          return;
+        }
+
+        double shooterAngleRad = Math.acos(shooterOffset / distance);
+        Rotation2d shooterAngle = Rotation2d.fromRadians(shooterAngleRad);
+
+        Rotation2d offsetAngle =
+            Rotation2d.kCCW_90deg.minus(shooterAngle);
+
+        Rotation2d desiredAngle =
+            offsetAngle
+                .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle())
+                .plus(Rotation2d.k180deg);
+
+        Rotation2d currentAngle = robotPose.getRotation();
+
+        // Angle
+        double omega =
+            DriveConstants.rotationController.calculate( 
+                currentAngle.getRadians(),
+                desiredAngle.getRadians());
+
+        omega *= DriveConstants.maxAngularRate; 
+
+        // Deadband and stopping condition
+        double angleErrorDeg =
+            MathUtil.inputModulus(
+                currentAngle.minus(desiredAngle).getDegrees(),
+                -180.0,
+                180.0);
+
+        final double stickDeadband = 0.1;        
+        if (Math.abs(angleErrorDeg)
+                < DriveConstants.epsilonAngleToGoal.in(Units.Degrees) 
+            && Math.hypot(vx, vy) < stickDeadband) { 
+
+          runVelocity(new ChassisSpeeds());
+          return;
+        }
+
+        // Field centric
+        ChassisSpeeds speeds =
+            ChassisSpeeds.fromFieldRelativeSpeeds(
+                vx,
+                vy,
+                omega,
+                currentAngle);
+
+        runVelocity(speeds);
+      }).withName("AlignDrive");
+    }
+
 }
