@@ -1,6 +1,16 @@
 package frc.robot.subsystems.drive;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Radian;
+import static edu.wpi.first.units.Units.Volts;
+import edu.wpi.first.units.Units;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Supplier;
+
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
 
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -28,7 +38,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,6 +45,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
@@ -45,13 +55,6 @@ import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Supplier;
-
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.Logger;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 
 public class Drive extends SubsystemBase {
@@ -133,7 +136,7 @@ public class Drive extends SubsystemBase {
           rawGyroRotation,
           lastModulePositions,
           new Pose2d(),
-          VecBuilder.fill(0.1, 0.1, Units.degreesToRadians(3)),
+          VecBuilder.fill(0.1, 0.1, Units.Degrees.of(3).in(Radian)),
           VecBuilder.fill(0.9, 0.9, 0.9));
 
   public Drive(
@@ -462,7 +465,7 @@ public class Drive extends SubsystemBase {
 
         //find desired angle
         double shooterOffset =
-            -Constants.shooterSideOffset.in(Units.Meters); //ADD THIS LATER
+            -DriveConstants.shooterSideOffset.in(Units.Meters); //ADD THIS LATER
 
         double distance =
             robotPose.getTranslation().getDistance(targetPose.getTranslation());
@@ -488,11 +491,11 @@ public class Drive extends SubsystemBase {
 
         // Angle
         double omega =
-            Constants.rotationController.calculate( // Add this from Purdue later
+            DriveConstants.rotationController.calculate( // Add this from Purdue later
                 currentAngle.getRadians(),
                 desiredAngle.getRadians());
 
-        omega *= Constants.maxAngularRate; //add later
+        omega *= DriveConstants.maxAngularRate; //add later
 
         // Deadband and stopping condition
         double angleErrorDeg =
@@ -501,9 +504,10 @@ public class Drive extends SubsystemBase {
                 -180.0,
                 180.0);
 
+        final double stickDeadband = 0.1;        
         if (Math.abs(angleErrorDeg)
-                < Constants.epsilonAngleToGoal.in(Units.Degrees) //Find in Purdue
-            && Math.hypot(vx, vy) < ControlBoardConstants.stickDeadband) { //Find in Purdue
+                < DriveConstants.epsilonAngleToGoal.in(Units.Degrees) //Find in Purdue
+            && Math.hypot(vx, vy) < stickDeadband) { //Find in Purdue
 
           runVelocity(new ChassisSpeeds());
           return;
