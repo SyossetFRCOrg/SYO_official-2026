@@ -2,19 +2,11 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.*;
 import frc.robot.generated.TunerConstants;
-// import edu.wpi.first.math.kinematics.SwerveDriveWheelPositions;
 import frc.robot.util.GeomUtil;
 import frc.robot.util.swerve.ModuleLimits;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.ExtensionMethod;
-// import org.littletonrobotics.frc2024.subsystems.drive.DriveConstants;
-// import org.littletonrobotics.frc2024.subsystems.superstructure.arm.ArmConstants;
-// import org.littletonrobotics.frc2024.util.AllianceFlipUtil;
-// import org.littletonrobotics.frc2024.util.GeomUtil;
-// import org.littletonrobotics.frc2024.util.LoggedTunableNumber;
-// import org.littletonrobotics.frc2024.util.NoteVisualizer;
-// import org.littletonrobotics.frc2024.util.swerve.ModuleLimits;
 import org.littletonrobotics.junction.AutoLogOutput;
 
 @ExtensionMethod({ GeomUtil.class })
