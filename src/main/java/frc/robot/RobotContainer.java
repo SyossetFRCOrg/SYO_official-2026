@@ -140,7 +140,7 @@ public class RobotContainer {
 
 
     //TODO this is a placeholder button value
-    Trigger ShootOnRightTrigger = new Trigger(() -> controller.getRawButton(0) && !RobotState.getInstance().isAutoAiming());
+    Trigger ShootOnRightTrigger = new Trigger(() -> controller.getBButton());
 
     ShootOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
 
