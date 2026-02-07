@@ -94,6 +94,7 @@ public class Superstructure extends SubsystemBase {
         case INTAKING -> SuperState.INTAKING;
         default -> ready ? desiredSuperState : currentSuperState;
       };
+    System.out.println(currentSuperState);
     return currentSuperState;
   }
 
@@ -132,7 +133,7 @@ public class Superstructure extends SubsystemBase {
   private boolean ready(SuperState state) {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
-      case INTAKING -> true;
+      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
       case STOPPED -> true;
       case IDLE -> true;
       default -> false;

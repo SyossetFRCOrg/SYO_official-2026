@@ -20,7 +20,7 @@ public class Indexer extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
-    private double indexerSpeed;
+    private double indexerSpeed = 5;
 
     public Indexer(IndexerIO indexerIO) 
     {

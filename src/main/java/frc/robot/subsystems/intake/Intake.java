@@ -14,7 +14,7 @@ public class Intake extends SubsystemBase {
     private final IntakeIO intakeIO;
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
-    private double intakeSpeed;
+    private double intakeSpeed = 5;
 
     public Intake(IntakeIO intakeIO) 
     {
