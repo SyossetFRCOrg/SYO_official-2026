@@ -132,10 +132,10 @@ public class RobotContainer {
 
 
     //TODO this is a placeholder button value
-    Trigger AlignShooterOnRightTrigger = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
+    Trigger AlignShooterOnRightBumper = new Trigger(() -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
     
     //Toggles Shooter alignment based on change in bumper press
-    AlignShooterOnRightTrigger.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(!RobotState.getInstance().isAutoAiming())));
+    AlignShooterOnRightBumper.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(!RobotState.getInstance().isAutoAiming())));
     //TODO add a .whileTrue for when Aligning is implemented 
 
 
