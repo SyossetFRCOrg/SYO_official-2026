@@ -91,6 +91,7 @@ public class Superstructure extends SubsystemBase {
       switch(desiredSuperState)
       {
         case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
+        case INTAKING -> SuperState.INTAKING;
         default -> ready ? desiredSuperState : currentSuperState;
       };
     return currentSuperState;
@@ -131,7 +132,7 @@ public class Superstructure extends SubsystemBase {
   private boolean ready(SuperState state) {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
-      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
+      case INTAKING -> true;
       case STOPPED -> true;
       case IDLE -> true;
       default -> false;
