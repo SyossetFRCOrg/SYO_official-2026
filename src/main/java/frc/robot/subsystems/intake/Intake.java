@@ -25,6 +25,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         // TODO Auto-generated method stub
         super.periodic();
+        System.out.println("Intake State" + currentSubstate);
         applyStates();
     }
 

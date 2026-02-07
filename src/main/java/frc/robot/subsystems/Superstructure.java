@@ -94,7 +94,7 @@ public class Superstructure extends SubsystemBase {
         case INTAKING -> SuperState.INTAKING;
         default -> ready ? desiredSuperState : currentSuperState;
       };
-    System.out.println(currentSuperState);
+    System.out.println("Super State" + currentSuperState);
     return currentSuperState;
   }
 
