@@ -3,7 +3,7 @@ package frc.robot.subsystems.indexer;
 import com.ctre.phoenix6.CANBus;
 
 public class IndexerConstants {
-    public static final int motorID = 1;
+    public static final int motorID = 18;
 
     //TODO Tune
     public static final double kP = 100;

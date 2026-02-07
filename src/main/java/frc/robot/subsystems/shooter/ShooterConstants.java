@@ -5,9 +5,9 @@ import com.ctre.phoenix6.CANBus;
 //TODO adjust these values
 public class ShooterConstants {
 
-    public static final int leftMotorID = 1;
-    public static final int centerMotorID = 2;
-    public static final int rightMotorID = 3;
+    public static final int leftMotorID = 15;
+    public static final int centerMotorID = 16;
+    public static final int rightMotorID = 17;
 
     public static final double left_kP = 100;
     public static final double left_kD = 0;
