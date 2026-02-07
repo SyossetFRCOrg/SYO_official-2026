@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
-import frc.robot.subsystems.conveyor.Conveyor;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.intake.Intake;
@@ -20,7 +19,6 @@ import org.littletonrobotics.junction.Logger;
 public class Superstructure extends SubsystemBase {
   private Drive drive;
   private RobotContainer container;
-  private Conveyor conveyor;
   private Indexer indexer;
   private Intake intake;
   private Shooter shooter;
@@ -39,11 +37,10 @@ public class Superstructure extends SubsystemBase {
   private static @Getter @Setter SuperState currentSuperState = SuperState.IDLE;
   private static SuperState previousSuperState = SuperState.IDLE;
 
-  public Superstructure(RobotContainer container, Conveyor conveyor, Drive drive, Indexer indexer, Intake intake,
+  public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
       Shooter shooter) {
     this.drive = drive;
     this.container = container;
-    this.conveyor = conveyor;
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;

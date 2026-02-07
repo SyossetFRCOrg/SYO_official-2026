@@ -16,8 +16,6 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
-import frc.robot.subsystems.conveyor.Conveyor;
-import frc.robot.subsystems.conveyor.ConveyorIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -43,7 +41,6 @@ public class RobotContainer {
     // Subsystems
     private final Vision vision;
     private final Drive drive;
-    private final Conveyor conveyor;
     private final Indexer indexer;
     private final Intake intake;
     private final Shooter shooter;
@@ -76,7 +73,6 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
 
-        conveyor = new Conveyor(new ConveyorIOTalonFX());
         indexer = new Indexer(new IndexerIOTalonFX());
         intake = new Intake(new IntakeIOTalonFX());
         shooter = new Shooter(new ShooterIOTalonFX());
@@ -91,7 +87,7 @@ public class RobotContainer {
                 new VisionIOLimelight(camera2Name, drive::getRotation));
 
 
-        superstructure = new Superstructure(this,conveyor,drive,indexer,intake,shooter);
+        superstructure = new Superstructure(this,drive,indexer,intake,shooter);
 
         // configureAutos();
 
