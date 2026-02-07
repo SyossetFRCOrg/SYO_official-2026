@@ -129,22 +129,23 @@ public class RobotContainer {
             () -> -controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
 
-    Trigger intakingWhenAPressed = new Trigger(() -> controller.getAButton());
+
     
-    intakingWhenAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
+    Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
+    
+    IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
 
 
     //TODO this is a placeholder button value
-    Trigger AutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
+    Trigger AlignShooterOnRightTrigger = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
 
-    AutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+    //TODO add a .whileTrue for when Aligning is implemented 
 
-    //TODO add auto align drive implementation
 
     //TODO this is a placeholder button value
-    Trigger NoAutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && !RobotState.getInstance().isAutoAiming());
+    Trigger ShootOnRightTrigger = new Trigger(() -> controller.getRawButton(0) && !RobotState.getInstance().isAutoAiming());
 
-    NoAutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+    ShootOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
 
 
   }
