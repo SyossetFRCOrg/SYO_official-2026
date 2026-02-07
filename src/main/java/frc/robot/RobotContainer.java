@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
@@ -48,11 +49,11 @@ public class RobotContainer {
     private final Superstructure superstructure;
 
 
-    // Controller
+    // Controllers
     private final XboxController controller = new XboxController(0);
     private final XboxController buttonboard = new XboxController(1);
 
-    private final UsbCamera climbCam;
+    // private final UsbCamera climbCam;
 
     // private final HttpCamera climberCamera;
 
@@ -89,20 +90,18 @@ public class RobotContainer {
 
         superstructure = new Superstructure(this,drive,indexer,intake,shooter);
 
-        // configureAutos();
-
         // Configure the button bindings
         configureButtonBindings();
 
-        climbCam = CameraServer.startAutomaticCapture();
-        climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-        climbCam.setResolution(80, 60);
+        // climbCam = CameraServer.startAutomaticCapture();
+        // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+        // climbCam.setResolution(80, 60);
         
-        Shuffleboard.getTab("Match")
-                .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
-                .withWidget(BuiltInWidgets.kCameraStream)
-                .withSize(4, 3)
-                .withPosition(4, 3);
+        // Shuffleboard.getTab("Match")
+        //         .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
+        //         .withWidget(BuiltInWidgets.kCameraStream)
+        //         .withSize(4, 3)
+        //         .withPosition(4, 3);
     }
 
   /**
@@ -134,7 +133,9 @@ public class RobotContainer {
 
     //TODO this is a placeholder button value
     Trigger AlignShooterOnRightTrigger = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
-
+    
+    //Toggles Shooter alignment based on change in bumper press
+    AlignShooterOnRightTrigger.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(!RobotState.getInstance().isAutoAiming())));
     //TODO add a .whileTrue for when Aligning is implemented 
 
 

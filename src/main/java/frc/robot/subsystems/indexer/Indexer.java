@@ -11,7 +11,8 @@ import lombok.Setter;
 public class Indexer extends SubsystemBase {
   public enum Substate {
         STOPPED,
-        ACTIVE
+        INDEXING,
+        REVERSING
     }
 
  // declare IO & logs
@@ -34,8 +35,10 @@ public class Indexer extends SubsystemBase {
 
     public void applyStates() {
         switch (currentSubstate) {
-            case ACTIVE: indexerIO.setVelocity(indexerSpeed);
             case STOPPED: indexerIO.setVelocity(0);
+            case INDEXING: indexerIO.setVelocity(indexerSpeed);
+            case REVERSING: indexerIO.setVelocity(-indexerSpeed);
+
         }
     }
 }
