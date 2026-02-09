@@ -125,7 +125,7 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
 
-    
+    //TODO fix error where triggers are not being registered. Something is wrong with the way I set up these triggers because the code does not do anything with them
     Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
     
     IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));

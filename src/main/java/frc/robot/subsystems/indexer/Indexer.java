@@ -34,6 +34,8 @@ public class Indexer extends SubsystemBase {
         applyStates();
     }
 
+    //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
+
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED: indexerIO.setVelocity(0);
