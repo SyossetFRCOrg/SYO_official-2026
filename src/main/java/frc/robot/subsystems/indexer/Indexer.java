@@ -32,7 +32,11 @@ public class Indexer extends SubsystemBase {
         // TODO Auto-generated method stub
         super.periodic();
         applyStates();
+        handleIndexerTransitions();
     }
+    private Substate handleIndexerTransitions() {
+        return desiredSubstate;
+  }
 
     //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
 

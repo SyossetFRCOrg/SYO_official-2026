@@ -39,10 +39,14 @@ public class Shooter extends SubsystemBase {
     public Shooter(ShooterIO shooterIO) {
         this.shooterIO = shooterIO;
     }
+    private Substate handleShooterTransitions() {
+        return desiredSubstate;
+  }
 
     @Override
     public void periodic() {
         shooterIO.updateInputs(inputs);
+        handleShooterTransitions();
         Logger.processInputs("Shooter", inputs);
         applyStates();
     }
