@@ -113,7 +113,6 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // kinda stupid but it works
-
     double tempSpeed = 0.35;
 
     // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
@@ -129,7 +128,8 @@ public class RobotContainer {
     Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
     
     IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
-
+    IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
+    IntakeOnAPressed.onTrue(new InstantCommand(() -> System.out.println("A Button Pressed"))); //debug triggers
 
     //TODO this is a placeholder button value
     Trigger AlignShooterOnRightBumper = new Trigger(() -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
