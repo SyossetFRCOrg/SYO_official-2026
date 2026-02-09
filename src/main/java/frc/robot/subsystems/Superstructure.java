@@ -35,6 +35,7 @@ public class Superstructure extends SubsystemBase {
 
   private static @Getter @Setter SuperState desiredSuperState = SuperState.IDLE;
   private static @Getter @Setter SuperState currentSuperState = SuperState.IDLE;
+  
   private static SuperState previousSuperState = SuperState.IDLE;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
@@ -51,6 +52,7 @@ public class Superstructure extends SubsystemBase {
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
     applyStates();
+
   }
 
   public void logRoboStateValues() {
@@ -86,20 +88,16 @@ public class Superstructure extends SubsystemBase {
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
-    currentSuperState = 
+    System.out.println("Super State" + currentSuperState);
+    return
       switch(desiredSuperState)
       {
         case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
         case INTAKING -> SuperState.INTAKING;
         default -> ready ? desiredSuperState : currentSuperState;
       };
-    System.out.println("SuperState" + currentSuperState);
-    return currentSuperState;
   }
 
-  /**
-   * Sets each subsystem to desired substate based on current SuperState
-   */
   private void applyStates() {
     switch (currentSuperState) {
       case STOPPED:
@@ -114,9 +112,9 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case INTAKING:
-        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         intake.setDesiredSubstate(Intake.Substate.ACTIVE);
-        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case SHOOTINGPREPARE:
         drive.stopWithX();
@@ -136,7 +134,8 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, IDLE -> true;
+      case STOPPED -> true;
+      case IDLE -> true;
       default -> false;
     };
   }
