@@ -11,7 +11,8 @@ import lombok.Setter;
 public class Indexer extends SubsystemBase {
   public enum Substate {
         STOPPED,
-        ACTIVE
+        INDEXING,
+        REVERSING
     }
 
  // declare IO & logs
@@ -19,7 +20,7 @@ public class Indexer extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
-    private double indexerSpeed;
+    private double indexerSpeed = 5;
 
     public Indexer(IndexerIO indexerIO) 
     {
@@ -30,12 +31,17 @@ public class Indexer extends SubsystemBase {
     public void periodic() {
         // TODO Auto-generated method stub
         super.periodic();
+        applyStates();
     }
+
+    //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
 
     public void applyStates() {
         switch (currentSubstate) {
-            case ACTIVE: indexerIO.setVelocity(indexerSpeed);
             case STOPPED: indexerIO.setVelocity(0);
+            case INDEXING: indexerIO.setVelocity(indexerSpeed);
+            case REVERSING: indexerIO.setVelocity(-indexerSpeed);
+
         }
     }
 }

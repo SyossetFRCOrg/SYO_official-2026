@@ -136,7 +136,6 @@ public class IntakeIOTalonFX implements IntakeIO{
     /** Run intake with velocity */
     public void setVelocity(double velocityRadPerSec) {
         talon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
-        // talon.setControl(torquerequest.withVelocity(velocityRadPerSec));
     }
 
 }

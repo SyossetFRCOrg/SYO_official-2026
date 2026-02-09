@@ -11,16 +11,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
-import frc.robot.subsystems.conveyor.Conveyor;
-import frc.robot.subsystems.conveyor.ConveyorIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
@@ -43,7 +42,6 @@ public class RobotContainer {
     // Subsystems
     private final Vision vision;
     private final Drive drive;
-    private final Conveyor conveyor;
     private final Indexer indexer;
     private final Intake intake;
     private final Shooter shooter;
@@ -51,11 +49,11 @@ public class RobotContainer {
     private final Superstructure superstructure;
 
 
-    // Controller
+    // Controllers
     private final XboxController controller = new XboxController(0);
     private final XboxController buttonboard = new XboxController(1);
 
-    private final UsbCamera climbCam;
+    // private final UsbCamera climbCam;
 
     // private final HttpCamera climberCamera;
 
@@ -76,7 +74,6 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
 
-        conveyor = new Conveyor(new ConveyorIOTalonFX());
         indexer = new Indexer(new IndexerIOTalonFX());
         intake = new Intake(new IntakeIOTalonFX());
         shooter = new Shooter(new ShooterIOTalonFX());
@@ -91,22 +88,20 @@ public class RobotContainer {
                 new VisionIOLimelight(camera2Name, drive::getRotation));
 
 
-        superstructure = new Superstructure(this,conveyor,drive,indexer,intake,shooter);
-
-        // configureAutos();
+        superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
         // Configure the button bindings
         configureButtonBindings();
 
-        climbCam = CameraServer.startAutomaticCapture();
-        climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-        climbCam.setResolution(80, 60);
+        // climbCam = CameraServer.startAutomaticCapture();
+        // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+        // climbCam.setResolution(80, 60);
         
-        Shuffleboard.getTab("Match")
-                .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
-                .withWidget(BuiltInWidgets.kCameraStream)
-                .withSize(4, 3)
-                .withPosition(4, 3);
+        // Shuffleboard.getTab("Match")
+        //         .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
+        //         .withWidget(BuiltInWidgets.kCameraStream)
+        //         .withSize(4, 3)
+        //         .withPosition(4, 3);
     }
 
   /**
@@ -129,22 +124,25 @@ public class RobotContainer {
             () -> -controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
 
-    Trigger intakingWhenAPressed = new Trigger(() -> controller.getAButton());
+
+    //TODO fix error where triggers are not being registered. Something is wrong with the way I set up these triggers because the code does not do anything with them
+    Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
     
-    intakingWhenAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
+    IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
 
 
     //TODO this is a placeholder button value
-    Trigger AutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && RobotState.getInstance().isAutoAiming());
+    Trigger AlignShooterOnRightBumper = new Trigger(() -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
+    
+    //Toggles Shooter alignment based on change in bumper press
+    AlignShooterOnRightBumper.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(!RobotState.getInstance().isAutoAiming())));
+    //TODO add a .whileTrue for when Aligning is implemented 
 
-    AutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-
-    //TODO add auto align drive implementation
 
     //TODO this is a placeholder button value
-    Trigger NoAutoAlignShooterWhenRightTriggerPressed = new Trigger(() -> controller.getRawButton(0) && !RobotState.getInstance().isAutoAiming());
+    Trigger ShootOnRightTrigger = new Trigger(() -> controller.getBButton());
 
-    NoAutoAlignShooterWhenRightTriggerPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+    ShootOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
 
 
   }

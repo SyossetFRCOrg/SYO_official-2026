@@ -86,7 +86,7 @@ public class ModuleIOTalonFX implements ModuleIO {
           constants) {
     this.constants = constants;
 
-    CANBus canbus = new CANBus("rio");
+    CANBus canbus = new CANBus("*");
     driveTalon = new TalonFX(constants.DriveMotorId, canbus);
     turnTalon = new TalonFX(constants.SteerMotorId, canbus);
     cancoder = new CANcoder(constants.EncoderId, canbus);

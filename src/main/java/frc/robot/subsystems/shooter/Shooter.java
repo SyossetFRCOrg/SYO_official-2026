@@ -33,7 +33,7 @@ public class Shooter extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
-    private double shooterSpeed;
+    private double shooterSpeed = .5;
     private final ShooterIO shooterIO;
 
     public Shooter(ShooterIO shooterIO) {
@@ -44,6 +44,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         shooterIO.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
+        applyStates();
     }
 
     public void applyStates() {
