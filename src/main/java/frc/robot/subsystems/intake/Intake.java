@@ -1,6 +1,7 @@
 package frc.robot.subsystems.intake;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.Superstructure.SuperState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,22 +13,26 @@ public class Intake extends SubsystemBase {
 
     // declare IO & logs
     private final IntakeIO intakeIO;
+    
+    public Intake(IntakeIO intakeIO){
+        this.intakeIO = intakeIO;
+    }
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     private double intakeSpeed = 5;
 
-    public Intake(IntakeIO intakeIO) 
-    {
-        this.intakeIO = intakeIO;
-    }
-
+    private Substate handleIntakeTransitions() {
+        return desiredSubstate;
+  }
     @Override
     public void periodic() {
         // TODO Auto-generated method stub
         super.periodic();
         System.out.println("Intake State" + currentSubstate);
+        currentSubstate = handleIntakeTransitions();
         applyStates();
     }
+    
 
     //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
     public void applyStates() {
@@ -36,4 +41,5 @@ public class Intake extends SubsystemBase {
             case ACTIVE: intakeIO.setVelocity(intakeSpeed);
         }
     }
+    
 }
