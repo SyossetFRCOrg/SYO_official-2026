@@ -18,22 +18,23 @@ public class Shooter extends SubsystemBase {
         ACTIVE
     }
 
-    private static final HashMap<SuperState, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
+    private static final HashMap<Substate, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
 
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     private final Timer debounceTimer = new Timer();
     private final double toleranceTime = 0.1;
 
-    private static final HashMap<SuperState, LoggedTunableNumber> initializeSpeeds() {
-        var map = new HashMap<SuperState, LoggedTunableNumber>();
+    private static final HashMap<Substate, LoggedTunableNumber> initializeSpeeds() {
+        HashMap<Substate, LoggedTunableNumber> map = new HashMap<Substate, LoggedTunableNumber>();
+        map.put(Substate.ACTIVE, new LoggedTunableNumber("Active Speed", shooterSpeed));
         return map;
     }
 
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
-    private double shooterSpeed = .5;
+    private static double shooterSpeed = .5;
     private final ShooterIO shooterIO;
 
     public Shooter(ShooterIO shooterIO) {
@@ -57,9 +58,8 @@ public class Shooter extends SubsystemBase {
                 shooterIO.setVelocity(0);
                 break;
             case ACTIVE, PREPARING:
-                shooterIO.setVelocity(shooterSpeed);
-                break;
-            
+                shooterIO.setVelocity(shooterSpeeds.get(currentSubstate).get());
+                break;   
         }
     }
 
