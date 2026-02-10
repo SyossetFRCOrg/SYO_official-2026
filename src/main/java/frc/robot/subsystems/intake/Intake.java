@@ -17,8 +17,11 @@ public class Intake extends SubsystemBase {
     public Intake(IntakeIO intakeIO){
         this.intakeIO = intakeIO;
     }
+
+    private Substate previousSubstate = Substate.STOPPED;
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
+
     private double intakeSpeed = 5;
 
     private Substate handleIntakeTransitions() {
@@ -28,8 +31,11 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         // TODO Auto-generated method stub
         super.periodic();
-        System.out.println("Intake State" + currentSubstate);
+        previousSubstate = currentSubstate;
         currentSubstate = handleIntakeTransitions();
+        if (currentSubstate != previousSubstate) {
+            System.out.println("Intake State Changed from " + previousSubstate + "to " + currentSubstate);
+        }
         applyStates();
     }
     

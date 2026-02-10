@@ -48,9 +48,14 @@ public class Superstructure extends SubsystemBase {
 
   @Override
   public void periodic() {
+    previousSuperState = currentSuperState;
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
     applyStates();
+    if(previousSuperState != currentSuperState)
+    {
+      System.out.println("Superstructure State Changed from " + previousSuperState + "to " + currentSuperState);
+    }
   }
 
   public void logRoboStateValues() {
@@ -86,7 +91,6 @@ public class Superstructure extends SubsystemBase {
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
-    System.out.println("SuperState" + currentSuperState);
     return
       switch(desiredSuperState)
       {
