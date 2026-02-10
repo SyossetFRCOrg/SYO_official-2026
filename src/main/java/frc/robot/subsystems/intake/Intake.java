@@ -37,8 +37,12 @@ public class Intake extends SubsystemBase {
     //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
     public void applyStates() {
         switch (currentSubstate) {
-            case STOPPED: intakeIO.setVelocity(0); 
-            case ACTIVE: intakeIO.setVelocity(intakeSpeed);
+            case STOPPED:
+                intakeIO.setVelocity(0); 
+                break;
+            case ACTIVE:
+                intakeIO.setVelocity(intakeSpeed);
+                break;
         }
     }
     

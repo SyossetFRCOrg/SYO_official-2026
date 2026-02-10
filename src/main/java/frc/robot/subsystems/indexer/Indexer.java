@@ -42,9 +42,15 @@ public class Indexer extends SubsystemBase {
 
     public void applyStates() {
         switch (currentSubstate) {
-            case STOPPED: indexerIO.setVelocity(0);
-            case INDEXING: indexerIO.setVelocity(indexerSpeed);
-            case REVERSING: indexerIO.setVelocity(-indexerSpeed);
+            case STOPPED:
+                indexerIO.setVelocity(0);
+                break;
+            case INDEXING:
+                indexerIO.setVelocity(indexerSpeed);
+                break;
+            case REVERSING: 
+                indexerIO.setVelocity(-indexerSpeed);
+                break;
 
         }
     }
