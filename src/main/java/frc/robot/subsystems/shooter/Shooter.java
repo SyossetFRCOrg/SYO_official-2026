@@ -27,7 +27,8 @@ public class Shooter extends SubsystemBase {
 
     private static final HashMap<Substate, LoggedTunableNumber> initializeSpeeds() {
         HashMap<Substate, LoggedTunableNumber> map = new HashMap<Substate, LoggedTunableNumber>();
-        map.put(Substate.ACTIVE, new LoggedTunableNumber("Active Speed", shooterSpeed));
+        map.put(Substate.ACTIVE, new LoggedTunableNumber("Active Shooter Speed", shooterSpeed));
+        //maps
         return map;
     }
 
@@ -42,7 +43,7 @@ public class Shooter extends SubsystemBase {
     }
     private Substate handleShooterTransitions() {
         return desiredSubstate;
-  }
+    }
 
     @Override
     public void periodic() {

@@ -86,15 +86,14 @@ public class Superstructure extends SubsystemBase {
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
-    currentSuperState = 
+    System.out.println("SuperState" + currentSuperState);
+    return
       switch(desiredSuperState)
       {
         case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
         case INTAKING -> SuperState.INTAKING;
         default -> ready ? desiredSuperState : currentSuperState;
       };
-    System.out.println("SuperState" + currentSuperState);
-    return currentSuperState;
   }
 
   /**

@@ -127,9 +127,9 @@ public class RobotContainer {
     //TODO fix error where triggers are not being registered. Something is wrong with the way I set up these triggers because the code does not do anything with them
     Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
     
-    IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
+    IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                            .andThen(new InstantCommand(() -> System.out.print("A Button Pressed"))));
     IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
-    IntakeOnAPressed.onTrue(new InstantCommand(() -> System.out.println("A Button Pressed"))); //debug triggers
 
     //TODO this is a placeholder button value
     Trigger AlignShooterOnRightBumper = new Trigger(() -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
@@ -143,8 +143,6 @@ public class RobotContainer {
     Trigger ShootOnRightTrigger = new Trigger(() -> controller.getBButton());
 
     ShootOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-
-
   }
 
     public Drive getDrive() {
