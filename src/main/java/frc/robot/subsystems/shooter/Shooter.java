@@ -11,15 +11,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Shooter extends SubsystemBase {
-
     public enum Substate {
         STOPPED,
         PREPARING,
         ACTIVE
     }
 
-    private static final HashMap<Substate, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
+    public Shooter(ShooterIO shooterIO) {
+        this.shooterIO = shooterIO;
+    }
 
+
+    //Declare IO & logs
+    private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
     private final Timer debounceTimer = new Timer();
@@ -35,12 +39,10 @@ public class Shooter extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
+    private static final HashMap<Substate, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
     private static double shooterSpeed = .5;
-    private final ShooterIO shooterIO;
 
-    public Shooter(ShooterIO shooterIO) {
-        this.shooterIO = shooterIO;
-    }
+    
     private Substate handleShooterTransitions() {
         return desiredSubstate;
     }

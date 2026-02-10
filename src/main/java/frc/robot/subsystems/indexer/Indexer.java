@@ -15,8 +15,10 @@ public class Indexer extends SubsystemBase {
         REVERSING
     }
 
- // declare IO & logs
+
+    // declare IO & logs
     private final IndexerIO indexerIO;
+    private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged();
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
@@ -31,6 +33,7 @@ public class Indexer extends SubsystemBase {
     public void periodic() {
         // TODO Auto-generated method stub
         super.periodic();
+        indexerIO.updateInputs(inputs);
         applyStates();
         handleIndexerTransitions();
     }
