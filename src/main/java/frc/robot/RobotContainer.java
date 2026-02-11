@@ -87,9 +87,7 @@ public class RobotContainer {
         vision = new Vision(
                 drive::addVisionMeasurement,
                 drive,
-                new VisionIOLimelight(camera0Name, drive::getRotation),
-                new VisionIOLimelight(camera1Name, drive::getRotation),
-                new VisionIOLimelight(camera2Name, drive::getRotation));
+                new VisionIOLimelight(camera0Name, drive::getRotation));
 
 
         superstructure = new Superstructure(this, drive, indexer, intake, shooter);
