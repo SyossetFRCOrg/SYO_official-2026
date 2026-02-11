@@ -78,10 +78,9 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.FrontRight),
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
-
-        indexer = new Indexer(new IndexerIOTalonFX());
+        indexer = null;//new Indexer(new IndexerIOTalonFX());
         intake = new Intake(new IntakeIOTalonFX());
-        shooter = new Shooter(new ShooterIOTalonFX());
+        shooter = null;//new Shooter(new ShooterIOTalonFX());
 
         // LEDs = new LEDs();
 
