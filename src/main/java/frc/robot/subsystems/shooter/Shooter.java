@@ -50,8 +50,8 @@ public class Shooter extends SubsystemBase {
     @Override
     public void periodic() {
         shooterIO.updateInputs(inputs);
-        handleShooterTransitions();
         Logger.processInputs("Shooter", inputs);
+        handleShooterTransitions();
         applyStates();
     }
 

@@ -1,5 +1,7 @@
 package frc.robot.subsystems.intake;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Superstructure.SuperState;
 import lombok.Getter;
@@ -34,6 +36,7 @@ public class Intake extends SubsystemBase {
         // TODO Auto-generated method stub
         super.periodic();
         intakeIO.updateInputs(inputs);
+        Logger.processInputs("Intake", inputs);
         previousSubstate = currentSubstate;
         currentSubstate = handleIntakeTransitions();
         if (currentSubstate != previousSubstate) {

@@ -121,7 +121,7 @@ public class IndexerIOTalonFX implements IndexerIO {
 
     inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
     inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
-    inputs.currentAmpts = indexerCurrent.getValueAsDouble();
+    inputs.currentAmps = indexerCurrent.getValueAsDouble();
     // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
   }
 

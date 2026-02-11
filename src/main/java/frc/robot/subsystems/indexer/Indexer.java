@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.indexer;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +36,7 @@ public class Indexer extends SubsystemBase {
         // TODO Auto-generated method stub
         super.periodic();
         indexerIO.updateInputs(inputs);
+        Logger.processInputs("Indexer", inputs);
         applyStates();
         handleIndexerTransitions();
     }
