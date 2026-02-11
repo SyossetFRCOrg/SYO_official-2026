@@ -7,10 +7,15 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
@@ -122,6 +127,19 @@ public class RobotContainer {
             () -> -controller.getLeftY() * tempSpeed,
             () -> -controller.getLeftX() * tempSpeed,
             () -> -controller.getRightX()));
+        Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
+    resetPoseTrigger.onTrue(
+        Commands.runOnce(
+                () ->
+                    drive.setPose(
+                        new Pose2d(
+                            drive.getPose().getX(),
+                            drive.getPose().getY(),
+                            DriverStation.getAlliance().get() == Alliance.Blue
+                                ? Rotation2d.fromRadians(180)
+                                : Rotation2d.fromDegrees(0))),
+                drive)
+            .ignoringDisable(true));
 
 
     //TODO fix error where triggers are not being registered. Something is wrong with the way I set up these triggers because the code does not do anything with them
