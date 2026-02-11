@@ -136,8 +136,8 @@ public class RobotContainer {
                             drive.getPose().getX(),
                             drive.getPose().getY(),
                             DriverStation.getAlliance().get() == Alliance.Blue
-                                ? Rotation2d.fromRadians(180)
-                                : Rotation2d.fromDegrees(0))),
+                                ? Rotation2d.fromRadians(0)
+                                : Rotation2d.fromDegrees(180))),
                 drive)
             .ignoringDisable(true));
 
