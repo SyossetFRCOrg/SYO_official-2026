@@ -5,12 +5,13 @@ import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ToggleableSubsystem;
 import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends ToggleableSubsystem {
     public enum Substate {
         STOPPED,
         PREPARING,
@@ -49,6 +50,7 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
+        super.periodic();
         shooterIO.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
         handleShooterTransitions();

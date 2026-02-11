@@ -1,0 +1,5 @@
+climber: true
+drive: true
+indexer: true
+intake: true
+shooter: true

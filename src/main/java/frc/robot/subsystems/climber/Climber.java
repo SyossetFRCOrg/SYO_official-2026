@@ -3,11 +3,12 @@ package frc.robot.subsystems.climber;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ToggleableSubsystem;
 import lombok.Getter;
 import lombok.Setter;
 
 // From last year with modifications (may need to implement a second motor)
-public class Climber extends SubsystemBase {
+public class Climber extends ToggleableSubsystem {
     public enum Substate {
         STOPPED,
         L1, // Bottom rung

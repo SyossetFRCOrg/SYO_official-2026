@@ -3,6 +3,10 @@ import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.UsbCamera;
@@ -81,6 +85,9 @@ public class RobotContainer {
         indexer = new Indexer(new IndexerIOTalonFX());
         intake = new Intake(new IntakeIOTalonFX());
         shooter = new Shooter(new ShooterIOTalonFX());
+
+        // Disable Subsystems
+        disableSubsystems();
 
         // LEDs = new LEDs();
 
@@ -168,5 +175,36 @@ public class RobotContainer {
 
     public Superstructure getSuperstructure() {
         return superstructure;
+    }
+
+    private void disableSubsystems() {
+        try {
+            File file = new File("src/main/enabled_subsystems.txt");
+            Scanner reader = new Scanner(file);
+
+            while (reader.hasNext()) {
+                String line = reader.nextLine();
+                String[] data = line.split(": ");
+                if (!Boolean.parseBoolean(data[1])) { // Note: all subsystems enabled unless otherwise specified within
+                    switch (data[0]) {
+                        case "climber":
+                            //climber.disable("Climber"); break;
+                        case "drive":
+                            drive.disable("Drive"); break;
+                        case "indexer":
+                            indexer.disable("Indexer"); break;
+                        case "intake":
+                            intake.disable("Intake"); break;
+                        case "shooter":
+                            shooter.disable("Shooter"); break;
+                        default: break;
+                    }
+                }
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("There was an issue disabling subsystems!");
+        }
     }
 }

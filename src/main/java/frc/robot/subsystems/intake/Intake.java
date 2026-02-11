@@ -4,10 +4,11 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Superstructure.SuperState;
+import frc.robot.subsystems.ToggleableSubsystem;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Intake extends SubsystemBase {
+public class Intake extends ToggleableSubsystem {
     public enum Substate {
         STOPPED,
         ACTIVE

@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ToggleableSubsystem;
 import frc.robot.RobotState;
 import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
@@ -50,7 +51,7 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 
-public class Drive extends SubsystemBase {
+public class Drive extends ToggleableSubsystem {
 
   private double currentTime;
   private double dt;
@@ -194,6 +195,7 @@ public class Drive extends SubsystemBase {
 
   @Override
   public void periodic() {
+    super.periodic();
     odometryLock.lock(); // Prevents odometry updates while reading data
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
