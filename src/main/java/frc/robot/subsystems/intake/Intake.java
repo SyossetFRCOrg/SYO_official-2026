@@ -37,6 +37,7 @@ public class Intake extends SubsystemBase {
         super.periodic();
         intakeIO.updateInputs(inputs);
         Logger.processInputs("Intake", inputs);
+        
         previousSubstate = currentSubstate;
         currentSubstate = handleIntakeTransitions();
         if (currentSubstate != previousSubstate) {

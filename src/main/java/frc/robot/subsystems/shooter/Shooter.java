@@ -42,7 +42,7 @@ public class Shooter extends SubsystemBase {
     private static final HashMap<Substate, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
     private static double shooterSpeed = .5;
 
-    
+    //TODO Add check for shooter velocity when returning ACTIVE
     private Substate handleShooterTransitions() {
         return desiredSubstate;
     }
@@ -51,7 +51,7 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         shooterIO.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
-        handleShooterTransitions();
+        currentSubstate = handleShooterTransitions();
         applyStates();
     }
 

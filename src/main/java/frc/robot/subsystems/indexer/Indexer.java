@@ -37,8 +37,9 @@ public class Indexer extends SubsystemBase {
         super.periodic();
         indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer", inputs);
+        
+        currentSubstate = handleIndexerTransitions();
         applyStates();
-        handleIndexerTransitions();
     }
     private Substate handleIndexerTransitions() {
         return desiredSubstate;
