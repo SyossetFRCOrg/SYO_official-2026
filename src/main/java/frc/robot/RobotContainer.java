@@ -179,7 +179,7 @@ public class RobotContainer {
 
     private void disableSubsystems() {
         try {
-            File file = new File("src/main/enabled_subsystems.txt");
+            File file = new File("enabled_subsystems.txt");
             Scanner reader = new Scanner(file);
 
             while (reader.hasNext()) {

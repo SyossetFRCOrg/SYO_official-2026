@@ -1,0 +1,5 @@
+climber: false
+drive: false
+indexer: false
+intake: true
+shooter: false

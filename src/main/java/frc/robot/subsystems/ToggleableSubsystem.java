@@ -14,6 +14,7 @@ public abstract class ToggleableSubsystem extends SubsystemBase {
 
     public void disable(String logName) {
         enabled = false;
+        
         System.out.println(logName + " disabled!");
     }
 
