@@ -38,7 +38,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
-import frc.robot.generated.TunerConstants;
 import frc.robot.RobotState;
 import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
@@ -48,6 +47,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
+import frc.robot.subsystems.drive.TunerConstants;
 
 
 public class Drive extends SubsystemBase {
@@ -67,7 +67,6 @@ public class Drive extends SubsystemBase {
           Math.max(
               Math.hypot(TunerConstants.BackLeft.LocationX, TunerConstants.BackLeft.LocationY),
               Math.hypot(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)));
-
   static double trackWidthX = 31;
   static double trackWidthY = 31;
   public static final Translation2d[] moduleTranslations =
