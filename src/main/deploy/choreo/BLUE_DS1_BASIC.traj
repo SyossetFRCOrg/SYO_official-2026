@@ -46,9 +46,9 @@
    "tmax":1.2,
    "cof":1.5,
    "bumper":{
-    "front":0.5461,
-    "side":0.8509,
-    "back":0.5461
+    "front":0.4064,
+    "side":0.4064,
+    "back":0.4064
    },
    "differentialTrackWidth":0.5588
   },
