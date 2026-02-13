@@ -76,11 +76,8 @@ public class Superstructure extends SubsystemBase {
         new double[] {
             drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
         });
-    if(currentSuperState != desiredSuperState)
-    {
       Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
       Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
-    }
   }
 
   /**
