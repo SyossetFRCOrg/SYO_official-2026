@@ -108,7 +108,7 @@ public class Drive extends SubsystemBase {
           1),
       getModuleTranslations());
 
-  static final Lock odometryLock = new ReentrantLock();
+  static final Lock odometryLock = new ReentrantLock(true);
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
