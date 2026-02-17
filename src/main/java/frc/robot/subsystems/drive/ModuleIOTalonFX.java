@@ -94,6 +94,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     // Configure drive motor
     var driveConfig = constants.DriveMotorInitialConfigs;
     driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    driveConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1;
 
     // if (TunerConstants.kDriveClosedLoopOutput == ClosedLoopOutputType.Voltage) {
     driveConfig.Slot0 = constants.DriveMotorGains;
