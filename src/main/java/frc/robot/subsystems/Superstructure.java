@@ -81,29 +81,27 @@ public class Superstructure extends SubsystemBase {
     Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
     Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
 
-    Color exampleColor = new Color(68, 238, 255);
-    SmartDashboard.putString("Example Color", exampleColor.toHexString());
 
-    SmartDashboard.putData("Swerve Drive", new Sendable() {
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        builder.setSmartDashboardType("SwerveDrive");
+    // SmartDashboard.putData("Swerve Drive", new Sendable() {
+    //   @Override
+    //   public void initSendable(SendableBuilder builder) {
+    //     builder.setSmartDashboardType("SwerveDrive");
 
-        builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians(), null);
-        builder.addDoubleProperty("Front Left Velocity", () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
+    //     builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians(), null);
+    //     builder.addDoubleProperty("Front Left Velocity", () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians(), null);
-        builder.addDoubleProperty("Front Right Velocity", () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
+    //     builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians(), null);
+    //     builder.addDoubleProperty("Front Right Velocity", () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians(), null);
-        builder.addDoubleProperty("Back Left Velocity", () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
+    //     builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians(), null);
+    //     builder.addDoubleProperty("Back Left Velocity", () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians(), null);
-        builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
+    //     builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians(), null);
+    //     builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
-      }
-    });
+    //     builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
+    //   }
+    // });
 
   }
 
