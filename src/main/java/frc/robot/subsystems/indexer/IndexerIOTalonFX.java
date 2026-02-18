@@ -27,7 +27,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
 
-   private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Indexer/Gains/kD", IndexerConstants.kD);
     private static final LoggedTunableNumber kS = new LoggedTunableNumber("Indexer/Gains/kS", IndexerConstants.kS);
     private static final LoggedTunableNumber kV = new LoggedTunableNumber("Indexer/Gains/kV", IndexerConstants.kV);
