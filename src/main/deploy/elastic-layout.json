@@ -11,7 +11,7 @@
             "x": 0.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 544.0,
+            "height": 736.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -95,12 +95,19 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Radial Gauge",
                 "properties": {
                   "topic": "/AdvantageKit/Drive/Module0/TurnVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
+                  "start_angle": -140.0,
+                  "end_angle": 140.0,
+                  "min_value": 0.0,
+                  "max_value": 100.0,
+                  "number_of_labels": 8,
+                  "wrap_value": false,
+                  "show_pointer": true,
+                  "show_ticks": true
                 }
               },
               {
@@ -124,7 +131,7 @@
             "x": 256.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 544.0,
+            "height": 736.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -208,12 +215,19 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Radial Gauge",
                 "properties": {
                   "topic": "/AdvantageKit/Drive/Module1/TurnVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
+                  "start_angle": -140.0,
+                  "end_angle": 140.0,
+                  "min_value": 0.0,
+                  "max_value": 100.0,
+                  "number_of_labels": 8,
+                  "wrap_value": false,
+                  "show_pointer": true,
+                  "show_ticks": true
                 }
               },
               {
@@ -237,7 +251,7 @@
             "x": 512.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 544.0,
+            "height": 736.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -321,12 +335,19 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Radial Gauge",
                 "properties": {
                   "topic": "/AdvantageKit/Drive/Module2/TurnVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
+                  "start_angle": -140.0,
+                  "end_angle": 140.0,
+                  "min_value": 0.0,
+                  "max_value": 100.0,
+                  "number_of_labels": 8,
+                  "wrap_value": false,
+                  "show_pointer": true,
+                  "show_ticks": true
                 }
               },
               {
@@ -350,7 +371,7 @@
             "x": 768.0,
             "y": 0.0,
             "width": 256.0,
-            "height": 544.0,
+            "height": 736.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -434,12 +455,19 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Radial Gauge",
                 "properties": {
                   "topic": "/AdvantageKit/Drive/Module3/TurnVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
+                  "start_angle": -140.0,
+                  "end_angle": 140.0,
+                  "min_value": 0.0,
+                  "max_value": 100.0,
+                  "number_of_labels": 8,
+                  "wrap_value": false,
+                  "show_pointer": true,
+                  "show_ticks": true
                 }
               },
               {
@@ -608,9 +636,9 @@
           },
           {
             "title": "Intake",
-            "x": 0.0,
-            "y": 544.0,
-            "width": 240.0,
+            "x": 1280.0,
+            "y": 0.0,
+            "width": 256.0,
             "height": 304.0,
             "type": "List Layout",
             "properties": {
@@ -680,9 +708,9 @@
           },
           {
             "title": "Indexer",
-            "x": 240.0,
-            "y": 544.0,
-            "width": 240.0,
+            "x": 1280.0,
+            "y": 304.0,
+            "width": 256.0,
             "height": 304.0,
             "type": "List Layout",
             "properties": {
@@ -752,10 +780,10 @@
           },
           {
             "title": "Superstructure",
-            "x": 480.0,
-            "y": 544.0,
-            "width": 240.0,
-            "height": 192.0,
+            "x": 1024.0,
+            "y": 608.0,
+            "width": 160.0,
+            "height": 176.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -801,7 +829,7 @@
         "layouts": [
           {
             "title": "Intake",
-            "x": 592.0,
+            "x": 688.0,
             "y": 0.0,
             "width": 256.0,
             "height": 320.0,
@@ -873,7 +901,7 @@
           },
           {
             "title": "Indexer",
-            "x": 848.0,
+            "x": 944.0,
             "y": 0.0,
             "width": 256.0,
             "height": 320.0,
@@ -988,25 +1016,60 @@
             "title": "Shooter",
             "x": 256.0,
             "y": 0.0,
-            "width": 336.0,
-            "height": 544.0,
+            "width": 432.0,
+            "height": 624.0,
             "type": "List Layout",
             "properties": {
               "label_position": "LEFT"
             },
             "children": [
               {
-                "title": "CenterAppliedVolts",
+                "title": "LeftConnected",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Boolean Box",
+                "properties": {
+                  "topic": "/AdvantageKit/Shooter/LeftConnected",
+                  "period": 0.06,
+                  "data_type": "boolean",
+                  "true_color": 4283215696,
+                  "false_color": 4294198070,
+                  "true_icon": "None",
+                  "false_icon": "None"
+                }
+              },
+              {
+                "title": "LeftAppliedVolts",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
                 "type": "Text Display",
                 "properties": {
-                  "topic": "/AdvantageKit/Shooter/CenterAppliedVolts",
+                  "topic": "/AdvantageKit/Shooter/LeftAppliedVolts",
                   "period": 0.06,
                   "data_type": "double",
                   "show_submit_button": false
+                }
+              },
+              {
+                "title": "LeftVelocityRadPerSec",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Number Bar",
+                "properties": {
+                  "topic": "/AdvantageKit/Shooter/LeftVelocityRadPerSec",
+                  "period": 0.06,
+                  "data_type": "double",
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "inverted": false,
+                  "orientation": "horizontal"
                 }
               },
               {
@@ -1027,14 +1090,14 @@
                 }
               },
               {
-                "title": "CenterCurrentAmps",
+                "title": "CenterAppliedVolts",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
                 "type": "Text Display",
                 "properties": {
-                  "topic": "/AdvantageKit/Shooter/CenterCurrentAmps",
+                  "topic": "/AdvantageKit/Shooter/CenterAppliedVolts",
                   "period": 0.06,
                   "data_type": "double",
                   "show_submit_button": false
@@ -1046,85 +1109,16 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Number Bar",
                 "properties": {
                   "topic": "/AdvantageKit/Shooter/CenterVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "LeftAppliedVolts",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/Shooter/LeftAppliedVolts",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "LeftConnected",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Boolean Box",
-                "properties": {
-                  "topic": "/AdvantageKit/Shooter/LeftConnected",
-                  "period": 0.06,
-                  "data_type": "boolean",
-                  "true_color": 4283215696,
-                  "false_color": 4294198070,
-                  "true_icon": "None",
-                  "false_icon": "None"
-                }
-              },
-              {
-                "title": "LeftCurrentAmps",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/Shooter/LeftCurrentAmps",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "LeftVelocityRadPerSec",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/Shooter/LeftVelocityRadPerSec",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "RightAppliedVolts",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/Shooter/RightAppliedVolts",
-                  "period": 0.06,
-                  "data_type": "double",
-                  "show_submit_button": false
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "inverted": false,
+                  "orientation": "horizontal"
                 }
               },
               {
@@ -1145,14 +1139,14 @@
                 }
               },
               {
-                "title": "RightCurrentAmps",
+                "title": "RightAppliedVolts",
                 "x": 0.0,
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
                 "type": "Text Display",
                 "properties": {
-                  "topic": "/AdvantageKit/Shooter/RightCurrentAmps",
+                  "topic": "/AdvantageKit/Shooter/RightAppliedVolts",
                   "period": 0.06,
                   "data_type": "double",
                   "show_submit_button": false
@@ -1164,12 +1158,98 @@
                 "y": 0.0,
                 "width": 128.0,
                 "height": 128.0,
-                "type": "Text Display",
+                "type": "Number Bar",
                 "properties": {
                   "topic": "/AdvantageKit/Shooter/RightVelocityRadPerSec",
                   "period": 0.06,
                   "data_type": "double",
-                  "show_submit_button": false
+                  "min_value": -1.0,
+                  "max_value": 1.0,
+                  "divisions": 5,
+                  "inverted": false,
+                  "orientation": "horizontal"
+                }
+              }
+            ]
+          },
+          {
+            "title": "Indexer",
+            "x": 944.0,
+            "y": 400.0,
+            "width": 256.0,
+            "height": 176.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "CurrentSubstate",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Indexer/CurrentSubstate",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "DesiredSubstate",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Indexer/DesiredSubstate",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": true
+                }
+              }
+            ]
+          },
+          {
+            "title": "Intake",
+            "x": 688.0,
+            "y": 400.0,
+            "width": 256.0,
+            "height": 176.0,
+            "type": "List Layout",
+            "properties": {
+              "label_position": "TOP"
+            },
+            "children": [
+              {
+                "title": "CurrentSubstate",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Intake/CurrentSubstate",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": true
+                }
+              },
+              {
+                "title": "DesiredSubstate",
+                "x": 0.0,
+                "y": 0.0,
+                "width": 128.0,
+                "height": 128.0,
+                "type": "Text Display",
+                "properties": {
+                  "topic": "/AdvantageKit/RealOutputs/Intake/DesiredSubstate",
+                  "period": 0.06,
+                  "data_type": "string",
+                  "show_submit_button": true
                 }
               }
             ]
@@ -1188,6 +1268,76 @@
               "period": 0.06,
               "show_robot_rotation": true,
               "rotation_unit": "Radians"
+            }
+          },
+          {
+            "title": "IndexerSpeed",
+            "x": 944.0,
+            "y": 320.0,
+            "width": 256.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Tuning/Indexer/IndexerSpeed",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": false
+            }
+          },
+          {
+            "title": "Active Shooter Speed",
+            "x": 256.0,
+            "y": 624.0,
+            "width": 224.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Tuning/Active Shooter Speed",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "IntakeSpeed",
+            "x": 688.0,
+            "y": 320.0,
+            "width": 240.0,
+            "height": 80.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/Tuning/Intake/IntakeSpeed",
+              "period": 0.06,
+              "data_type": "double",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "CurrentSubstate",
+            "x": 0.0,
+            "y": 448.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Shooter/CurrentSubstate",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "DesiredSubstate",
+            "x": 0.0,
+            "y": 576.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Shooter/DesiredSubstate",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": true
             }
           }
         ]
