@@ -51,6 +51,8 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         shooterIO.updateInputs(inputs);
         Logger.processInputs("Shooter", inputs);
+        Logger.recordOutput("Shooter/CurrentSubstate", currentSubstate.toString());
+        Logger.recordOutput("Shooter/DesiredSubstate", desiredSubstate.toString());
         currentSubstate = handleShooterTransitions();
         applyStates();
     }
