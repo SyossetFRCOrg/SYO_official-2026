@@ -4,6 +4,7 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.Superstructure.SuperState;
+import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class Intake extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
-    private double intakeSpeed = 5;
+    private LoggedTunableNumber intakeSpeed = new LoggedTunableNumber("Intake/IntakeSpeed", 5);
 
     private Substate handleIntakeTransitions() {
         return desiredSubstate;
@@ -53,7 +54,7 @@ public class Intake extends SubsystemBase {
                 intakeIO.setVelocity(0);
                 break;
             case ACTIVE:
-                intakeIO.setVelocity(intakeSpeed);
+                intakeIO.setVelocity(intakeSpeed.get());
                 break;
         }
     }
