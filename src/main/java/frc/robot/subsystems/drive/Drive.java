@@ -55,6 +55,7 @@ import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
+import lombok.Getter;
 
 public class Drive extends SubsystemBase {
 
@@ -111,7 +112,7 @@ public class Drive extends SubsystemBase {
   static final Lock odometryLock = new ReentrantLock();
   private final GyroIO gyroIO;
   private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
-  private final Module[] modules = new Module[4]; // FL, FR, BL, BR
+  @Getter private final Module[] modules = new Module[4]; // FL, FR, BL, BR
   private final SysIdRoutine sysId;
   private final Alert gyroDisconnectedAlert = new Alert("Disconnected gyro, using kinematics as fallback.",
       AlertType.kError);

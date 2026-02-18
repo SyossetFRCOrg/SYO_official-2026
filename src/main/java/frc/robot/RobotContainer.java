@@ -1,12 +1,9 @@
 package frc.robot;
+
 import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.HttpCamera;
-import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -53,7 +50,6 @@ public class RobotContainer {
 
     private final Superstructure superstructure;
 
-
     // Controllers
     private final XboxController controller = new XboxController(0);
     private final XboxController buttonboard = new XboxController(1);
@@ -87,10 +83,7 @@ public class RobotContainer {
         vision = new Vision(
                 drive::addVisionMeasurement,
                 drive,
-                new VisionIOLimelight(camera0Name, drive::getRotation),
-                new VisionIOLimelight(camera1Name, drive::getRotation),
-                new VisionIOLimelight(camera2Name, drive::getRotation));
-
+                new VisionIOLimelight(camera0Name, drive::getRotation));
 
         superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
@@ -100,67 +93,65 @@ public class RobotContainer {
         // climbCam = CameraServer.startAutomaticCapture();
         // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
         // climbCam.setResolution(80, 60);
-        
+
         // Shuffleboard.getTab("Match")
-        //         .add(new HttpCamera("ClimberCam", "http://roborio-9016-frc.local:1181/?action=stream"))
-        //         .withWidget(BuiltInWidgets.kCameraStream)
-        //         .withSize(4, 3)
-        //         .withPosition(4, 3);
+        // .add(new HttpCamera("ClimberCam",
+        // "http://roborio-9016-frc.local:1181/?action=stream"))
+        // .withWidget(BuiltInWidgets.kCameraStream)
+        // .withSize(4, 3)
+        // .withPosition(4, 3);
     }
 
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  private void configureButtonBindings() {
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+     * it to a {@link
+     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
 
-    // kinda stupid but it works
-    double tempSpeed = 0.35;
+        // kinda stupid but it works
+        double tempSpeed = 0.35;
 
-    // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
-    drive.setDefaultCommand(
-        DriveCommands.joystickDrive(
-            drive,
-            () -> -controller.getLeftY() * tempSpeed,
-            () -> -controller.getLeftX() * tempSpeed,
-            () -> -controller.getRightX()));
+        // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
+        drive.setDefaultCommand(
+                DriveCommands.joystickDrive(
+                        drive,
+                        () -> -controller.getLeftY() * tempSpeed,
+                        () -> -controller.getLeftX() * tempSpeed,
+                        () -> -controller.getRightX()));
         Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
-    resetPoseTrigger.onTrue(
-        Commands.runOnce(
-                () ->
-                    drive.setPose(
-                        new Pose2d(
-                            drive.getPose().getX(),
-                            drive.getPose().getY(),
-                            DriverStation.getAlliance().get() == Alliance.Blue
-                                ? Rotation2d.fromRadians(0)
-                                : Rotation2d.fromDegrees(180))),
-                drive)
-            .ignoringDisable(true));
+        resetPoseTrigger.onTrue(
+                Commands.runOnce(
+                        () -> drive.setPose(
+                                new Pose2d(
+                                        drive.getPose().getX(),
+                                        drive.getPose().getY(),
+                                        DriverStation.getAlliance().get() == Alliance.Blue
+                                                ? Rotation2d.fromRadians(0)
+                                                : Rotation2d.fromDegrees(180))),
+                        drive)
+                        .ignoringDisable(true));
 
+        // TODO fix error where triggers are not being registered. Something is wrong
+        // with the way I set up these triggers because the code does not do anything
+        // with them
+        Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
 
-    //TODO fix error where triggers are not being registered. Something is wrong with the way I set up these triggers because the code does not do anything with them
-    Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
-    
-    IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
-                            .andThen(new InstantCommand(() -> System.out.print("A Button Pressed"))));
-    IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
+        IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                .andThen(new InstantCommand(() -> System.out.print("A Button Pressed"))));
+        IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
 
-    //TODO this is a placeholder button value
-    Trigger AlignShooterOnRightBumper = new Trigger(() -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
-    
-    //Toggles Shooter alignment based on change in bumper press
-    AlignShooterOnRightBumper.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(!RobotState.getInstance().isAutoAiming())));
-    //TODO add a .whileTrue for when Aligning is implemented 
+        // TODO this is a placeholder button value
+        Trigger AlignShooterOnRightBumper = new Trigger(
+                () -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
 
+        Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
 
-    //TODO this is a placeholder button value
-    Trigger ShootOnRightTrigger = new Trigger(() -> controller.getBButton());
-
-    ShootOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-  }
+        ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+    }
 
     public Drive getDrive() {
         return drive;

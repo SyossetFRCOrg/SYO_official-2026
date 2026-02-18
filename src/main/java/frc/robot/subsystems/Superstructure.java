@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -14,7 +18,6 @@ import java.util.function.BooleanSupplier;
 import lombok.Getter;
 import lombok.Setter;
 import org.littletonrobotics.junction.Logger;
-
 
 public class Superstructure extends SubsystemBase {
   private Drive drive;
@@ -52,8 +55,7 @@ public class Superstructure extends SubsystemBase {
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
     applyStates();
-    if(previousSuperState != currentSuperState)
-    {
+    if (previousSuperState != currentSuperState) {
       System.out.println("Superstructure State Changed from " + previousSuperState + "to " + currentSuperState);
     }
   }
@@ -76,8 +78,33 @@ public class Superstructure extends SubsystemBase {
         new double[] {
             drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
         });
-      Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
-      Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
+    Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
+    Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
+
+    Color exampleColor = new Color(68, 238, 255);
+    SmartDashboard.putString("Example Color", exampleColor.toHexString());
+
+    SmartDashboard.putData("Swerve Drive", new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveDrive");
+
+        builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
+      }
+    });
+
   }
 
   /**
@@ -88,13 +115,11 @@ public class Superstructure extends SubsystemBase {
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
-    return
-      switch(desiredSuperState)
-      {
-        case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
-        case INTAKING -> SuperState.INTAKING;
-        default -> ready ? desiredSuperState : currentSuperState;
-      };
+    return switch (desiredSuperState) {
+      case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
+      case INTAKING -> SuperState.INTAKING;
+      default -> ready ? desiredSuperState : currentSuperState;
+    };
   }
 
   /**
