@@ -186,6 +186,7 @@ public class RobotContainer {
                 Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
 
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
         }
 
         public Drive getDrive() {
