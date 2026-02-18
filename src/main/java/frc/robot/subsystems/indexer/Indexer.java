@@ -53,10 +53,10 @@ public class Indexer extends SubsystemBase {
                 indexerIO.setVelocity(0);
                 break;
             case INDEXING:
-                indexerIO.setVelocity(indexerSpeed);
+                indexerIO.setVelocity(-indexerSpeed);
                 break;
             case REVERSING: 
-                indexerIO.setVelocity(-indexerSpeed);
+                indexerIO.setVelocity(indexerSpeed);
                 break;
 
         }
