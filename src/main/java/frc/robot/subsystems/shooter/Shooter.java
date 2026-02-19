@@ -32,6 +32,7 @@ public class Shooter extends SubsystemBase {
     private static final HashMap<Substate, LoggedTunableNumber> initializeSpeeds() {
         HashMap<Substate, LoggedTunableNumber> map = new HashMap<Substate, LoggedTunableNumber>();
         map.put(Substate.ACTIVE, new LoggedTunableNumber("Active Shooter Speed", shooterSpeed));
+        map.put(Substate.PREPARING, new LoggedTunableNumber("Active Shooter Speed", 0.9 * shooterSpeed));
         //maps
         return map;
     }

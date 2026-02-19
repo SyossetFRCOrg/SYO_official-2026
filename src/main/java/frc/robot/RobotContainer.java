@@ -124,9 +124,7 @@ public class RobotContainer {
                 });
 
                 final Field2d field = new Field2d();
-
                 SmartDashboard.putData(field);
-
                 field.setRobotPose(drive.getPose());
 
                 // climbCam = CameraServer.startAutomaticCapture();
