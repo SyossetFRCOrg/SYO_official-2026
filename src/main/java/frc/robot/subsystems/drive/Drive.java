@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -448,7 +449,7 @@ public class Drive extends SubsystemBase {
     };
   }
 
-  public Command alignDrive(CommandXboxController controller, Supplier<Pose2d> targetPoseSupplier) {
+  public Command alignDrive(XboxController controller, Supplier<Pose2d> targetPoseSupplier) {
     return run(() -> {
       // Driver input
       double vx = -controller.getLeftY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();

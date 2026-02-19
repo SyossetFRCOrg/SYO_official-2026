@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.Degrees;
 
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 
 
 public class DriveConstants {
@@ -15,9 +17,7 @@ public class DriveConstants {
     public static final double maxAngularRate = Units.RotationsPerSecond.of(0.75).in(Units.RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     public static final Angle epsilonAngleToGoal = Degrees.of(1.0);
 
-
-        public static final PIDController rotationController = getRotationController();
-
+    public static final PIDController rotationController = getRotationController();
 
     private static final PIDController getRotationController() {
         PIDController controller = new PIDController(2.0, 0.0, 0.0);

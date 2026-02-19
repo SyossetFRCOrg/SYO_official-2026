@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
@@ -56,7 +57,6 @@ public class RobotContainer {
         // Controllers
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
-
         // private final UsbCamera climbCam;
 
         // private final HttpCamera climberCamera;
@@ -177,16 +177,16 @@ public class RobotContainer {
 
                 IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
                                 .andThen(new InstantCommand(() -> System.out.print("A Button Pressed"))));
-                IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
-
-                // TODO this is a placeholder button value
-                Trigger AlignShooterOnRightBumper = new Trigger(
-                                () -> controller.getRawButton(6) && RobotState.getInstance().isAutoAiming());
+                IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
 
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.IDLE));
+                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+                Trigger AlignOnXRightBumper = new Trigger(() -> controller.getRawButton(6));
+                AlignOnXRightBumper.onTrue(superstructure.prepShot(controller, () -> FieldConstants.getHubePose().toPose2d()));
+                AlignOnXRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
         }
 
         public Drive getDrive() {
