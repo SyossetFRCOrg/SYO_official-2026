@@ -151,8 +151,8 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> -controller.getLeftY() * tempSpeed,
-                                                () -> -controller.getLeftX() * tempSpeed,
+                                                () -> controller.getLeftY() * tempSpeed,
+                                                () -> controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
@@ -164,9 +164,9 @@ public class RobotContainer {
                                                                                 DriverStation.getAlliance()
                                                                                                 .get() == Alliance.Blue
                                                                                                                 ? Rotation2d.fromRadians(
-                                                                                                                                0)
+                                                                                                                                180)
                                                                                                                 : Rotation2d.fromDegrees(
-                                                                                                                                180))),
+                                                                                                                                0))),
                                                 drive)
                                                 .ignoringDisable(true));
 
