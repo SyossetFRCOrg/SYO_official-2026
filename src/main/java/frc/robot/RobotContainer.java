@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -121,6 +122,12 @@ public class RobotContainer {
                                 builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
                         }
                 });
+
+                final Field2d field = new Field2d();
+
+                SmartDashboard.putData(field);
+
+                field.setRobotPose(drive.getPose());
 
                 // climbCam = CameraServer.startAutomaticCapture();
                 // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
