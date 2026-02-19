@@ -1,10 +1,13 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -15,6 +18,8 @@ import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
 import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.littletonrobotics.junction.Logger;
@@ -30,15 +35,15 @@ public class Superstructure extends SubsystemBase {
     // MANUAL,
     STOPPED,
     INTAKING,
-    IDLE,
+    DRIVING,
     SHOOTING,
     SHOOTINGPREPARE,
 
   }
 
-  private static @Getter @Setter SuperState desiredSuperState = SuperState.IDLE;
-  private static @Getter @Setter SuperState currentSuperState = SuperState.IDLE;
-  private static SuperState previousSuperState = SuperState.IDLE;
+  private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
+  private static @Getter @Setter SuperState currentSuperState = SuperState.DRIVING;
+  private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
       Shooter shooter) {
@@ -112,7 +117,7 @@ public class Superstructure extends SubsystemBase {
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
-      case IDLE:
+      case DRIVING:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
@@ -140,9 +145,16 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, IDLE -> true;
+      case STOPPED, DRIVING -> true;
       default -> false;
     };
+  }
+
+  public Command prepShot(XboxController controller, Supplier<Pose2d> targetPose)
+  {
+    return Commands.parallel(
+      new InstantCommand(() -> shooter.setDesiredSubstate(Shooter.Substate.PREPARING)),
+      drive.alignDrive(controller, targetPose));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
