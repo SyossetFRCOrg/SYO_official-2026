@@ -67,8 +67,6 @@ class AutoFactory {
     return c;
   }
 
-  
-
   // Auto init helpers
   private Command resetPose(final PathPlannerPath segment) {
     return runOnce(
