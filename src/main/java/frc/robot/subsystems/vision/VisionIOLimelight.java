@@ -8,6 +8,7 @@ import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.subsystems.vision.LimelightHelpers.PoseEstimate;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -63,11 +64,14 @@ public class VisionIOLimelight implements VisionIO {
             24, 25, 36, 27, 28, 29, 30, 31, 32});
     } 
     else {
-      LimelightHelpers.SetFiducialIDFiltersOverride(
-          name,
-          new int[] {
-            0 /*RobotState.getInstance().getNearestReefTagID(RobotState.getInstance().getRobotPose())*/
-          });
+      int[] nums = new int[22];
+      if (DriverStation.getAlliance().get() == Alliance.Red) {
+        for (int i = 0; i < 22; i++) nums[i] = i + 1;
+      } else {
+        for (int i = 0; i < 6; i++) nums[i] = i + 1;
+        for (int i = 6; i < 22; i++) nums[i] = i + 11;
+      }
+      LimelightHelpers.SetFiducialIDFiltersOverride(name, nums);
     }
 
     latencySubscriber = LimelightHelpers.getLatency_Pipeline(name);
