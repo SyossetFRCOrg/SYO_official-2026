@@ -7,6 +7,7 @@ package frc.robot.subsystems.indexer;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +25,7 @@ public class Indexer extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
-    private double indexerSpeed = 5;
+    private LoggedTunableNumber indexerSpeed = new LoggedTunableNumber("Indexer/IndexerSpeed", 5);
 
     public Indexer(IndexerIO indexerIO) 
     {
@@ -37,6 +38,8 @@ public class Indexer extends SubsystemBase {
         super.periodic();
         indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer", inputs);
+        Logger.recordOutput("Indexer/CurrentSubstate", currentSubstate.toString());
+        Logger.recordOutput("Indexer/DesiredSubstate", desiredSubstate.toString());
         
         currentSubstate = handleIndexerTransitions();
         applyStates();
@@ -53,10 +56,10 @@ public class Indexer extends SubsystemBase {
                 indexerIO.setVelocity(0);
                 break;
             case INDEXING:
-                indexerIO.setVelocity(indexerSpeed);
+                indexerIO.setVelocity(indexerSpeed.get());
                 break;
             case REVERSING: 
-                indexerIO.setVelocity(-indexerSpeed);
+                indexerIO.setVelocity(-indexerSpeed.get());
                 break;
 
         }

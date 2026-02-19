@@ -252,10 +252,32 @@ public class ShooterIOTalonFX implements ShooterIO {
                                 .rotationsPerMinuteToRadiansPerSecond(leftShooterVelocity.getValueAsDouble());
                 inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
                 inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
+
+                var rightTalonStatus = BaseStatusSignal.refreshAll(
+                                rightShooterVelocity, rightShooterAppliedVolts, rightShooterCurrent,
+                                rightShooterTorqueCurrent);
+
+                inputs.rightConnected = shooterConnectedDebounce.calculate(rightTalonStatus.isOK());
+
+                inputs.rightVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(rightShooterVelocity.getValueAsDouble());
+                inputs.rightAppliedVolts = rightShooterAppliedVolts.getValueAsDouble();
+                inputs.rightCurrentAmps = rightShooterCurrent.getValueAsDouble();
+
+                var centerTalonStatus = BaseStatusSignal.refreshAll(
+                                centerShooterVelocity, centerShooterAppliedVolts, centerShooterCurrent,
+                                centerShooterTorqueCurrent);
+
+                inputs.centerConnected = shooterConnectedDebounce.calculate(centerTalonStatus.isOK());
+
+                inputs.centerVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(centerShooterVelocity.getValueAsDouble());
+                inputs.centerAppliedVolts = centerShooterAppliedVolts.getValueAsDouble();
+                inputs.centerCurrentAmps = centerShooterCurrent.getValueAsDouble();
                 // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
         }
 
-        public void setVelocity(double velocityRadPerSec, String motor) {
+        public void setVelocity(double velocityRadPerSec) {
                 centerTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
         }
 

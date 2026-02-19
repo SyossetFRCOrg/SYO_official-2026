@@ -94,6 +94,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     // Configure drive motor
     var driveConfig = constants.DriveMotorInitialConfigs;
     driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    driveConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = 0.1;
 
     // if (TunerConstants.kDriveClosedLoopOutput == ClosedLoopOutputType.Voltage) {
     driveConfig.Slot0 = constants.DriveMotorGains;
@@ -172,9 +173,9 @@ public class ModuleIOTalonFX implements ModuleIO {
     // Configure periodic frames
     // BaseStatusSignal.setUpdateFrequencyForAll(
     //     Drive.ODOMETRY_FREQUENCY, drivePosition, turnPosition);
-    BaseStatusSignal.setUpdateFrequencyForAll(100, drivePosition, turnPosition);
+    BaseStatusSignal.setUpdateFrequencyForAll(250, drivePosition, turnPosition);
     BaseStatusSignal.setUpdateFrequencyForAll(
-        100,
+        250,
         driveVelocity,
         driveAppliedVolts,
         driveCurrent,
