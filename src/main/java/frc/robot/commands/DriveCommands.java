@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.FieldConstants;
 import frc.robot.RobotState;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
@@ -115,7 +116,6 @@ public class DriveCommands {
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
-
     // Construct command
     return Commands.run(
         () -> {
@@ -147,6 +147,12 @@ public class DriveCommands {
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
+  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier)
+  {
+    return DriveCommands.joystickDriveAtAngle(
+      drive, xSupplier, ySupplier, () -> FieldConstants.getHubePose().toPose2d().getRotation()
+    );
+  }
   /**
    * Measures the velocity feedforward constants for the drive motors.
    *

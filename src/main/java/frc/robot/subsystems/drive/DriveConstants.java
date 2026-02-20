@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 public class DriveConstants {
     public static final Distance shooterSideOffset = Units.Inches.of(6.0);
     public static final double maxAngularRate = Units.RotationsPerSecond.of(0.75).in(Units.RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-    public static final Angle epsilonAngleToGoal = Degrees.of(1.0);
+    public static final Angle epsilonAngleToGoal = Degrees.of(0.1);
 
     public static final PIDController rotationController = getRotationController();
 

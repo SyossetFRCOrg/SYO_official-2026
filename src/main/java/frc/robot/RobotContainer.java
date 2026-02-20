@@ -46,129 +46,124 @@ import frc.robot.subsystems.vision.VisionIOLimelight;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-        // Subsystems
-        private final Vision vision;
-        private final Drive drive;
-        private final Indexer indexer;
-        private final Intake intake;
-        private final Shooter shooter;
+    // Subsystems
+    private final Vision vision;
+    private final Drive drive;
+    private final Indexer indexer;
+    private final Intake intake;
+    private final Shooter shooter;
 
-        private final Superstructure superstructure;
+    private final Superstructure superstructure;
 
-        // Controllers
-        private final XboxController controller = new XboxController(0);
-        private final XboxController buttonboard = new XboxController(1);
-        // private final UsbCamera climbCam;
+    // Controllers
+    private final XboxController controller = new XboxController(0);
+    private final XboxController buttonboard = new XboxController(1);
+    // private final UsbCamera climbCam;
 
-        // private final HttpCamera climberCamera;
+    // private final HttpCamera climberCamera;
 
-        // private final AutoSelector autoSelector = new AutoSelector("Auto");
+    // private final AutoSelector autoSelector = new AutoSelector("Auto");
 
-        // Dashboard inputs
-        // private final LoggedDashboardChooser<Command> autoChooser;
+    // Dashboard inputs
+    // private final LoggedDashboardChooser<Command> autoChooser;
 
-        /**
-         * The container for the robot. Contains subsystems, IO devices, and commands.
-         */
-        public RobotContainer() {
+    /**
+     * The container for the robot. Contains subsystems, IO devices, and commands.
+     */
+    public RobotContainer() {
 
-                drive = new Drive(
-                                new GyroIOPigeon2(),
-                                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                                new ModuleIOTalonFX(TunerConstants.BackRight));
-                indexer = new Indexer(new IndexerIOTalonFX());
-                intake = new Intake(new IntakeIOTalonFX());
-                shooter = new Shooter(new ShooterIOTalonFX());
+        drive = new Drive(
+                new GyroIOPigeon2(),
+                new ModuleIOTalonFX(TunerConstants.FrontLeft),
+                new ModuleIOTalonFX(TunerConstants.FrontRight),
+                new ModuleIOTalonFX(TunerConstants.BackLeft),
+                new ModuleIOTalonFX(TunerConstants.BackRight));
+        indexer = new Indexer(new IndexerIOTalonFX());
+        intake = new Intake(new IntakeIOTalonFX());
+        shooter = new Shooter(new ShooterIOTalonFX());
 
-                // LEDs = new LEDs();
+        // LEDs = new LEDs();
 
-                vision = new Vision(
-                                drive::addVisionMeasurement,
-                                drive,
-                                new VisionIOLimelight(camera0Name, drive::getRotation));
+        vision = new Vision(
+                drive::addVisionMeasurement,
+                drive,
+                new VisionIOLimelight(camera0Name, drive::getRotation));
 
-                superstructure = new Superstructure(this, drive, indexer, intake, shooter);
+        superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
-                // Configure the button bindings
-                configureButtonBindings();
+        // Configure the button bindings
+        configureButtonBindings();
 
-                
-                field.setRobotPose(drive.getPose());
+        // climbCam = CameraServer.startAutomaticCapture();
+        // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+        // climbCam.setResolution(80, 60);
 
-                // climbCam = CameraServer.startAutomaticCapture();
-                // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-                // climbCam.setResolution(80, 60);
+        // Shuffleboard.getTab("Match")
+        // .add(new HttpCamera("ClimberCam",
+        // "http://roborio-9016-frc.local:1181/?action=stream"))
+        // .withWidget(BuiltInWidgets.kCameraStream)
+        // .withSize(4, 3)
+        // .withPosition(4, 3);
+    }
 
-                // Shuffleboard.getTab("Match")
-                // .add(new HttpCamera("ClimberCam",
-                // "http://roborio-9016-frc.local:1181/?action=stream"))
-                // .withWidget(BuiltInWidgets.kCameraStream)
-                // .withSize(4, 3)
-                // .withPosition(4, 3);
-        }
+    /**
+     * Use this method to define your button->command mappings. Buttons can be
+     * created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
+     * it to a {@link
+     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    private void configureButtonBindings() {
 
-        /**
-         * Use this method to define your button->command mappings. Buttons can be
-         * created by
-         * instantiating a {@link GenericHID} or one of its subclasses ({@link
-         * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing
-         * it to a {@link
-         * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-         */
-        private void configureButtonBindings() {
+        // kinda stupid but it works
+        double tempSpeed = 0.35;
 
-                // kinda stupid but it works
-                double tempSpeed = 0.35;
+        // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
+        drive.setDefaultCommand(
+                DriveCommands.joystickDrive(
+                        drive,
+                        () -> -controller.getLeftY() * tempSpeed,
+                        () -> -controller.getLeftX() * tempSpeed,
+                        () -> -controller.getRightX()));
+        Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
+        resetPoseTrigger.onTrue(
+                Commands.runOnce(
+                        () -> drive.setPose(
+                                new Pose2d(
+                                        drive.getPose().getX(),
+                                        drive.getPose().getY(),
+                                        DriverStation.getAlliance()
+                                                .get() == Alliance.Blue
+                                                        ? Rotation2d.fromRadians(
+                                                                180)
+                                                        : Rotation2d.fromDegrees(
+                                                                0))),
+                        drive)
+                        .ignoringDisable(true));
 
-                // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
-                drive.setDefaultCommand(
-                                DriveCommands.joystickDrive(
-                                                drive,
-                                                () -> -controller.getLeftY() * tempSpeed,
-                                                () -> -controller.getLeftX() * tempSpeed,
-                                                () -> -controller.getRightX()));
-                Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
-                resetPoseTrigger.onTrue(
-                                Commands.runOnce(
-                                                () -> drive.setPose(
-                                                                new Pose2d(
-                                                                                drive.getPose().getX(),
-                                                                                drive.getPose().getY(),
-                                                                                DriverStation.getAlliance()
-                                                                                                .get() == Alliance.Blue
-                                                                                                                ? Rotation2d.fromRadians(
-                                                                                                                                180)
-                                                                                                                : Rotation2d.fromDegrees(
-                                                                                                                                0))),
-                                                drive)
-                                                .ignoringDisable(true));
+        // TODO fix error where triggers are not being registered. Something is wrong
+        // with the way I set up these triggers because the code does not do anything
+        // with them
+        Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
 
-                // TODO fix error where triggers are not being registered. Something is wrong
-                // with the way I set up these triggers because the code does not do anything
-                // with them
-                Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
+        IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
+        IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
-                                .andThen(new InstantCommand(() -> System.out.print("A Button Pressed"))));
-                IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+        Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
 
-                Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
+        ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+        ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+        Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
+        AlignOnRightBumper.whileTrue(superstructure.AutoAlignShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+    }
 
-                Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignOnRightBumper.onTrue(superstructure.prepShot(controller, () -> FieldConstants.getHubePose().toPose2d()));
-                AlignOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
-        }
+    public Drive getDrive() {
+        return drive;
+    }
 
-        public Drive getDrive() {
-                return drive;
-        }
-
-        public Superstructure getSuperstructure() {
-                return superstructure;
-        }
+    public Superstructure getSuperstructure() {
+        return superstructure;
+    }
 }

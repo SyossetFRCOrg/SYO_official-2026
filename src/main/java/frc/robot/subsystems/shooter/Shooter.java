@@ -76,7 +76,7 @@ public class Shooter extends SubsystemBase {
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRadPerSec - shooterSpeeds.get(Substate.ACTIVE).get()) < 0.2;
+        return Math.abs(inputs.centerVelocityRadPerSec - shooterSpeeds.get(Substate.ACTIVE).get()) < 1.5;
     }
 
 }

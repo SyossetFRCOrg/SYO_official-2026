@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
+import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.intake.Intake;
@@ -38,7 +40,7 @@ public class Superstructure extends SubsystemBase {
     DRIVING,
     SHOOTING,
     SHOOTINGPREPARE,
-
+    AUTOALIGNING
   }
 
   private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
@@ -100,8 +102,10 @@ public class Superstructure extends SubsystemBase {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
     return switch (desiredSuperState) {
+      case SHOOTINGPREPARE -> SuperState.SHOOTINGPREPARE;
       case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
       case INTAKING -> SuperState.INTAKING;
+      case AUTOALIGNING -> SuperState.AUTOALIGNING;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -128,13 +132,18 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case SHOOTINGPREPARE:
-        drive.stopWithX();
+        //drive.stopWithX();
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
+        break;
+      case AUTOALIGNING:
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
         break;
     }
   }
@@ -150,11 +159,9 @@ public class Superstructure extends SubsystemBase {
     };
   }
 
-  public Command prepShot(XboxController controller, Supplier<Pose2d> targetPose)
+  public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose)
   {
-    return Commands.parallel(
-      new InstantCommand(() -> shooter.setDesiredSubstate(Shooter.Substate.PREPARING)),
-      drive.alignDrive(controller, targetPose));
+    return DriveCommands.joystickDriveHub(drive, () -> controller.getLeftX(), () -> controller.getLeftY()).alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {

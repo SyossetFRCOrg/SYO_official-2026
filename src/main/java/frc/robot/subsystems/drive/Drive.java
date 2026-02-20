@@ -452,8 +452,8 @@ public class Drive extends SubsystemBase {
   public Command alignDrive(XboxController controller, Supplier<Pose2d> targetPoseSupplier) {
     return run(() -> {
       // Driver input
-      double vx = -controller.getLeftY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
-      double vy = -controller.getLeftX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+      double vx = controller.getLeftY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
+      double vy = controller.getLeftX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
 
       Pose2d robotPose = getPose();
       Pose2d targetPose = targetPoseSupplier.get();
@@ -475,7 +475,7 @@ public class Drive extends SubsystemBase {
       Rotation2d offsetAngle = Rotation2d.kCCW_90deg.minus(shooterAngle);
 
       Rotation2d desiredAngle = offsetAngle
-          .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle());
+          .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle()).plus(Rotation2d.k180deg);
 
       Rotation2d currentAngle = robotPose.getRotation();
 
