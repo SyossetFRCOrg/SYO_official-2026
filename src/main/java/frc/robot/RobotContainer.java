@@ -94,39 +94,6 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                SmartDashboard.putData("Swerve Drive", new Sendable() {
-                        @Override
-                        public void initSendable(SendableBuilder builder) {
-                                builder.setSmartDashboardType("SwerveDrive");
-
-                                builder.addDoubleProperty("Front Left Angle",
-                                                () -> drive.getModules()[0].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Front Left Velocity",
-                                                () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Front Right Angle",
-                                                () -> drive.getModules()[1].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Front Right Velocity",
-                                                () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Back Left Angle",
-                                                () -> drive.getModules()[2].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Back Left Velocity",
-                                                () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Back Right Angle",
-                                                () -> drive.getModules()[3].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Back Right Velocity",
-                                                () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
-                        }
-                });
-
-                final Field2d field = new Field2d();
-                SmartDashboard.putData(field);
-                field.setRobotPose(drive.getPose());
-
                 // climbCam = CameraServer.startAutomaticCapture();
                 // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 // climbCam.setResolution(80, 60);
