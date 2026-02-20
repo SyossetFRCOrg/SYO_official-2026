@@ -72,7 +72,7 @@ public class TunerConstants {
 
     // CAN bus that the devices are located on;
     // All swerve devices must share the same CAN bus
-    public static final CANBus kCANBus = new CANBus("*", "./logs/example.hoot");
+    public static final CANBus kCANBus = new CANBus("Comp CANivore", "./logs/example.hoot");
 
     // Theoretical free speed (m/s) at 12 V applied output;
     // This needs to be tuned to your individual robot
@@ -128,10 +128,10 @@ public class TunerConstants {
 
 
     // Front Left
-    private static final int kFrontLeftDriveMotorId = 1;
-    private static final int kFrontLeftSteerMotorId = 2;
-    private static final int kFrontLeftEncoderId = 3;
-    private static final Angle kFrontLeftEncoderOffset = Rotations.of(0.2021484375);
+    private static final int kFrontLeftDriveMotorId = 10;
+    private static final int kFrontLeftSteerMotorId = 11;
+    private static final int kFrontLeftEncoderId = 12;
+    private static final Angle kFrontLeftEncoderOffset = Rotations.of(-0.006103515625);
     private static final boolean kFrontLeftSteerMotorInverted = false;
     private static final boolean kFrontLeftEncoderInverted = false;
 
@@ -139,10 +139,10 @@ public class TunerConstants {
     private static final Distance kFrontLeftYPos = Inches.of(14);
 
     // Front Right
-    private static final int kFrontRightDriveMotorId = 4;
-    private static final int kFrontRightSteerMotorId = 5;
-    private static final int kFrontRightEncoderId = 6;
-    private static final Angle kFrontRightEncoderOffset = Rotations.of(-0.12109375);
+    private static final int kFrontRightDriveMotorId = 7;
+    private static final int kFrontRightSteerMotorId = 8;
+    private static final int kFrontRightEncoderId = 9;
+    private static final Angle kFrontRightEncoderOffset = Rotations.of(0.0625);
     private static final boolean kFrontRightSteerMotorInverted = false;
     private static final boolean kFrontRightEncoderInverted = false;
 
@@ -150,10 +150,10 @@ public class TunerConstants {
     private static final Distance kFrontRightYPos = Inches.of(-14);
 
     // Back Left
-    private static final int kBackLeftDriveMotorId = 7;
-    private static final int kBackLeftSteerMotorId = 8;
-    private static final int kBackLeftEncoderId = 9;
-    private static final Angle kBackLeftEncoderOffset = Rotations.of(0.064208984375);
+    private static final int kBackLeftDriveMotorId = 4;
+    private static final int kBackLeftSteerMotorId = 5;
+    private static final int kBackLeftEncoderId = 6;
+    private static final Angle kBackLeftEncoderOffset = Rotations.of(-0.1240234375);
     private static final boolean kBackLeftSteerMotorInverted = false;
     private static final boolean kBackLeftEncoderInverted = false;
 
@@ -161,10 +161,10 @@ public class TunerConstants {
     private static final Distance kBackLeftYPos = Inches.of(14);
 
     // Back Right
-    private static final int kBackRightDriveMotorId = 10;
-    private static final int kBackRightSteerMotorId = 11;
-    private static final int kBackRightEncoderId = 12;
-    private static final Angle kBackRightEncoderOffset = Rotations.of(-0.012451171875);
+    private static final int kBackRightDriveMotorId = 1;
+    private static final int kBackRightSteerMotorId = 2;
+    private static final int kBackRightEncoderId = 3;
+    private static final Angle kBackRightEncoderOffset = Rotations.of(0.20166015625);
     private static final boolean kBackRightSteerMotorInverted = false;
     private static final boolean kBackRightEncoderInverted = false;
 
@@ -193,33 +193,6 @@ public class TunerConstants {
             kBackRightXPos, kBackRightYPos, kInvertRightSide, kBackRightSteerMotorInverted, kBackRightEncoderInverted
         );
 
-    public static final DriveConfig driveConfig =
-        DriveConfig.builder()
-            .maxLinearVelocity(
-                (5800.0 / 60.0)
-                    / ((50.0 / 13.0) * (16.0 / 28.0) * (45.0 / 15.0))
-                    * kWheelRadius.in(Inches)
-                    * 2
-                    * Math.PI)
-            .maxLinearAcceleration(25)
-            .maxAngularVelocity(4.5 * Math.PI) // test out units - rad/s? was 12.0
-            .maxAngularAcceleration(3 * Math.PI) // was 6.0
-            .build();
-
-    @Builder
-    public record DriveConfig(
-        double maxLinearVelocity,
-        double maxLinearAcceleration,
-        double maxAngularVelocity,
-        double maxAngularAcceleration) {}
-
-    public static final ModuleLimits moduleLimitsFree =
-        new ModuleLimits(
-            driveConfig.maxLinearVelocity(),
-            driveConfig.maxLinearAcceleration(),
-            Units.degreesToRadians(1080.0));
-
-
     /**
      * Creates a CommandSwerveDrivetrain instance.
      * This should only be called once in your robot program,.
@@ -230,6 +203,31 @@ public class TunerConstants {
     //     );
     // }
 
+    public static final DriveConfig driveConfig =
+            DriveConfig.builder()
+                .maxLinearVelocity(
+                    (5800.0 / 60.0)
+                        / ((50.0 / 13.0) * (16.0 / 28.0) * (45.0 / 15.0))
+                        * kWheelRadius.in(Inches)
+                        * 2
+                        * Math.PI)
+                .maxLinearAcceleration(25)
+                .maxAngularVelocity(4.5 * Math.PI) // test out units - rad/s? was 12.0
+                .maxAngularAcceleration(3 * Math.PI) // was 6.0
+                .build();
+
+        @Builder
+        public record DriveConfig(
+            double maxLinearVelocity,
+            double maxLinearAcceleration,
+            double maxAngularVelocity,
+            double maxAngularAcceleration) {}
+
+        public static final ModuleLimits moduleLimitsFree =
+            new ModuleLimits(
+                driveConfig.maxLinearVelocity(),
+                driveConfig.maxLinearAcceleration(),
+                Units.degreesToRadians(1080.0));
 
     /**
      * Swerve Drive class utilizing CTR Electronics' Phoenix 6 API with the selected device types.
