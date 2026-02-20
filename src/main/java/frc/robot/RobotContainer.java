@@ -94,37 +94,7 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                SmartDashboard.putData("Swerve Drive", new Sendable() {
-                        @Override
-                        public void initSendable(SendableBuilder builder) {
-                                builder.setSmartDashboardType("SwerveDrive");
-
-                                builder.addDoubleProperty("Front Left Angle",
-                                                () -> drive.getModules()[0].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Front Left Velocity",
-                                                () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Front Right Angle",
-                                                () -> drive.getModules()[1].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Front Right Velocity",
-                                                () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Back Left Angle",
-                                                () -> drive.getModules()[2].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Back Left Velocity",
-                                                () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Back Right Angle",
-                                                () -> drive.getModules()[3].getAngle().getRadians(), null);
-                                builder.addDoubleProperty("Back Right Velocity",
-                                                () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
-
-                                builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
-                        }
-                });
-
-                final Field2d field = new Field2d();
-                SmartDashboard.putData(field);
+                
                 field.setRobotPose(drive.getPose());
 
                 // climbCam = CameraServer.startAutomaticCapture();
@@ -156,8 +126,8 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> controller.getLeftY() * tempSpeed,
-                                                () -> controller.getLeftX() * tempSpeed,
+                                                () -> -controller.getLeftY() * tempSpeed,
+                                                () -> -controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
@@ -189,9 +159,9 @@ public class RobotContainer {
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger AlignOnXRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignOnXRightBumper.onTrue(superstructure.prepShot(controller, () -> FieldConstants.getHubePose().toPose2d()));
-                AlignOnXRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
+                AlignOnRightBumper.onTrue(superstructure.prepShot(controller, () -> FieldConstants.getHubePose().toPose2d()));
+                AlignOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
         }
 
         public Drive getDrive() {

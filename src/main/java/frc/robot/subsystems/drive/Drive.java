@@ -475,8 +475,7 @@ public class Drive extends SubsystemBase {
       Rotation2d offsetAngle = Rotation2d.kCCW_90deg.minus(shooterAngle);
 
       Rotation2d desiredAngle = offsetAngle
-          .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle())
-          .plus(Rotation2d.k180deg);
+          .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle());
 
       Rotation2d currentAngle = robotPose.getRotation();
 

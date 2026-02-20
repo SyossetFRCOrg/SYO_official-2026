@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -133,9 +134,9 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                leftTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-                centerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-                rightTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+                leftTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                centerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                rightTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
                 tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
                 tryUntilOk(5, () -> leftTalon.setPosition(0.0, 0.25));
@@ -280,5 +281,4 @@ public class ShooterIOTalonFX implements ShooterIO {
         public void setVelocity(double velocityRadPerSec) {
                 centerTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
         }
-
 }
