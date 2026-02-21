@@ -16,6 +16,7 @@ import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
+import frc.robot.subsystems.indexer.Indexer.Substate;
 import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.shooter.Shooter;
 
@@ -40,6 +41,7 @@ public class Superstructure extends SubsystemBase {
     DRIVING,
     SHOOTING,
     SHOOTINGPREPARE,
+    SHOOTINGWHILEINDEXEROUT,
     AUTOALIGNING
   }
 
@@ -135,6 +137,10 @@ public class Superstructure extends SubsystemBase {
         //drive.stopWithX();
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        break;
+      case SHOOTINGWHILEINDEXEROUT:
+        indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case SHOOTING:

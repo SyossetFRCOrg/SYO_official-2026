@@ -36,32 +36,53 @@ public class ShooterIOTalonFX implements ShooterIO {
         private static TalonFXConfiguration centerTalonConfig = new TalonFXConfiguration();
         private static TalonFXConfiguration rightTalonConfig = new TalonFXConfiguration();
 
-        private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP", ShooterConstants.left_kP);
-        private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD", ShooterConstants.left_kD);
-        private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS", ShooterConstants.left_kS);
-        private static final LoggedTunableNumber left_kV = new LoggedTunableNumber("Shooter/Gains/left_kV", ShooterConstants.left_kV);
-        private static final LoggedTunableNumber left_kA = new LoggedTunableNumber("Shooter/Gains/left_kA", ShooterConstants.left_kA);
+        private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
+                        ShooterConstants.left_kP);
+        private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
+                        ShooterConstants.left_kD);
+        private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS",
+                        ShooterConstants.left_kS);
+        private static final LoggedTunableNumber left_kV = new LoggedTunableNumber("Shooter/Gains/left_kV",
+                        ShooterConstants.left_kV);
+        private static final LoggedTunableNumber left_kA = new LoggedTunableNumber("Shooter/Gains/left_kA",
+                        ShooterConstants.left_kA);
 
-        private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP", ShooterConstants.center_kP);
-        private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD", ShooterConstants.center_kD);
-        private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS", ShooterConstants.center_kS);
-        private static final LoggedTunableNumber center_kV = new LoggedTunableNumber("Shooter/Gains/center_kV", ShooterConstants.center_kV);
-        private static final LoggedTunableNumber center_kA = new LoggedTunableNumber("Shooter/Gains/center_kA", ShooterConstants.center_kA);
+        private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP",
+                        ShooterConstants.center_kP);
+        private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD",
+                        ShooterConstants.center_kD);
+        private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS",
+                        ShooterConstants.center_kS);
+        private static final LoggedTunableNumber center_kV = new LoggedTunableNumber("Shooter/Gains/center_kV",
+                        ShooterConstants.center_kV);
+        private static final LoggedTunableNumber center_kA = new LoggedTunableNumber("Shooter/Gains/center_kA",
+                        ShooterConstants.center_kA);
 
-        private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP", ShooterConstants.right_kP);
-        private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD", ShooterConstants.right_kD);
-        private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS", ShooterConstants.right_kS);
-        private static final LoggedTunableNumber right_kV = new LoggedTunableNumber("Shooter/Gains/right_kV", ShooterConstants.right_kV);
-        private static final LoggedTunableNumber right_kA = new LoggedTunableNumber("Shooter/Gains/right_kA", ShooterConstants.right_kA);
+        private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP",
+                        ShooterConstants.right_kP);
+        private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD",
+                        ShooterConstants.right_kD);
+        private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS",
+                        ShooterConstants.right_kS);
+        private static final LoggedTunableNumber right_kV = new LoggedTunableNumber("Shooter/Gains/right_kV",
+                        ShooterConstants.right_kV);
+        private static final LoggedTunableNumber right_kA = new LoggedTunableNumber("Shooter/Gains/right_kA",
+                        ShooterConstants.right_kA);
 
-        private static final LoggedTunableNumber leftMotionMagicAcceleration = new LoggedTunableNumber("Shooter/leftMaxAcceleration", ShooterConstants.leftMaxAcceleration);
-        private static final LoggedTunableNumber leftMotionMagicJerk = new LoggedTunableNumber("Shooter/leftMaxJerk", ShooterConstants.leftMaxJerk);
+        private static final LoggedTunableNumber leftMotionMagicAcceleration = new LoggedTunableNumber(
+                        "Shooter/leftMaxAcceleration", ShooterConstants.leftMaxAcceleration);
+        private static final LoggedTunableNumber leftMotionMagicJerk = new LoggedTunableNumber("Shooter/leftMaxJerk",
+                        ShooterConstants.leftMaxJerk);
 
-        private static final LoggedTunableNumber centerMotionMagicAcceleration = new LoggedTunableNumber("Shooter/centerMaxAcceleration", ShooterConstants.centerMaxAcceleration);
-        private static final LoggedTunableNumber centerMotionMagicJerk = new LoggedTunableNumber("Shooter/centerMaxJerk", ShooterConstants.centerMaxJerk);
+        private static final LoggedTunableNumber centerMotionMagicAcceleration = new LoggedTunableNumber(
+                        "Shooter/centerMaxAcceleration", ShooterConstants.centerMaxAcceleration);
+        private static final LoggedTunableNumber centerMotionMagicJerk = new LoggedTunableNumber(
+                        "Shooter/centerMaxJerk", ShooterConstants.centerMaxJerk);
 
-        private static final LoggedTunableNumber rightMotionMagicAcceleration = new LoggedTunableNumber("Shooter/rightMaxAcceleration", ShooterConstants.rightMaxAcceleration);
-        private static final LoggedTunableNumber rightMotionMagicJerk = new LoggedTunableNumber("Shooter/rightMaxJerk", ShooterConstants.rightMaxJerk);
+        private static final LoggedTunableNumber rightMotionMagicAcceleration = new LoggedTunableNumber(
+                        "Shooter/rightMaxAcceleration", ShooterConstants.rightMaxAcceleration);
+        private static final LoggedTunableNumber rightMotionMagicJerk = new LoggedTunableNumber("Shooter/rightMaxJerk",
+                        ShooterConstants.rightMaxJerk);
 
         private final StatusSignal<AngularVelocity> leftShooterVelocity;
         private final StatusSignal<Voltage> leftShooterAppliedVolts;
@@ -279,6 +300,9 @@ public class ShooterIOTalonFX implements ShooterIO {
         }
 
         public void setVelocity(double velocityRadPerSec) {
+                // final VelocityVoltage velocityController = new VelocityVoltage(0);
+                // velocityController.Slot = 0;
+                // centerTalon.setControl(velocityController.withVelocity(10));
                 centerTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
         }
 }
