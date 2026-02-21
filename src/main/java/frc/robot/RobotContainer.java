@@ -150,10 +150,15 @@ public class RobotContainer {
         IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
         IntakeOnAPressed.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-        Trigger ShootOnBButton = new Trigger(() -> controller.getBButton());
+        Trigger ShootOnBButton = new Trigger(() -> (controller.getBButton() && !(controller.getRightTriggerAxis() > 0.5)));
 
         ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
         ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+        Trigger ShootWhileIndexerOutOnBButtonAndRightTrigger = new Trigger(() -> (controller.getRightTriggerAxis() > 0.5 && controller.getBButton()));
+        
+        ShootWhileIndexerOutOnBButtonAndRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+        ShootWhileIndexerOutOnBButtonAndRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
         Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
         AlignOnRightBumper.whileTrue(superstructure.AutoAlignShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
