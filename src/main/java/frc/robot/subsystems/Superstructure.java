@@ -168,7 +168,7 @@ public class Superstructure extends SubsystemBase {
 
   public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose)
   {
-    return DriveCommands.joystickDriveHub(drive, () -> controller.getLeftX(), () -> controller.getLeftY()).alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
+    return DriveCommands.joystickDriveHub(drive, () -> -controller.getLeftY(), () -> -controller.getLeftX()).alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
