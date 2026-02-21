@@ -105,6 +105,7 @@ public class Superstructure extends SubsystemBase {
     boolean ready = ready(desiredSuperState);
     return switch (desiredSuperState) {
       case SHOOTINGPREPARE -> SuperState.SHOOTINGPREPARE;
+      case SHOOTINGWHILEINDEXEROUT -> SuperState.SHOOTINGWHILEINDEXEROUT;
       case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
       case INTAKING -> SuperState.INTAKING;
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
