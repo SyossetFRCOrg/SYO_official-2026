@@ -64,12 +64,11 @@ public class VisionIOLimelight implements VisionIO {
             24, 25, 36, 27, 28, 29, 30, 31, 32});
     } 
     else {
-      int[] nums = new int[22];
+      int[] nums;
       if (DriverStation.getAlliance().get() == Alliance.Red) {
-        for (int i = 0; i < 22; i++) nums[i] = i + 1;
+        nums = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22};
       } else {
-        for (int i = 0; i < 6; i++) nums[i] = i + 1;
-        for (int i = 6; i < 22; i++) nums[i] = i + 11;
+        nums = new int[] {1, 2, 3, 4, 5, 6, 17, 18, 19, 20, 21, 22, 23, 24, 25, 36, 27, 28, 29, 30, 31, 32};
       }
       LimelightHelpers.SetFiducialIDFiltersOverride(name, nums);
     }
