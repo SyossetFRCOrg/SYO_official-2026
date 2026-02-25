@@ -24,6 +24,8 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -48,6 +50,7 @@ import frc.robot.subsystems.vision.VisionIOLimelight;
 public class RobotContainer {
     // Subsystems
     private final Vision vision;
+    private final Climber climber;
     private final Drive drive;
     private final Indexer indexer;
     private final Intake intake;
@@ -72,6 +75,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
 
+        climber = new Climber(new ClimberIOTalonFX());
         drive = new Drive(
                 new GyroIOPigeon2(),
                 new ModuleIOTalonFX(TunerConstants.FrontLeft),
@@ -89,7 +93,7 @@ public class RobotContainer {
                 drive,
                 new VisionIOLimelight(camera0Name, drive::getRotation));
 
-        superstructure = new Superstructure(this, drive, indexer, intake, shooter);
+        superstructure = new Superstructure(this, climber, drive, indexer, intake, shooter);
 
         // Configure the button bindings
         configureButtonBindings();
@@ -118,6 +122,12 @@ public class RobotContainer {
 
         // kinda stupid but it works
         double tempSpeed = 0.35;
+
+        Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
+        Trigger StopClimbOnXAndLeftTrigger = new Trigger(() -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
+
+        ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.PREPCLIMBING));
+        StopClimbOnXAndLeftTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
         // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
         drive.setDefaultCommand(

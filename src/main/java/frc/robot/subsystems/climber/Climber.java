@@ -17,7 +17,6 @@ public class Climber extends SubsystemBase {
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
     private final ClimberIO climberIO;
     
-    private double voltage = 0;
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
