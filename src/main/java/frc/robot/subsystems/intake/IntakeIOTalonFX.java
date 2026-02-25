@@ -23,8 +23,8 @@ public class IntakeIOTalonFX implements IntakeIO{
 
     final VoltageOut VoltageRequest = new VoltageOut(0);
 
-    private final TalonFX talon;
-    private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+    private final TalonFX intakeTalon;
+    private static TalonFXConfiguration intakeTalonConfig = new TalonFXConfiguration();
 
     private static final LoggedTunableNumber kP = new LoggedTunableNumber("Intake/Gains/kP", IntakeConstants.kP);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Intake/Gains/kD", IntakeConstants.kD);
@@ -50,38 +50,38 @@ public class IntakeIOTalonFX implements IntakeIO{
     public IntakeIOTalonFX()
     {
         // TODO: set up device id
-        talon = new TalonFX(IntakeConstants.motorID, IntakeConstants.canbus);
+        intakeTalon = new TalonFX(IntakeConstants.motorID, IntakeConstants.canbus);
 
-        talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-        talonConfig.Slot0.kA = kA.get();
-        talonConfig.Slot0.kD = kD.get();
+        intakeTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+        intakeTalonConfig.Slot0.kA = kA.get();
+        intakeTalonConfig.Slot0.kD = kD.get();
         // talonConfig.Slot0.kG = kG.get();
-        talonConfig.Slot0.kP = kP.get();
-        talonConfig.Slot0.kS = kS.get();
-        talonConfig.Slot0.kV = kV.get();
+        intakeTalonConfig.Slot0.kP = kP.get();
+        intakeTalonConfig.Slot0.kS = kS.get();
+        intakeTalonConfig.Slot0.kV = kV.get();
 
-        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+        intakeTalonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
         // talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
-        talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+        intakeTalonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
 
         // talonConfig.TorqueCurrent.PeakForwardTorqueCurrent = constants.SlipCurrent;
         // talonConfig.TorqueCurrent.PeakReverseTorqueCurrent = -constants.SlipCurrent;
-        talonConfig.CurrentLimits.StatorCurrentLimit = 60;
-        talonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        talonConfig.CurrentLimits.SupplyCurrentLimit = 50;
-        talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        intakeTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+        intakeTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+        intakeTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+        intakeTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-        talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        intakeTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         // false // fix this, test this.  Positive should be upward
         //     ? InvertedValue.Clockwise_Positive
         //     : InvertedValue.CounterClockwise_Positive;
 
-        tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+        tryUntilOk(5, () -> intakeTalon.getConfigurator().apply(intakeTalonConfig, 0.25));
 
-        intakeVelocity = talon.getVelocity();
-        intakeAppliedVolts = talon.getMotorVoltage();
-        intakeCurrent = talon.getSupplyCurrent();
-        intakeTorqueCurrent = talon.getTorqueCurrent();
+        intakeVelocity = intakeTalon.getVelocity();
+        intakeAppliedVolts = intakeTalon.getMotorVoltage();
+        intakeCurrent = intakeTalon.getSupplyCurrent();
+        intakeTorqueCurrent = intakeTalon.getTorqueCurrent();
 
         BaseStatusSignal.setUpdateFrequencyForAll(
             50.0,
@@ -89,7 +89,7 @@ public class IntakeIOTalonFX implements IntakeIO{
             intakeAppliedVolts,
             intakeCurrent,
             intakeTorqueCurrent);
-        ParentDevice.optimizeBusUtilizationForAll(talon);
+        ParentDevice.optimizeBusUtilizationForAll(intakeTalon);
     }
 
     @Override
@@ -97,13 +97,13 @@ public class IntakeIOTalonFX implements IntakeIO{
         LoggedTunableNumber.ifChanged(
             hashCode(),
             () -> {
-            talonConfig.Slot0.kA = kA.get();
-            talonConfig.Slot0.kD = kD.get();
+            intakeTalonConfig.Slot0.kA = kA.get();
+            intakeTalonConfig.Slot0.kD = kD.get();
             // talonConfig.Slot0.kG = kG.get();
-            talonConfig.Slot0.kP = kP.get();
-            talonConfig.Slot0.kS = kS.get();
-            talonConfig.Slot0.kV = kV.get();
-            tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+            intakeTalonConfig.Slot0.kP = kP.get();
+            intakeTalonConfig.Slot0.kS = kS.get();
+            intakeTalonConfig.Slot0.kV = kV.get();
+            tryUntilOk(5, () -> intakeTalon.getConfigurator().apply(intakeTalonConfig, 0.25));
             },
             kA,
             kD,
@@ -114,10 +114,10 @@ public class IntakeIOTalonFX implements IntakeIO{
         LoggedTunableNumber.ifChanged(
             hashCode(),
             () -> {
-            talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+            intakeTalonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
             // talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
-            talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-                tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+            intakeTalonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+                tryUntilOk(5, () -> intakeTalon.getConfigurator().apply(intakeTalonConfig, 0.25));
             },
             motionMagicAcceleration,
             motionMagicJerk);
@@ -135,7 +135,7 @@ public class IntakeIOTalonFX implements IntakeIO{
 
     /** Run intake with velocity */
     public void setVelocity(double velocityRadPerSec) {
-        talon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+        intakeTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
     }
 
 }
