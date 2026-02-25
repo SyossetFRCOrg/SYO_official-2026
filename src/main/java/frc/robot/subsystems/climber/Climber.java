@@ -10,9 +10,8 @@ import lombok.Setter;
 public class Climber extends SubsystemBase {
     public enum Substate {
         STOPPED,
-        L1, // Bottom rung
-        L2, // Middle rung
-        L3; // Top rung
+        UP,
+        DOWN;
     }
 
     private final ClimberIOInputsAutoLogged inputs = new ClimberIOInputsAutoLogged();
@@ -43,19 +42,13 @@ public class Climber extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                voltage = 0;
-                climberIO.setvoltage(voltage);
+                climberIO.setVoltage(0);
                 break;
-            case L1:
-                /*
-                Example barebones idea if two motors:
-                voltage1 = 1;
-                voltage2 = 0 or -1 (to pull back down);
-                */
+            case UP:
+                climberIO.setVoltage(10);
                 break;
-            case L2:
-                break;
-            case L3:
+            case DOWN:
+                climberIO.setVoltage(-10);
                 break;
         }
     }
