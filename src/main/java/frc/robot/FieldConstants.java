@@ -22,6 +22,7 @@ public class FieldConstants {
     public static final Pose3d blueTowerPose = new Pose3d(Units.Inches.of(0.32), Units.Inches.of(164.47), Units.Inches.of(21.75), Rotation3d.kZero);
 
     // Gets pose based on current alliance
+    // -->
     public static Pose3d getHubePose() {
         return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
     }
