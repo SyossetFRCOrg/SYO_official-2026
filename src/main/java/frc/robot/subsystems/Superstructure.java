@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.Indexer.Substate;
@@ -28,6 +29,7 @@ import lombok.Setter;
 import org.littletonrobotics.junction.Logger;
 
 public class Superstructure extends SubsystemBase {
+  private Climber climber;
   private Drive drive;
   private RobotContainer container;
   private Indexer indexer;
@@ -37,6 +39,8 @@ public class Superstructure extends SubsystemBase {
   public static enum SuperState {
     // MANUAL,
     STOPPED,
+    PREPCLIMBING,
+    CLIMBING,
     INTAKING,
     DRIVING,
     SHOOTING,
@@ -49,8 +53,9 @@ public class Superstructure extends SubsystemBase {
   private static @Getter @Setter SuperState currentSuperState = SuperState.DRIVING;
   private static SuperState previousSuperState = SuperState.DRIVING;
 
-  public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
+  public Superstructure(RobotContainer container, Climber climber, Drive drive, Indexer indexer, Intake intake,
       Shooter shooter) {
+    this.climber = climber;
     this.drive = drive;
     this.container = container;
     this.indexer = indexer;
@@ -100,12 +105,17 @@ public class Superstructure extends SubsystemBase {
   private SuperState handleStateTransitions() {
     previousSuperState = currentSuperState;
     boolean ready = ready(desiredSuperState);
+    if (desiredSuperState == SuperState.PREPCLIMBING) {
+      climber.setDesiredSubstate(climber.getCurrentSubstate() == Climber.Substate.UP ? Climber.Substate.DOWN : Climber.Substate.UP);
+    }
     return switch (desiredSuperState) {
       case SHOOTINGPREPARE -> SuperState.SHOOTINGPREPARE;
       case SHOOTINGWHILEINDEXEROUT -> SuperState.SHOOTINGWHILEINDEXEROUT;
       case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
       case INTAKING -> SuperState.INTAKING;
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
+      case PREPCLIMBING -> SuperState.CLIMBING;
+      case CLIMBING -> SuperState.CLIMBING;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -125,6 +135,7 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        climber.setDesiredSubstate(Climber.Substate.STOPPED);
         break;
       case INTAKING:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
@@ -144,11 +155,19 @@ public class Superstructure extends SubsystemBase {
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
         break;
+<<<<<<< HEAD
+=======
       case AUTOALIGNING:
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         break;
+      case CLIMBING:
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+      default: break;
+>>>>>>> 99ea0ce1d137081cf83286d125e98e45eb108ae2
     }
   }
 
@@ -157,13 +176,20 @@ public class Superstructure extends SubsystemBase {
   private boolean ready(SuperState state) {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
-      case INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, DRIVING -> true;
+      case  INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
+      case STOPPED, DRIVING, CLIMBING, PREPCLIMBING -> true;
       default -> false;
     };
   }
 
-  public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose) {
+  public Command AutonStationaryAimShooting(Supplier<Pose2d> targetPose)
+  {
+    return DriveCommands.joystickDriveHub(
+        drive, () -> 0.0, () -> 0.0, targetPose)
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
+  }
+
+  public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
         drive, () -> controller.getLeftX(), () -> controller.getLeftY(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
