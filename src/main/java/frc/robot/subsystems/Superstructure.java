@@ -144,11 +144,6 @@ public class Superstructure extends SubsystemBase {
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
         break;
-      case AUTOALIGNING:
-        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
-        intake.setDesiredSubstate(Intake.Substate.STOPPED);
-        break;
     }
   }
 
@@ -163,7 +158,14 @@ public class Superstructure extends SubsystemBase {
     };
   }
 
-  public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose) {
+  public Command AutonStationaryAimShooting(Supplier<Pose2d> targetPose)
+  {
+    return DriveCommands.joystickDriveHub(
+        drive, () -> 0.0, () -> 0.0, targetPose)
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
+  }
+
+  public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
         drive, () -> controller.getLeftX(), () -> controller.getLeftY(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));

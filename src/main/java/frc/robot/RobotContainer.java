@@ -142,9 +142,6 @@ public class RobotContainer {
                         drive)
                         .ignoringDisable(true));
 
-        // TODO fix error where triggers are not being registered. Something is wrong
-        // with the way I set up these triggers because the code does not do anything
-        // with them
         Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
 
         IntakeOnAPressed.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
@@ -160,7 +157,7 @@ public class RobotContainer {
         ShootWhileIndexerOutOnBButtonAndRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
 
         Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-        AlignOnRightBumper.whileTrue(superstructure.AutoAlignShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+        AlignOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
     }
 
     public Drive getDrive() {
