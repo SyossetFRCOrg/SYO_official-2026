@@ -145,7 +145,7 @@ public class AutoChooser extends SendableChooser<Auto> {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
 
-    builder.publishConstString("selected", "%s".formatted(Auto.IDLE));
+    builder.publishConstString("selected", "%s".formatted(Auto.TEST));
   }
 
   private Command loadCommand(final DriverStation.Alliance alliance, final Auto auto) {
