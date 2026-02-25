@@ -147,11 +147,11 @@ public class DriveCommands {
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
-  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier)
+  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> hubPose)
   {
       // Face the hub while maintaining drive controls
     return DriveCommands.joystickDriveAtAngle(
-      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(FieldConstants.getHubePose().toPose2d()).getTranslation().getAngle()
+      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle()
     );
   }
   /**

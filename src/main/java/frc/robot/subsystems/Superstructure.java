@@ -90,9 +90,6 @@ public class Superstructure extends SubsystemBase {
     Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
     Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
 
-
-    
-
   }
 
   /**
@@ -135,7 +132,7 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case SHOOTINGPREPARE:
-        //drive.stopWithX();
+        // drive.stopWithX();
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
@@ -166,9 +163,10 @@ public class Superstructure extends SubsystemBase {
     };
   }
 
-  public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose)
-  {
-    return DriveCommands.joystickDriveHub(drive, () -> controller.getLeftY(), () -> controller.getLeftX()).alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
+  public Command AutoAlignShooting(XboxController controller, Supplier<Pose2d> targetPose) {
+    return DriveCommands.joystickDriveHub(
+        drive, () -> controller.getLeftY(), () -> controller.getLeftX(), targetPose)
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
