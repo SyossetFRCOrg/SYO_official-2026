@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
@@ -63,8 +64,20 @@ class AutoFactory {
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(follow(path));
-    //.addcommands(shoot)
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(intakeWhileFollowing(path));
     return c;
+  }
+
+  
+  private Command stationaryAAShoot()
+  {
+      return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
+  }
+
+  private Command intakeWhileFollowing(PathPlannerPath path)
+  {
+    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING));
   }
 
   // Auto init helpers
