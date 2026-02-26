@@ -65,7 +65,7 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(follow(path));
     c.addCommands(stationaryAAShoot());
-    c.addCommands(follow(path));
+    // c.addCommands(follow(path));
     return c;
   }
 
