@@ -158,6 +158,7 @@ public class Superstructure extends SubsystemBase {
         break;
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
+        intake.setDesiredSubstate(Intake.Substate.ACTIVE);
         break;
       case AUTOALIGNING:
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
