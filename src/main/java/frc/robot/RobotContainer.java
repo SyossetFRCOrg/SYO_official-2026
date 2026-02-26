@@ -141,7 +141,7 @@ public class RobotContainer {
                                         new Pose2d(
                                                 drive.getPose().getX(),
                                                 drive.getPose().getY(),
-                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0))),drive)
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
