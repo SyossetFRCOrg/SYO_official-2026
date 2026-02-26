@@ -157,7 +157,23 @@ public class DriveCommands {
   {
       // Face the hub while maintaining drive controls
     
-    Logger.recordOutput("AutoAlign/Status", "Creating a new joystickangle");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
+    System.out.println("RUNNING HUB!!!");
     return joystickDriveAtAngle(
       drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
