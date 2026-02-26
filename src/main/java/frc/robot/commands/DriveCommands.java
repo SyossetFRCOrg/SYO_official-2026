@@ -111,10 +111,10 @@ public class DriveCommands {
 
     // Create PID controller
     ProfiledPIDController angleController = new ProfiledPIDController(
-        ANGLE_KP,
+        ANGLE_KP.get(),
         0.0,
-        ANGLE_KD,
-        new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
+        ANGLE_KD.get(),
+        new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
