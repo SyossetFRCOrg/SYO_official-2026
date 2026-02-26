@@ -34,7 +34,6 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
         super.periodic();
         intakeIO.updateInputs(inputs);
         Logger.processInputs("Intake", inputs);
@@ -51,10 +50,10 @@ public class Intake extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                intakeIO.setVelocity(0);
+                intakeIO.setRollerVelocity(0);
                 break;
             case ACTIVE:
-                intakeIO.setVelocity(intakeSpeed.get());
+                intakeIO.setRollerVelocity(intakeSpeed.get());
                 break;
         }
     }

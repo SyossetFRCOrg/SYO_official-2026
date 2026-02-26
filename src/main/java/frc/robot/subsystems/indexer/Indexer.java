@@ -34,7 +34,6 @@ public class Indexer extends SubsystemBase {
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
         super.periodic();
         indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer", inputs);
@@ -47,8 +46,6 @@ public class Indexer extends SubsystemBase {
     private Substate handleIndexerTransitions() {
         return desiredSubstate;
   }
-
-    //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
 
     public void applyStates() {
         switch (currentSubstate) {
