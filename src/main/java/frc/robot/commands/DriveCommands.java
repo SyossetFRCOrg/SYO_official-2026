@@ -118,13 +118,15 @@ public class DriveCommands {
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
     
-    Logger.recordOutput("AutoAlign/Status","Created new PID Controller");
     
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
     return Commands.run(
         () -> {
+          angleController.setPID(ANGLE_KP.get(), 0.0, ANGLE_KD.get());
+          angleController.setConstraints(new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+
           // Get linear velocity
           Translation2d linearVelocity = getLinearVelocityFromJoysticks(xSupplier.getAsDouble(),
               ySupplier.getAsDouble());
@@ -156,24 +158,6 @@ public class DriveCommands {
   public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> hubPose)
   {
       // Face the hub while maintaining drive controls
-    
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
-    System.out.println("RUNNING HUB!!!");
     return joystickDriveAtAngle(
       drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
