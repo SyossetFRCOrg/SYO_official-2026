@@ -64,7 +64,7 @@ class AutoFactory {
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(follow(path));
-    c.addCommands(stationaryAAShoot());
+    // c.addCommands(stationaryAAShoot());
     // c.addCommands(follow(path));
     return c;
   }
