@@ -111,6 +111,7 @@ public class Superstructure extends SubsystemBase {
       case SHOOTINGWHILEINDEXEROUT -> SuperState.SHOOTINGWHILEINDEXEROUT;
       case SHOOTING -> ready ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
       case INTAKING -> SuperState.INTAKING;
+      case INTAKINGANDINDEXINGWITHOUTSHOOTING -> SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING;
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
       case PREPCLIMBING -> SuperState.CLIMBING;
       case CLIMBING -> SuperState.CLIMBING;
