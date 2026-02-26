@@ -24,7 +24,7 @@ public class Robot extends LoggedRobot {
 
   private final Field2d field = new Field2d();
 
-  // private AutoChooser autoChooser;
+  private AutoChooser autoChooser;
 
   private final RobotContainer robotContainer;
 
@@ -78,15 +78,14 @@ public class Robot extends LoggedRobot {
 
     SmartDashboard.putData(field);
 
-    // autoChooser =
-    // AutoChooser.create(
-    // robotContainer, robotContainer.getDrive(),
-    // robotContainer.getSuperstructure());
-    // Shuffleboard.getTab("Match")
-    // .add("Auto Program", autoChooser)
-    // .withSize(6, 3)
-    // .withPosition(12, 0)
-    // .withWidget(BuiltInWidgets.kComboBoxChooser);
+    autoChooser = AutoChooser.create(
+        robotContainer, robotContainer.getDrive(),
+        robotContainer.getSuperstructure());
+    Shuffleboard.getTab("Testing")
+        .add("Auto Program", autoChooser)
+        .withSize(6, 3)
+        .withPosition(12, 0)
+        .withWidget(BuiltInWidgets.kComboBoxChooser);
   }
 
   @Override
@@ -107,7 +106,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    // autoChooser.update();
+    autoChooser.update();
   }
 
   /**
@@ -123,7 +122,8 @@ public class Robot extends LoggedRobot {
     // autonomousCommand.schedule();
     // }
 
-    // autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
+    autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
+    System.out.println(autoChooser.getSelectedCommand());
   }
 
   @Override

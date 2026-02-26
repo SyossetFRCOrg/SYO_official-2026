@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.FieldConstants;
 import frc.robot.RobotState;
 import frc.robot.subsystems.drive.TunerConstants;
+import frc.robot.util.LoggedTunableNumber;
 import frc.robot.subsystems.drive.Drive;
 
 import java.text.DecimalFormat;
@@ -27,12 +28,14 @@ import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 public class DriveCommands {
   private static final double DEADBAND = 0.1;
-  private static final double ANGLE_KP = 4.0;
-  private static final double ANGLE_KD = 0.4;
-  private static final double ANGLE_MAX_VELOCITY = TunerConstants.driveConfig.maxAngularVelocity() * 1.5;
-  private static final double ANGLE_MAX_ACCELERATION = TunerConstants.driveConfig.maxAngularAcceleration() * 1.5;
+  private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 4.0);
+  private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.4);
+  private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity", TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
+  private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber("AlignDrive/angleMaxAcceleration", TunerConstants.driveConfig.maxAngularAcceleration() * 1.5);
   private static final double FF_START_DELAY = 2.0; // Secs
   private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
   private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
@@ -110,10 +113,13 @@ public class DriveCommands {
 
     // Create PID controller
     ProfiledPIDController angleController = new ProfiledPIDController(
-        ANGLE_KP,
+        ANGLE_KP.get(),
         0.0,
-        ANGLE_KD,
-        new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY, ANGLE_MAX_ACCELERATION));
+        ANGLE_KD.get(),
+        new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+    
+    Logger.recordOutput("AlignDrive/Status","Created new PID Controller");
+    
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
@@ -150,8 +156,10 @@ public class DriveCommands {
   public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> hubPose)
   {
       // Face the hub while maintaining drive controls
-    return DriveCommands.joystickDriveAtAngle(
-      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle()
+    
+    Logger.recordOutput("AlignDrive/Status", "Creating a new joystickangle");
+    return joystickDriveAtAngle(
+      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
   }
   /**

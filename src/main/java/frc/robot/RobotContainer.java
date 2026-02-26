@@ -24,8 +24,6 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
-import frc.robot.subsystems.climber.Climber;
-import frc.robot.subsystems.climber.ClimberIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -50,7 +48,6 @@ import frc.robot.subsystems.vision.VisionIOLimelight;
 public class RobotContainer {
         // Subsystems
         private final Vision vision;
-        private final Climber climber;
         private final Drive drive;
         private final Indexer indexer;
         private final Intake intake;
@@ -75,7 +72,6 @@ public class RobotContainer {
          */
         public RobotContainer() {
 
-                climber = new Climber(new ClimberIOTalonFX());
                 drive = new Drive(
                                 new GyroIOPigeon2(),
                                 new ModuleIOTalonFX(TunerConstants.FrontLeft),
@@ -93,7 +89,7 @@ public class RobotContainer {
                                 drive,
                                 new VisionIOLimelight(camera0Name, drive::getRotation));
 
-                superstructure = new Superstructure(this, climber, drive, indexer, intake, shooter);
+                superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
                 // Configure the button bindings
                 configureButtonBindings();
@@ -130,27 +126,21 @@ public class RobotContainer {
                 ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.PREPCLIMBING));
                 StopClimbOnXAndLeftTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                // We flip x and y cuz it works. bad fix
+                // x y flipped 4funsies
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> controller.getLeftY() * tempSpeed,
-                                                () -> controller.getLeftX() * tempSpeed,
+                                                () -> -controller.getLeftY() * tempSpeed,
+                                                () -> -controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
-                                Commands.runOnce(
-                                                () -> drive.setPose(
-                                                                new Pose2d(
-                                                                                drive.getPose().getX(),
-                                                                                drive.getPose().getY(),
-                                                                                DriverStation.getAlliance()
-                                                                                                .get() == Alliance.Blue
-                                                                                                                ? Rotation2d.fromRadians(
-                                                                                                                                180)
-                                                                                                                : Rotation2d.fromDegrees(
-                                                                                                                                0))),
-                                                drive)
+                        Commands.runOnce(
+                                () -> drive.setPose(
+                                        new Pose2d(
+                                                drive.getPose().getX(),
+                                                drive.getPose().getY(),
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
@@ -164,11 +154,14 @@ public class RobotContainer {
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger ShootWhileIndexerOutOnBButtonAndRightTrigger = new Trigger(
-                                () -> (controller.getRightTriggerAxis() > 0.5 && controller.getBButton()));
+                Trigger ShootWhileIndexerOutOnBButtonAndRightTrigger = new Trigger(() -> (controller.getRightTriggerAxis() > 0.5 && controller.getBButton()));
 
-                ShootWhileIndexerOutOnBButtonAndRightTrigger
-                                .onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+                ShootWhileIndexerOutOnBButtonAndRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+
+                Trigger IntakeAndIndexWithoutShootingTrigger = new Trigger(() -> (controller.getXButton()));
+
+                IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
+                IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
                 AlignOnRightBumper.whileTrue(

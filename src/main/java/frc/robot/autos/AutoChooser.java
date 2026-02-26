@@ -37,6 +37,7 @@ import java.util.stream.Stream;
  */
 public class AutoChooser extends SendableChooser<Auto> {
   private static final List<AutoProgram> AUTO_PROGRAMS = List.of(
+    new AutoProgram(Auto.IDLE, "IDLE", AutoFactory::createIdleCommand),
     new AutoProgram(Auto.TEST, "TEST", AutoFactory::testPath)
   );
 
@@ -74,7 +75,7 @@ public class AutoChooser extends SendableChooser<Auto> {
 
     autoChooser.reset(null);
 
-    Shuffleboard.getTab("Match")
+    Shuffleboard.getTab("Testing")
         .addString("Selected Auto", () -> autoChooser.getSelected().name())
         .withPosition(12, 3)
         .withSize(6, 2)
@@ -92,15 +93,15 @@ public class AutoChooser extends SendableChooser<Auto> {
    * edu.wpi.first.wpilibj.shuffleboard.Shuffleboard} under the key <code>Auto/Selected</code>.
    */
   public void update() {
-    // var selected = getSelected();
+    var selected = getSelected();
 
-    // Stream.of(DriverStation.Alliance.values())
-    //     .forEach(
-    //         alliance -> {
-    //           commandCache
-    //               .get(alliance)
-    //               .computeIfAbsent(selected, auto -> loadCommand(alliance, auto));
-    //         });
+    Stream.of(DriverStation.Alliance.values())
+        .forEach(
+            alliance -> {
+              commandCache
+                  .get(alliance)
+                  .computeIfAbsent(selected, auto -> loadCommand(alliance, auto));
+            });
   }
 
   /**

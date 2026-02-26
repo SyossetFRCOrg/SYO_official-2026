@@ -1175,9 +1175,9 @@
           {
             "title": "Indexer",
             "x": 944.0,
-            "y": 528.0,
+            "y": 400.0,
             "width": 256.0,
-            "height": 256.0,
+            "height": 176.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -1216,9 +1216,9 @@
           {
             "title": "Intake",
             "x": 688.0,
-            "y": 528.0,
+            "y": 400.0,
             "width": 256.0,
-            "height": 256.0,
+            "height": 176.0,
             "type": "List Layout",
             "properties": {
               "label_position": "TOP"
@@ -1253,47 +1253,6 @@
                 }
               }
             ]
-          },
-          {
-            "title": "Shooter",
-            "x": 256.0,
-            "y": 624.0,
-            "width": 224.0,
-            "height": 192.0,
-            "type": "List Layout",
-            "properties": {
-              "label_position": "TOP"
-            },
-            "children": [
-              {
-                "title": "CurrentSubstate",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/RealOutputs/Shooter/CurrentSubstate",
-                  "period": 0.06,
-                  "data_type": "string",
-                  "show_submit_button": false
-                }
-              },
-              {
-                "title": "DesiredSubstate",
-                "x": 0.0,
-                "y": 0.0,
-                "width": 128.0,
-                "height": 128.0,
-                "type": "Text Display",
-                "properties": {
-                  "topic": "/AdvantageKit/RealOutputs/Shooter/DesiredSubstate",
-                  "period": 0.06,
-                  "data_type": "string",
-                  "show_submit_button": false
-                }
-              }
-            ]
           }
         ],
         "containers": [
@@ -1316,65 +1275,79 @@
             "x": 944.0,
             "y": 320.0,
             "width": 256.0,
-            "height": 208.0,
-            "type": "Radial Gauge",
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
               "topic": "/Tuning/Indexer/IndexerSpeed",
               "period": 0.06,
               "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
+              "show_submit_button": false
             }
           },
           {
             "title": "Active Shooter Speed",
-            "x": 480.0,
+            "x": 256.0,
             "y": 624.0,
-            "width": 208.0,
-            "height": 208.0,
-            "type": "Radial Gauge",
+            "width": 224.0,
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
               "topic": "/Tuning/Active Shooter Speed",
               "period": 0.06,
               "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
+              "show_submit_button": true
             }
           },
           {
             "title": "IntakeSpeed",
             "x": 688.0,
             "y": 320.0,
-            "width": 256.0,
-            "height": 208.0,
-            "type": "Radial Gauge",
+            "width": 240.0,
+            "height": 80.0,
+            "type": "Text Display",
             "properties": {
               "topic": "/Tuning/Intake/IntakeSpeed",
               "period": 0.06,
               "data_type": "double",
-              "start_angle": -140.0,
-              "end_angle": 140.0,
-              "min_value": 0.0,
-              "max_value": 100.0,
-              "number_of_labels": 8,
-              "wrap_value": false,
-              "show_pointer": true,
-              "show_ticks": true
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "CurrentSubstate",
+            "x": 0.0,
+            "y": 448.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Shooter/CurrentSubstate",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": true
+            }
+          },
+          {
+            "title": "DesiredSubstate",
+            "x": 0.0,
+            "y": 576.0,
+            "width": 256.0,
+            "height": 128.0,
+            "type": "Text Display",
+            "properties": {
+              "topic": "/AdvantageKit/RealOutputs/Shooter/DesiredSubstate",
+              "period": 0.06,
+              "data_type": "string",
+              "show_submit_button": true
             }
           }
         ]
+      }
+    },
+    {
+      "name": "Testing",
+      "grid_layout": {
+        "layouts": [],
+        "containers": []
       }
     }
   ]
