@@ -155,8 +155,6 @@ public class Superstructure extends SubsystemBase {
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
         break;
-<<<<<<< HEAD
-=======
       case AUTOALIGNING:
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
@@ -167,7 +165,6 @@ public class Superstructure extends SubsystemBase {
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
       default: break;
->>>>>>> 99ea0ce1d137081cf83286d125e98e45eb108ae2
     }
   }
 
@@ -189,9 +186,10 @@ public class Superstructure extends SubsystemBase {
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
+  // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
-        drive, () -> controller.getLeftX(), () -> controller.getLeftY(), targetPose)
+        drive, () -> controller.getLeftY(), () -> controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
