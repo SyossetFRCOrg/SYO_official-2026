@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 public class DriveCommands {
   private static final double DEADBAND = 0.1;
   private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 4.0);
@@ -116,10 +118,7 @@ public class DriveCommands {
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
     
-    System.out.println(ANGLE_KP.get() + "please BIBI!!");
-    System.out.println(ANGLE_KD.get() + "please BIBI!!");
-    System.out.println(ANGLE_MAX_ACCELERATION.get() + "please BIBI!!");
-    System.out.println(ANGLE_MAX_VELOCITY.get() + "please BIBI!!");
+    Logger.recordOutput("AlignDrive/Status","Created new PID Controller")
     
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
@@ -158,7 +157,7 @@ public class DriveCommands {
   {
       // Face the hub while maintaining drive controls
     
-    System.out.println("Creating new joystickdriveatangle for BIBI!!!!");
+    Logger.recordOutput("AlignDrive/Status", "Creating a new joystickangle");
     return joystickDriveAtAngle(
       drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );

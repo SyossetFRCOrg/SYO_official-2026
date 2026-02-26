@@ -193,7 +193,7 @@ public class Superstructure extends SubsystemBase {
 
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
-        drive, () -> controller.getLeftX(), () -> controller.getLeftY(), targetPose)
+        drive, () -> controller.getLeftY(), () -> controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
