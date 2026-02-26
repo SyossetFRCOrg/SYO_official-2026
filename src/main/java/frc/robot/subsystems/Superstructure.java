@@ -191,9 +191,10 @@ public class Superstructure extends SubsystemBase {
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
+  // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
-        drive, () -> controller.getLeftY(), () -> controller.getLeftX(), targetPose)
+        drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
 
