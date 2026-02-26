@@ -115,6 +115,12 @@ public class DriveCommands {
         0.0,
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+    
+    System.out.println(ANGLE_KP.get() + "please BIBI!!");
+    System.out.println(ANGLE_KD.get() + "please BIBI!!");
+    System.out.println(ANGLE_MAX_ACCELERATION.get() + "please BIBI!!");
+    System.out.println(ANGLE_MAX_VELOCITY.get() + "please BIBI!!");
+    
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
