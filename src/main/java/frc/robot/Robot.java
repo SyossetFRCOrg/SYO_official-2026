@@ -123,6 +123,7 @@ public class Robot extends LoggedRobot {
     // }
 
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
+    System.out.println(autoChooser.getSelectedCommand());
   }
 
   @Override
