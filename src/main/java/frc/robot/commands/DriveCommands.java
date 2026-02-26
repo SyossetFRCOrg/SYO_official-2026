@@ -157,7 +157,7 @@ public class DriveCommands {
   public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> hubPose)
   {
       // Face the hub while maintaining drive controls
-    return DriveCommands.joystickDriveAtAngle(
+    return joystickDriveAtAngle(
       drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
   }
