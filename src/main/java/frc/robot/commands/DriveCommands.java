@@ -118,7 +118,7 @@ public class DriveCommands {
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
     
-    Logger.recordOutput("AlignDrive/Status","Created new PID Controller");
+    Logger.recordOutput("AutoAlign/Status","Created new PID Controller");
     
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
@@ -157,7 +157,7 @@ public class DriveCommands {
   {
       // Face the hub while maintaining drive controls
     
-    Logger.recordOutput("AlignDrive/Status", "Creating a new joystickangle");
+    Logger.recordOutput("AutoAlign/Status", "Creating a new joystickangle");
     return joystickDriveAtAngle(
       drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
