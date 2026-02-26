@@ -106,7 +106,7 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    // autoChooser.update();
+    autoChooser.update();
   }
 
   /**
