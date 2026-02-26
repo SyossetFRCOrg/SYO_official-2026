@@ -116,7 +116,6 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
-                //TODO get rid of this for comp?
                 // kinda stupid but it works
                 double tempSpeed = 0.35;
 
@@ -127,7 +126,7 @@ public class RobotContainer {
                 ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.PREPCLIMBING));
                 StopClimbOnXAndLeftTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                // REALLY BAD FIX, DO NOT KEEP THIS!!!!!
+                // x y flipped 4funsies
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,

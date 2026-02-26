@@ -69,7 +69,6 @@ class AutoFactory {
     return c;
   }
 
-  
   private Command stationaryAAShoot()
   {
       return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
