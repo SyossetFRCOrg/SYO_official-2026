@@ -118,7 +118,7 @@ public class DriveCommands {
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
     
-    Logger.recordOutput("AlignDrive/Status","Created new PID Controller")
+    Logger.recordOutput("AlignDrive/Status","Created new PID Controller");
     
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
