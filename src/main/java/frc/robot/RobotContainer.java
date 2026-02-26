@@ -116,6 +116,7 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
+                //TODO get rid of this for comp?
                 // kinda stupid but it works
                 double tempSpeed = 0.35;
 
@@ -135,18 +136,12 @@ public class RobotContainer {
                                                 () -> -controller.getRightX()));
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
-                                Commands.runOnce(
-                                                () -> drive.setPose(
-                                                                new Pose2d(
-                                                                                drive.getPose().getX(),
-                                                                                drive.getPose().getY(),
-                                                                                DriverStation.getAlliance()
-                                                                                                .get() == Alliance.Blue
-                                                                                                                ? Rotation2d.fromDegrees(
-                                                                                                                                180)
-                                                                                                                : Rotation2d.fromDegrees(
-                                                                                                                                0))),
-                                                drive)
+                        Commands.runOnce(
+                                () -> drive.setPose(
+                                        new Pose2d(
+                                                drive.getPose().getX(),
+                                                drive.getPose().getY(),
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
@@ -160,11 +155,14 @@ public class RobotContainer {
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger ShootWhileIndexerOutOnBButtonAndRightTrigger = new Trigger(
-                                () -> (controller.getRightTriggerAxis() > 0.5 && controller.getBButton()));
+                Trigger ShootWhileIndexerOutOnBButtonAndRightTrigger = new Trigger(() -> (controller.getRightTriggerAxis() > 0.5 && controller.getBButton()));
 
-                ShootWhileIndexerOutOnBButtonAndRightTrigger
-                                .onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+                ShootWhileIndexerOutOnBButtonAndRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+
+                Trigger IntakeAndIndexWithoutShootingTrigger = new Trigger(() -> (controller.getXButton()));
+
+                IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
+                IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
                 AlignOnRightBumper.whileTrue(

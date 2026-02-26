@@ -44,6 +44,7 @@ public class Superstructure extends SubsystemBase {
     SHOOTING,
     SHOOTINGPREPARE,
     SHOOTINGWHILEINDEXEROUT,
+    INTAKINGANDINDEXINGWITHOUTSHOOTING,
     AUTOALIGNING
   }
 
@@ -148,6 +149,11 @@ public class Superstructure extends SubsystemBase {
       case SHOOTINGWHILEINDEXEROUT:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        break;
+      case INTAKINGANDINDEXINGWITHOUTSHOOTING:
+        indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
+        intake.setDesiredSubstate(Intake.Substate.ACTIVE);
+        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
