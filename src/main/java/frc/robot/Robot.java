@@ -121,6 +121,7 @@ public class Robot extends LoggedRobot {
     // if (autonomousCommand != null) {
     // autonomousCommand.schedule();
     // }
+    robotContainer.getSuperstructure().getIntake().getIntakeIO().moveHopperToPosition(100);
 
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
     System.out.println(autoChooser.getSelectedCommand());
