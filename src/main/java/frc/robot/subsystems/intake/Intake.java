@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
     }
 
     // declare IO & logs
-    private final IntakeIO intakeIO;
+    private @Getter final IntakeIO intakeIO;
     private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
     private Substate previousSubstate = Substate.STOPPED;
