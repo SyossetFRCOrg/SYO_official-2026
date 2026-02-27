@@ -168,6 +168,19 @@ public class RobotContainer {
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
                 AlignOnRightBumper.whileTrue(
                                 superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+
+                Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
+                IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterSpeed(1)));
+
+                Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
+                DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterSpeed(-1)));
+
+                Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
+                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterSpeed(0.1)));
+
+                Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
+                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterSpeed(-0.1)));
+
         }
 
         public Drive getDrive() {
