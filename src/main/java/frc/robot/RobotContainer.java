@@ -116,8 +116,7 @@ public class RobotContainer {
          */
         private void configureButtonBindings() {
 
-                // kinda stupid but it works
-                double tempSpeed = 0.35;
+               
 
                 Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
                 Trigger StopClimbOnXAndLeftTrigger = new Trigger(
@@ -126,12 +125,15 @@ public class RobotContainer {
                 ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.PREPCLIMBING));
                 StopClimbOnXAndLeftTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
+                 // kinda stupid but it works
+                double tempSpeed = 0.35;
+
                 // x y flipped 4funsies
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> -controller.getLeftY() * tempSpeed,
                                                 () -> -controller.getLeftX() * tempSpeed,
+                                                () -> -controller.getLeftY() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
