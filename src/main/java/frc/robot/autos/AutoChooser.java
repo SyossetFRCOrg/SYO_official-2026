@@ -38,7 +38,7 @@ import java.util.stream.Stream;
 public class AutoChooser extends SendableChooser<Auto> {
   private static final List<AutoProgram> AUTO_PROGRAMS = List.of(
     new AutoProgram(Auto.IDLE, "IDLE", AutoFactory::createIdleCommand),
-    new AutoProgram(Auto.TEST, "TEST", AutoFactory::createIdleCommand)
+    new AutoProgram(Auto.TEST, "TEST", AutoFactory::testPath)
   );
 
   /**

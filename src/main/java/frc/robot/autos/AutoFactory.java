@@ -60,7 +60,7 @@ class AutoFactory {
 
   Command testPath()
   {
-    PathPlannerPath path = loadSegment("TestPath");
+    PathPlannerPath path = loadSegment("BLUE_DS1_BASIC");
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(follow(path));
