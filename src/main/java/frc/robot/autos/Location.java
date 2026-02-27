@@ -1,7 +1,5 @@
 package frc.robot.autos;
 
-import lombok.launch.PatchFixesHider.FieldInitializer;
-
 public enum Location {
 
   FIELDA,
@@ -16,14 +14,21 @@ public enum Location {
 
   OUTPOST,
   HUB,
-  TOWER,
+  TOWERLEFT,
+  TOWERRIGHT,
   DEPOTS,
   LEFTBUMPS,
   RIGHTBUMPS,
+  
+  MIDSTART,
+  RSTART,
+  LSTART,
+  FARLSTART,
+  FARRSTART,
 
   S1,
   S2,
   S3,
-  
+
   NONE,
 }
