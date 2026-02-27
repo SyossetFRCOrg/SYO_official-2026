@@ -9,7 +9,7 @@ public enum Location {
   FIELDE, 
   FIELDF,
   FIELDG,
-  FieldI,
+  FIELDI,
   FIELDJ,
 
   OUTPOST,
@@ -23,8 +23,8 @@ public enum Location {
   MIDSTART,
   RSTART,
   LSTART,
-  FARLSTART,
-  FARRSTART,
+  FLSTART,
+  FRSTART,
 
   S1,
   S2,
