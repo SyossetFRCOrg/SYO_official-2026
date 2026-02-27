@@ -1,5 +1,5 @@
 {
- "name":"AllDirections_NoTurn",
+ "name":"BLUE_AllDirections_NoTurn",
  "version":2,
  "type":"Swerve",
  "variables":{

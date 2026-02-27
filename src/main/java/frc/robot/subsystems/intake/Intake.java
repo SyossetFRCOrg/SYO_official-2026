@@ -2,9 +2,8 @@ package frc.robot.subsystems.intake;
 
 import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.ToggleableSubsystem;
+import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,7 +25,7 @@ public class Intake extends ToggleableSubsystem {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
-    private double intakeSpeed = 5;
+    private LoggedTunableNumber intakeSpeed = new LoggedTunableNumber("Intake/IntakeSpeed", 3.5);
 
     private Substate handleIntakeTransitions() {
         return desiredSubstate;
@@ -34,15 +33,14 @@ public class Intake extends ToggleableSubsystem {
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
         super.periodic();
         intakeIO.updateInputs(inputs);
         Logger.processInputs("Intake", inputs);
+        Logger.recordOutput("Intake/CurrentSubstate", currentSubstate.toString());
+        Logger.recordOutput("Intake/DesiredSubstate", desiredSubstate.toString());
+        
         previousSubstate = currentSubstate;
         currentSubstate = handleIntakeTransitions();
-        if (currentSubstate != previousSubstate) {
-            System.out.println("Intake State Changed from " + previousSubstate + "to " + currentSubstate);
-        }
         applyStates();
     }
 
@@ -51,10 +49,10 @@ public class Intake extends ToggleableSubsystem {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                intakeIO.setVelocity(0);
+                intakeIO.setRollerVelocity(0);
                 break;
             case ACTIVE:
-                intakeIO.setVelocity(intakeSpeed);
+                intakeIO.setRollerVelocity(intakeSpeed.get());
                 break;
         }
     }

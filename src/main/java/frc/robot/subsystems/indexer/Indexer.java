@@ -8,6 +8,7 @@ import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.ToggleableSubsystem;
+import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +26,7 @@ public class Indexer extends ToggleableSubsystem {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
-    private double indexerSpeed = 5;
+    private LoggedTunableNumber indexerSpeed = new LoggedTunableNumber("Indexer/IndexerSpeed", 5);
 
     public Indexer(IndexerIO indexerIO) 
     {
@@ -34,18 +35,18 @@ public class Indexer extends ToggleableSubsystem {
 
     @Override
     public void periodic() {
-        // TODO Auto-generated method stub
         super.periodic();
         indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer", inputs);
+        Logger.recordOutput("Indexer/CurrentSubstate", currentSubstate.toString());
+        Logger.recordOutput("Indexer/DesiredSubstate", desiredSubstate.toString());
+        
+        currentSubstate = handleIndexerTransitions();
         applyStates();
-        handleIndexerTransitions();
     }
     private Substate handleIndexerTransitions() {
         return desiredSubstate;
   }
-
-    //TODO fix the setVelocity for stopped, 0 velocity seems to run the motor. Is possibly a PID issue (?)
 
     public void applyStates() {
         switch (currentSubstate) {
@@ -53,10 +54,10 @@ public class Indexer extends ToggleableSubsystem {
                 indexerIO.setVelocity(0);
                 break;
             case INDEXING:
-                indexerIO.setVelocity(indexerSpeed);
+                indexerIO.setVelocity(indexerSpeed.get());
                 break;
             case REVERSING: 
-                indexerIO.setVelocity(-indexerSpeed);
+                indexerIO.setVelocity(-indexerSpeed.get());
                 break;
 
         }

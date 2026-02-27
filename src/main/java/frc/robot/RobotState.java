@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.geometry.*;
-import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.util.GeomUtil;
 import frc.robot.util.swerve.ModuleLimits;
 import lombok.Getter;

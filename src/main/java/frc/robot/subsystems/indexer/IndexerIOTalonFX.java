@@ -27,7 +27,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
 
-   private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
     private static final LoggedTunableNumber kD = new LoggedTunableNumber("Indexer/Gains/kD", IndexerConstants.kD);
     private static final LoggedTunableNumber kS = new LoggedTunableNumber("Indexer/Gains/kS", IndexerConstants.kS);
     private static final LoggedTunableNumber kV = new LoggedTunableNumber("Indexer/Gains/kV", IndexerConstants.kV);
@@ -66,7 +66,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     talonConfig.CurrentLimits.SupplyCurrentLimit = 50;
     talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-    talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+    talonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
     tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
     tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));

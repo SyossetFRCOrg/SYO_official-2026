@@ -8,15 +8,18 @@ public interface IntakeIO {
     @AutoLog
     public static class IntakeIOInputs 
     {
-        public boolean connected = false;
-        public double velocityRadPerSec = 0.0;
-        public double appliedVolts = 0.0;
-        public double currentAmps = 0.0;
+        public boolean rollerConnected = false;
+        public double rollerVelocityRadPerSec = 0.0;
+        public double rollerAppliedVolts = 0.0;
+        public double rollerCurrentAmps = 0.0;
     }
 
     public default void updateInputs(IntakeIOInputs inputs) {}
     
     // velocity should be in rad/sec
-    public default void setVelocity(double velocity) {}
+    public default void setRollerVelocity(double velocity) {}
 
+    public default void setHopperEncoderPosition(double positionRadians){}
+
+    public default void moveHopperToPosition(double positionRadians){}
 }

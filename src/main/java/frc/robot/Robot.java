@@ -1,10 +1,17 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autos.AutoChooser;
+import frc.robot.subsystems.drive.Drive;
+
 import org.littletonrobotics.junction.LogFileUtil;
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
@@ -14,7 +21,10 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
-  // private AutoChooser autoChooser;
+
+  private final Field2d field = new Field2d();
+
+  private AutoChooser autoChooser;
 
   private final RobotContainer robotContainer;
 
@@ -43,19 +53,46 @@ public class Robot extends LoggedRobot {
 
     Logger.start();
 
-    // autoChooser =
-    //     AutoChooser.create(
-    //         robotContainer, robotContainer.getDrive(), robotContainer.getSuperstructure());
-    // Shuffleboard.getTab("Match")
-    //     .add("Auto Program", autoChooser)
-    //     .withSize(6, 3)
-    //     .withPosition(12, 0)
-    //     .withWidget(BuiltInWidgets.kComboBoxChooser);
+    Drive drive = robotContainer.getDrive();
+
+    SmartDashboard.putData("Swerve Drive", new Sendable() {
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveDrive");
+
+        builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
+
+        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
+      }
+    });
+
+    SmartDashboard.putData(field);
+
+    autoChooser = AutoChooser.create(
+        robotContainer, robotContainer.getDrive(),
+        robotContainer.getSuperstructure());
+    Shuffleboard.getTab("Testing")
+        .add("Auto Program", autoChooser)
+        .withSize(6, 3)
+        .withPosition(12, 0)
+        .withWidget(BuiltInWidgets.kComboBoxChooser);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    field.setRobotPose(robotContainer.getDrive().getPose());
+
   }
 
   /** This function is called once when the robot is disabled. */
@@ -69,30 +106,37 @@ public class Robot extends LoggedRobot {
   /** This function is called periodically when disabled. */
   @Override
   public void disabledPeriodic() {
-    // autoChooser.update();
+    autoChooser.update();
   }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
     // autonomousCommand = robotContainer.getAutonomousCommand();
 
     // // schedule the autonomous command (example)
     // if (autonomousCommand != null) {
-    //   autonomousCommand.schedule();
+    // autonomousCommand.schedule();
     // }
 
-    // autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
+    autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
+    System.out.println(autoChooser.getSelectedCommand());
   }
 
   @Override
-  public void disabledExit() {}
+  public void disabledExit() {
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() {
+  }
 
   @Override
   public void teleopInit() {
@@ -102,10 +146,12 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
-  public void teleopExit() {}
+  public void teleopExit() {
+  }
 
   @Override
   public void testInit() {
@@ -113,8 +159,10 @@ public class Robot extends LoggedRobot {
   }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 
   @Override
-  public void testExit() {}
+  public void testExit() {
+  }
 }
