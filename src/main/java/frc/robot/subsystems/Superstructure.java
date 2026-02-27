@@ -85,11 +85,7 @@ public class Superstructure extends SubsystemBase {
       Logger.recordOutput("RobotState/tuningTempPose", new double[] { 0, 0, 0 });
     }
 
-    Logger.recordOutput(
-        "Drive/EstimatedPose",
-        new double[] {
-            drive.getPose().getX(), drive.getPose().getY(), drive.getPose().getRotation().getDegrees()
-        });
+    Logger.recordOutput("Drive/EstimatedPose", drive.getPose());
     Logger.recordOutput("Superstructure/CurrentSuperState", currentSuperState.toString());
     Logger.recordOutput("Superstructure/DesiredSuperState", desiredSuperState.toString());
 
