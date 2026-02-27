@@ -16,7 +16,7 @@ public enum Location {
   HUB,
   TOWERLEFT,
   TOWERRIGHT,
-  DEPOTS,
+  DEPOT,
   LEFTBUMPS,
   RIGHTBUMPS,
   

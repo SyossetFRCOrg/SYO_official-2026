@@ -69,11 +69,11 @@ class AutoFactory {
     return c;
   }
 
-  Command LStart_DEPOT_S3_TOWERLEFT()
+  Command LStart_Depot_S3_TowerLeft()
   {
     // Load trajectories
-    PathPlannerPath LStartToDepot = loadSegment(Location.LSTART, Location.DEPOTS);
-    PathPlannerPath depotToS3 = loadSegment(Location.DEPOTS, Location.S3);
+    PathPlannerPath LStartToDepot = loadSegment(Location.LSTART, Location.DEPOT);
+    PathPlannerPath depotToS3 = loadSegment(Location.DEPOT, Location.S3);
     PathPlannerPath S3ToTowerLeft = loadSegment(Location.S3, Location.TOWERLEFT);
     preloadTrajectoryClass(LStartToDepot);
     preloadTrajectoryClass(depotToS3);
