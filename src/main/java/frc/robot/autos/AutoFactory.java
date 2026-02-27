@@ -69,6 +69,25 @@ class AutoFactory {
     return c;
   }
 
+  Command LStart_DEPOT_S3_TOWERLEFT()
+  {
+    // Load trajectories
+    PathPlannerPath LStartToDepot = loadSegment(Location.LSTART, Location.DEPOTS);
+    PathPlannerPath depotToS3 = loadSegment(Location.DEPOTS, Location.S3);
+    PathPlannerPath S3ToTowerLeft = loadSegment(Location.S3, Location.TOWERLEFT);
+    preloadTrajectoryClass(LStartToDepot);
+    preloadTrajectoryClass(depotToS3);
+    preloadTrajectoryClass(S3ToTowerLeft);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(intakeWhileFollowing(LStartToDepot));
+    c.addCommands(follow(depotToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToTowerLeft));
+    // climb
+    return c;
+  }
+
   private Command stationaryAAShoot()
   {
       return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
@@ -134,7 +153,7 @@ class AutoFactory {
 
   // Load paths
   private PathPlannerPath loadSegment(final Location start, final Location end) {
-    var name = "%S_TO_%S".formatted(start, end);
+    var name = "%S_%S".formatted(start, end);
     PathPlannerPath path;
 
     try {
