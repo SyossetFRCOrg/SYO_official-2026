@@ -185,7 +185,7 @@ public class Superstructure extends SubsystemBase {
     return DriveCommands.joystickDriveHub(
         drive, () -> 0.0, () -> 0.0, targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE))
-        .andThen(Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.STOPPED));
+        .andThen(Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING));
   }
 
   // flip x and y cuz it works. bad fix
