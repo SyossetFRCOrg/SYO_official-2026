@@ -50,13 +50,13 @@ public class Indexer extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                indexerIO.setVelocity(0);
+                indexerIO.setVoltage(0);
                 break;
             case INDEXING:
-                indexerIO.setVelocity(indexerSpeed.get());
+                indexerIO.setVoltage(indexerSpeed.get());
                 break;
             case REVERSING: 
-                indexerIO.setVelocity(-indexerSpeed.get());
+                indexerIO.setVoltage(-indexerSpeed.get());
                 break;
 
         }

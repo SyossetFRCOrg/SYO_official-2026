@@ -206,8 +206,8 @@ public class IntakeIOTalonFX implements IntakeIO {
         // request, however based on the needs of our robot this will actually function
         // fine as we just need to speed the subsystem up to a good enough speed
         /** Run intake with velocity */
-        public void setRollerVelocity(double velocityRadPerSec) {
-                intakeRollerTalon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+        public void setRollerVoltage(double voltage) {
+                intakeRollerTalon.setControl(VoltageRequest.withOutput((voltage)));
         }
 
         public void moveHopperToPosition(double positionRadians) {

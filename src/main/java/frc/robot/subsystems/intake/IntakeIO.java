@@ -22,7 +22,7 @@ public interface IntakeIO {
     public default void updateInputs(IntakeIOInputs inputs) {}
     
     // velocity should be in rad/sec
-    public default void setRollerVelocity(double velocity) {}
+    public default void setRollerVoltage(double velocity) {}
 
     public default void setHopperEncoderPosition(double positionRadians){}
 

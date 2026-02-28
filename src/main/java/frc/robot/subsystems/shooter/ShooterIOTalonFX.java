@@ -299,7 +299,7 @@ public class ShooterIOTalonFX implements ShooterIO {
                 // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
         }
 
-        public void setVelocity(double velocityRadPerSec) {
+        public void setVoltage(double velocityRadPerSec) {
                 // final VelocityVoltage velocityController = new VelocityVoltage(0);
                 // velocityController.Slot = 0;
                 // centerTalon.setControl(velocityController.withVelocity(10));

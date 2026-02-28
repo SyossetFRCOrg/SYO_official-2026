@@ -125,8 +125,8 @@ public class IndexerIOTalonFX implements IndexerIO {
     // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
   }
 
-  public void setVelocity(double velocityRadPerSec) {
-    talon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+  public void setVoltage(double voltage) {
+    talon.setControl(VoltageRequest.withOutput((voltage)));
   }
 
 

@@ -50,10 +50,10 @@ public class Intake extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                intakeIO.setRollerVelocity(0);
+                intakeIO.setRollerVoltage(0);
                 break;
             case ACTIVE:
-                intakeIO.setRollerVelocity(intakeSpeed.get());
+                intakeIO.setRollerVoltage(intakeSpeed.get());
                 break;
         }
     }
