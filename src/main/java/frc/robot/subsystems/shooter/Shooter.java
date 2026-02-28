@@ -41,6 +41,8 @@ public class Shooter extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
+    private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
+
     // private static final HashMap<Substate, LoggedTunableNumber> shooterSpeeds = initializeSpeeds();
 
     private Substate handleShooterTransitions() {
@@ -84,7 +86,7 @@ public class Shooter extends SubsystemBase {
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRadPerSec - (shooterSpeed + shooterChange) /*shooterSpeeds.get(Substate.ACTIVE).get()*/) < 1.5;
+        return Math.abs(inputs.centerVelocityRadPerSec - (shooterSpeed + shooterChange) /*shooterSpeeds.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
     }
 
     public void adjustShooterSpeed(double amount) {
