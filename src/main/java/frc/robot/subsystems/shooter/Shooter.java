@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.littletonrobotics.junction.Logger;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Superstructure.SuperState;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +61,8 @@ public class Shooter extends SubsystemBase {
 
     //TODO Update the setVoltage with linear regression
     public void applyStates() {
+        
+
         switch (currentSubstate) {
             case STOPPED: 
                 shooterIO.setVoltage(0);
