@@ -109,6 +109,46 @@ class AutoFactory {
       return c;
   }
 
+  Command Depot_S3_LStart(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+      PathPlannerPath OutpostToS3 = loadSegment(Location.OUTPOST, Location.S3);
+      PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
+      preloadTrajectoryClass(StartToDepot);
+      preloadTrajectoryClass(OutpostToS3);
+      preloadTrajectoryClass(S3ToLStart);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToDepot));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS3));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S3ToLStart));
+
+      return c;
+  }
+
+  Command Outpost_S2_RStart(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+      PathPlannerPath S2ToRStart = loadSegment(Location.S2, Location.RSTART);
+      preloadTrajectoryClass(StartToOutpost);
+      preloadTrajectoryClass(OutpostToS2);
+      preloadTrajectoryClass(S2ToRStart);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToOutpost));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS2));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S2ToRStart));
+
+      return c;
+  }
+
   private Command stationaryAAShoot()
   {
       return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
