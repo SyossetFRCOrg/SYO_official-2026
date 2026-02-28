@@ -108,6 +108,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 // : InvertedValue.CounterClockwise_Positive;
 
                 tryUntilOk(5, () -> intakeRollerTalon.getConfigurator().apply(intakeRollerTalonConfig, 0.25));
+                tryUntilOk(5, () -> hopperTalon.setPosition(0));
 
                 intakeRollerVelocity = intakeRollerTalon.getVelocity();
                 intakeRollerAppliedVolts = intakeRollerTalon.getMotorVoltage();
@@ -155,8 +156,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                         hopperTalonConfig.Slot0.kP = hopper_kP.get();
                                         hopperTalonConfig.Slot0.kS = hopper_kS.get();
                                         hopperTalonConfig.Slot0.kV = hopper_kV.get();
-                                        tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig,
-                                                        0.25));
+                                        tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig,0.25));
 
                                 });
                 LoggedTunableNumber.ifChanged(
@@ -213,6 +213,10 @@ public class IntakeIOTalonFX implements IntakeIO {
         public void moveHopperToPosition(double positionRadians) {
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(0);
                 hopperTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
+        }
+
+        public void setHopperVoltage(double voltage) {
+                hopperTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
 }

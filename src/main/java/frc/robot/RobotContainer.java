@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
@@ -124,9 +125,10 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
+                                                () -> controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getLeftY() * tempSpeed,
-                                                () -> -controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
+                
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
                         Commands.runOnce(
@@ -157,6 +159,15 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
+                //TODO consider moving this to buttonboard?
+                Trigger moveHopperOutOnDpadUp = new Trigger(() -> controller.getPOV() == 90);
+                moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(2));
+                moveHopperOutOnDpadUp.onFalse(superstructure.SetHopperVoltage(0));
+                Trigger moveHopperInOnDpadDown = new Trigger(() -> controller.getPOV() == 270);
+                moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-2));
+                moveHopperInOnDpadDown.onFalse(superstructure.SetHopperVoltage(0));
+
+
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
                 AlignOnRightBumper.whileTrue(
                                 superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
@@ -172,6 +183,7 @@ public class RobotContainer {
 
                 Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
                 DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-0.1)));
+
 
         }
 
