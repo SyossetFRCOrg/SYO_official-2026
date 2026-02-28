@@ -8,7 +8,7 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"3.4246890544891357 m", "val":3.4246890544891357}, "y":{"exp":"5.513981342315674 m", "val":5.513981342315674}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"3.4246890544891357 m", "val":3.4246890544891357}, "y":{"exp":"5.513981342315674 m", "val":5.513981342315674}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":23, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"0.5619911551475525 m", "val":0.5619911551475525}, "y":{"exp":"5.88737678527832 m", "val":5.88737678527832}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
