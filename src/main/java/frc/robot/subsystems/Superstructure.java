@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
@@ -133,13 +134,15 @@ public class Superstructure extends SubsystemBase {
         break;
       case SHOOTINGPREPARE:
         // drive.stopWithX();
-        intake.setDesiredSubstate(Intake.Substate.STOPPED);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
       case SHOOTINGWHILEINDEXEROUT:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
@@ -151,9 +154,10 @@ public class Superstructure extends SubsystemBase {
         intake.setDesiredSubstate(Intake.Substate.ACTIVE);
         break;
       case AUTOALIGNING:
-        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
       case CLIMBING:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
@@ -185,8 +189,11 @@ public class Superstructure extends SubsystemBase {
   // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
-        drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
+        drive, () -> controller.getLeftX(), () -> -controller.getLeftY(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
+  }
+  public Command SetHopperVoltage(double voltage){
+    return new InstantCommand(() -> intake.setHopperVoltage(voltage));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {

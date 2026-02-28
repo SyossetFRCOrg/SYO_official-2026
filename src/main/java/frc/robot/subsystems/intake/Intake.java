@@ -3,7 +3,6 @@ package frc.robot.subsystems.intake;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +21,7 @@ public class Intake extends SubsystemBase {
     private @Getter final IntakeIO intakeIO;
     private final IntakeIOInputsAutoLogged inputs = new IntakeIOInputsAutoLogged();
 
-    private Substate previousSubstate = Substate.STOPPED;
+    // private Substate previousSubstate = Substate.STOPPED;
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
@@ -40,7 +39,7 @@ public class Intake extends SubsystemBase {
         Logger.recordOutput("Intake/CurrentSubstate", currentSubstate.toString());
         Logger.recordOutput("Intake/DesiredSubstate", desiredSubstate.toString());
         
-        previousSubstate = currentSubstate;
+        // previousSubstate = currentSubstate;
         currentSubstate = handleIntakeTransitions();
         applyStates();
     }
@@ -56,5 +55,9 @@ public class Intake extends SubsystemBase {
                 intakeIO.setRollerVoltage(intakeSpeed.get());
                 break;
         }
+    }
+
+    public void setHopperVoltage(double voltage){
+        intakeIO.setHopperVoltage(voltage);
     }
 }
