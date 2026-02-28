@@ -1,11 +1,7 @@
 package frc.robot.subsystems.shooter;
 
-import java.util.HashMap;
-
 import org.littletonrobotics.junction.Logger;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,8 +22,6 @@ public class Shooter extends SubsystemBase {
     private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    private final Timer debounceTimer = new Timer();
-    private final double toleranceTime = 0.1;
     private static double shooterVoltage = 10, shooterChange = 0;
 
 
@@ -35,6 +29,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
+
 
 
     private Substate handleShooterTransitions() {
@@ -73,6 +68,13 @@ public class Shooter extends SubsystemBase {
                 shooterIO.setVoltage(shooterVoltage * 0.9 + shooterChange);
                 break;  
         }
+    }
+
+
+    //TODO
+    public void setCalculatedShooterVoltage(double distance)
+    {
+        shooterVoltage = distance * 2; 
     }
 
     public boolean motorsReady()
