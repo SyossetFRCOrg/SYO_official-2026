@@ -189,7 +189,7 @@ public class Superstructure extends SubsystemBase {
   // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveHub(
-        drive, () -> controller.getLeftX(), () -> -controller.getLeftY(), targetPose)
+        drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
   public Command SetIntakeHopperVoltage(double voltage){

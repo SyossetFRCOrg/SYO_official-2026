@@ -5,7 +5,7 @@ import com.ctre.phoenix6.CANBus;
 public class IntakeConstants {
     //TODO  to be tuned
     public static final int rollerMotorID = 14;
-    public static final int hopperMotorID = 100;
+    public static final int hopperMotorID = 20;
 
     public static final double roller_kP = 100;
     public static final double roller_kD = 0;
