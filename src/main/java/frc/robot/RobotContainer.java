@@ -162,11 +162,11 @@ public class RobotContainer {
 
                 //TODO consider moving this to buttonboard?
                 Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
-                moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(4));
-                moveHopperOutOnDpadUp.onFalse(superstructure.SetHopperVoltage(0));
+                moveHopperOutOnDpadUp.onTrue(superstructure.SetIntakeHopperVoltage(4));
+                moveHopperOutOnDpadUp.onFalse(superstructure.SetIntakeHopperVoltage(0));
                 Trigger moveHopperInOnDpadDown = new Trigger(() -> buttonboard.getRawButton(5));
-                moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-4));
-                moveHopperInOnDpadDown.onFalse(superstructure.SetHopperVoltage(0));
+                moveHopperInOnDpadDown.onTrue(superstructure.SetIntakeHopperVoltage(-4));
+                moveHopperInOnDpadDown.onFalse(superstructure.SetIntakeHopperVoltage(0));
 
 
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));

@@ -106,7 +106,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 hopperTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 hopperTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                intakeRollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 hopperTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 // false // fix this, test this. Positive should be upward
                 // ? InvertedValue.Clockwise_Positive
