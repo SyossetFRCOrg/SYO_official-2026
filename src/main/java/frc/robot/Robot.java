@@ -121,7 +121,9 @@ public class Robot extends LoggedRobot {
     // if (autonomousCommand != null) {
     // autonomousCommand.schedule();
     // }
-    robotContainer.getSuperstructure().getIntake().getIntakeIO().moveHopperToPosition(100);
+
+    //TODO test if this works or if there is a better way to do it? 
+    //robotContainer.getSuperstructure().getIntake().getIntakeIO().moveIntakeHopperToPosition(100);
 
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
     System.out.println(autoChooser.getSelectedCommand());

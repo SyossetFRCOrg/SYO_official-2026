@@ -160,12 +160,12 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 //TODO consider moving this to buttonboard?
-                Trigger moveHopperOutOnDpadUp = new Trigger(() -> controller.getPOV() == 90);
-                moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(2));
-                moveHopperOutOnDpadUp.onFalse(superstructure.SetHopperVoltage(0));
-                Trigger moveHopperInOnDpadDown = new Trigger(() -> controller.getPOV() == 270);
-                moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-2));
-                moveHopperInOnDpadDown.onFalse(superstructure.SetHopperVoltage(0));
+                Trigger moveIntakeHopperOutOnDpadUp = new Trigger(() -> controller.getPOV() == 90);
+                moveIntakeHopperOutOnDpadUp.onTrue(superstructure.SetIntakeHopperVoltage(2));
+                moveIntakeHopperOutOnDpadUp.onFalse(superstructure.SetIntakeHopperVoltage(0));
+                Trigger moveIntakeHopperInOnDpadDown = new Trigger(() -> controller.getPOV() == 270);
+                moveIntakeHopperInOnDpadDown.onTrue(superstructure.SetIntakeHopperVoltage(-2));
+                moveIntakeHopperInOnDpadDown.onFalse(superstructure.SetIntakeHopperVoltage(0));
 
 
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
