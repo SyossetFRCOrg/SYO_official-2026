@@ -5,7 +5,7 @@ import com.ctre.phoenix6.CANBus;
 // Delete if not needed
 public class ClimberConstants {
     //TODO set to actual ID
-    public static final int motor1ID = -1;
+    public static final int motor1ID = 21;
     public static final int motor2ID = -1;
     
     //TODO Tune (This is all from indexer)

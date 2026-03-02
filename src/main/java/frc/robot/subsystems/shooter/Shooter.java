@@ -29,6 +29,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
+    private final LoggedTunableNumber desiredVelocity = new LoggedTunableNumber("Shooter/desiredVelocity", 7.5);
 
 
 
@@ -76,12 +77,12 @@ public class Shooter extends SubsystemBase {
     //TODO
     public void setCalculatedShooterVoltage(double distance)
     {
-        shooterVoltage = distance * 2; 
+        // shooterVoltage = shooterVoltage;
     }
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRadPerSec - (shooterVoltage + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
+        return Math.abs(inputs.centerVelocityRadPerSec - (desiredVelocity.get()) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
     }
 
     public void adjustShooterVoltage(double amount) {

@@ -80,7 +80,8 @@ public class RobotContainer {
                 vision = new Vision(
                                 drive::addVisionMeasurement,
                                 drive,
-                                new VisionIOLimelight(camera0Name, drive::getRotation));
+                                new VisionIOLimelight(camera0Name, drive::getRotation),
+                                new VisionIOLimelight(camera1Name, drive::getRotation));
 
                 superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
@@ -125,8 +126,8 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
+                                                () -> controller.getLeftY() * tempSpeed,
                                                 () -> controller.getLeftX() * tempSpeed,
-                                                () -> -controller.getLeftY() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
@@ -136,7 +137,7 @@ public class RobotContainer {
                                         new Pose2d(
                                                 drive.getPose().getX(),
                                                 drive.getPose().getY(),
-                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
@@ -160,17 +161,16 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 //TODO consider moving this to buttonboard?
-                Trigger moveHopperOutOnDpadUp = new Trigger(() -> controller.getPOV() == 90);
-                moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(2));
+                Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
+                moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(4));
                 moveHopperOutOnDpadUp.onFalse(superstructure.SetHopperVoltage(0));
-                Trigger moveHopperInOnDpadDown = new Trigger(() -> controller.getPOV() == 270);
-                moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-2));
+                Trigger moveHopperInOnDpadDown = new Trigger(() -> buttonboard.getRawButton(5));
+                moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-4));
                 moveHopperInOnDpadDown.onFalse(superstructure.SetHopperVoltage(0));
 
 
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignOnRightBumper.whileTrue(
-                                superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+                AlignOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
 
                 Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
                 IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(1)));

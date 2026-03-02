@@ -13,9 +13,9 @@ public class VisionConstants {
 
   //TODO rename these
   // Camera names, must match names configured on coprocessor
-  public static String camera0Name = "limelight-front";
+  public static String camera0Name = "limelight-left";
 
-  public static String camera1Name = "limelight-three";
+  public static String camera1Name = "limelight-right";
 
   public static String camera2Name = "limelight-backll";
 
