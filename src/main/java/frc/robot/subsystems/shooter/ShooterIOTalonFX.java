@@ -29,7 +29,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
         final VoltageOut voltageRequest = new VoltageOut(0);
 
-        final MotionMagicVelocityVoltage motionMagicVoltageRequest = new MotionMagicVelocityVoltage(0);
+        final MotionMagicVelocityVoltage motionMagicVelocityVoltageRequest = new MotionMagicVelocityVoltage(0);
 
         private final TalonFX leftTalon;
         private final TalonFX centerTalon;
@@ -111,8 +111,8 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canbus);
 
                 // set right and left motors to followers
-                leftTalon.setControl(new Follower(centerTalon.getDeviceID(), MotorAlignmentValue.Aligned));
-                rightTalon.setControl(new Follower(centerTalon.getDeviceID(), MotorAlignmentValue.Aligned));
+                // leftTalon.setControl(new Follower(centerTalon.getDeviceID(), MotorAlignmentValue.Aligned));
+                // rightTalon.setControl(new Follower(centerTalon.getDeviceID(), MotorAlignmentValue.Aligned));
 
                 leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
                 leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
@@ -310,7 +310,7 @@ public class ShooterIOTalonFX implements ShooterIO {
         }
         public void setMagicMotionVelocityVoltage(double velocity)
         {
-                centerTalon.setControl(motionMagicVoltageRequest.withVelocity(velocity).withAcceleration(centerMotionMagicAcceleration.get()));
+                centerTalon.setControl(motionMagicVelocityVoltageRequest.withVelocity(velocity).withAcceleration(centerMotionMagicAcceleration.get()));
                 
         }
 }

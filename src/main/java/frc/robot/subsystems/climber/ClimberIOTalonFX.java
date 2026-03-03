@@ -28,19 +28,19 @@ import frc.robot.util.LoggedTunableNumber;
 public class ClimberIOTalonFX implements ClimberIO {
 
     private static final LoggedTunableNumber motionMagicVelocity =
-      new LoggedTunableNumber("Elevator/maxVelocity", 100);
+      new LoggedTunableNumber("Climber/maxVelocity", 100);
     private static final LoggedTunableNumber motionMagicAcceleration =
-      new LoggedTunableNumber("Elevator/maxAcceleration", 70);
+      new LoggedTunableNumber("Climber/maxAcceleration", 70);
     private static final LoggedTunableNumber motionMagicJerk =
-      new LoggedTunableNumber("Elevator/maxJerk", 1000);
+      new LoggedTunableNumber("Climber/maxJerk", 1000);
     
-    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Elevator/Gains/kP", 1000);
-//  private static final LoggedTunableNumber kI = new LoggedTunableNumber("Elevator/Gains/kI", 0);
-    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Elevator/Gains/kD", 50);
-    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Elevator/Gains/kS", 0);
-    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Elevator/Gains/kV", 0);
-    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Elevator/Gains/kA", 0);
-    private static final LoggedTunableNumber kG = new LoggedTunableNumber("Elevator/Gains/kG", 0);
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Climber/Gains/kP", 1000);
+//  private static final LoggedTunableNumber kI = new LoggedTunableNumber("Climber/Gains/kI", 0);
+    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Climber/Gains/kD", 50);
+    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Climber/Gains/kS", 0);
+    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Climber/Gains/kV", 0);
+    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Climber/Gains/kA", 0);
+    private static final LoggedTunableNumber kG = new LoggedTunableNumber("Climber/Gains/kG", 0);
 
     private final TalonFX talon;
     private final DynamicMotionMagicTorqueCurrentFOC positionRequest = new DynamicMotionMagicTorqueCurrentFOC(0, motionMagicVelocity.get(), motionMagicJerk.get());
@@ -80,17 +80,13 @@ public class ClimberIOTalonFX implements ClimberIO {
         talonConfig.Slot0.kP = kP.get();
         talonConfig.Slot0.kS = kS.get();
         talonConfig.Slot0.kV = kV.get();
-        talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-        talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-        // If vertical climber, use Elevator_Static
         talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-        talonConfig.Slot0.kG = 0.5; // Tune if needed
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
         // Motion magic
-        talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();   // rotations/sec
-        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();    // rotations/sec^2
+        talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
+        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
         talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
 
         // Status Signals
@@ -146,7 +142,6 @@ public class ClimberIOTalonFX implements ClimberIO {
             motionMagicVelocity);
         
 
-        // Edit logic from gear to belt
         if (desiredPositionRot > Units.radiansToRotations(climberPosition.getValueAsDouble())) {
             positionRequest.Velocity = motionMagicVelocity.get();
             positionRequest.Acceleration = motionMagicAcceleration.get();
@@ -176,17 +171,11 @@ public class ClimberIOTalonFX implements ClimberIO {
         inputs.torqueCurrentAmps = climberTorqueCurrent.getValueAsDouble();
     }
 
-    // ================= POSITION CONTROL =================
-
     public void setTargetRotations(double rotations) {
         talon.setControl(positionRequest.withPosition(rotations));
     }
 
     public void stop() {
         talon.stopMotor();
-    }
-
-    public void setVoltage(double voltage) {
-        talon.setControl(new VoltageOut(voltage));
     }
 }

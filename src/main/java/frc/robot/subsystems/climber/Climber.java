@@ -19,6 +19,7 @@ public class Climber extends SubsystemBase {
     
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
+    
 
     public Climber(ClimberIO climberIO) {
         this.climberIO = climberIO;
@@ -37,17 +38,17 @@ public class Climber extends SubsystemBase {
         return desiredSubstate;
     }
 
-    //TODO actually add logic
+    //TODO verify logic
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                climberIO.setVoltage(0);
+                climberIO.stop(); // EMERGENCIES ONLY
                 break;
             case UP:
-                climberIO.setVoltage(10);
+                climberIO.setTargetRotations(ClimberConstants.upRotations);
                 break;
             case DOWN:
-                climberIO.setVoltage(-10);
+                climberIO.setTargetRotations(ClimberConstants.downRotations);
                 break;
         }
     }
