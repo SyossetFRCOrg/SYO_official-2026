@@ -192,8 +192,8 @@ public class Superstructure extends SubsystemBase {
         drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
-  public Command SetIntakeHopperVoltage(double voltage){
-    return new InstantCommand(() -> intake.setIntakeHopperVoltage(voltage));
+  public Command SetHopperVoltage(double voltage){
+    return new InstantCommand(() -> intake.setHopperVoltage(voltage));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
