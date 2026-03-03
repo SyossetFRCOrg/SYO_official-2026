@@ -17,6 +17,8 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
+import frc.robot.subsystems.climber.Climber;
+import frc.robot.subsystems.climber.ClimberIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -45,6 +47,7 @@ public class RobotContainer {
         private final Indexer indexer;
         private final Intake intake;
         private final Shooter shooter;
+        private final Climber climber;
 
         private final Superstructure superstructure;
 
@@ -74,6 +77,7 @@ public class RobotContainer {
                 indexer = new Indexer(new IndexerIOTalonFX());
                 intake = new Intake(new IntakeIOTalonFX());
                 shooter = new Shooter(new ShooterIOTalonFX());
+                climber = new Climber(new ClimberIOTalonFX());
 
                 // LEDs = new LEDs();
 
@@ -113,11 +117,10 @@ public class RobotContainer {
                
 
                 Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
-                Trigger StopClimbOnXAndLeftTrigger = new Trigger(
-                                () -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
+                Trigger StopClimbOnXAndLeftTrigger = new Trigger(() -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
 
-                ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.PREPCLIMBING));
-                StopClimbOnXAndLeftTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(climber.getCurrentSubstate() == Climber.Substate.UP ? SuperState.CLIMBDOWN : SuperState.CLIMBUP));
+                StopClimbOnXAndLeftTrigger.onTrue(Commands.runOnce(() -> climber.setDesiredSubstate(Climber.Substate.STOPPED)));
 
                  // kinda stupid but it works
                 double tempSpeed = 0.35;

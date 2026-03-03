@@ -32,8 +32,8 @@ public class Superstructure extends SubsystemBase {
   public static enum SuperState {
     // MANUAL,
     STOPPED,
-    PREPCLIMBING,
-    CLIMBING,
+    CLIMBUP,
+    CLIMBDOWN,
     INTAKING,
     DRIVING,
     SHOOTING,
@@ -104,8 +104,8 @@ public class Superstructure extends SubsystemBase {
       case INTAKING -> SuperState.INTAKING;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING -> SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING;
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
-      case PREPCLIMBING -> SuperState.CLIMBING;
-      case CLIMBING -> SuperState.CLIMBING;
+      case CLIMBUP -> SuperState.CLIMBUP;
+      case CLIMBDOWN -> SuperState.CLIMBDOWN;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -125,7 +125,6 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        // climber.setDesiredSubstate(Climber.Substate.STOPPED);
         break;
       case INTAKING:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
@@ -159,10 +158,16 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
-      case CLIMBING:
+      case CLIMBUP:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        break;
+      case CLIMBDOWN:
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        break;
       default: break;
     }
   }
@@ -173,7 +178,7 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case  INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, DRIVING, CLIMBING, PREPCLIMBING -> true;
+      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN -> true;
       default -> false;
     };
   }

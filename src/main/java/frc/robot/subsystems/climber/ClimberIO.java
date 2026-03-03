@@ -2,6 +2,8 @@ package frc.robot.subsystems.climber;
 
 import org.littletonrobotics.junction.AutoLog;
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
+
 // From last year
 public interface ClimberIO {
     
@@ -19,4 +21,6 @@ public interface ClimberIO {
 
     /** Sets velocity in radians/sec */
     public default void setVoltage(double voltage) {}
+
+    public default void setTargetRotations(double rotations) {}
 }
