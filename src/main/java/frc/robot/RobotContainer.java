@@ -6,19 +6,12 @@ import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
@@ -87,7 +80,8 @@ public class RobotContainer {
                 vision = new Vision(
                                 drive::addVisionMeasurement,
                                 drive,
-                                new VisionIOLimelight(camera0Name, drive::getRotation));
+                                new VisionIOLimelight(camera0Name, drive::getRotation),
+                                new VisionIOLimelight(camera1Name, drive::getRotation));
 
                 superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
@@ -132,9 +126,10 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> -controller.getLeftY() * tempSpeed,
-                                                () -> -controller.getLeftX() * tempSpeed,
+                                                () -> controller.getLeftY() * tempSpeed,
+                                                () -> controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
+                
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
                 resetPoseTrigger.onTrue(
                         Commands.runOnce(
@@ -142,7 +137,7 @@ public class RobotContainer {
                                         new Pose2d(
                                                 drive.getPose().getX(),
                                                 drive.getPose().getY(),
-                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
@@ -165,9 +160,31 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
+                //TODO consider moving this to buttonboard?
+                Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
+                moveHopperOutOnDpadUp.onTrue(superstructure.SetIntakeHopperVoltage(4));
+                moveHopperOutOnDpadUp.onFalse(superstructure.SetIntakeHopperVoltage(0));
+                Trigger moveHopperInOnDpadDown = new Trigger(() -> buttonboard.getRawButton(5));
+                moveHopperInOnDpadDown.onTrue(superstructure.SetIntakeHopperVoltage(-4));
+                moveHopperInOnDpadDown.onFalse(superstructure.SetIntakeHopperVoltage(0));
+
+
                 Trigger AlignOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignOnRightBumper.whileTrue(
-                                superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+                AlignOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()));
+
+                Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
+                IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(1)));
+
+                Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
+                DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-1)));
+
+                Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
+                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(0.1)));
+
+                Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
+                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-0.1)));
+
+
         }
 
         public Drive getDrive() {

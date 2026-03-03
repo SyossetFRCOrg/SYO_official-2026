@@ -1,6 +1,7 @@
 package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
+import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
@@ -69,6 +70,85 @@ class AutoFactory {
     return c;
   }
 
+  Command Depot_S3_TowerLeft(Location Start)
+  {
+    // Load trajectories
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+    PathPlannerPath S3ToTowerLeft = loadSegment(Location.S3, Location.TOWERLEFT);
+    preloadTrajectoryClass(StartToDepot);
+    preloadTrajectoryClass(DepotToS3);
+    preloadTrajectoryClass(S3ToTowerLeft);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(intakeWhileFollowing(StartToDepot));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToTowerLeft));
+    // climb
+    return c;
+  }
+
+  Command Outpost_S2_TowerRight(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+      PathPlannerPath S2ToTowerRight = loadSegment(Location.S2, Location.TOWERRIGHT);
+      preloadTrajectoryClass(StartToOutpost);
+      preloadTrajectoryClass(OutpostToS2);
+      preloadTrajectoryClass(S2ToTowerRight);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToOutpost));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS2));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S2ToTowerRight));
+      // climb
+      return c;
+  }
+
+  Command Depot_S3_LStart(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+      PathPlannerPath OutpostToS3 = loadSegment(Location.OUTPOST, Location.S3);
+      PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
+      preloadTrajectoryClass(StartToDepot);
+      preloadTrajectoryClass(OutpostToS3);
+      preloadTrajectoryClass(S3ToLStart);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToDepot));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS3));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S3ToLStart));
+
+      return c;
+  }
+
+  Command Outpost_S2_RStart(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+      PathPlannerPath S2ToRStart = loadSegment(Location.S2, Location.RSTART);
+      preloadTrajectoryClass(StartToOutpost);
+      preloadTrajectoryClass(OutpostToS2);
+      preloadTrajectoryClass(S2ToRStart);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToOutpost));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS2));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S2ToRStart));
+
+      return c;
+  }
+
   private Command stationaryAAShoot()
   {
       return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
@@ -134,7 +214,7 @@ class AutoFactory {
 
   // Load paths
   private PathPlannerPath loadSegment(final Location start, final Location end) {
-    var name = "%S_TO_%S".formatted(start, end);
+    var name = "%S_%S".formatted(start, end);
     PathPlannerPath path;
 
     try {
