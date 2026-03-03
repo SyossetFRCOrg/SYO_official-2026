@@ -184,6 +184,11 @@ public class RobotContainer {
                 Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
                 DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-0.1)));
 
+                //TODO: match Intake states/command to trigger
+                Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
+                //MoveIntakeArmOut.onTrue(Commands.runOnce(() -> intake.EXTENDMETHOD()));
+                Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
+                //MoveIntakeArmIn.onTrue(Commands.runOnce(() -> intake.RETRACTMETHOD()));
 
         }
 
