@@ -86,6 +86,7 @@ public class IndexerIOTalonFX implements IndexerIO {
 
   @Override
   public void updateInputs(IndexerIOInputs inputs) {
+    
     LoggedTunableNumber.ifChanged(
         hashCode(),
         () -> {

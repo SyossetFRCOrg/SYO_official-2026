@@ -3,7 +3,15 @@
  "version":2,
  "type":"Swerve",
  "variables":{
-  "expressions":{},
+  "expressions":{
+   "xOutpost":{
+    "dimension":"Number",
+    "var":{
+     "exp":"0.47734129428863525",
+     "val":0.47734129428863525
+    }
+   }
+  },
   "poses":{}
  },
  "config":{
