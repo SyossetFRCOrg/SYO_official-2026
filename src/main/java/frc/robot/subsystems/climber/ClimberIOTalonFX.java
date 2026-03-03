@@ -1,150 +1,181 @@
 package frc.robot.subsystems.climber;
 
+import static frc.robot.util.PhoenixUtil.*;
 import static frc.robot.util.PhoenixUtil.tryUntilOk;
 
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.DynamicMotionMagicTorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
+import com.ctre.phoenix6.controls.Follower;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
-import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
+import frc.robot.util.LoggedTunableNumber;
 
-// From last year
 public class ClimberIOTalonFX implements ClimberIO {
 
-    private final TalonFX talon1, talon2;
+    private static final LoggedTunableNumber motionMagicVelocity =
+      new LoggedTunableNumber("Climber/maxVelocity", 100);
+    private static final LoggedTunableNumber motionMagicAcceleration =
+      new LoggedTunableNumber("Climber/maxAcceleration", 70);
+    private static final LoggedTunableNumber motionMagicJerk =
+      new LoggedTunableNumber("Climber/maxJerk", 1000);
+    
+    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Climber/Gains/kP", 1000);
+//  private static final LoggedTunableNumber kI = new LoggedTunableNumber("Climber/Gains/kI", 0);
+    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Climber/Gains/kD", 50);
+    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Climber/Gains/kS", 0);
+    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Climber/Gains/kV", 0);
+    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Climber/Gains/kA", 0);
+    private static final LoggedTunableNumber kG = new LoggedTunableNumber("Climber/Gains/kG", 0);
 
-    Debouncer climberConnectedDebounce = new Debouncer(.5);
+    private final TalonFX talon;
+    private final DynamicMotionMagicTorqueCurrentFOC positionRequest = new DynamicMotionMagicTorqueCurrentFOC(0, motionMagicVelocity.get(), motionMagicJerk.get());
 
-    // private final TalonFX followertalon;
-    private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
+    private static final TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
-    private final StatusSignal<Angle> climberPosition1, climberPosition2;
-    private final StatusSignal<AngularVelocity> climberVelocity1, climberVelocity2;
-    private final StatusSignal<Voltage> climberAppliedVolts1, climberAppliedVolts2;
-    private final StatusSignal<Current> climberCurrent1, climberCurrent2;
-    private final StatusSignal<Current> climberTorqueCurrent1, climberTorqueCurrent2;
-    private final StatusSignal<Temperature> tempCelsius1, tempCelsius2;
+    private final Debouncer climberConnectedDebounce = new Debouncer(.5);
+
+    private double desiredPositionRot = 0;
+
+    private final StatusSignal<Angle> climberPosition;
+    private final StatusSignal<AngularVelocity> climberVelocity;
+    private final StatusSignal<Voltage> climberAppliedVolts;
+    private final StatusSignal<Current> climberCurrent;
+    private final StatusSignal<Current> climberTorqueCurrent;
 
     public ClimberIOTalonFX() {
-        talon1 = new TalonFX(ClimberConstants.motor1ID, ClimberConstants.canbus);
-        talon2 = new TalonFX(ClimberConstants.motor2ID, ClimberConstants.canbus);
 
+        talon = new TalonFX(ClimberConstants.motorID, ClimberConstants.canbus);
 
+        // Motor Output
         talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        talonConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-        talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+        talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
+        // Current Limits
         talonConfig.CurrentLimits.StatorCurrentLimit = 120;
         talonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         talonConfig.CurrentLimits.SupplyCurrentLimit = 80;
         talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        talonConfig.TorqueCurrent.PeakForwardTorqueCurrent = 175;
+        talonConfig.TorqueCurrent.PeakReverseTorqueCurrent = -175;
 
-        talonConfig.MotorOutput.Inverted =
-            false // fix this, test this.  Positive should be upward
-                ? InvertedValue.Clockwise_Positive
-                : InvertedValue.CounterClockwise_Positive;
+        // PID
+        talonConfig.Slot0.kA = kA.get();
+        talonConfig.Slot0.kD = kD.get();
+        talonConfig.Slot0.kG = kG.get();
+        talonConfig.Slot0.kP = kP.get();
+        talonConfig.Slot0.kS = kS.get();
+        talonConfig.Slot0.kV = kV.get();
 
-        tryUntilOk(5, () -> talon1.getConfigurator().apply(talonConfig, 0.25));
-        tryUntilOk(5, () -> talon2.getConfigurator().apply(talonConfig, 0.25));
-        tryUntilOk(5, () -> talon1.setPosition(0.0, 0.25));
-        tryUntilOk(5, () -> talon2.setPosition(0.0, 0.25));
+        talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
+        talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-        climberPosition1 = talon1.getPosition();
-        climberVelocity1 = talon1.getVelocity();
-        climberAppliedVolts1 = talon1.getMotorVoltage();
-        climberCurrent1 = talon1.getSupplyCurrent();
-        climberTorqueCurrent1 = talon1.getTorqueCurrent();
-        tempCelsius1 = talon1.getDeviceTemp();
+        // Motion magic
+        talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
+        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+        talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
 
-        climberPosition2 = talon2.getPosition();
-        climberVelocity2 = talon2.getVelocity();
-        climberAppliedVolts2 = talon2.getMotorVoltage();
-        climberCurrent2 = talon2.getSupplyCurrent();
-        climberTorqueCurrent2 = talon2.getTorqueCurrent();
-        tempCelsius2 = talon2.getDeviceTemp();
+        // Status Signals
+        climberPosition = talon.getPosition();
+        climberVelocity = talon.getVelocity();
+        climberAppliedVolts = talon.getMotorVoltage();
+        climberCurrent = talon.getSupplyCurrent();
+        climberTorqueCurrent = talon.getTorqueCurrent();
 
         BaseStatusSignal.setUpdateFrequencyForAll(
             100.0,
-            climberPosition1,
-            climberVelocity1,
-            climberAppliedVolts1,
-            climberCurrent1,
-            climberTorqueCurrent1,
-            tempCelsius1,
-            climberPosition2,
-            climberVelocity2,
-            climberAppliedVolts2,
-            climberCurrent2,
-            climberTorqueCurrent2,
-            tempCelsius2);
-    
-        ParentDevice.optimizeBusUtilizationForAll(talon1, talon2);
+            climberPosition,
+            climberVelocity,
+            climberAppliedVolts,
+            climberCurrent,
+            climberTorqueCurrent);
+
+        ParentDevice.optimizeBusUtilizationForAll(talon);
     }
 
     @Override
     public void updateInputs(ClimberIOInputs inputs) {
+        LoggedTunableNumber.ifChanged(
+            hashCode(),
+            () -> {
+            talonConfig.Slot0.kA = kA.get();
+            talonConfig.Slot0.kD = kD.get();
+            talonConfig.Slot0.kG = kG.get();
+            talonConfig.Slot0.kP = kP.get();
+            talonConfig.Slot0.kS = kS.get();
+            talonConfig.Slot0.kV = kV.get();
+            tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+            },
+            kA,
+            kD,
+            kG,
+            kP,
+            kS,
+            kV);
+        LoggedTunableNumber.ifChanged(
+            hashCode(),
+            () -> {
+                talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+                talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
+                talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+                tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+                positionRequest.Velocity = motionMagicVelocity.get();
+                positionRequest.Acceleration = motionMagicAcceleration.get();
+                positionRequest.Jerk = motionMagicJerk.get();
+            },
+            motionMagicAcceleration,
+            motionMagicJerk,
+            motionMagicVelocity);
+        
 
-        var talonStatus1 = BaseStatusSignal.refreshAll(
-            climberPosition1,
-            climberVelocity1,
-            climberAppliedVolts1,
-            climberCurrent1,
-            climberTorqueCurrent1,
-            tempCelsius1
-        );
+        if (desiredPositionRot > Units.radiansToRotations(climberPosition.getValueAsDouble())) {
+            positionRequest.Velocity = motionMagicVelocity.get();
+            positionRequest.Acceleration = motionMagicAcceleration.get();
+            positionRequest.Jerk = motionMagicJerk.get();
 
-        var talonStatus2 = BaseStatusSignal.refreshAll(
-            climberPosition2,
-            climberVelocity2,
-            climberAppliedVolts2,
-            climberCurrent2,
-            climberTorqueCurrent2,
-            tempCelsius2
-        );
+        } else if (desiredPositionRot < Units.radiansToRotations(climberPosition.getValueAsDouble())) {
+            positionRequest.Velocity = motionMagicVelocity.get();
+            positionRequest.Acceleration = motionMagicAcceleration.get() * .35;
+            positionRequest.Jerk = motionMagicJerk.get() * .5;
+        }
 
-        inputs.connectedMotor2 = climberConnectedDebounce.calculate(talonStatus2.isOK());
-        inputs.connectedMotor1 = climberConnectedDebounce.calculate(talonStatus1.isOK());
+        var talonStatus =
+            BaseStatusSignal.refreshAll(
+                climberPosition,
+                climberVelocity,
+                climberAppliedVolts,
+                climberCurrent,
+                climberTorqueCurrent
+            );
 
-        inputs.positionRad1 = Units.rotationsToRadians(climberPosition1.getValueAsDouble());
-        inputs.velocityRadPerSec1 =
-            Units.rotationsPerMinuteToRadiansPerSecond(climberVelocity1.getValueAsDouble());
-        inputs.appliedVolts1 = climberAppliedVolts1.getValueAsDouble();
-        inputs.currentAmps1 = climberTorqueCurrent1.getValueAsDouble();
 
-        inputs.positionRad2 = Units.rotationsToRadians(climberPosition2.getValueAsDouble());
-        inputs.velocityRadPerSec2 =
-            Units.rotationsPerMinuteToRadiansPerSecond(climberVelocity2.getValueAsDouble());
-        inputs.appliedVolts2 = climberAppliedVolts2.getValueAsDouble();
-        inputs.currentAmps2 = climberTorqueCurrent2.getValueAsDouble();
+        inputs.motorConnected = climberConnectedDebounce.calculate(talonStatus.isOK());
+        inputs.positionRad = Units.rotationsToRadians(climberPosition.getValueAsDouble());
+        inputs.velocityRadPerSec = climberVelocity.getValueAsDouble();
+        inputs.appliedVolts = climberAppliedVolts.getValueAsDouble();
+        inputs.currentAmps = climberCurrent.getValueAsDouble();
+        inputs.torqueCurrentAmps = climberTorqueCurrent.getValueAsDouble();
+    }
+
+    public void setTargetRotations(double rotations) {
+        talon.setControl(positionRequest.withPosition(rotations));
     }
 
     public void stop() {
-        talon1.stopMotor();
-        talon2.stopMotor();
-    }
-
-    /** Resets the angle of the intake to 0. */
-    public void resetPosition(double positionRads) {
-        talon1.setPosition(Units.radiansToRotations(positionRads));
-        talon2.setPosition(Units.radiansToRotations(positionRads));
-    }
-
-    /** Run climber with voltage */
-    public void setVoltage(double voltage) {
-        talon1.setControl(new VoltageOut(voltage));
-        talon2.setControl(new VoltageOut(voltage));
+        talon.stopMotor();
     }
 }
