@@ -83,14 +83,12 @@ public class ClimberIOTalonFX implements ClimberIO {
         talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-        // If vertical climber, use Elevator_Static
         talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-        talonConfig.Slot0.kG = 0.5; // Tune if needed
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
         // Motion magic
-        talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();   // rotations/sec
-        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();    // rotations/sec^2
+        talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
+        talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
         talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
 
         // Status Signals
@@ -146,7 +144,6 @@ public class ClimberIOTalonFX implements ClimberIO {
             motionMagicVelocity);
         
 
-        // Edit logic from gear to belt
         if (desiredPositionRot > Units.radiansToRotations(climberPosition.getValueAsDouble())) {
             positionRequest.Velocity = motionMagicVelocity.get();
             positionRequest.Acceleration = motionMagicAcceleration.get();
@@ -175,8 +172,6 @@ public class ClimberIOTalonFX implements ClimberIO {
         inputs.currentAmps = climberCurrent.getValueAsDouble();
         inputs.torqueCurrentAmps = climberTorqueCurrent.getValueAsDouble();
     }
-
-    // ================= POSITION CONTROL =================
 
     public void setTargetRotations(double rotations) {
         talon.setControl(positionRequest.withPosition(rotations));
