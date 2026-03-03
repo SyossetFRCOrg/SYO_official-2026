@@ -38,11 +38,11 @@ public class Climber extends SubsystemBase {
         return desiredSubstate;
     }
 
-    //TODO actually add logic
+    //TODO verify logic
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                climberIO.setVoltage(0);
+                climberIO.stop(); // EMERGENCIES ONLY
                 break;
             case UP:
                 climberIO.setTargetRotations(ClimberConstants.upRotations);

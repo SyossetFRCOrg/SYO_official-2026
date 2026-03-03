@@ -10,6 +10,7 @@ import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.intake.Intake;
@@ -28,6 +29,7 @@ public class Superstructure extends SubsystemBase {
   private @Getter Indexer indexer;
   private @Getter Intake intake;
   private @Getter Shooter shooter;
+  private @Getter Climber climber;
 
   public static enum SuperState {
     // MANUAL,
@@ -48,12 +50,13 @@ public class Superstructure extends SubsystemBase {
   private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
-      Shooter shooter) {
+      Shooter shooter, Climber climber) {
     this.drive = drive;
     this.container = container;
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
+    this.climber = climber;
   }
 
   @Override
@@ -158,15 +161,17 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
-      case CLIMBUP:
+      case CLIMBUP: // TODO for climbup and climbdown, should we stop everything else? if not, we may just be able to set the climber directly
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        climber.setDesiredSubstate(Climber.Substate.UP);
         break;
       case CLIMBDOWN:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        climber.setDesiredSubstate(Climber.Substate.DOWN);
         break;
       default: break;
     }

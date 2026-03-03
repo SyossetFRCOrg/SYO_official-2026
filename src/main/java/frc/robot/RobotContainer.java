@@ -87,7 +87,7 @@ public class RobotContainer {
                                 new VisionIOLimelight(camera0Name, drive::getRotation),
                                 new VisionIOLimelight(camera1Name, drive::getRotation));
 
-                superstructure = new Superstructure(this, drive, indexer, intake, shooter);
+                superstructure = new Superstructure(this, drive, indexer, intake, shooter, climber);
 
                 // Configure the button bindings
                 configureButtonBindings();
@@ -117,6 +117,8 @@ public class RobotContainer {
                
 
                 Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
+
+                // FOR EMERGENCIES ONLY!!!!!
                 Trigger StopClimbOnXAndLeftTrigger = new Trigger(() -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
 
                 ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(climber.getCurrentSubstate() == Climber.Substate.UP ? SuperState.CLIMBDOWN : SuperState.CLIMBUP));

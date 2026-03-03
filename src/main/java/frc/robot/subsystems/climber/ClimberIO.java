@@ -19,8 +19,9 @@ public interface ClimberIO {
 
     public default void updateInputs(ClimberIOInputs inputs) {}
 
-    /** Sets velocity in radians/sec */
-    public default void setVoltage(double voltage) {}
+    // /** Sets velocity in radians/sec */
+    // public default void setVoltage(double voltage) {}
+    public default void stop() {}
 
     public default void setTargetRotations(double rotations) {}
 }
