@@ -1,5 +1,7 @@
 package frc.robot;
 
+import java.util.Optional;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.units.Units;
@@ -19,9 +21,20 @@ public class FieldConstants {
     public static final Pose3d blueOutputPose = new Pose3d(Units.Inches.of(0.30), Units.Inches.of(26.22), Units.Inches.of(21.75), Rotation3d.kZero);
     public static final Pose3d blueTowerPose = new Pose3d(Units.Inches.of(0.32), Units.Inches.of(164.47), Units.Inches.of(21.75), Rotation3d.kZero);
 
+    public static final Pose3d redFerryOutpostPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d redFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d blueFerryOutpostPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d blueFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
+
+    
     // Gets pose based on current alliance
     // -->
     public static Pose3d getHubePose() {
         return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
+    }
+
+    public static Pose3d getFerryPose()
+    {
+        return null;
     }
 }
