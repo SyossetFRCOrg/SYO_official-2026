@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.Volts;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Distance;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -49,6 +50,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
+import frc.robot.FieldConstants;
 import frc.robot.RobotState;
 import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
@@ -498,4 +500,22 @@ public class Drive extends SubsystemBase {
     }).withName("AlignDrive");
   }
 
+  public Distance getShotDistance(Translation2d targetPose)
+    {
+        Pose2d drivePose = getPose();
+        double centerToTargetMeters = drivePose.getTranslation().getDistance(targetPose);
+        double centerToShooterMeters = DriveConstants.shooterSideOffset.in(Units.Meters);
+        double shooterToTargetMeters = Math.sqrt(Math.pow(centerToTargetMeters, 2.0) - Math.pow(centerToShooterMeters, 2.0));
+        return Units.Meters.of(shooterToTargetMeters);
+    }
+  
+  public Distance getHubDistance()
+  {
+    return getShotDistance(FieldConstants.getHubePose().toPose2d().getTranslation());
+  }
+
+  public Distance getFerryDistance()
+  {
+    return getShotDistance(FieldConstants.getHubePose().toPose2d().getTranslation());
+  }
 }
