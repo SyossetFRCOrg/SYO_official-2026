@@ -10,6 +10,7 @@ import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
+import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.intake.Intake;
@@ -28,12 +29,13 @@ public class Superstructure extends SubsystemBase {
   private @Getter Indexer indexer;
   private @Getter Intake intake;
   private @Getter Shooter shooter;
+  private @Getter Climber climber;
 
   public static enum SuperState {
     // MANUAL,
     STOPPED,
-    PREPCLIMBING,
-    CLIMBING,
+    CLIMBUP,
+    CLIMBDOWN,
     INTAKING,
     DRIVING,
     SHOOTING,
@@ -48,12 +50,13 @@ public class Superstructure extends SubsystemBase {
   private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
-      Shooter shooter) {
+      Shooter shooter, Climber climber) {
     this.drive = drive;
     this.container = container;
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
+    this.climber = climber;
   }
 
   @Override
@@ -104,8 +107,8 @@ public class Superstructure extends SubsystemBase {
       case INTAKING -> SuperState.INTAKING;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING -> SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING;
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
-      case PREPCLIMBING -> SuperState.CLIMBING;
-      case CLIMBING -> SuperState.CLIMBING;
+      case CLIMBUP -> SuperState.CLIMBUP;
+      case CLIMBDOWN -> SuperState.CLIMBDOWN;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -125,7 +128,6 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        // climber.setDesiredSubstate(Climber.Substate.STOPPED);
         break;
       case INTAKING:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
@@ -159,10 +161,18 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
         break;
-      case CLIMBING:
+      case CLIMBUP: // TODO for climbup and climbdown, should we stop everything else? if not, we may just be able to set the climber directly
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        climber.setDesiredSubstate(Climber.Substate.UP);
+        break;
+      case CLIMBDOWN:
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
+        intake.setDesiredSubstate(Intake.Substate.STOPPED);
+        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
+        climber.setDesiredSubstate(Climber.Substate.DOWN);
+        break;
       default: break;
     }
   }
@@ -173,7 +183,7 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case  INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, DRIVING, CLIMBING, PREPCLIMBING -> true;
+      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN -> true;
       default -> false;
     };
   }
@@ -192,8 +202,8 @@ public class Superstructure extends SubsystemBase {
         drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }
-  public Command SetIntakeHopperVoltage(double voltage){
-    return new InstantCommand(() -> intake.setIntakeHopperVoltage(voltage));
+  public Command SetHopperVoltage(double voltage){
+    return new InstantCommand(() -> intake.setHopperVoltage(voltage));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {

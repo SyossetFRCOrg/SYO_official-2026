@@ -29,38 +29,42 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final TalonFX hopperTalon;
         private static TalonFXConfiguration hopperTalonConfig = new TalonFXConfiguration();
 
-        // private final TalonFX armTalon;
-        // private static TalonFXConfiguration armTalonConfig = new TalonFXConfiguration();
+        private final TalonFX armTalon;
+        private static TalonFXConfiguration armTalonConfig = new TalonFXConfiguration();
 
-        private static final LoggedTunableNumber roller_kP = new LoggedTunableNumber("Intake/Gains/roller_kP",
-                        IntakeConstants.roller_kP);
-        private static final LoggedTunableNumber roller_kD = new LoggedTunableNumber("Intake/Gains/roller_kD",
-                        IntakeConstants.roller_kD);
-        private static final LoggedTunableNumber roller_kS = new LoggedTunableNumber("Intake/Gains/roller_kS",
-                        IntakeConstants.roller_kS);
-        // kV is Voltage given per unit of velocity, in this case volts / rad / s
-        private static final LoggedTunableNumber roller_kV = new LoggedTunableNumber("Intake/Gains/roller_kV",
-                        IntakeConstants.roller_kV);
-        // kA is Voltage given per unit of acceleration, volts / rad / s^2
-        private static final LoggedTunableNumber roller_kA = new LoggedTunableNumber("Intake/Gains/roller_kA",
-                        IntakeConstants.roller_kA);
 
         // TODO tune these values
+        private static final LoggedTunableNumber roller_kP = new LoggedTunableNumber("Intake/Gains/roller_kP", IntakeConstants.roller_kP);
+        private static final LoggedTunableNumber roller_kD = new LoggedTunableNumber("Intake/Gains/roller_kD", IntakeConstants.roller_kD);
+        private static final LoggedTunableNumber roller_kS = new LoggedTunableNumber("Intake/Gains/roller_kS", IntakeConstants.roller_kS);
+        private static final LoggedTunableNumber roller_kV = new LoggedTunableNumber("Intake/Gains/roller_kV", IntakeConstants.roller_kV);
+        private static final LoggedTunableNumber roller_kA = new LoggedTunableNumber("Intake/Gains/roller_kA", IntakeConstants.roller_kA);
+
         private static final LoggedTunableNumber hopper_kP = new LoggedTunableNumber("Intake/Gains/hopper_kP", IntakeConstants.hopper_kP);
         private static final LoggedTunableNumber hopper_kD = new LoggedTunableNumber("Intake/Gains/hopper_kD", IntakeConstants.hopper_kD);
         private static final LoggedTunableNumber hopper_kS = new LoggedTunableNumber("Intake/Gains/hopper_kS", IntakeConstants.hopper_kS);
-        // kV is Voltage given per unit of velocity, in this case volts / rad / s
         private static final LoggedTunableNumber hopper_kV = new LoggedTunableNumber("Intake/Gains/hopper_kV", IntakeConstants.hopper_kV);
-        // kA is Voltage given per unit of acceleration, volts / rad / s^2
         private static final LoggedTunableNumber hopper_kA = new LoggedTunableNumber("Intake/Gains/hopper_kA", IntakeConstants.hopper_kA);
+
+        private static final LoggedTunableNumber arm_kP = new LoggedTunableNumber("Intake/Gains/arm_kP", IntakeConstants.arm_kP);
+        private static final LoggedTunableNumber arm_kD = new LoggedTunableNumber("Intake/Gains/arm_kD", IntakeConstants.arm_kD);
+        private static final LoggedTunableNumber arm_kS = new LoggedTunableNumber("Intake/Gains/arm_kS", IntakeConstants.arm_kS);
+        private static final LoggedTunableNumber arm_kV = new LoggedTunableNumber("Intake/Gains/arm_kV", IntakeConstants.arm_kV);
+        private static final LoggedTunableNumber arm_kA = new LoggedTunableNumber("Intake/Gains/arm_kA", IntakeConstants.arm_kA);
+
 
         private static final LoggedTunableNumber rollerMotionMagicAcceleration = new LoggedTunableNumber( "Intake/rollerMaxAcceleration", IntakeConstants.rollerMaxAcceleration);
         private static final LoggedTunableNumber rollerMotionMagicJerk = new LoggedTunableNumber("Intake/rollerMaxJerk", IntakeConstants.rollerMaxJerk);
 
-        private static final LoggedTunableNumber hopperCruiseVelocity = new LoggedTunableNumber( "Intake/hopperCruiseVelocity", IntakeConstants.hopperCruiseVelocity);
-        private static final LoggedTunableNumber hopperMotionMagicAcceleration = new LoggedTunableNumber( "Intake/hopperMaxAcceleration", IntakeConstants.hopperMaxAcceleration);
-        private static final LoggedTunableNumber hopperMotionMagicJerk = new LoggedTunableNumber(
-                        "Intake/hopperMaxJerk", IntakeConstants.hopperMaxJerk);
+        private static final LoggedTunableNumber hopperMotionMagicCruiseVelocity = new LoggedTunableNumber( "Intake/hopperMotionMagicCruiseVelocity", IntakeConstants.hopperMotionMagicCruiseVelocity);
+        private static final LoggedTunableNumber hopperMotionMagicAcceleration = new LoggedTunableNumber( "Intake/hopperMaxAcceleration", IntakeConstants.hopperMotionMagicMaxAcceleration);
+        private static final LoggedTunableNumber hopperMotionMagicJerk = new LoggedTunableNumber("Intake/hopperMaxJerk", IntakeConstants.hopperMotionMagicMaxJerk);
+
+        private static final LoggedTunableNumber armMotionMagicCruiseVelocity = new LoggedTunableNumber( "Intake/armCruiseVelocity", IntakeConstants.armMotionMagicCruiseVelocity);
+        private static final LoggedTunableNumber armMotionMagicAcceleration = new LoggedTunableNumber( "Intake/armMaxAcceleration", IntakeConstants.armMaxAcceleration);
+        private static final LoggedTunableNumber armMotionMagicJerk = new LoggedTunableNumber("Intake/armMaxJerk", IntakeConstants.armMaxJerk);
+
+        
 
         private final StatusSignal<AngularVelocity> rollerVelocity;
         private final StatusSignal<Voltage> rollerAppliedVolts;
@@ -69,12 +73,17 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final StatusSignal<AngularVelocity> hopperVelocity;
         private final StatusSignal<Voltage> hopperAppliedVolts;
 
-        private final Debouncer intakeConnectedDebounce = new Debouncer(0.5);
+        private final StatusSignal<Angle> armPosition;
+        private final StatusSignal<AngularVelocity> armVelocity;
+        private final StatusSignal<Voltage> armAppliedVolts;
+
+        private final Debouncer intakeConnectedDebounce = new Debouncer(0.01);
 
         public IntakeIOTalonFX() {
                 // TODO: set up device id for hopper
                 rollerTalon = new TalonFX(IntakeConstants.rollerMotorID, IntakeConstants.canbus);
                 hopperTalon = new TalonFX(IntakeConstants.hopperMotorID, IntakeConstants.canbus);
+                armTalon = new TalonFX(IntakeConstants.armMotorID, IntakeConstants.canbus);
 
 
                 //TODO tune these values and switch over to motion magic
@@ -90,7 +99,6 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rollerTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 
 
                 hopperTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
@@ -99,6 +107,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 hopperTalonConfig.Slot0.kP = hopper_kP.get();
                 hopperTalonConfig.Slot0.kS = hopper_kS.get();
                 hopperTalonConfig.Slot0.kV = hopper_kV.get();
+                hopperTalonConfig.MotionMagic.MotionMagicCruiseVelocity = hopperMotionMagicCruiseVelocity.get();
                 hopperTalonConfig.MotionMagic.MotionMagicAcceleration = hopperMotionMagicAcceleration.get();
                 hopperTalonConfig.MotionMagic.MotionMagicJerk = hopperMotionMagicJerk.get();
                 hopperTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
@@ -106,17 +115,32 @@ public class IntakeIOTalonFX implements IntakeIO {
                 hopperTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 hopperTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                armTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+                armTalonConfig.Slot0.kA = arm_kA.get();
+                armTalonConfig.Slot0.kD = arm_kD.get();
+                armTalonConfig.Slot0.kP = arm_kP.get();
+                armTalonConfig.Slot0.kS = arm_kS.get();
+                armTalonConfig.Slot0.kV = arm_kV.get();
+                armTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
+                armTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
+                armTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
+                armTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                armTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+                armTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                armTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+
+                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 hopperTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-                // false // fix this, test this. Positive should be upward
-                // ? InvertedValue.Clockwise_Positive
-                // : InvertedValue.CounterClockwise_Positive;
+                armTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+               
 
 
 
                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
                 tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig, 0.25));
                 tryUntilOk(5, () -> hopperTalon.setPosition(0));
+                tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.25));
+                tryUntilOk(5, () -> armTalon.setPosition(0));
 
                 rollerVelocity = rollerTalon.getVelocity();
                 rollerAppliedVolts = rollerTalon.getMotorVoltage();
@@ -125,14 +149,22 @@ public class IntakeIOTalonFX implements IntakeIO {
                 hopperVelocity = hopperTalon.getVelocity();
                 hopperAppliedVolts = hopperTalon.getMotorVoltage();
 
+                armPosition = armTalon.getPosition();
+                armVelocity = armTalon.getVelocity();
+                armAppliedVolts = armTalon.getMotorVoltage();
+                
+
                 BaseStatusSignal.setUpdateFrequencyForAll(
                                 50.0,
                                 rollerVelocity,
                                 rollerAppliedVolts,
                                 hopperPosition,
                                 hopperVelocity,
-                                hopperAppliedVolts);
-                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, hopperTalon);
+                                hopperAppliedVolts,
+                                armPosition,
+                                armVelocity,
+                                armAppliedVolts);
+                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, hopperTalon, armTalon);
         }
 
         @Override
@@ -151,8 +183,15 @@ public class IntakeIOTalonFX implements IntakeIO {
                                         hopperTalonConfig.Slot0.kP = hopper_kP.get();
                                         hopperTalonConfig.Slot0.kS = hopper_kS.get();
                                         hopperTalonConfig.Slot0.kV = hopper_kV.get();
-                                        tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-                                        tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig, 0.25));
+
+                                        armTalonConfig.Slot0.kA = arm_kA.get();
+                                        armTalonConfig.Slot0.kD = arm_kD.get();
+                                        armTalonConfig.Slot0.kP = arm_kP.get();
+                                        armTalonConfig.Slot0.kS = arm_kS.get();
+                                        armTalonConfig.Slot0.kV = arm_kV.get();
+                                        tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
+                                        tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig, 0.05));
+                                        tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.05));
                                 },
                                 roller_kA,
                                 roller_kD,
@@ -169,7 +208,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                 () -> {
                                         rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
                                         rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
-                                        hopperTalonConfig.MotionMagic.MotionMagicCruiseVelocity = hopperCruiseVelocity.get();
+                                        hopperTalonConfig.MotionMagic.MotionMagicCruiseVelocity = hopperMotionMagicCruiseVelocity.get();
                                         hopperTalonConfig.MotionMagic.MotionMagicAcceleration = hopperMotionMagicAcceleration.get();
                                         hopperTalonConfig.MotionMagic.MotionMagicJerk =  hopperMotionMagicJerk.get();
                                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
@@ -177,16 +216,17 @@ public class IntakeIOTalonFX implements IntakeIO {
                                 },
                                 rollerMotionMagicAcceleration,
                                 rollerMotionMagicJerk,
-                                hopperCruiseVelocity,
+                                hopperMotionMagicCruiseVelocity,
                                 hopperMotionMagicAcceleration,
                                 hopperMotionMagicJerk);
 
                 var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
-                var hopperTalonStatus = BaseStatusSignal.refreshAll(hopperPosition, hopperVelocity,
-                                hopperAppliedVolts);
+                var hopperTalonStatus = BaseStatusSignal.refreshAll(hopperPosition, hopperVelocity,hopperAppliedVolts);
+                var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
 
                 inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
                 inputs.hopperConnected = intakeConnectedDebounce.calculate(hopperTalonStatus.isOK());
+                inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
 
                 inputs.rollerVelocityRadPerSec = Units
                                 .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
@@ -196,6 +236,11 @@ public class IntakeIOTalonFX implements IntakeIO {
                 inputs.hopperVelocityRadPerSec = Units
                                 .rotationsPerMinuteToRadiansPerSecond(hopperVelocity.getValueAsDouble());
                 inputs.hopperAppliedVolts = hopperAppliedVolts.getValueAsDouble();
+
+                inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
+                inputs.armVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
+                inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
 
         }
 
@@ -207,13 +252,18 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rollerTalon.setControl(VoltageRequest.withOutput((voltage)));
         }
 
-        public void moveIntakeHopperToPosition(double positionRadians) {
+        public void moveHopperToPosition(double positionRadians) {
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(0);
                 hopperTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
         }
 
-        public void setIntakeHopperVoltage(double voltage) {
+        public void setHopperVoltage(double voltage) {
                 hopperTalon.setControl(VoltageRequest.withOutput(voltage));
+        }
+
+        public void moveArmToposition(double positionRadians){
+                final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRadians);
+                armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
         }
 
 }
