@@ -65,7 +65,7 @@ public class Shooter extends SubsystemBase {
                 break;
 
             case ACTIVE:
-                shooterIO.setMagicMotionVelocityVoltage(1);
+                shooterIO.setVoltage(shooterVoltage + shooterChange);
                 break; 
             case PREPARING:
                 shooterIO.setVoltage(shooterVoltage * 0.9 + shooterChange);

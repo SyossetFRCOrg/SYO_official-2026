@@ -77,7 +77,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final StatusSignal<AngularVelocity> armVelocity;
         private final StatusSignal<Voltage> armAppliedVolts;
 
-        private final Debouncer intakeConnectedDebounce = new Debouncer(0.5);
+        private final Debouncer intakeConnectedDebounce = new Debouncer(0.01);
 
         public IntakeIOTalonFX() {
                 // TODO: set up device id for hopper
@@ -99,7 +99,6 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rollerTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 
 
                 hopperTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
@@ -130,17 +129,17 @@ public class IntakeIOTalonFX implements IntakeIO {
                 armTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 armTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 hopperTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 armTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                
 
 
 
-                tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-                tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig, 0.05));
+                tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
+                tryUntilOk(5, () -> hopperTalon.getConfigurator().apply(hopperTalonConfig, 0.25));
                 tryUntilOk(5, () -> hopperTalon.setPosition(0));
-                tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.05));
+                tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.25));
                 tryUntilOk(5, () -> armTalon.setPosition(0));
 
                 rollerVelocity = rollerTalon.getVelocity();
@@ -222,11 +221,12 @@ public class IntakeIOTalonFX implements IntakeIO {
                                 hopperMotionMagicJerk);
 
                 var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
-                var hopperTalonStatus = BaseStatusSignal.refreshAll(hopperPosition, hopperVelocity,
-                                hopperAppliedVolts);
+                var hopperTalonStatus = BaseStatusSignal.refreshAll(hopperPosition, hopperVelocity,hopperAppliedVolts);
+                var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
 
                 inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
                 inputs.hopperConnected = intakeConnectedDebounce.calculate(hopperTalonStatus.isOK());
+                inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
 
                 inputs.rollerVelocityRadPerSec = Units
                                 .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
@@ -236,6 +236,11 @@ public class IntakeIOTalonFX implements IntakeIO {
                 inputs.hopperVelocityRadPerSec = Units
                                 .rotationsPerMinuteToRadiansPerSecond(hopperVelocity.getValueAsDouble());
                 inputs.hopperAppliedVolts = hopperAppliedVolts.getValueAsDouble();
+
+                inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
+                inputs.armVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
+                inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
 
         }
 
@@ -254,6 +259,11 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         public void setHopperVoltage(double voltage) {
                 hopperTalon.setControl(VoltageRequest.withOutput(voltage));
+        }
+
+        public void moveArmToposition(double positionRadians){
+                final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRadians);
+                armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
         }
 
 }

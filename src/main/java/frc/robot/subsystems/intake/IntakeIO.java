@@ -17,6 +17,11 @@ public interface IntakeIO {
         public double hopperVelocityRadPerSec = 0.0;
         public double hopperAppliedVolts = 0.0;
 
+        public boolean armConnected = false;
+        public double armPosition = 0.0;
+        public double armVelocityRadPerSec = 0.0;
+        public double armAppliedVolts = 0.0;
+
     }
 
     public default void updateInputs(IntakeIOInputs inputs) {}
