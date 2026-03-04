@@ -169,7 +169,6 @@ public class RobotContainer {
                 FerryShotOnBButtonAndLefTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()))); //Change the pose to Ferry pose
 
-
                 //TODO consider moving this to buttonboard?
                 Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
                 moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(4));

@@ -34,11 +34,10 @@ public class FieldConstants {
         return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
     }
 
-    public static Pose3d getFerryPose()
+    public static void getFerryPose()
     {
         if(DriverStation.getAlliance().get().equals(Alliance.Red))
         {
-            return 
         }
     }
 }
