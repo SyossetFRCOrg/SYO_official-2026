@@ -7,6 +7,7 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import pabeles.concurrency.IntOperatorTask.Min;
 
 public class FieldConstants {
     // https://firstfrc.blob.core.windows.net/frc2026/FieldAssets/2026-field-dimension-dwgs.pdf All April tag poses are derived from Welded measurements
@@ -22,9 +23,9 @@ public class FieldConstants {
     public static final Pose3d blueTowerPose = new Pose3d(Units.Inches.of(0.32), Units.Inches.of(164.47), Units.Inches.of(21.75), Rotation3d.kZero);
 
     public static final Pose3d redFerryOutpostPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
-    public static final Pose3d redFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
-    public static final Pose3d blueFerryOutpostPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
-    public static final Pose3d blueFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d redFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(80), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d blueFerryOutpostPose = new Pose3d(Units.Inches.of(43.42), Units.Inches.of(80), Units.Inches.of(0), Rotation3d.kZero);
+    public static final Pose3d blueFerryDepotPose = new Pose3d(Units.Inches.of(43.42), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
 
     
     // Gets pose based on current alliance
@@ -35,6 +36,9 @@ public class FieldConstants {
 
     public static Pose3d getFerryPose()
     {
-        return null;
+        if(DriverStation.getAlliance().get().equals(Alliance.Red))
+        {
+            return 
+        }
     }
 }
