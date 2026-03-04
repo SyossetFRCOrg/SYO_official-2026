@@ -257,10 +257,10 @@ public class Vision extends SubsystemBase {
         // pose itself jumps so often. This should smooth it out while still not directly
         // neglecting
         // the new pose inputs.
-        if (observation.averageTagDistance() < 1) {
+        if (observation.type() == PoseObservationType.MEGATAG_2 && observation.averageTagDistance() < 1) {
           thetastdDevFactor *= 4000000;
         }
-        // }
+        // TODO: investigate this ^^^ is our mt2 alg still tweaking?
 
         double linearStdDev = linearStdDevBaseline * linearstdDevFactor;
         double angularStdDev = angularStdDevBaseline * thetastdDevFactor;
