@@ -155,11 +155,11 @@ public class DriveCommands {
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
-  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> hubPose)
+  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> pose)
   {
       // Face the hub while maintaining drive controls
     return joystickDriveAtAngle(
-      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(hubPose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
+      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(pose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
     );
   }
   /**

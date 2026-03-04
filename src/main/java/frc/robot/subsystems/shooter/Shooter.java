@@ -88,5 +88,4 @@ public class Shooter extends SubsystemBase {
     public void adjustShooterVoltage(double amount) {
         shooterChange += amount;
     }
-
 }
