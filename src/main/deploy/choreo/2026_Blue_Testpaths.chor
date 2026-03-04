@@ -3,18 +3,6 @@
  "version":2,
  "type":"Swerve",
  "variables":{
-<<<<<<< HEAD
-  "expressions":{
-   "xOutpost":{
-    "dimension":"Number",
-    "var":{
-     "exp":"0.47734129428863525",
-     "val":0.47734129428863525
-    }
-   }
-  },
-  "poses":{}
-=======
   "expressions":{},
   "poses":{
    "DEPOT":{
@@ -158,7 +146,6 @@
     }
    }
   }
->>>>>>> 78df6bb7a6f2f209f415cce22aea7c61671ab39a
  },
  "config":{
   "frontLeft":{
