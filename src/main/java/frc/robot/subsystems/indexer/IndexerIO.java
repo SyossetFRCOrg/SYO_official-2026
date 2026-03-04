@@ -15,5 +15,5 @@ public interface IndexerIO {
 
     public default void updateInputs(IndexerIOInputs inputs) {}
 
-    public default void setVelocity(double velocity) {}
+    public default void setVoltage(double velocity) {}
 }

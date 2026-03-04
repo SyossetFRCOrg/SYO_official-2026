@@ -66,7 +66,7 @@ public class IndexerIOTalonFX implements IndexerIO {
     talonConfig.CurrentLimits.SupplyCurrentLimit = 50;
     talonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-    talonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+    talonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 
     tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
     tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
@@ -86,6 +86,7 @@ public class IndexerIOTalonFX implements IndexerIO {
 
   @Override
   public void updateInputs(IndexerIOInputs inputs) {
+    
     LoggedTunableNumber.ifChanged(
         hashCode(),
         () -> {
@@ -125,8 +126,8 @@ public class IndexerIOTalonFX implements IndexerIO {
     // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
   }
 
-  public void setVelocity(double velocityRadPerSec) {
-    talon.setControl(VoltageRequest.withOutput((velocityRadPerSec)));
+  public void setVoltage(double voltage) {
+    talon.setControl(VoltageRequest.withOutput((voltage)));
   }
 
 
