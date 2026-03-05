@@ -275,7 +275,9 @@ class AutoFactory {
       return Commands.none();
     
     double seenId = table.getEntry("tid").getDouble(-1);
-
+    if (!(seenId == 15 && seenId == 16))
+      return Commands.none();
+    
     switch (towerLocation) {
       //add logic
       default:
