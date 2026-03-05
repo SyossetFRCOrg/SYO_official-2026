@@ -294,6 +294,7 @@ class AutoFactory {
       default:
         break;
     }
+    return Commands.none();
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path)
