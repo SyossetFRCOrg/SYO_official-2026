@@ -35,5 +35,7 @@ public interface IntakeIO {
 
     public default void setHopperVoltage(double voltage){}
 
+    public default void setArmVoltage(double voltage){}
+
 
 }

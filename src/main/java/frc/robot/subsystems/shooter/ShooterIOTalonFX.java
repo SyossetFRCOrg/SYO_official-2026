@@ -111,23 +111,23 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canbus);
                
 
-                leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-                // leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+                leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
                 centerTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
                 centerTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
                 rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
                 rightTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-                // leftTalonConfig.Slot0.kA = left_kA.get();
-                // leftTalonConfig.Slot0.kD = left_kD.get();
+                leftTalonConfig.Slot0.kA = left_kA.get();
+                leftTalonConfig.Slot0.kD = left_kD.get();
                 centerTalonConfig.Slot0.kA = center_kA.get();
                 centerTalonConfig.Slot0.kD = center_kD.get();
                 rightTalonConfig.Slot0.kA = right_kA.get();
                 rightTalonConfig.Slot0.kD = right_kD.get();
 
-                // leftTalonConfig.Slot0.kP = left_kP.get();
-                // leftTalonConfig.Slot0.kS = left_kS.get();
-                // leftTalonConfig.Slot0.kV = left_kV.get();
+                leftTalonConfig.Slot0.kP = left_kP.get();
+                leftTalonConfig.Slot0.kS = left_kS.get();
+                leftTalonConfig.Slot0.kV = left_kV.get();
                 centerTalonConfig.Slot0.kP = center_kP.get();
                 centerTalonConfig.Slot0.kS = center_kS.get();
                 centerTalonConfig.Slot0.kV = center_kV.get();
@@ -135,17 +135,17 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.Slot0.kS = right_kS.get();
                 rightTalonConfig.Slot0.kV = right_kV.get();
 
-                // leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
-                // leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
+                leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
+                leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
                 centerTalonConfig.MotionMagic.MotionMagicAcceleration = centerMotionMagicAcceleration.get();
                 centerTalonConfig.MotionMagic.MotionMagicJerk = centerMotionMagicJerk.get();
                 rightTalonConfig.MotionMagic.MotionMagicAcceleration = rightMotionMagicAcceleration.get();
                 rightTalonConfig.MotionMagic.MotionMagicJerk = rightMotionMagicJerk.get();
 
-                // leftTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
-                // leftTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                // leftTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
-                // leftTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+                leftTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
+                leftTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+                leftTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                leftTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
                 centerTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
                 centerTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
                 centerTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
@@ -155,12 +155,12 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                // leftTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                leftTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 centerTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 rightTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
-                // tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
-                // tryUntilOk(5, () -> leftTalon.setPosition(0.0, 0.25));
+                tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                tryUntilOk(5, () -> leftTalon.setPosition(0.0, 0.25));
                 tryUntilOk(5, () -> centerTalon.getConfigurator().apply(leftTalonConfig, 0.25));
                 tryUntilOk(5, () -> centerTalon.setPosition(0.0, 0.25));
                 tryUntilOk(5, () -> rightTalon.getConfigurator().apply(leftTalonConfig, 0.25));
@@ -304,8 +304,8 @@ public class ShooterIOTalonFX implements ShooterIO {
                 // velocityController.Slot = 0;
                 // centerTalon.setControl(velocityController.withVelocity(10));
                 leftTalon.setControl(voltageRequest.withOutput((voltage)));
-                // centerTalon.setControl(voltageRequest.withOutput((voltage)));
-                // rightTalon.setControl(voltageRequest.withOutput((voltage)));
+                centerTalon.setControl(voltageRequest.withOutput((voltage)));
+                rightTalon.setControl(voltageRequest.withOutput((voltage)));
         }
         public void setMagicMotionVelocityVoltage(double velocity)
         {

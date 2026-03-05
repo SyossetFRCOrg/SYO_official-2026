@@ -29,7 +29,7 @@ public class Superstructure extends SubsystemBase {
   private @Getter Indexer indexer;
   private @Getter Intake intake;
   private @Getter Shooter shooter;
-  private @Getter Climber climber;
+  // private @Getter Climber climber;
 
   public static enum SuperState {
     // MANUAL,
@@ -50,13 +50,13 @@ public class Superstructure extends SubsystemBase {
   private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
-      Shooter shooter, Climber climber) {
+      Shooter shooter) {
     this.drive = drive;
     this.container = container;
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
-    this.climber = climber;
+    // this.climber = climber;
   }
 
   @Override
@@ -165,13 +165,13 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        climber.setDesiredSubstate(Climber.Substate.UP);
+        // climber.setDesiredSubstate(Climber.Substate.UP);
         break;
       case CLIMBDOWN:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        climber.setDesiredSubstate(Climber.Substate.DOWN);
+        // climber.setDesiredSubstate(Climber.Substate.DOWN);
         break;
       default: break;
     }
@@ -204,6 +204,9 @@ public class Superstructure extends SubsystemBase {
   }
   public Command SetHopperVoltage(double voltage){
     return new InstantCommand(() -> intake.setHopperVoltage(voltage));
+  }
+  public Command SetArmVoltage(double voltage){
+    return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
