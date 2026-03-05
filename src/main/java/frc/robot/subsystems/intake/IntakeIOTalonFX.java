@@ -77,7 +77,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final StatusSignal<AngularVelocity> armVelocity;
         private final StatusSignal<Voltage> armAppliedVolts;
 
-        private final Debouncer intakeConnectedDebounce = new Debouncer(0.01);
+        private final Debouncer intakeConnectedDebounce = new Debouncer(0.5);
 
         public IntakeIOTalonFX() {
                 // TODO: set up device id for hopper
@@ -225,8 +225,8 @@ public class IntakeIOTalonFX implements IntakeIO {
                 var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
 
                 inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
-                inputs.hopperConnected = intakeConnectedDebounce.calculate(hopperTalonStatus.isOK());
                 inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
+                inputs.hopperConnected = intakeConnectedDebounce.calculate(hopperTalonStatus.isOK());
 
                 inputs.rollerVelocityRadPerSec = Units
                                 .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
@@ -259,6 +259,10 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         public void setHopperVoltage(double voltage) {
                 hopperTalon.setControl(VoltageRequest.withOutput(voltage));
+        }
+
+        public void setArmVoltage(double voltage) {
+                armTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
         public void moveArmToposition(double positionRadians){

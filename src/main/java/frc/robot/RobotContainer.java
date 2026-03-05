@@ -47,7 +47,7 @@ public class RobotContainer {
         private final Indexer indexer;
         private final Intake intake;
         private final Shooter shooter;
-        private final Climber climber;
+        // private final Climber climber;
 
         private final Superstructure superstructure;
 
@@ -77,7 +77,7 @@ public class RobotContainer {
                 indexer = new Indexer(new IndexerIOTalonFX());
                 intake = new Intake(new IntakeIOTalonFX());
                 shooter = new Shooter(new ShooterIOTalonFX());
-                climber = new Climber(new ClimberIOTalonFX());
+                // climber = new Climber(new ClimberIOTalonFX());
 
                 // LEDs = new LEDs();
 
@@ -87,7 +87,7 @@ public class RobotContainer {
                                 new VisionIOLimelight(camera0Name, drive::getRotation),
                                 new VisionIOLimelight(camera1Name, drive::getRotation));
 
-                superstructure = new Superstructure(this, drive, indexer, intake, shooter, climber);
+                superstructure = new Superstructure(this, drive, indexer, intake, shooter);
 
                 // Configure the button bindings
                 configureButtonBindings();
@@ -116,13 +116,13 @@ public class RobotContainer {
 
                
 
-                Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
+                // Trigger ClimbOnX = new Trigger(() -> controller.getXButton());
 
                 // FOR EMERGENCIES ONLY!!!!!
-                Trigger StopClimbOnXAndLeftTrigger = new Trigger(() -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
+                // Trigger StopClimbOnXAndLeftTrigger = new Trigger(() -> controller.getXButton() && controller.getLeftTriggerAxis() > 0.5);
 
-                ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(climber.getCurrentSubstate() == Climber.Substate.UP ? SuperState.CLIMBDOWN : SuperState.CLIMBUP));
-                StopClimbOnXAndLeftTrigger.onTrue(Commands.runOnce(() -> climber.setDesiredSubstate(Climber.Substate.STOPPED)));
+                // ClimbOnX.onTrue(superstructure.setDesiredSuperStateCommand(climber.getCurrentSubstate() == Climber.Substate.UP ? SuperState.CLIMBDOWN : SuperState.CLIMBUP));
+                // StopClimbOnXAndLeftTrigger.onTrue(Commands.runOnce(() -> climber.setDesiredSubstate(Climber.Substate.STOPPED)));
 
                  // kinda stupid but it works
                 double tempSpeed = 0.35;
@@ -131,8 +131,8 @@ public class RobotContainer {
                 drive.setDefaultCommand(
                                 DriveCommands.joystickDrive(
                                                 drive,
-                                                () -> controller.getLeftY() * tempSpeed,
-                                                () -> controller.getLeftX() * tempSpeed,
+                                                () -> -controller.getLeftY() * tempSpeed,
+                                                () -> -controller.getLeftX() * tempSpeed,
                                                 () -> -controller.getRightX()));
                 
                 Trigger resetPoseTrigger = new Trigger(() -> controller.getRawButton(8));
@@ -142,7 +142,7 @@ public class RobotContainer {
                                         new Pose2d(
                                                 drive.getPose().getX(),
                                                 drive.getPose().getY(),
-                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(180) : Rotation2d.fromDegrees(0))),drive)
+                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnAPressed = new Trigger(() -> controller.getAButton());
@@ -195,9 +195,11 @@ public class RobotContainer {
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                //MoveIntakeArmOut.onTrue(Commands.runOnce(() -> intake.EXTENDMETHOD()));
+                MoveIntakeArmOut.whileTrue(superstructure.SetArmVoltage(10));
+                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
-                //MoveIntakeArmIn.onTrue(Commands.runOnce(() -> intake.RETRACTMETHOD()));
+                MoveIntakeArmIn.whileTrue(superstructure.SetArmVoltage(-10));
+                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
 
         }
 

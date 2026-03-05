@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
-    private LoggedTunableNumber intakeSpeed = new LoggedTunableNumber("Intake/IntakeSpeed", 3.5);
+    private LoggedTunableNumber intakeSpeed = new LoggedTunableNumber("Intake/IntakeSpeed", 5);
 
     private Substate handleIntakeTransitions() {
         return desiredSubstate;
@@ -49,15 +49,21 @@ public class Intake extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED:
-                intakeIO.setRollerVoltage(0);
+                setRollerVoltage(0);
                 break;
             case ACTIVE:
-                intakeIO.setRollerVoltage(intakeSpeed.get());
+                setRollerVoltage(intakeSpeed.get());
                 break;
         }
     }
 
     public void setHopperVoltage(double voltage){
         intakeIO.setHopperVoltage(voltage);
+    }
+    public void setRollerVoltage(double voltage){
+        intakeIO.setRollerVoltage(voltage);
+    }
+    public void setArmVoltage(double voltage){
+        intakeIO.setArmVoltage(voltage);
     }
 }

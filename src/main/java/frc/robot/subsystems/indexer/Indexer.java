@@ -25,7 +25,7 @@ public class Indexer extends SubsystemBase {
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
     
-    private LoggedTunableNumber indexerSpeed = new LoggedTunableNumber("Indexer/IndexerSpeed", 5);
+    private LoggedTunableNumber indexerSpeed = new LoggedTunableNumber("Indexer/IndexerSpeed", 10);
 
     public Indexer(IndexerIO indexerIO) 
     {

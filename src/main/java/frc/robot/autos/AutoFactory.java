@@ -113,16 +113,16 @@ class AutoFactory {
   {
       // Load trajectories
       PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-      PathPlannerPath OutpostToS3 = loadSegment(Location.OUTPOST, Location.S3);
+      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
       PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
       preloadTrajectoryClass(StartToDepot);
-      preloadTrajectoryClass(OutpostToS3);
+      preloadTrajectoryClass(DepotToS3);
       preloadTrajectoryClass(S3ToLStart);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
       c.addCommands(follow(StartToDepot));
       c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS3));
+      c.addCommands(follow(DepotToS3));
       c.addCommands(stationaryAAShoot());
       c.addCommands(follow(S3ToLStart));
 
@@ -149,46 +149,111 @@ class AutoFactory {
       return c;
   }
 
-  Command Depot_S3_FLStart(Location Start)
+  Command Depot_S3_LTrench(Location Start)
   {
       // Load trajectories
       PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-      PathPlannerPath OutpostToS3 = loadSegment(Location.OUTPOST, Location.S3);
-      PathPlannerPath S3ToFLStart = loadSegment(Location.S3, Location.FLSTART);
+      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+      PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
       preloadTrajectoryClass(StartToDepot);
-      preloadTrajectoryClass(OutpostToS3);
-      preloadTrajectoryClass(S3ToFLStart);
+      preloadTrajectoryClass(DepotToS3);
+      preloadTrajectoryClass(S3ToLTrench);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
       c.addCommands(follow(StartToDepot));
       c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS3));
+      c.addCommands(follow(DepotToS3));
       c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S3ToFLStart));
+      c.addCommands(follow(S3ToLTrench));
 
       return c;
   }
 
-  Command Outpost_S2_FRStart(Location Start)
+  Command Outpost_S2_RTrench(Location Start)
   {
       // Load trajectories
       PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
       PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-      PathPlannerPath S2ToFRStart = loadSegment(Location.S2, Location.FRSTART);
+      PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
       preloadTrajectoryClass(StartToOutpost);
       preloadTrajectoryClass(OutpostToS2);
-      preloadTrajectoryClass(S2ToFRStart);
+      preloadTrajectoryClass(S2ToRTrench);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
       c.addCommands(follow(StartToOutpost));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(OutpostToS2));
       c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToFRStart));
+      c.addCommands(follow(S2ToRTrench));
 
       return c;
   }
 
+  Command Depot_S3_LTrench_ND_LTrench_S3_LTrench(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+      PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
+      PathPlannerPath LTrenchToND = loadSegment(Location.LTRENCH, Location.ND);
+      PathPlannerPath NDToLTrench = loadSegment(Location.ND, Location.LTRENCH);
+      PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH, Location.S3);
+
+      preloadTrajectoryClass(StartToDepot);
+      preloadTrajectoryClass(DepotToS3);
+      preloadTrajectoryClass(S3ToLTrench);
+      preloadTrajectoryClass(LTrenchToND);
+      preloadTrajectoryClass(NDToLTrench);
+      preloadTrajectoryClass(LTrenchToS3);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToDepot));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(DepotToS3));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S3ToLTrench));
+      c.addCommands(follow(LTrenchToND));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(NDToLTrench));
+      c.addCommands(follow(LTrenchToS3));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S3ToLTrench));
+
+      return c;
+  }
+
+  Command Outpost_S2_RTrench_NF_RTrench_S2_RTrench(Location Start)
+  {
+      // Load trajectories
+      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+      PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
+      PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH, Location.NF);
+      PathPlannerPath NFToRTrench = loadSegment(Location.NF, Location.RTRENCH);
+      PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH, Location.S2);
+
+      preloadTrajectoryClass(StartToOutpost);
+      preloadTrajectoryClass(OutpostToS2);
+      preloadTrajectoryClass(S2ToRTrench);
+      preloadTrajectoryClass(RTrenchToNF);
+      preloadTrajectoryClass(NFToRTrench);
+      preloadTrajectoryClass(RTrenchToS2);
+  
+      SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(follow(StartToOutpost));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(OutpostToS2));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S2ToRTrench));
+      c.addCommands(follow(RTrenchToNF));
+      c.addCommands(Commands.waitSeconds(4));
+      c.addCommands(follow(NFToRTrench));
+      c.addCommands(follow(RTrenchToS2));
+      c.addCommands(stationaryAAShoot());
+      c.addCommands(follow(S2ToRTrench));
+
+      return c;
+  }
 
   private Command stationaryAAShoot()
   {
