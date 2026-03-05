@@ -179,7 +179,7 @@ public class RobotContainer {
 
 
                 Trigger AlignHubOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d())); 
+                AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())); 
                 AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
                 Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
