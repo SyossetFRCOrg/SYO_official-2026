@@ -139,12 +139,12 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
       case SHOOTINGWHILEINDEXEROUT:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
@@ -154,12 +154,13 @@ public class Superstructure extends SubsystemBase {
       case SHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);
         intake.setDesiredSubstate(Intake.Substate.ACTIVE);
+        shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         break;
       case AUTOALIGNING:
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubePose().getTranslation().toTranslation2d()));
+        shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
       case CLIMBUP: // TODO for climbup and climbdown, should we stop everything else? if not, we may just be able to set the climber directly
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);

@@ -61,20 +61,19 @@ class AutoFactory {
     return Commands.none();
   }
 
-  Command testPath()
-  {
+  Command testPath() {
     PathPlannerPath path = loadSegment("TestPath");
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(path));
     c.addCommands(follow(path));
     c.addCommands(stationaryAAShoot());
-    // c.addCommands(superstructure.AimShooting(new XboxController(-1), () -> FieldConstants.getHubePose().toPose2d()));
+    // c.addCommands(superstructure.AimShooting(new XboxController(-1), () ->
+    // FieldConstants.getHubePose().toPose2d()));
     return c;
   }
 
-  Command Depot_S3_TowerLeft(Location Start)
-  {
+  Command Depot_S3_TowerLeft(Location Start) {
     // Load trajectories
     PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
@@ -92,197 +91,188 @@ class AutoFactory {
     return c;
   }
 
-  Command Outpost_S2_TowerRight(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-      PathPlannerPath S2ToTowerRight = loadSegment(Location.S2, Location.TOWERRIGHT);
-      preloadTrajectoryClass(StartToOutpost);
-      preloadTrajectoryClass(OutpostToS2);
-      preloadTrajectoryClass(S2ToTowerRight);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToOutpost));
-      c.addCommands(follow(StartToOutpost));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS2));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToTowerRight));
-      // climb
-      return c;
+  Command Outpost_S2_TowerRight(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+    PathPlannerPath S2ToTowerRight = loadSegment(Location.S2, Location.TOWERRIGHT);
+    preloadTrajectoryClass(StartToOutpost);
+    preloadTrajectoryClass(OutpostToS2);
+    preloadTrajectoryClass(S2ToTowerRight);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToOutpost));
+    c.addCommands(follow(StartToOutpost));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(OutpostToS2));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S2ToTowerRight));
+    // climb
+    return c;
   }
 
-  Command Depot_S3_LStart(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-      PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
-      preloadTrajectoryClass(StartToDepot);
-      preloadTrajectoryClass(DepotToS3);
-      preloadTrajectoryClass(S3ToLStart);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToDepot));
-      c.addCommands(follow(StartToDepot));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(DepotToS3));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S3ToLStart));
+  Command Depot_S3_LStart(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+    PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
+    preloadTrajectoryClass(StartToDepot);
+    preloadTrajectoryClass(DepotToS3);
+    preloadTrajectoryClass(S3ToLStart);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDepot));
+    c.addCommands(follow(StartToDepot));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToLStart));
+
+    return c;
   }
 
-  Command Outpost_S2_RStart(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-      PathPlannerPath S2ToRStart = loadSegment(Location.S2, Location.RSTART);
-      preloadTrajectoryClass(StartToOutpost);
-      preloadTrajectoryClass(OutpostToS2);
-      preloadTrajectoryClass(S2ToRStart);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToOutpost));
-      c.addCommands(follow(StartToOutpost));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS2));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToRStart));
+  Command Outpost_S2_RStart(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+    PathPlannerPath S2ToRStart = loadSegment(Location.S2, Location.RSTART);
+    preloadTrajectoryClass(StartToOutpost);
+    preloadTrajectoryClass(OutpostToS2);
+    preloadTrajectoryClass(S2ToRStart);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToOutpost));
+    c.addCommands(follow(StartToOutpost));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(OutpostToS2));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S2ToRStart));
+
+    return c;
   }
 
-  Command Depot_S3_LTrench(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-      PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
-      preloadTrajectoryClass(StartToDepot);
-      preloadTrajectoryClass(DepotToS3);
-      preloadTrajectoryClass(S3ToLTrench);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToDepot));
-      c.addCommands(follow(StartToDepot));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(DepotToS3));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S3ToLTrench));
+  Command Depot_S3_LTrench(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+    PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
+    preloadTrajectoryClass(StartToDepot);
+    preloadTrajectoryClass(DepotToS3);
+    preloadTrajectoryClass(S3ToLTrench);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDepot));
+    c.addCommands(follow(StartToDepot));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToLTrench));
+
+    return c;
   }
 
-  Command Outpost_S2_RTrench(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-      PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
-      preloadTrajectoryClass(StartToOutpost);
-      preloadTrajectoryClass(OutpostToS2);
-      preloadTrajectoryClass(S2ToRTrench);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToOutpost));
-      c.addCommands(follow(StartToOutpost));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS2));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToRTrench));
+  Command Outpost_S2_RTrench(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
+    preloadTrajectoryClass(StartToOutpost);
+    preloadTrajectoryClass(OutpostToS2);
+    preloadTrajectoryClass(S2ToRTrench);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToOutpost));
+    c.addCommands(follow(StartToOutpost));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(OutpostToS2));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S2ToRTrench));
+
+    return c;
   }
 
-  Command Depot_S3_LTrench_ND_LTrench_S3_LTrench(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-      PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-      PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
-      PathPlannerPath LTrenchToND = loadSegment(Location.LTRENCH, Location.ND);
-      PathPlannerPath NDToLTrench = loadSegment(Location.ND, Location.LTRENCH);
-      PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH, Location.S3);
+  Command Depot_S3_LTrench_ND_LTrench_S3_LTrench(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
+    PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
+    PathPlannerPath LTrenchToND = loadSegment(Location.LTRENCH, Location.ND);
+    PathPlannerPath NDToLTrench = loadSegment(Location.ND, Location.LTRENCH);
+    PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH, Location.S3);
 
-      preloadTrajectoryClass(StartToDepot);
-      preloadTrajectoryClass(DepotToS3);
-      preloadTrajectoryClass(S3ToLTrench);
-      preloadTrajectoryClass(LTrenchToND);
-      preloadTrajectoryClass(NDToLTrench);
-      preloadTrajectoryClass(LTrenchToS3);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToDepot));
-      c.addCommands(follow(StartToDepot));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(DepotToS3));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S3ToLTrench));
-      c.addCommands(follow(LTrenchToND));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(NDToLTrench));
-      c.addCommands(follow(LTrenchToS3));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S3ToLTrench));
+    preloadTrajectoryClass(StartToDepot);
+    preloadTrajectoryClass(DepotToS3);
+    preloadTrajectoryClass(S3ToLTrench);
+    preloadTrajectoryClass(LTrenchToND);
+    preloadTrajectoryClass(NDToLTrench);
+    preloadTrajectoryClass(LTrenchToS3);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDepot));
+    c.addCommands(follow(StartToDepot));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToLTrench));
+    c.addCommands(follow(LTrenchToND));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(NDToLTrench));
+    c.addCommands(follow(LTrenchToS3));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S3ToLTrench));
+
+    return c;
   }
 
-  Command Outpost_S2_RTrench_NF_RTrench_S2_RTrench(Location Start)
-  {
-      // Load trajectories
-      PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-      PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-      PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
-      PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH, Location.NF);
-      PathPlannerPath NFToRTrench = loadSegment(Location.NF, Location.RTRENCH);
-      PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH, Location.S2);
+  Command Outpost_S2_RTrench_NF_RTrench_S2_RTrench(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
+    PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH, Location.NF);
+    PathPlannerPath NFToRTrench = loadSegment(Location.NF, Location.RTRENCH);
+    PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH, Location.S2);
 
-      preloadTrajectoryClass(StartToOutpost);
-      preloadTrajectoryClass(OutpostToS2);
-      preloadTrajectoryClass(S2ToRTrench);
-      preloadTrajectoryClass(RTrenchToNF);
-      preloadTrajectoryClass(NFToRTrench);
-      preloadTrajectoryClass(RTrenchToS2);
-  
-      SequentialCommandGroup c = new SequentialCommandGroup();
-      c.addCommands(resetPose(StartToOutpost));
-      c.addCommands(follow(StartToOutpost));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(OutpostToS2));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToRTrench));
-      c.addCommands(follow(RTrenchToNF));
-      c.addCommands(Commands.waitSeconds(4));
-      c.addCommands(follow(NFToRTrench));
-      c.addCommands(follow(RTrenchToS2));
-      c.addCommands(stationaryAAShoot());
-      c.addCommands(follow(S2ToRTrench));
+    preloadTrajectoryClass(StartToOutpost);
+    preloadTrajectoryClass(OutpostToS2);
+    preloadTrajectoryClass(S2ToRTrench);
+    preloadTrajectoryClass(RTrenchToNF);
+    preloadTrajectoryClass(NFToRTrench);
+    preloadTrajectoryClass(RTrenchToS2);
 
-      return c;
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToOutpost));
+    c.addCommands(follow(StartToOutpost));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(OutpostToS2));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S2ToRTrench));
+    c.addCommands(follow(RTrenchToNF));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(NFToRTrench));
+    c.addCommands(follow(RTrenchToS2));
+    c.addCommands(stationaryAAShoot());
+    c.addCommands(follow(S2ToRTrench));
+
+    return c;
   }
 
-  private Command stationaryAAShoot()
-  {
-      return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d()).withTimeout(4);
+  private Command stationaryAAShoot() {
+    return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d()).withTimeout(4);
   }
 
-  private Command alignToPose(Pose2d targetPose)
-  {
-    return superstructure.AimShooting(new XboxController(0), () ->targetPose).withTimeout(2.0);
+  private Command alignToPose(Pose2d targetPose) {
+    return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
-  private Command alignToTower()
-  {
-    return new Command() {};
+  private Command alignToTower() {
+    return new Command() {
+    };
   }
 
-  private Command intakeWhileFollowing(PathPlannerPath path)
-  {
-    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING));
+  private Command intakeWhileFollowing(PathPlannerPath path) {
+    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING))
+        .andThen(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.DRIVING));
   }
 
   // Auto init helpers
@@ -291,7 +281,7 @@ class AutoFactory {
         () -> {
           // var correctedTraj =
           // segment.generateTrajectory(new ChassisSpeeds(), new Rotation2d(), null);
-          Pose2d pose = AllianceFlipUtil.apply(segment.getStartingHolonomicPose().get());
+          Pose2d pose = segment.getStartingHolonomicPose().get();
           // Pose2d pose = segment.getPreviewStartingHolonomicPose();
           // getpreviewstartingholonomicpose didn't work
           // getStartingDifferentialPose worked!!!
@@ -301,14 +291,14 @@ class AutoFactory {
 
   // // Auto init helpers
   // private Command resetPose(final Pose2d pose) {
-  //   return runOnce(
-  //       () -> {
-  //         // Pose2d pose = segment.getPreviewStartingHolonomicPose();
-  //         // //getpreviewstartingholonomicpose didn't work
-  //         // getStartingDifferentialPose worked!!!
+  // return runOnce(
+  // () -> {
+  // // Pose2d pose = segment.getPreviewStartingHolonomicPose();
+  // // //getpreviewstartingholonomicpose didn't work
+  // // getStartingDifferentialPose worked!!!
 
-  //         drive.setPose(pose);
-  //       });
+  // drive.setPose(pose);
+  // });
   // }
 
   // Path following
@@ -320,8 +310,6 @@ class AutoFactory {
   private Command follow(PathPlannerPath path) {
     return AutoBuilder.followPath(path);
   }
-
-  
 
   private void preloadTrajectoryClass(PathPlannerPath firstSegment) {
     // This is done because Java loads classes lazily. Calling this here loads the
@@ -353,13 +341,11 @@ class AutoFactory {
     return path;
   }
 
-  private PathPlannerPath loadSegment(String pathName)
-  {
+  private PathPlannerPath loadSegment(String pathName) {
     PathPlannerPath path;
     try {
       path = PathPlannerPath.fromChoreoTrajectory(pathName);
-    } catch (Exception e)
-    {
+    } catch (Exception e) {
       e.printStackTrace();
       path = null;
     }
