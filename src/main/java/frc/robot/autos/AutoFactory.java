@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
@@ -265,11 +266,6 @@ class AutoFactory {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
-<<<<<<< HEAD
-  private Command alignToTower() {
-    return new Command() {
-    };
-=======
   private Command alignToTower(Location tower)
   {
     switch (tower) 
@@ -278,18 +274,15 @@ class AutoFactory {
         
         break;
       case TOWERRIGHT:
-        
         break;
       case TOWERMIDRIGHT:
-        
         break;
       case TOWERMIDLEFT:
-        
         break;
       default:
         break;
     }
->>>>>>> f10f28495d8f21aea1f7b276756f3214d823b6a0
+    return new InstantCommand();
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {

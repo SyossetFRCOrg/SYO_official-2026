@@ -193,8 +193,8 @@ public class Superstructure extends SubsystemBase {
   {
     return DriveCommands.joystickDriveFacingPose(
         drive, () -> 0.0, () -> 0.0, targetPose)
-        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE))
-        .andThen(Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING));
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE).andThen(
+          Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING)));
   }
 
   // flip x and y cuz it works. bad fix
