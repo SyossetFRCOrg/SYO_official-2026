@@ -7,6 +7,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -16,7 +18,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.AllianceFlipUtil;
-
+import frc.robot.util.SwitchableChooser;
 import edu.wpi.first.wpilibj.XboxController;
 
 /** A factory for creating autonomous programs for a given {@link Auto} */
@@ -258,11 +260,29 @@ class AutoFactory {
   }
 
   private Command stationaryAAShoot() {
-    return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d()).withTimeout(4);
+    return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
 
   private Command alignToPose(Pose2d targetPose) {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
+  }
+
+  private Command alignToTower(Location towerLocation) {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    
+    double tv = table.getEntry("tv").getDouble(0);
+    if (tv == 0) 
+      return Commands.none();
+    
+    double seenId = table.getEntry("tid").getDouble(-1);
+    if (!(seenId == 15 && seenId == 16))
+      return Commands.none();
+    
+    switch (towerLocation) {
+      //add logic
+      default:
+        return Commands.none();
+    }
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {
