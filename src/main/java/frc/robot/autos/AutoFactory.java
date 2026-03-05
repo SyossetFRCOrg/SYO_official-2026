@@ -265,33 +265,6 @@ class AutoFactory {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
-<<<<<<< HEAD
-  private Command alignToTower() {
-    return new Command() {
-    };
-=======
-  private Command alignToTower(Location tower)
-  {
-    switch (tower) 
-    {
-      case TOWERLEFT:
-        
-        break;
-      case TOWERRIGHT:
-        
-        break;
-      case TOWERMIDRIGHT:
-        
-        break;
-      case TOWERMIDLEFT:
-        
-        break;
-      default:
-        break;
-    }
->>>>>>> f10f28495d8f21aea1f7b276756f3214d823b6a0
-  }
-
   private Command intakeWhileFollowing(PathPlannerPath path) {
     return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING))
         .andThen(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.DRIVING));
