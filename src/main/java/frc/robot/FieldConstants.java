@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -34,10 +35,22 @@ public class FieldConstants {
         return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
     }
 
-    public static void getFerryPose()
+    public static Pose3d getFerryPose(Translation2d robotPose)
     {
-        if(DriverStation.getAlliance().get().equals(Alliance.Red))
-        {
+        if(DriverStation.getAlliance().get().equals(Alliance.Red)) {
+            if (robotPose.getDistance(redFerryOutpostPose.getTranslation().toTranslation2d()) <
+                robotPose.getDistance(redFerryDepotPose.getTranslation().toTranslation2d())) {
+                return redFerryOutpostPose;
+            } else {
+                return redFerryDepotPose;
+            }
+        } else {
+            if (robotPose.getDistance(blueFerryOutpostPose.getTranslation().toTranslation2d()) <
+                robotPose.getDistance(blueFerryDepotPose.getTranslation().toTranslation2d())) {
+                return blueFerryOutpostPose;
+            } else {
+                return blueFerryDepotPose;
+            }
         }
     }
 }

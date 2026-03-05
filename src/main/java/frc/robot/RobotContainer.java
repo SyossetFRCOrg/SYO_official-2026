@@ -167,7 +167,7 @@ public class RobotContainer {
 
                 Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
                 FerryShotOnBButtonAndLefTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getHubePose().toPose2d()))); //Change the pose to Ferry pose
+                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())));
 
                 //TODO consider moving this to buttonboard?
                 Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
