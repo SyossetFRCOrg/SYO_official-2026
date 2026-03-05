@@ -48,7 +48,16 @@ public class RobotState {
   @AutoLogOutput(key = "Swerve/ModuleLimits")
   public ModuleLimits getModuleLimits() {
     // if (DriverStation.isTeleop()) {
-    return TunerConstants.moduleLimitsFree;
+    if(!isAutoAiming)
+    {
+      return TunerConstants.moduleLimitsFree;
+    }
+    else
+    {
+      return TunerConstants.moduleLimitsAlign;
+    }
+
+
   }
   
 }
