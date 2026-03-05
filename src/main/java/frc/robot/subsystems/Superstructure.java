@@ -190,7 +190,7 @@ public class Superstructure extends SubsystemBase {
 
   public Command AutonStationaryAimShooting(Supplier<Pose2d> targetPose)
   {
-    return DriveCommands.joystickDriveHub(
+    return DriveCommands.joystickDriveFacingPose(
         drive, () -> 0.0, () -> 0.0, targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE))
         .andThen(Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING));
@@ -198,7 +198,7 @@ public class Superstructure extends SubsystemBase {
 
   // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
-    return DriveCommands.joystickDriveHub(
+    return DriveCommands.joystickDriveFacingPose(
         drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
         .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE));
   }

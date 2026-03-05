@@ -155,7 +155,7 @@ public class DriveCommands {
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
-  public static Command joystickDriveHub(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> pose)
+  public static Command joystickDriveFacingPose(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> pose)
   {
       // Face the hub while maintaining drive controls
     return joystickDriveAtAngle(

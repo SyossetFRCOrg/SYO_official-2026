@@ -2,6 +2,7 @@ package frc.robot;
 
 import java.util.Optional;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -37,9 +38,11 @@ public class FieldConstants {
 
     public static Pose3d getFerryPose(Translation2d robotPose)
     {
-        if(DriverStation.getAlliance().get().equals(Alliance.Red)) {
+        if(DriverStation.getAlliance().get().equals(Alliance.Red)) 
+        {
             if (robotPose.getDistance(redFerryOutpostPose.getTranslation().toTranslation2d()) <
-                robotPose.getDistance(redFerryDepotPose.getTranslation().toTranslation2d())) {
+                robotPose.getDistance(redFerryDepotPose.getTranslation().toTranslation2d())) 
+                {
                 return redFerryOutpostPose;
             } else {
                 return redFerryDepotPose;
@@ -52,6 +55,5 @@ public class FieldConstants {
                 return blueFerryDepotPose;
             }
         }
-    }
     }
 }

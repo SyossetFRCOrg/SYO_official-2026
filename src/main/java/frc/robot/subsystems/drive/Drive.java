@@ -502,6 +502,7 @@ public class Drive extends SubsystemBase {
 
   public Distance getShotDistance(Translation2d targetPose)
     {
+      // incorporate momentum
         Pose2d drivePose = getPose();
         double centerToTargetMeters = drivePose.getTranslation().getDistance(targetPose);
         double centerToShooterMeters = DriveConstants.shooterSideOffset.in(Units.Meters);
@@ -516,6 +517,6 @@ public class Drive extends SubsystemBase {
 
   public Distance getFerryDistance()
   {
-    return getShotDistance(FieldConstants.getHubePose().toPose2d().getTranslation());
+    return getShotDistance(FieldConstants.getFerryPose(getPose().getTranslation()).toPose2d().getTranslation());
   }
 }
