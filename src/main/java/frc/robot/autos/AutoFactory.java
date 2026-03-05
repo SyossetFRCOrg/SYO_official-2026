@@ -267,9 +267,25 @@ class AutoFactory {
     return superstructure.AimShooting(new XboxController(0), () ->targetPose).withTimeout(2.0);
   }
 
-  private Command alignToTower()
+  private Command alignToTower(Location tower)
   {
-    return new Command() {};
+    switch (tower) 
+    {
+      case TOWERLEFT:
+        
+        break;
+      case TOWERRIGHT:
+        
+        break;
+      case TOWERMIDRIGHT:
+        
+        break;
+      case TOWERMIDLEFT:
+        
+        break;
+      default:
+        break;
+    }
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path)
