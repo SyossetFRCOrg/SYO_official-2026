@@ -277,14 +277,7 @@ class AutoFactory {
     double seenId = table.getEntry("tid").getDouble(-1);
 
     switch (towerLocation) {
-      case TOWERLEFT:
-        return alignToPose(FieldConstants.getTowerLeftPose().toPose2d());
-      case TOWERRIGHT:
-        return alignToPose(FieldConstants.getTowerRightPose().toPose2d());
-      case TOWERMIDRIGHT:
-        return alignToPose(FieldConstants.getTowerMidRightPose().toPose2d());
-      case TOWERMIDLEFT:
-        return alignToPose(FieldConstants.getTowerMidLeftPose().toPose2d());
+      //add logic
       default:
         return Commands.none();
     }
