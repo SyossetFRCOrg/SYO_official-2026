@@ -200,11 +200,15 @@ public class Superstructure extends SubsystemBase {
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveFacingPose(
         drive, () -> -controller.getLeftY(), () -> -controller.getLeftX(), targetPose)
-        .alongWith(new InstantCommand(() -> {RobotState.getInstance().setAutoAiming(true);}));
+        .alongWith(new InstantCommand(() -> {
+          RobotState.getInstance().setAutoAiming(true);
+          Logger.recordOutput("RobotState/isAutoAiming", RobotState.getInstance().isAutoAiming());
+        
+        }));
   }
-  public Command SetHopperVoltage(double voltage){
-    return new InstantCommand(() -> intake.setHopperVoltage(voltage));
-  }
+  // public Command SetHopperVoltage(double voltage){
+  //   return new InstantCommand(() -> intake.setHopperVoltage(voltage));
+  // }
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }
