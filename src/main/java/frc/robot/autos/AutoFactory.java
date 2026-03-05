@@ -7,6 +7,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -70,6 +71,12 @@ class AutoFactory {
     return c;
   }
 
+  private void setInitalPose(PathPlannerPath path)
+  {
+    Translation2d intialLoc = path.getAllPathPoints().get(0).position;
+    //Pose2d initialPose = new Pose2d(intialLoc);
+  }
+
   Command Depot_S3_TowerLeft(Location Start)
   {
     // Load trajectories
@@ -79,7 +86,6 @@ class AutoFactory {
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToTowerLeft);
-
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(intakeWhileFollowing(StartToDepot));
     c.addCommands(follow(DepotToS3));
