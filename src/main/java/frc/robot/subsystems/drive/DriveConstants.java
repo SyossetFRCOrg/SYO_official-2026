@@ -11,8 +11,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 
 public class DriveConstants {
-    // TODO FIX SHOOTERSIDE OFFSET
-    public static final Distance shooterSideOffset = Units.Inches.of(6.0);
+    public static final Distance shooterSideOffset = Units.Inches.of(4.5);
     public static final double maxAngularRate = Units.RotationsPerSecond.of(0.75).in(Units.RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
     public static final Angle epsilonAngleToGoal = Degrees.of(0.1);
 
