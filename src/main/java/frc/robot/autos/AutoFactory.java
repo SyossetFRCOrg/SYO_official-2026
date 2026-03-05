@@ -17,7 +17,7 @@ import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.AllianceFlipUtil;
 
-//import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController;
 
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({ "UnusedMethod", "UnusedVariable", "EmptyBlockTag" })
@@ -259,7 +259,17 @@ class AutoFactory {
 
   private Command stationaryAAShoot()
   {
-      return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d());
+      return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubePose().toPose2d()).withTimeout(4);
+  }
+
+  private Command alignToPose(Pose2d targetPose)
+  {
+    return superstructure.AimShooting(new XboxController(0), () ->targetPose).withTimeout(2.0);
+  }
+
+  private Command alignToTower()
+  {
+    return new Command() {};
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path)
