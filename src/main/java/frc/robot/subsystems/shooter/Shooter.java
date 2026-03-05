@@ -57,8 +57,6 @@ public class Shooter extends SubsystemBase {
 
     //TODO Update the setVoltage with linear regression
     public void applyStates() {
-        
-
         switch (currentSubstate) {
             case STOPPED: 
                 shooterIO.setVoltage(0);

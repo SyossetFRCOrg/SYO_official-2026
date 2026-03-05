@@ -83,6 +83,7 @@ class AutoFactory {
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToTowerLeft);
     SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDepot));
     c.addCommands(intakeWhileFollowing(StartToDepot));
     c.addCommands(follow(DepotToS3));
     c.addCommands(stationaryAAShoot());
@@ -102,6 +103,7 @@ class AutoFactory {
       preloadTrajectoryClass(S2ToTowerRight);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToOutpost));
       c.addCommands(follow(StartToOutpost));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(OutpostToS2));
@@ -122,6 +124,7 @@ class AutoFactory {
       preloadTrajectoryClass(S3ToLStart);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToDepot));
       c.addCommands(follow(StartToDepot));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(DepotToS3));
@@ -142,6 +145,7 @@ class AutoFactory {
       preloadTrajectoryClass(S2ToRStart);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToOutpost));
       c.addCommands(follow(StartToOutpost));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(OutpostToS2));
@@ -162,6 +166,7 @@ class AutoFactory {
       preloadTrajectoryClass(S3ToLTrench);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToDepot));
       c.addCommands(follow(StartToDepot));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(DepotToS3));
@@ -182,6 +187,7 @@ class AutoFactory {
       preloadTrajectoryClass(S2ToRTrench);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToOutpost));
       c.addCommands(follow(StartToOutpost));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(OutpostToS2));
@@ -209,6 +215,7 @@ class AutoFactory {
       preloadTrajectoryClass(LTrenchToS3);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToDepot));
       c.addCommands(follow(StartToDepot));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(DepotToS3));
@@ -242,6 +249,7 @@ class AutoFactory {
       preloadTrajectoryClass(RTrenchToS2);
   
       SequentialCommandGroup c = new SequentialCommandGroup();
+      c.addCommands(resetPose(StartToOutpost));
       c.addCommands(follow(StartToOutpost));
       c.addCommands(Commands.waitSeconds(4));
       c.addCommands(follow(OutpostToS2));
