@@ -74,7 +74,7 @@ public class Robot extends LoggedRobot {
         builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
         builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
+        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
       }
     });
 
