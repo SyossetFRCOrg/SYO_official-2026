@@ -2,15 +2,16 @@ package frc.robot.autos;
 
 public enum Location {
 
-  FIELDA,
-  FIELDB,
-  FIELDC,
-  FIELDD,
-  FIELDE, 
-  FIELDF,
-  FIELDG,
-  FIELDI,
-  FIELDJ,
+  // Field (Neutral) Locations
+  NA,
+  NB,
+  NC,
+  ND,
+  NE, 
+  NF,
+  NG,
+  NH,
+  NI,
 
   OUTPOST,
   HUB,
@@ -25,6 +26,9 @@ public enum Location {
   LSTART,
   FLSTART,
   FRSTART,
+
+  LTRENCH,
+  RTRENCH,
 
   S1,
   S2,
