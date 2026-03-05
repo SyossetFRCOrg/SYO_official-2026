@@ -1,13 +1,12 @@
 package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
-import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
+
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -65,16 +64,11 @@ class AutoFactory {
     PathPlannerPath path = loadSegment("TestPath");
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(path));
     c.addCommands(follow(path));
     // c.addCommands(stationaryAAShoot());
     // c.addCommands(follow(path));
     return c;
-  }
-
-  private void setInitalPose(PathPlannerPath path)
-  {
-    Translation2d intialLoc = path.getAllPathPoints().get(0).position;
-    //Pose2d initialPose = new Pose2d(intialLoc);
   }
 
   Command Depot_S3_TowerLeft(Location Start)
@@ -272,33 +266,30 @@ class AutoFactory {
   }
 
   // Auto init helpers
-  private Command resetPose(final PathPlannerPath segment) {
+  private Command resetPose(PathPlannerPath segment) {
     return runOnce(
         () -> {
-
           // var correctedTraj =
           // segment.generateTrajectory(new ChassisSpeeds(), new Rotation2d(), null);
-          // Pose2d pose = correctedTraj.getInitialPose();
           Pose2d pose = AllianceFlipUtil.apply(segment.getStartingHolonomicPose().get());
           // Pose2d pose = segment.getPreviewStartingHolonomicPose();
-          // //getpreviewstartingholonomicpose didn't work
+          // getpreviewstartingholonomicpose didn't work
           // getStartingDifferentialPose worked!!!
-
           drive.setPose(pose);
         });
   }
 
-  // Auto init helpers
-  private Command resetPose(final Pose2d pose) {
-    return runOnce(
-        () -> {
-          // Pose2d pose = segment.getPreviewStartingHolonomicPose();
-          // //getpreviewstartingholonomicpose didn't work
-          // getStartingDifferentialPose worked!!!
+  // // Auto init helpers
+  // private Command resetPose(final Pose2d pose) {
+  //   return runOnce(
+  //       () -> {
+  //         // Pose2d pose = segment.getPreviewStartingHolonomicPose();
+  //         // //getpreviewstartingholonomicpose didn't work
+  //         // getStartingDifferentialPose worked!!!
 
-          drive.setPose(pose);
-        });
-  }
+  //         drive.setPose(pose);
+  //       });
+  // }
 
   // Path following
   private Command follow(final Location start, final Location end) {
