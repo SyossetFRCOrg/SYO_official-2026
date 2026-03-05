@@ -32,7 +32,7 @@ public class FieldConstants {
     
     // Gets pose based on current alliance
     // -->
-    public static Pose3d getHubePose() {
+    public static Pose3d getHubPose() {
         return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
     }
 

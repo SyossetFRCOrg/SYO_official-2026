@@ -513,7 +513,7 @@ public class Drive extends SubsystemBase {
   
   public Distance getHubDistance()
   {
-    return getShotDistance(FieldConstants.getHubePose().toPose2d().getTranslation());
+    return getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation());
   }
 
   public Distance getFerryDistance()
