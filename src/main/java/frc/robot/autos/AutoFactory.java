@@ -17,6 +17,8 @@ import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.AllianceFlipUtil;
 
+//import edu.wpi.first.wpilibj.XboxController;
+
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({ "UnusedMethod", "UnusedVariable", "EmptyBlockTag" })
 class AutoFactory {
@@ -66,8 +68,8 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(path));
     c.addCommands(follow(path));
-    // c.addCommands(stationaryAAShoot());
-    // c.addCommands(follow(path));
+    c.addCommands(stationaryAAShoot());
+    // c.addCommands(superstructure.AimShooting(new XboxController(-1), () -> FieldConstants.getHubePose().toPose2d()));
     return c;
   }
 
