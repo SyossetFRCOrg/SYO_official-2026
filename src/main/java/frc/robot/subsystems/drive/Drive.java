@@ -211,6 +211,7 @@ public class Drive extends SubsystemBase {
     }
 
     RobotState.getInstance().setRobotPose(getPose());
+    Logger.recordOutput("Drive/distanceToHub", getHubDistance());
 
     // Log empty setpoint states when disabled
     if (DriverStation.isDisabled()) {

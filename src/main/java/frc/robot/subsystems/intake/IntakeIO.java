@@ -12,10 +12,10 @@ public interface IntakeIO {
         public double rollerVelocityRadPerSec = 0.0;
         public double rollerAppliedVolts = 0.0;
 
-        public boolean hopperConnected = false;
-        public double hopperPosition = 0.0;
-        public double hopperVelocityRadPerSec = 0.0;
-        public double hopperAppliedVolts = 0.0;
+        // public boolean hopperConnected = false;
+        // public double hopperPosition = 0.0;
+        // public double hopperVelocityRadPerSec = 0.0;
+        // public double hopperAppliedVolts = 0.0;
 
         public boolean armConnected = false;
         public double armPosition = 0.0;
@@ -31,9 +31,9 @@ public interface IntakeIO {
 
     // public default void setHopperEncoderPosition(double positionRadians){}
 
-    public default void moveHopperToPosition(double positionRadians){}
+    // public default void moveHopperToPosition(double positionRadians){}
 
-    public default void setHopperVoltage(double voltage){}
+    // public default void setHopperVoltage(double voltage){}
 
     public default void setArmVoltage(double voltage){}
 
