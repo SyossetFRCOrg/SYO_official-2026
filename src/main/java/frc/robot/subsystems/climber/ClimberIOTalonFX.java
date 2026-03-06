@@ -84,6 +84,9 @@ public class ClimberIOTalonFX implements ClimberIO {
         talonConfig.Slot0.GravityType = GravityTypeValue.Elevator_Static;
         talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
+        tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+        tryUntilOk(5, () -> talon.setPosition(0.0, 0.25));
+
         // Motion magic
         talonConfig.MotionMagic.MotionMagicCruiseVelocity = motionMagicVelocity.get();
         talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
@@ -172,6 +175,7 @@ public class ClimberIOTalonFX implements ClimberIO {
     }
 
     public void setTargetRotations(double rotations) {
+        desiredPositionRot = rotations;
         talon.setControl(positionRequest.withPosition(rotations));
     }
 
