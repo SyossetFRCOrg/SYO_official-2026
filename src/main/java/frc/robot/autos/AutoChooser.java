@@ -1,5 +1,12 @@
 package frc.robot.autos;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -11,12 +18,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * A {@link edu.wpi.first.wpilibj.smartdashboard.SendableChooser} for selecting an autonomous
@@ -51,7 +52,10 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.MIDSTART_DEPOT_S3_LSTART,"FLSTART_DEPOT_S3_LSTART", autoFactory -> autoFactory.Depot_S3_LStart(Location.MIDSTART)),
     new AutoProgram(Auto.FRSTART_OUTPOST_S2_RSTART, "FRSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RSTART, "RSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.RSTART)),
-    new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART))
+    new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART)),
+  
+    new AutoProgram(Auto.FLSTART_Depot_S3_LTrench, null, null)
+  
   );
 
   /**
