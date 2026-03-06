@@ -69,7 +69,7 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(path));
     c.addCommands(follow(path));
-    c.addCommands(stationaryAAShoot());
+    // c.addCommands(stationaryAAShoot());
     // c.addCommands(superstructure.AimShooting(new XboxController(-1), () ->
     // FieldConstants.getHubePose().toPose2d()));
     return c;

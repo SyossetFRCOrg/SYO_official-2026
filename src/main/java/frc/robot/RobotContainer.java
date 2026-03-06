@@ -199,11 +199,11 @@ public class RobotContainer {
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                MoveIntakeArmOut.whileTrue(superstructure.SetArmVoltage(10));
-                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmOut.onTrue(superstructure.SetArmVoltage(10));
+                // MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
-                MoveIntakeArmIn.whileTrue(superstructure.SetArmVoltage(-10));
-                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmIn.onTrue(superstructure.SetArmVoltage(-10));
+                // MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
 
         }
 
