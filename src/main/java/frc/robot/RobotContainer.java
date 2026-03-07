@@ -6,6 +6,9 @@ import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
 import org.littletonrobotics.junction.Logger;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -56,7 +59,7 @@ public class RobotContainer {
         // Controllers
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
-        // private final UsbCamera climbCam;
+        private final UsbCamera climbCam;
 
         // private final HttpCamera climberCamera;
 
@@ -95,9 +98,9 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                // climbCam = CameraServer.startAutomaticCapture();
-                // climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-                // climbCam.setResolution(80, 60);
+                climbCam = CameraServer.startAutomaticCapture();
+                climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+                climbCam.setResolution(80, 60);
 
                 // Shuffleboard.getTab("Match")
                 // .add(new HttpCamera("ClimberCam",
@@ -200,10 +203,10 @@ public class RobotContainer {
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
                 MoveIntakeArmOut.onTrue(superstructure.SetArmVoltage(10));
-                // MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
                 MoveIntakeArmIn.onTrue(superstructure.SetArmVoltage(-10));
-                // MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
 
         }
 

@@ -27,5 +27,5 @@ public interface ShooterIO {
 
     public default void setVoltage(double voltage){}
 
-    public default void setMagicMotionVelocityVoltage(double velocity){}
+    public default void setVelocityVoltage(double velocity){}
 }

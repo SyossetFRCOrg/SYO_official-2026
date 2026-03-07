@@ -344,7 +344,7 @@ class AutoFactory {
 
   // Path following
   private Command follow(PathPlannerPath path) {
-    path.preventFlipping = false;
+    // path.preventFlipping = false;
     return AutoBuilder.followPath(path);
   }
 
@@ -353,7 +353,7 @@ class AutoFactory {
     // trajectory class
     // which is used to follow paths and saves user code ms loop time at the start
     // of auto.
-    firstSegment.preventFlipping = false;
+    // firstSegment.preventFlipping = false;
 
     if (!trajectoriesLoaded) {
       trajectoriesLoaded = true;
@@ -374,7 +374,7 @@ class AutoFactory {
       path = null;
     }
 
-    path.preventFlipping = false;
+    // path.preventFlipping = false;
 
     // return new AutoSegment(start, end, name, path);
     return path;
@@ -388,7 +388,7 @@ class AutoFactory {
       e.printStackTrace();
       path = null;
     }
-    path.preventFlipping = false;
+    // path.preventFlipping = false;
     return path;
   }
 }
