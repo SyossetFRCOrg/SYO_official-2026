@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
        return switch (desiredSubstate) {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
-            case ACTIVE -> motorsReady() ? Substate.ACTIVE : Substate.PREPARING;
+            case ACTIVE -> motorsReady() && currentSubstate != Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
             case FERRY -> Substate.FERRY;
         };
     }

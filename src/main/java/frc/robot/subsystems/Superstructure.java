@@ -208,9 +208,6 @@ public class Superstructure extends SubsystemBase {
         
         }));
   }
-  // public Command SetHopperVoltage(double voltage){
-  //   return new InstantCommand(() -> intake.setHopperVoltage(voltage));
-  // }
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }

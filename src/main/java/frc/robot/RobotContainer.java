@@ -103,10 +103,12 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                usbCam = CameraServer.startAutomaticCapture();
+                usbCam = CameraServer.startAutomaticCapture(0);
                 usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-                usbCam.setResolution(80, 60);
+                usbCam.setResolution(1280, 720);
+                usbCam.setFPS(15);
                 usbCam.setPixelFormat(PixelFormat.kMJPEG);
+                System.out.println();
 
                 Shuffleboard.getTab("Match")
                 .add(new HttpCamera("ClimberCam",
@@ -181,13 +183,6 @@ public class RobotContainer {
                 // Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
                 // FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())));
 
-                // //TODO consider moving this to buttonboard?
-                // Trigger moveHopperOutOnDpadUp = new Trigger(() -> buttonboard.getRawButton(6));
-                // moveHopperOutOnDpadUp.onTrue(superstructure.SetHopperVoltage(4));
-                // moveHopperOutOnDpadUp.onFalse(superstructure.SetHopperVoltage(0));
-                // Trigger moveHopperInOnDpadDown = new Trigger(() -> buttonboard.getRawButton(5));
-                // moveHopperInOnDpadDown.onTrue(superstructure.SetHopperVoltage(-4));
-                // moveHopperInOnDpadDown.onFalse(superstructure.SetHopperVoltage(0));
 
 
                 Trigger AlignHubOnRightBumper = new Trigger(() -> controller.getRawButton(6));
@@ -208,11 +203,11 @@ public class RobotContainer {
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                MoveIntakeArmOut.onTrue(superstructure.SetArmVoltage(10));
-                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmOut.onTrue(superstructure.SetArmVoltage(2));
+                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0.5));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
-                MoveIntakeArmIn.onTrue(superstructure.SetArmVoltage(-10));
-                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0));
+                MoveIntakeArmIn.onTrue(superstructure.SetArmVoltage(-2));
+                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0.5));
 
         }
 

@@ -57,9 +57,7 @@ public class Intake extends SubsystemBase {
         }
     }
 
-    // public void setHopperVoltage(double voltage){
-    //     intakeIO.setHopperVoltage(voltage);
-    // }
+   
     public void setRollerVoltage(double voltage){
         intakeIO.setRollerVoltage(voltage);
     }
