@@ -7,6 +7,8 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -17,7 +19,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.util.AllianceFlipUtil;
-
+import frc.robot.util.SwitchableChooser;
 import edu.wpi.first.wpilibj.XboxController;
 
 /** A factory for creating autonomous programs for a given {@link Auto} */
@@ -68,7 +70,7 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(path));
     c.addCommands(follow(path));
-    c.addCommands(stationaryAAShoot());
+    // c.addCommands(stationaryAAShoot());
     // c.addCommands(superstructure.AimShooting(new XboxController(-1), () ->
     // FieldConstants.getHubePose().toPose2d()));
     return c;
@@ -259,13 +261,14 @@ class AutoFactory {
   }
 
   private Command stationaryAAShoot() {
-    return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d()).withTimeout(4);
+    return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
 
   private Command alignToPose(Pose2d targetPose) {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
+<<<<<<< HEAD
   private Command alignToTower(Location tower)
   {
     switch (tower) 
@@ -279,10 +282,28 @@ class AutoFactory {
         break;
       case TOWERMIDLEFT:
         break;
+=======
+  private Command alignToTower(Location towerLocation) {
+    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    
+    double tv = table.getEntry("tv").getDouble(0);
+    if (tv == 0) 
+      return Commands.none();
+    
+    double seenId = table.getEntry("tid").getDouble(-1);
+    if (!(seenId == 15 && seenId == 16))
+      return Commands.none();
+    
+    switch (towerLocation) {
+      //add logic
+>>>>>>> fb7dbff5e930fa43f0198feb4eeb645f39c43d74
       default:
-        break;
+        return Commands.none();
     }
+<<<<<<< HEAD
     return new InstantCommand();
+=======
+>>>>>>> fb7dbff5e930fa43f0198feb4eeb645f39c43d74
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {
@@ -323,6 +344,7 @@ class AutoFactory {
 
   // Path following
   private Command follow(PathPlannerPath path) {
+    path.preventFlipping = false;
     return AutoBuilder.followPath(path);
   }
 
@@ -331,6 +353,8 @@ class AutoFactory {
     // trajectory class
     // which is used to follow paths and saves user code ms loop time at the start
     // of auto.
+    firstSegment.preventFlipping = false;
+
     if (!trajectoriesLoaded) {
       trajectoriesLoaded = true;
       var trajectory = new PathPlannerTrajectory(
