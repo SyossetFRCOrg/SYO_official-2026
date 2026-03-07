@@ -64,7 +64,7 @@ public class RobotContainer {
         // Controllers
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
-        private final UsbCamera climbCam;
+        private final UsbCamera usbCam;
 
         // private final HttpCamera climberCamera;
 
@@ -103,10 +103,10 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                climbCam = CameraServer.startAutomaticCapture();
-                climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-                climbCam.setResolution(80, 60);
-                climbCam.setPixelFormat(PixelFormat.kMJPEG);
+                usbCam = CameraServer.startAutomaticCapture();
+                usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+                usbCam.setResolution(80, 60);
+                usbCam.setPixelFormat(PixelFormat.kMJPEG);
 
                 Shuffleboard.getTab("Match")
                 .add(new HttpCamera("ClimberCam",
