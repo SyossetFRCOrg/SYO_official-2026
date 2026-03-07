@@ -268,21 +268,6 @@ class AutoFactory {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
-<<<<<<< HEAD
-  private Command alignToTower(Location tower)
-  {
-    switch (tower) 
-    {
-      case TOWERLEFT:
-        
-        break;
-      case TOWERRIGHT:
-        break;
-      case TOWERMIDRIGHT:
-        break;
-      case TOWERMIDLEFT:
-        break;
-=======
   private Command alignToTower(Location towerLocation) {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     
@@ -296,14 +281,9 @@ class AutoFactory {
     
     switch (towerLocation) {
       //add logic
->>>>>>> fb7dbff5e930fa43f0198feb4eeb645f39c43d74
       default:
         return Commands.none();
     }
-<<<<<<< HEAD
-    return new InstantCommand();
-=======
->>>>>>> fb7dbff5e930fa43f0198feb4eeb645f39c43d74
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {

@@ -2,6 +2,8 @@ package frc.robot.subsystems.shooter;
 
 import com.ctre.phoenix6.CANBus;
 
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+
 //TODO adjust these values
 public class ShooterConstants {
 
@@ -43,4 +45,17 @@ public class ShooterConstants {
 
     public static final CANBus canbus = new CANBus("*");
 
+    // (distance, desired vel)
+    public static InterpolatingDoubleTreeMap shooterSpeedMapScoring =
+        new InterpolatingDoubleTreeMap();
+    public static InterpolatingDoubleTreeMap timeOfFlightMapScoring =
+        new InterpolatingDoubleTreeMap();
+
+    public static InterpolatingDoubleTreeMap shooterSpeedMapFerrying =
+        new InterpolatingDoubleTreeMap();
+
+    //TODO Interpolation
+    static {
+        shooterSpeedMapScoring.put(0.0,0.0);
+    }
 }
