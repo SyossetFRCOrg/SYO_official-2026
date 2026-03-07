@@ -10,7 +10,8 @@ public class Shooter extends SubsystemBase {
     public enum Substate {
         STOPPED,
         PREPARING,
-        ACTIVE
+        ACTIVE,
+        FERRY
     }
 
     public Shooter(ShooterIO shooterIO) {
@@ -29,8 +30,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
-    private final LoggedTunableNumber desiredVelocity = new LoggedTunableNumber("Shooter/desiredVelocity", 7.5);
-
+ 
 
 
     private Substate handleShooterTransitions() {
@@ -38,6 +38,7 @@ public class Shooter extends SubsystemBase {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
             case ACTIVE -> motorsReady() ? Substate.ACTIVE : Substate.PREPARING;
+            case FERRY -> Substate.FERRY;
         };
     }
 
@@ -48,9 +49,9 @@ public class Shooter extends SubsystemBase {
         Logger.recordOutput("Shooter/CurrentSubstate", currentSubstate.toString());
         Logger.recordOutput("Shooter/DesiredSubstate", desiredSubstate.toString());
         Logger.recordOutput("Shooter/MotorsReady", motorsReady());
-        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRadPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
-        Logger.recordOutput("Shooter/Voltage", (currentSubstate == Substate.PREPARING ? 0.9 : 1) * shooterVelocity + shooterChange);
-        Logger.recordOutput("Shooter/VoltageChange", shooterChange);
+        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
+        Logger.recordOutput("Shooter/InputtedVelocity",  shooterVelocity + shooterChange);
+        Logger.recordOutput("Shooter/VelocityChange", shooterChange);
         currentSubstate = handleShooterTransitions();
         applyStates();
     }
@@ -61,26 +62,27 @@ public class Shooter extends SubsystemBase {
             case STOPPED: 
                 shooterIO.setVelocityVoltage(0);
                 break;
-
-            case ACTIVE:
+            case ACTIVE, PREPARING, FERRY:
                 shooterIO.setVelocityVoltage(shooterVelocity + shooterChange);
-                break; 
-            case PREPARING:
-                shooterIO.setVelocityVoltage(shooterVelocity * 0.9 + shooterChange);
-                break;  
-        }
+                break;
+            }
     }
 
-
-    //TODO
     public void setCalculatedShooterVoltage(double distance)
     {
-        // shooterVoltage = shooterVoltage;
+        if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
+        {
+            //shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+        }
+        else if(currentSubstate == Substate.FERRY)
+        {
+           // shooterVelocity = ShooterConstants.shooterSpeedMapFerrying.get(distance);
+        }
     }
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRadPerSec - (desiredVelocity.get()) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
+        return Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
     }
 
     public void adjustShooterVoltage(double amount) {

@@ -34,8 +34,10 @@ public class DriveCommands {
   private static final double DEADBAND = 0.1;
   private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 12.0);
   private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.4);
-  private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity", TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
-  private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber("AlignDrive/angleMaxAcceleration", TunerConstants.driveConfig.maxAngularAcceleration() * 1.5);
+  private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity",
+      TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
+  private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber(
+      "AlignDrive/angleMaxAcceleration", TunerConstants.driveConfig.maxAngularAcceleration() * 1.5);
   private static final double FF_START_DELAY = 2.0; // Secs
   private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
   private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
@@ -117,15 +119,15 @@ public class DriveCommands {
         0.0,
         ANGLE_KD.get(),
         new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
-    
-    
+
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
     return Commands.run(
         () -> {
           angleController.setPID(ANGLE_KP.get(), 0.0, ANGLE_KD.get());
-          angleController.setConstraints(new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+          angleController
+              .setConstraints(new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
 
           // Get linear velocity
           Translation2d linearVelocity = getLinearVelocityFromJoysticks(xSupplier.getAsDouble(),
@@ -138,7 +140,7 @@ public class DriveCommands {
           // Convert to field relative speeds & send command
           ChassisSpeeds speeds = new ChassisSpeeds(
               linearVelocity.getX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
-              linearVelocity.getY() * TunerConstants.driveConfig.maxLinearVelocity(),
+              linearVelocity.getY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
               omega);
           boolean isFlipped = DriverStation.getAlliance().isPresent()
               && DriverStation.getAlliance().get() == Alliance.Red;
@@ -155,13 +157,14 @@ public class DriveCommands {
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
   }
 
-  public static Command joystickDriveFacingPose(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier, Supplier<Pose2d> pose)
-  {
-      // Face the hub while maintaining drive controls
+  public static Command joystickDriveFacingPose(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier,
+      Supplier<Pose2d> pose) {
+    // Face the hub while maintaining drive controls
     return joystickDriveAtAngle(
-      drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(pose.get()).getTranslation().getAngle().plus(Rotation2d.k180deg)
-    );
+        drive, xSupplier, ySupplier, () -> drive.getPose().relativeTo(pose.get())
+            .getTranslation().getAngle().plus(Rotation2d.k180deg));
   }
+
   /**
    * Measures the velocity feedforward constants for the drive motors.
    *
@@ -300,5 +303,5 @@ public class DriveCommands {
     Rotation2d lastAngle = new Rotation2d();
     double gyroDelta = 0.0;
   }
-  
+
 }
