@@ -7,12 +7,17 @@ import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -101,13 +106,14 @@ public class RobotContainer {
                 climbCam = CameraServer.startAutomaticCapture();
                 climbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 climbCam.setResolution(80, 60);
+                climbCam.setPixelFormat(PixelFormat.kMJPEG);
 
-                // Shuffleboard.getTab("Match")
-                // .add(new HttpCamera("ClimberCam",
-                // "http://roborio-9016-frc.local:1181/?action=stream"))
-                // .withWidget(BuiltInWidgets.kCameraStream)
-                // .withSize(4, 3)
-                // .withPosition(4, 3);
+                Shuffleboard.getTab("Match")
+                .add(new HttpCamera("ClimberCam",
+                "http://roborio-9016-frc.local:1181/?action=stream"))
+                .withWidget(BuiltInWidgets.kCameraStream)
+                .withSize(4, 3)
+                .withPosition(4, 3);
         }
 
         /**

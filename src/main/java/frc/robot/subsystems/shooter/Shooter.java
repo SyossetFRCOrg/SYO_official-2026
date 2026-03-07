@@ -30,8 +30,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
-    private final LoggedTunableNumber desiredVelocity = new LoggedTunableNumber("Shooter/desiredVelocity", 7.5);
-
+ 
 
 
     private Substate handleShooterTransitions() {
@@ -50,9 +49,9 @@ public class Shooter extends SubsystemBase {
         Logger.recordOutput("Shooter/CurrentSubstate", currentSubstate.toString());
         Logger.recordOutput("Shooter/DesiredSubstate", desiredSubstate.toString());
         Logger.recordOutput("Shooter/MotorsReady", motorsReady());
-        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRadPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
-        Logger.recordOutput("Shooter/Voltage", (currentSubstate == Substate.PREPARING ? 0.9 : 1) * shooterVelocity + shooterChange);
-        Logger.recordOutput("Shooter/VoltageChange", shooterChange);
+        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
+        Logger.recordOutput("Shooter/InputtedVelocity",  shooterVelocity + shooterChange);
+        Logger.recordOutput("Shooter/VelocityChange", shooterChange);
         currentSubstate = handleShooterTransitions();
         applyStates();
     }
@@ -83,7 +82,7 @@ public class Shooter extends SubsystemBase {
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRadPerSec - (desiredVelocity.get()) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
+        return Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
     }
 
     public void adjustShooterVoltage(double amount) {

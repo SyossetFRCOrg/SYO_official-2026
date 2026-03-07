@@ -280,7 +280,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.leftConnected = shooterConnectedDebounce.calculate(leftTalonStatus.isOK());
 
-                inputs.leftVelocityRadPerSec = leftShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.leftVelocityRotPerSec = leftShooterVelocity.getValue().in(RotationsPerSecond);
                 inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
                 inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
 
@@ -290,7 +290,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.rightConnected = shooterConnectedDebounce.calculate(rightTalonStatus.isOK());
 
-                inputs.rightVelocityRadPerSec = rightShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.rightVelocityRotPerSec = rightShooterVelocity.getValue().in(RotationsPerSecond);
                 inputs.rightAppliedVolts = rightShooterAppliedVolts.getValueAsDouble();
                 inputs.rightCurrentAmps = rightShooterCurrent.getValueAsDouble();
 
@@ -300,7 +300,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.centerConnected = shooterConnectedDebounce.calculate(centerTalonStatus.isOK());
 
-                inputs.centerVelocityRadPerSec = centerShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.centerVelocityRotPerSec = centerShooterVelocity.getValue().in(RotationsPerSecond);
 
                 inputs.centerAppliedVolts = centerShooterAppliedVolts.getValueAsDouble();
                 inputs.centerCurrentAmps = centerShooterCurrent.getValueAsDouble();
