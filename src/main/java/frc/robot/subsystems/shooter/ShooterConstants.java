@@ -10,21 +10,24 @@ public class ShooterConstants {
     public static final int rightMotorID = 15;
 
     public static final double left_kP = 0;
+    public static final double left_kI = 0.02;
     public static final double left_kD = 0;
-    public static final double left_kS = 0;
-    public static final double left_kV = 0;
+    public static final double left_kS = 0.28;
+    public static final double left_kV = 0.12;
     public static final double left_kA = 0;
 
     public static final double center_kP = 0;
+    public static final double center_kI = 0.02;
     public static final double center_kD = 0;
-    public static final double center_kS = 0;
-    public static final double center_kV = 0;
+    public static final double center_kS = 0.28;
+    public static final double center_kV = 0.12;
     public static final double center_kA = 0;
 
     public static final double right_kP = 0;
+    public static final double right_kI = 0.02;
     public static final double right_kD = 0;
-    public static final double right_kS = 0;
-    public static final double right_kV = 0;
+    public static final double right_kS = 0.28;
+    public static final double right_kV = 0.12;
     public static final double right_kA = 0;
 
 

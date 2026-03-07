@@ -8,28 +8,28 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.controls.DynamicMotionMagicVoltage;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import edu.wpi.first.math.filter.Debouncer;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
 import frc.robot.util.LoggedTunableNumber;
+
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.util.PhoenixUtil.*;
 
 public class ShooterIOTalonFX implements ShooterIO {
 
         final VoltageOut voltageRequest = new VoltageOut(0);
 
-        final MotionMagicVelocityVoltage motionMagicVelocityVoltageRequest = new MotionMagicVelocityVoltage(0);
+        final VelocityVoltage velocityVoltageRequest = new VelocityVoltage(0);
 
         private final TalonFX leftTalon;
         private final TalonFX centerTalon;
@@ -41,6 +41,8 @@ public class ShooterIOTalonFX implements ShooterIO {
 
         private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
                         ShooterConstants.left_kP);
+        private static final LoggedTunableNumber left_kI = new LoggedTunableNumber("Shooter/Gains/left_kI",
+        ShooterConstants.left_kI);
         private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
                         ShooterConstants.left_kD);
         private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS",
@@ -52,6 +54,8 @@ public class ShooterIOTalonFX implements ShooterIO {
 
         private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP",
                         ShooterConstants.center_kP);
+                        private static final LoggedTunableNumber center_kI = new LoggedTunableNumber("Shooter/Gains/center_kI",
+        ShooterConstants.center_kI);
         private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD",
                         ShooterConstants.center_kD);
         private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS",
@@ -63,6 +67,8 @@ public class ShooterIOTalonFX implements ShooterIO {
 
         private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP",
                         ShooterConstants.right_kP);
+                        private static final LoggedTunableNumber right_kI = new LoggedTunableNumber("Shooter/Gains/right_kI",
+        ShooterConstants.right_kI);
         private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD",
                         ShooterConstants.right_kD);
         private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS",
@@ -118,22 +124,26 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
                 rightTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-                leftTalonConfig.Slot0.kA = left_kA.get();
-                leftTalonConfig.Slot0.kD = left_kD.get();
-                centerTalonConfig.Slot0.kA = center_kA.get();
-                centerTalonConfig.Slot0.kD = center_kD.get();
-                rightTalonConfig.Slot0.kA = right_kA.get();
-                rightTalonConfig.Slot0.kD = right_kD.get();
-
                 leftTalonConfig.Slot0.kP = left_kP.get();
+                leftTalonConfig.Slot0.kI = left_kI.get();
+                leftTalonConfig.Slot0.kD = left_kD.get();
                 leftTalonConfig.Slot0.kS = left_kS.get();
                 leftTalonConfig.Slot0.kV = left_kV.get();
+                leftTalonConfig.Slot0.kA = left_kA.get();
+
                 centerTalonConfig.Slot0.kP = center_kP.get();
+                centerTalonConfig.Slot0.kI = center_kI.get();
+                centerTalonConfig.Slot0.kD = center_kD.get();
                 centerTalonConfig.Slot0.kS = center_kS.get();
                 centerTalonConfig.Slot0.kV = center_kV.get();
+                centerTalonConfig.Slot0.kA = center_kA.get();
+                
                 rightTalonConfig.Slot0.kP = right_kP.get();
+                rightTalonConfig.Slot0.kI = right_kI.get();
+                rightTalonConfig.Slot0.kD = right_kD.get();
                 rightTalonConfig.Slot0.kS = right_kS.get();
                 rightTalonConfig.Slot0.kV = right_kV.get();
+                rightTalonConfig.Slot0.kA = right_kA.get();
 
                 leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
                 leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
@@ -270,8 +280,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.leftConnected = shooterConnectedDebounce.calculate(leftTalonStatus.isOK());
 
-                inputs.leftVelocityRadPerSec = Units
-                                .rotationsPerMinuteToRadiansPerSecond(leftShooterVelocity.getValueAsDouble());
+                inputs.leftVelocityRadPerSec = leftShooterVelocity.getValue().in(RotationsPerSecond);
                 inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
                 inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
 
@@ -281,8 +290,7 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.rightConnected = shooterConnectedDebounce.calculate(rightTalonStatus.isOK());
 
-                inputs.rightVelocityRadPerSec = Units
-                                .rotationsPerMinuteToRadiansPerSecond(rightShooterVelocity.getValueAsDouble());
+                inputs.rightVelocityRadPerSec = rightShooterVelocity.getValue().in(RotationsPerSecond);
                 inputs.rightAppliedVolts = rightShooterAppliedVolts.getValueAsDouble();
                 inputs.rightCurrentAmps = rightShooterCurrent.getValueAsDouble();
 
@@ -292,8 +300,8 @@ public class ShooterIOTalonFX implements ShooterIO {
 
                 inputs.centerConnected = shooterConnectedDebounce.calculate(centerTalonStatus.isOK());
 
-                inputs.centerVelocityRadPerSec = Units
-                                .rotationsPerMinuteToRadiansPerSecond(centerShooterVelocity.getValueAsDouble());
+                inputs.centerVelocityRadPerSec = centerShooterVelocity.getValue().in(RotationsPerSecond);
+
                 inputs.centerAppliedVolts = centerShooterAppliedVolts.getValueAsDouble();
                 inputs.centerCurrentAmps = centerShooterCurrent.getValueAsDouble();
                 // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
@@ -307,9 +315,10 @@ public class ShooterIOTalonFX implements ShooterIO {
                 centerTalon.setControl(voltageRequest.withOutput((voltage)));
                 rightTalon.setControl(voltageRequest.withOutput((voltage)));
         }
-        public void setMagicMotionVelocityVoltage(double velocity)
+        public void setVelocityVoltage(double velocity)
         {
-                centerTalon.setControl(motionMagicVelocityVoltageRequest.withVelocity(velocity).withAcceleration(centerMotionMagicAcceleration.get()));
-                
+                leftTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
+                centerTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
+                rightTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
         }
 }
