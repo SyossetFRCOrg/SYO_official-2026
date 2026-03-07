@@ -22,7 +22,7 @@ public class Shooter extends SubsystemBase {
     private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    private static double shooterVoltage = 10, shooterChange = 0;
+    private static double shooterVelocity = 70, shooterChange = 0;
 
 
     private @Getter Substate currentSubstate = Substate.STOPPED;
@@ -48,8 +48,8 @@ public class Shooter extends SubsystemBase {
         Logger.recordOutput("Shooter/CurrentSubstate", currentSubstate.toString());
         Logger.recordOutput("Shooter/DesiredSubstate", desiredSubstate.toString());
         Logger.recordOutput("Shooter/MotorsReady", motorsReady());
-        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRadPerSec - (shooterVoltage + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
-        Logger.recordOutput("Shooter/Voltage", (currentSubstate == Substate.PREPARING ? 0.9 : 1) * shooterVoltage + shooterChange);
+        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRadPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
+        Logger.recordOutput("Shooter/Voltage", (currentSubstate == Substate.PREPARING ? 0.9 : 1) * shooterVelocity + shooterChange);
         Logger.recordOutput("Shooter/VoltageChange", shooterChange);
         currentSubstate = handleShooterTransitions();
         applyStates();
@@ -59,14 +59,14 @@ public class Shooter extends SubsystemBase {
     public void applyStates() {
         switch (currentSubstate) {
             case STOPPED: 
-                shooterIO.setVoltage(0);
+                shooterIO.setVelocityVoltage(0);
                 break;
 
             case ACTIVE:
-                shooterIO.setVoltage(shooterVoltage + shooterChange);
+                shooterIO.setVelocityVoltage(shooterVelocity + shooterChange);
                 break; 
             case PREPARING:
-                shooterIO.setVoltage(shooterVoltage * 0.9 + shooterChange);
+                shooterIO.setVelocityVoltage(shooterVelocity * 0.9 + shooterChange);
                 break;  
         }
     }

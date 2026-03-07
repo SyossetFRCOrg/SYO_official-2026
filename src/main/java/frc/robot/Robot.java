@@ -62,19 +62,19 @@ public class Robot extends LoggedRobot {
       public void initSendable(SendableBuilder builder) {
         builder.setSmartDashboardType("SwerveDrive");
 
-        builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians() , null);
+        builder.addDoubleProperty("Front Left Angle", () -> drive.getModules()[0].getAngle().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0) , null);
         builder.addDoubleProperty("Front Left Velocity", () -> drive.getModules()[0].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Front Right Angle", () -> drive.getModules()[1].getAngle().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
         builder.addDoubleProperty("Front Right Velocity", () -> drive.getModules()[1].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Left Angle", () -> drive.getModules()[2].getAngle().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
         builder.addDoubleProperty("Back Left Velocity", () -> drive.getModules()[2].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians(), null);
+        builder.addDoubleProperty("Back Right Angle", () -> drive.getModules()[3].getAngle().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
         builder.addDoubleProperty("Back Right Velocity", () -> drive.getModules()[3].getVelocityMetersPerSec(), null);
 
-        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians(), null);
+        builder.addDoubleProperty("Robot Angle", () -> drive.getRotation().getRadians() + (DriverStation.getAlliance().get().equals(Alliance.Red) ? Math.PI : 0), null);
       }
     });
 
