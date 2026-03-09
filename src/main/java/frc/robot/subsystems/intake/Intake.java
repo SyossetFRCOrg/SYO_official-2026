@@ -64,7 +64,11 @@ public class Intake extends SubsystemBase {
     public void setArmVoltage(double voltage){
         intakeIO.setArmVoltage(voltage);
     }
-    public void moveArmToPosition(double positionRotation){
-        intakeIO.moveArmToPosition(positionRotation);
+
+    public void intakePosition(){
+        intakeIO.setArmPosition(IntakeConstants.intakePosition);
+    }
+    public void upPosition(){
+        intakeIO.setArmPosition(IntakeConstants.upPosition);
     }
 }

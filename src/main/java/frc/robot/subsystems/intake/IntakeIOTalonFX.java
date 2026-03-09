@@ -12,6 +12,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -184,8 +185,10 @@ public class IntakeIOTalonFX implements IntakeIO {
                 armTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
-        public void moveArmToPosition(double positionRadians){
+        public void moveArmPosition(double positionRadians){
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRadians);
+                ArmFeedforward feedforward = new ArmFeedforward(arm_kS.get(), arm_kV.get(), arm_kA.get(), arm_kA.get());
+                motionMagicVoltageRequest.FeedForward = feedforward.calculate(armPosition.getValueAsDouble(), 0);
                 armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
         }
 
