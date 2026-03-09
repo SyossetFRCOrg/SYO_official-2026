@@ -452,57 +452,6 @@ public class Drive extends SubsystemBase {
     };
   }
 
-  public Command alignDrive(XboxController controller, Supplier<Pose2d> targetPoseSupplier) {
-    return run(() -> {
-      // Driver input
-      double vx = controller.getLeftY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
-      double vy = controller.getLeftX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity();
-
-      Pose2d robotPose = getPose();
-      Pose2d targetPose = targetPoseSupplier.get();
-
-      // find desired angle
-      double shooterOffset = -DriveConstants.shooterSideOffset.in(Units.Meters);
-
-      double distance = robotPose.getTranslation().getDistance(targetPose.getTranslation());
-
-      // Safety guard (prevents NaN when very close)
-      if (distance < 0.01) {
-        runVelocity(new ChassisSpeeds());
-        return;
-      }
-
-      double shooterAngleRad = Math.acos(shooterOffset / distance);
-      Rotation2d shooterAngle = Rotation2d.fromRadians(shooterAngleRad);
-
-      Rotation2d offsetAngle = Rotation2d.kCCW_90deg.minus(shooterAngle);
-
-      Rotation2d desiredAngle = offsetAngle
-          .plus(robotPose.relativeTo(targetPose).getTranslation().getAngle()).plus(Rotation2d.k180deg);
-
-      Rotation2d currentAngle = robotPose.getRotation();
-
-      // Angle
-      double omega = DriveConstants.rotationController.calculate(currentAngle.getRadians(),desiredAngle.getRadians());
-
-      omega *= DriveConstants.maxAngularRate;
-
-      // Deadband and stopping condition
-      double angleErrorDeg = MathUtil.inputModulus(currentAngle.minus(desiredAngle).getDegrees(),-180.0,180.0);
-
-      final double stickDeadband = 0.1;
-      if (Math.abs(angleErrorDeg) < DriveConstants.epsilonAngleToGoal.in(Units.Degrees) && Math.hypot(vx, vy) < stickDeadband) {
-        runVelocity(new ChassisSpeeds());
-        return;
-      }
-
-      // Field centric
-      ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(vx,vy,omega,currentAngle);
-
-      runVelocity(speeds);
-    }).withName("AlignDrive");
-  }
-
   public Distance getShotDistance(Translation2d targetPose)
     {
       // incorporate momentum
