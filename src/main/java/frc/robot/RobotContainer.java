@@ -156,7 +156,7 @@ public class RobotContainer {
                                         new Pose2d(
                                                 drive.getPose().getX(),
                                                 drive.getPose().getY(),
-                                                DriverStation.getAlliance().get() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
+                                                FieldConstants.getAlliance() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
                 Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightTriggerAxis() > 0.5);
