@@ -65,6 +65,7 @@ class AutoFactory {
     PathPlannerPath path = loadSegment("TestPath");
     preloadTrajectoryClass(path);
     SequentialCommandGroup c = new SequentialCommandGroup();
+    path.flipPath(); // Test if flipping works
     c.addCommands(resetPose(path));
     c.addCommands(follow(path));
     // c.addCommands(stationaryAAShoot());
