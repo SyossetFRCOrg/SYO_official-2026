@@ -75,9 +75,9 @@ class AutoFactory {
 
   Command Depot_S3_TowerLeft(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-    PathPlannerPath S3ToTowerLeft = loadSegment(Location.S3, Location.TOWERLEFT);
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.BDEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.BDEPOT, Location.BS3);
+    PathPlannerPath S3ToTowerLeft = loadSegment(Location.BS3, Location.BTOWERLEFT);
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToTowerLeft);
@@ -93,9 +93,9 @@ class AutoFactory {
 
   Command Outpost_S2_TowerRight(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-    PathPlannerPath S2ToTowerRight = loadSegment(Location.S2, Location.TOWERRIGHT);
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.BOUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.BOUTPOST, Location.BS2);
+    PathPlannerPath S2ToTowerRight = loadSegment(Location.BS2, Location.BTOWERRIGHT);
     preloadTrajectoryClass(StartToOutpost);
     preloadTrajectoryClass(OutpostToS2);
     preloadTrajectoryClass(S2ToTowerRight);
@@ -113,9 +113,9 @@ class AutoFactory {
 
   Command Depot_S3_LStart(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-    PathPlannerPath S3ToLStart = loadSegment(Location.S3, Location.LSTART);
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.BDEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.BDEPOT, Location.BS3);
+    PathPlannerPath S3ToLStart = loadSegment(Location.BS3, Location.BLSTART);
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToLStart);
@@ -133,9 +133,9 @@ class AutoFactory {
 
   Command Outpost_S2_RStart(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-    PathPlannerPath S2ToRStart = loadSegment(Location.S2, Location.RSTART);
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.BOUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.BOUTPOST, Location.BS2);
+    PathPlannerPath S2ToRStart = loadSegment(Location.BS2, Location.BRSTART);
     preloadTrajectoryClass(StartToOutpost);
     preloadTrajectoryClass(OutpostToS2);
     preloadTrajectoryClass(S2ToRStart);
@@ -153,9 +153,9 @@ class AutoFactory {
 
   Command Depot_S3_LTrench(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-    PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.BDEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.BDEPOT, Location.BS3);
+    PathPlannerPath S3ToLTrench = loadSegment(Location.BS3, Location.BLTRENCH);
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToLTrench);
@@ -173,9 +173,9 @@ class AutoFactory {
 
   Command Outpost_S2_RTrench(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.BOUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.BOUTPOST, Location.BS2);
+    PathPlannerPath S2ToRTrench = loadSegment(Location.BS2, Location.BRTRENCH);
     preloadTrajectoryClass(StartToOutpost);
     preloadTrajectoryClass(OutpostToS2);
     preloadTrajectoryClass(S2ToRTrench);
@@ -193,12 +193,12 @@ class AutoFactory {
 
   Command Depot_S3_LTrench_ND_LTrench_S3_LTrench(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToDepot = loadSegment(Start, Location.DEPOT);
-    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT, Location.S3);
-    PathPlannerPath S3ToLTrench = loadSegment(Location.S3, Location.LTRENCH);
-    PathPlannerPath LTrenchToND = loadSegment(Location.LTRENCH, Location.ND);
-    PathPlannerPath NDToLTrench = loadSegment(Location.ND, Location.LTRENCH);
-    PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH, Location.S3);
+    PathPlannerPath StartToDepot = loadSegment(Start, Location.BDEPOT);
+    PathPlannerPath DepotToS3 = loadSegment(Location.BDEPOT, Location.BS3);
+    PathPlannerPath S3ToLTrench = loadSegment(Location.BS3, Location.BLTRENCH);
+    PathPlannerPath LTrenchToND = loadSegment(Location.BLTRENCH, Location.ND);
+    PathPlannerPath NDToLTrench = loadSegment(Location.ND, Location.BLTRENCH);
+    PathPlannerPath LTrenchToS3 = loadSegment(Location.BLTRENCH, Location.BS3);
 
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
@@ -226,12 +226,12 @@ class AutoFactory {
 
   Command Outpost_S2_RTrench_NF_RTrench_S2_RTrench(Location Start) {
     // Load trajectories
-    PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
-    PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH, Location.NF);
-    PathPlannerPath NFToRTrench = loadSegment(Location.NF, Location.RTRENCH);
-    PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH, Location.S2);
+    PathPlannerPath StartToOutpost = loadSegment(Start, Location.BOUTPOST);
+    PathPlannerPath OutpostToS2 = loadSegment(Location.BOUTPOST, Location.BS2);
+    PathPlannerPath S2ToRTrench = loadSegment(Location.BS2, Location.BRTRENCH);
+    PathPlannerPath RTrenchToNF = loadSegment(Location.BRTRENCH, Location.NF);
+    PathPlannerPath NFToRTrench = loadSegment(Location.NF, Location.BRTRENCH);
+    PathPlannerPath RTrenchToS2 = loadSegment(Location.BRTRENCH, Location.BS2);
 
     preloadTrajectoryClass(StartToOutpost);
     preloadTrajectoryClass(OutpostToS2);
@@ -294,7 +294,7 @@ class AutoFactory {
         () -> {
           // var correctedTraj =
           // segment.generateTrajectory(new ChassisSpeeds(), new Rotation2d(), null);
-          Pose2d pose = segment.getStartingDifferentialPose();
+          Pose2d pose = segment.getStartingHolonomicPose().get();
           // Pose2d pose = segment.getPreviewStartingHolonomicPose();
           // getpreviewstartingholonomicpose didn't work
           // getStartingDifferentialPose worked!!!
