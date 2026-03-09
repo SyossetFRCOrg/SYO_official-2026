@@ -26,5 +26,7 @@ public interface IntakeIO {
 
     public default void setArmVoltage(double voltage){}
 
+    public default void setArmPosition(double positionRadians){}
+
 
 }
