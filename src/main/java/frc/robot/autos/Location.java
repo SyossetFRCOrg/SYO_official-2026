@@ -1,59 +1,53 @@
 package frc.robot.autos;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.FieldConstants;
+
 public enum Location {
 
-  // Field (Neutral) Locations
-  NA,
-  NB,
-  NC,
-  ND,
-  NE, 
-  NF,
-  NG,
-  NH,
-  NI,
+  // Field (Neutral) Locations Relative to blue side
+  NA("NA", "NI"),
+  NB("NB", "NH"),
+  NC("NC", "NG"),
+  ND("ND", "NH"),
+  NE("NE", "NE"), 
+  NF("NF", "NF"),
+  NG("NG", "NC"),
+  NH("NH", "NB"),
+  NI("NI", "NA"),
 
-  BDEPOT,
-  BOUTPOST,
+  DEPOT("BDEPOT", "RDEPOT"),
+  OUTPOST("BOUTPOST", "ROUTPOST"),
 
-  BTOWERLEFT,
-  BTOWERMIDLEFT,
-  BTOWERMIDRIGHT,
-  BTOWERRIGHT,
+  TOWERLEFT("BTOWERLEFT", "RTOWERLEFT"),
+  TOWERMIDLEFT("BTOWERMIDLEFT", "RTOWERMIDLEFT"),
+  TOWERMIDRIGHT("BTOWERMIDRIGHT", "RTOWERMIDRIGHT"),
+  TOWERRIGHT("BTOWERRIGHT", "RTOWERRIGHT"),
   
-  BS1,
-  BS2,
-  BS3,
+  S1("BS1", "RS1"),
+  S2("BS2", "RS2"),
+  S3("BS3", "RS3"),
 
-  BFLSTART,
-  BLSTART,
-  BMIDSTART,
-  BRSTART,
-  BFRSTART,
+  FLSTART("BFLSTART", "RFLSTART"),
+  LSTART("BLSTART", "RLSTART"),
+  MIDSTART("BMIDSTART", "RMIDSTART"),
+  RSTART("BRSTART", "RRSTART"),
+  FRSTART("BFRSTART", "RFRSTART"),
 
-  BLTRENCH,
-  BRTRENCH,
+  LTRENCH("BLTRENCH", "RLTRENCH"),
+  RTRENCH("BRTRENCH", "RRTRENCH"),
 
-  RDEPOT,
-  ROUTPOST,
+  NONE("NONE", "NONE");
 
-  RTOWERLEFT,
-  RTOWERMIDLEFT,
-  RTOWERMIDRIGHT,
-  RTOWERRIGHT,
-  
-  RS1,
-  RS2,
-  RS3,
+  private final String blueName, redName;
 
-  RFLSTART,
-  RLSTART,
-  RMIDSTART,
-  RRSTART,
-  RFRSTART,
-  
-  RLTRENCH,
-  RRTRENCH,
+  private Location(String blueName, String redName) {
+    this.blueName = blueName;
+    this.redName = redName;
+  }
 
-  NONE,
+  public String getAllianceName() {
+    return FieldConstants.getAlliance() == Alliance.Blue ? blueName : redName;
+  }
 }

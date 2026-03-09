@@ -90,8 +90,8 @@ public class DriveCommands {
               linearVelocity.getY()
                   * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
               omega * TunerConstants.driveConfig.maxAngularVelocity());
-          boolean isFlipped = DriverStation.getAlliance().isPresent()
-              && DriverStation.getAlliance().get() == Alliance.Red;
+          boolean isFlipped = FieldConstants.getAlliance() == Alliance.Red;
+              
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
                   speeds,
@@ -144,8 +144,7 @@ public class DriveCommands {
               linearVelocity.getX() * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
               linearVelocity.getY() * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
               omega);
-          boolean isFlipped = DriverStation.getAlliance().isPresent()
-              && DriverStation.getAlliance().get() == Alliance.Red;
+          boolean isFlipped = FieldConstants.getAlliance() == Alliance.Red;
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
                   speeds,

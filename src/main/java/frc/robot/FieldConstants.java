@@ -10,6 +10,7 @@ import edu.wpi.first.units.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import pabeles.concurrency.IntOperatorTask.Min;
+import lombok.*;
 
 public class FieldConstants {
     // https://firstfrc.blob.core.windows.net/frc2026/FieldAssets/2026-field-dimension-dwgs.pdf All April tag poses are derived from Welded measurements
@@ -28,17 +29,19 @@ public class FieldConstants {
     public static final Pose3d redFerryDepotPose = new Pose3d(Units.Inches.of(607.8), Units.Inches.of(80), Units.Inches.of(0), Rotation3d.kZero);
     public static final Pose3d blueFerryOutpostPose = new Pose3d(Units.Inches.of(43.42), Units.Inches.of(80), Units.Inches.of(0), Rotation3d.kZero);
     public static final Pose3d blueFerryDepotPose = new Pose3d(Units.Inches.of(43.42), Units.Inches.of(237.69), Units.Inches.of(0), Rotation3d.kZero);
-
     
+    @Getter @Setter
+    public static Alliance alliance;
+
     // Gets pose based on current alliance
     // -->
     public static Pose3d getHubPose() {
-        return DriverStation.getAlliance().get().equals(Alliance.Red) ? redHubPose : blueHubPose;
+        return alliance.equals(Alliance.Red) ? redHubPose : blueHubPose;
     }
 
     public static Pose3d getFerryPose(Translation2d robotPose)
     {
-        if(DriverStation.getAlliance().get().equals(Alliance.Red)) 
+        if(alliance.equals(Alliance.Red)) 
         {
             if (robotPose.getDistance(redFerryOutpostPose.getTranslation().toTranslation2d()) <
                 robotPose.getDistance(redFerryDepotPose.getTranslation().toTranslation2d())) 
