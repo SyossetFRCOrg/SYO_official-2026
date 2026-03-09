@@ -180,8 +180,9 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
                 
                 //TODO Placeholder button. DO NOT DEPLOY 
-                // Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
-                // FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())));
+                Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
+                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
 
 
