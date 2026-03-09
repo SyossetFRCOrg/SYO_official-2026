@@ -93,6 +93,8 @@ class AutoFactory {
 
   Command Outpost_S2_TowerRight(Location Start) {
     // Load trajectories
+      SequentialCommandGroup c = new SequentialCommandGroup();
+
     PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
     PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
     PathPlannerPath S2ToTowerRight = loadSegment(Location.S2, Location.TOWERRIGHT);
@@ -100,7 +102,6 @@ class AutoFactory {
     preloadTrajectoryClass(OutpostToS2);
     preloadTrajectoryClass(S2ToTowerRight);
 
-    SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToOutpost));
     c.addCommands(follow(StartToOutpost));
     c.addCommands(Commands.waitSeconds(4));
@@ -172,21 +173,23 @@ class AutoFactory {
   }
 
   Command Outpost_S2_RTrench(Location Start) {
+    SequentialCommandGroup c = new SequentialCommandGroup();
+
     // Load trajectories
     PathPlannerPath StartToOutpost = loadSegment(Start, Location.OUTPOST);
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
-    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
     preloadTrajectoryClass(StartToOutpost);
-    preloadTrajectoryClass(OutpostToS2);
-    preloadTrajectoryClass(S2ToRTrench);
-
-    SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToOutpost));
     c.addCommands(follow(StartToOutpost));
+    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST, Location.S2);
+    // preloadTrajectoryClass(OutpostToS2);
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(OutpostToS2));
+    PathPlannerPath S2ToRTrench = loadSegment(Location.S2, Location.RTRENCH);
+    // preloadTrajectoryClass(S2ToRTrench);
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S2ToRTrench));
+    
+    
 
     return c;
   }
@@ -294,7 +297,7 @@ class AutoFactory {
         () -> {
           // var correctedTraj =
           // segment.generateTrajectory(new ChassisSpeeds(), new Rotation2d(), null);
-          Pose2d pose = segment.getStartingDifferentialPose();
+          Pose2d pose = segment.getStartingHolonomicPose().get();
           // Pose2d pose = segment.getPreviewStartingHolonomicPose();
           // getpreviewstartingholonomicpose didn't work
           // getStartingDifferentialPose worked!!!
@@ -351,7 +354,7 @@ class AutoFactory {
       path = null;
     }
 
-    // path.preventFlipping = false;
+    path.preventFlipping = true;
 
     // return new AutoSegment(start, end, name, path);
     return path;
@@ -365,7 +368,7 @@ class AutoFactory {
       e.printStackTrace();
       path = null;
     }
-    // path.preventFlipping = false;
+    path.preventFlipping = true;
     return path;
   }
 }

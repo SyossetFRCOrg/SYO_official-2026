@@ -25,8 +25,8 @@ public class IntakeConstants {
     public static final double rollerMaxJerk = 0.1;
 
 
-    public static final double armMotionMagicCruiseVelocity = 80;
-    public static final double armMaxAcceleration = 160;
+    public static final double armMotionMagicCruiseVelocity = 70;
+    public static final double armMaxAcceleration = 70;
     public static final double armMaxJerk = 1600;
 
 

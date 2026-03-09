@@ -184,7 +184,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 armTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
-        public void moveArmToposition(double positionRadians){
+        public void moveArmToPosition(double positionRadians){
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRadians);
                 armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
         }

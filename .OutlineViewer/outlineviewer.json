@@ -1,5 +1,11 @@
 {
   "Connections": {
     "open": true
+  },
+  "Retained Values": {
+    "open": false
+  },
+  "Transitory Values": {
+    "open": false
   }
 }

@@ -53,12 +53,12 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.FRSTART_OUTPOST_S2_RSTART, "FRSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RSTART, "RSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART)),
-  
+  //TODO CHECK AUTON NAMES ARE RIGHT FOR EVERYTHING
     new AutoProgram(Auto.FLSTART_DEPOT_S3_LTRENCH, "FLSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.FLSTART)),
     new AutoProgram(Auto.LSTART_DEPOT_S3_LTRENCH, "LSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.LSTART)),
     new AutoProgram(Auto.MIDSTART_DEPOT_S3_LTRENCH, "MIDSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.MIDSTART)),
     new AutoProgram(Auto.RSTART_DEPOT_S3_LTRENCH, "RSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.RSTART)),
-    new AutoProgram(Auto.FRSTART_OUTPOST_S2_RTRENCH, "FRSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.FRSTART)),
+    new AutoProgram(Auto.FRSTART_OUTPOST_S2_RTRENCH, "FRSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RTRENCH, "RSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RTRENCH, "MIDSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.MIDSTART)),
     new AutoProgram(Auto.LSTART_OUTPOST_S2_RTRENCH, "LSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.LSTART))

@@ -4,20 +4,15 @@ import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
-import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoMode;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -27,8 +22,6 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Superstructure.SuperState;
-import frc.robot.subsystems.climber.Climber;
-import frc.robot.subsystems.climber.ClimberIOTalonFX;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
@@ -40,6 +33,7 @@ import frc.robot.subsystems.shooter.Shooter;
 import frc.robot.subsystems.shooter.ShooterIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOLimelight;
+import lombok.Getter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -53,10 +47,10 @@ import frc.robot.subsystems.vision.VisionIOLimelight;
 public class RobotContainer {
         // Subsystems
         private final Vision vision;
-        private final Drive drive;
-        private final Indexer indexer;
-        private final Intake intake;
-        private final Shooter shooter;
+        private final @Getter Drive drive;
+        private final @Getter Indexer indexer;
+        private final @Getter Intake intake;
+        private final @Getter Shooter shooter;
         // private final Climber climber;
 
         private final Superstructure superstructure;
@@ -64,14 +58,8 @@ public class RobotContainer {
         // Controllers
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
+        
         private final UsbCamera usbCam;
-
-        // private final HttpCamera climberCamera;
-
-        // private final AutoSelector autoSelector = new AutoSelector("Auto");
-
-        // Dashboard inputs
-        // private final LoggedDashboardChooser<Command> autoChooser;
 
         /**
          * The container for the robot. Contains subsystems, IO devices, and commands.
@@ -106,16 +94,9 @@ public class RobotContainer {
                 usbCam = CameraServer.startAutomaticCapture(0);
                 usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 usbCam.setResolution(1280, 720);
-                usbCam.setFPS(15);
+                usbCam.setFPS(60);
                 usbCam.setPixelFormat(PixelFormat.kMJPEG);
-                System.out.println();
-
-                Shuffleboard.getTab("Match")
-                .add(new HttpCamera("ClimberCam",
-                "http://roborio-9016-frc.local:1181/?action=stream"))
-                .withWidget(BuiltInWidgets.kCameraStream)
-                .withSize(4, 3)
-                .withPosition(4, 3);
+                
         }
 
         /**
@@ -203,16 +184,10 @@ public class RobotContainer {
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                MoveIntakeArmOut.onTrue(superstructure.SetArmVoltage(2));
-                MoveIntakeArmOut.onFalse(superstructure.SetArmVoltage(0.5));
+                MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(10));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
-                MoveIntakeArmIn.onTrue(superstructure.SetArmVoltage(-2));
-                MoveIntakeArmIn.onFalse(superstructure.SetArmVoltage(0.5));
+                MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(0));
 
-        }
-
-        public Drive getDrive() {
-                return drive;
         }
 
         public Superstructure getSuperstructure() {

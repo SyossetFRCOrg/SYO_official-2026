@@ -10,7 +10,6 @@ import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.RobotState;
 import frc.robot.commands.DriveCommands;
-import frc.robot.subsystems.climber.Climber;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.intake.Intake;
@@ -210,6 +209,9 @@ public class Superstructure extends SubsystemBase {
   }
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
+  }
+  public Command MoveArmToPosition(double positionRotations) {
+    return new InstantCommand(() -> intake.moveArmToPosition(positionRotations));
   }
 
   public BooleanSupplier doesCommandMatch(SuperState currentState) {
