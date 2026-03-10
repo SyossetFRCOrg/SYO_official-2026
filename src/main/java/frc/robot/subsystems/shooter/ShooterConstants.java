@@ -70,4 +70,6 @@ public class ShooterConstants {
         shooterSpeedMapScoring.put(2.9, 70.0);
 
     }
+
+    public static final double ferrySpeed = 80.0;
 }
