@@ -185,11 +185,15 @@ public class IntakeIOTalonFX implements IntakeIO {
                 armTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
-        public void moveArmPosition(double positionRadians){
-                final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRadians);
-                ArmFeedforward feedforward = new ArmFeedforward(arm_kS.get(), arm_kV.get(), arm_kA.get(), arm_kA.get());
-                motionMagicVoltageRequest.FeedForward = feedforward.calculate(armPosition.getValueAsDouble(), 0);
-                armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRadians));
+        public void moveArmToPosition(double positionRotations){
+                final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRotations);
+                // ArmFeedforward feedforward = new ArmFeedforward(arm_kS.get(), arm_kV.get(), arm_kA.get(), arm_kA.get());
+                // motionMagicVoltageRequest.FeedForward = feedforward.calculate(armPosition.getValueAsDouble(), 0);
+                armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRotations));
+        }
+        public void setArmEncoderPosition(double positionRotations){
+                armTalon.setPosition(positionRotations);
+
         }
 
 }

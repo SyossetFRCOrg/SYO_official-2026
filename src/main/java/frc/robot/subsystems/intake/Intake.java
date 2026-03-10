@@ -15,6 +15,7 @@ public class Intake extends SubsystemBase {
 
     public Intake(IntakeIO intakeIO) {
         this.intakeIO = intakeIO;
+        setArmEncoderPosition(0);
     }
 
     // declare IO & logs
@@ -65,10 +66,10 @@ public class Intake extends SubsystemBase {
         intakeIO.setArmVoltage(voltage);
     }
 
-    public void intakePosition(){
-        intakeIO.setArmPosition(IntakeConstants.intakePosition);
+    public void moveArmToPosition(double positionRads){
+        intakeIO.moveArmToPosition(positionRads);
     }
-    public void upPosition(){
-        intakeIO.setArmPosition(IntakeConstants.upPosition);
+    public void setArmEncoderPosition(double positionRotations){
+        intakeIO.setArmEncoderPosition(positionRotations);
     }
 }

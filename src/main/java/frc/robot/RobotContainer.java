@@ -188,6 +188,8 @@ public class RobotContainer {
                 MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(10));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
                 MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(0));
+                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(6));
+                resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
 
         }
 

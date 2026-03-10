@@ -31,6 +31,7 @@ public class Robot extends LoggedRobot {
 
   public Robot() {
     robotContainer = new RobotContainer();
+    FieldConstants.setAlliance(DriverStation.getAlliance().get());
     switch (Constants.currentMode) {
       case REAL:
         // Running on a real robot, log to a USB stick ("/U/logs")

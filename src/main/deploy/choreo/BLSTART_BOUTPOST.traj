@@ -15,8 +15,8 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"BLSTART.x", "val":3.65}, "y":{"exp":"BLSTART.y", "val":5.7008209228515625}, "heading":{"exp":"BLSTART.heading", "val":0.0}, "intervals":36, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"BOUTPOST.x", "val":0.3656969666481018}, "y":{"exp":"BOUTPOST.y", "val":0.6541252136230469}, "heading":{"exp":"BOUTPOST.heading", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BLSTART.x", "val":3.65}, "y":{"exp":"BLSTART.y", "val":5.7008209228515625}, "heading":{"exp":"BLSTART.heading", "val":0.0}, "intervals":34, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BOUTPOST.x", "val":0.3656969666481018}, "y":{"exp":"BOUTPOST.y", "val":0.6541252136230469}, "heading":{"exp":"BOUTPOST.heading", "val":0.0}, "intervals":42, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"1.2881602048873901 m", "val":1.28816020488739}, "y":{"exp":"9.041448593139648 m", "val":9.041448593139648}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},

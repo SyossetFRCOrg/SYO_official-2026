@@ -57,5 +57,13 @@ public class ShooterConstants {
     //TODO Interpolation
     static {
         shooterSpeedMapScoring.put(0.0,0.0);
+        shooterSpeedMapScoring.put(2.95, 76.0);
+        shooterSpeedMapScoring.put(2.11,67.0);
+        shooterSpeedMapScoring.put(3.43,79.0);
+        shooterSpeedMapScoring.put(1.94,66.0);
+        shooterSpeedMapScoring.put(1.7,65.0);
+        shooterSpeedMapScoring.put(4.28,96.0);
+        shooterSpeedMapScoring.put(2.03,67.0);
+
     }
 }

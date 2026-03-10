@@ -1,5 +1,6 @@
 package frc.robot.subsystems.drive;
 
+import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Radian;
 import static edu.wpi.first.units.Units.Volts;
@@ -462,9 +463,9 @@ public class Drive extends SubsystemBase {
         return Units.Meters.of(shooterToTargetMeters);
     }
   
-  public Distance getHubDistance()
+  public double getHubDistance()
   {
-    return getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation());
+    return ((Double)getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation()).in(Meter));
   }
 
   public Distance getFerryDistance()
