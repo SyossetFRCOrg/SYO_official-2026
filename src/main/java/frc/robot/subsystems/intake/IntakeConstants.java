@@ -4,7 +4,8 @@ import com.ctre.phoenix6.CANBus;
 
 public class IntakeConstants {
     public static final int rollerMotorID = 14;
-    public static final int armMotorID = 19;
+    public static final int leftArmMotorID = 20;
+    public static final int rightArmMotorID = 19;
 
     public static final double intakePosition = 0.0; 
     public static final double upPosition = 1.0; //TODO Find

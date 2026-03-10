@@ -190,7 +190,15 @@ public class RobotContainer {
                 MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(10));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
                 MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(0));
-                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(6));
+                
+                Trigger ApplyArmVoltageIn = new Trigger(() -> buttonboard.getRawButton(6));
+                ApplyArmVoltageIn.onTrue(superstructure.SetArmVoltage(-3));
+                ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
+                Trigger ApplyArmVoltageOut = new Trigger(() -> buttonboard.getRawButton(5));
+                ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(3));
+                ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
+
+                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8));
                 resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
 
         }

@@ -5,14 +5,15 @@ import static frc.robot.util.PhoenixUtil.*;
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.units.measure.Angle;
@@ -27,8 +28,10 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final TalonFX rollerTalon;
         private static TalonFXConfiguration rollerTalonConfig = new TalonFXConfiguration();
 
-        private final TalonFX armTalon;
-        private static TalonFXConfiguration armTalonConfig = new TalonFXConfiguration();
+        private final TalonFX leftArmTalon;
+        private final TalonFX rightArmTalon;
+        private static TalonFXConfiguration leftArmTalonConfig = new TalonFXConfiguration();
+        private static TalonFXConfiguration rightArmTalonConfig = new TalonFXConfiguration();
 
 
         // TODO tune these values
@@ -66,7 +69,10 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         public IntakeIOTalonFX() {
                 rollerTalon = new TalonFX(IntakeConstants.rollerMotorID, IntakeConstants.canbus);
-                armTalon = new TalonFX(IntakeConstants.armMotorID, IntakeConstants.canbus);
+                leftArmTalon = new TalonFX(IntakeConstants.leftArmMotorID, IntakeConstants.canbus);
+                rightArmTalon = new TalonFX(IntakeConstants.rightArmMotorID, IntakeConstants.canbus);
+
+                rightArmTalon.setControl(new Follower(leftArmTalon.getDeviceID(), MotorAlignmentValue.Opposed));
 
 
                 //TODO tune these values and switch over to motion magic
@@ -84,36 +90,52 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
                 
 
-                armTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                armTalonConfig.Slot0.kA = arm_kA.get();
-                armTalonConfig.Slot0.kD = arm_kD.get();
-                armTalonConfig.Slot0.kP = arm_kP.get();
-                armTalonConfig.Slot0.kS = arm_kS.get();
-                armTalonConfig.Slot0.kV = arm_kV.get();
-                armTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
-                armTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
-                armTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
-                armTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
-                armTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                armTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
-                armTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+                leftArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+                leftArmTalonConfig.Slot0.kA = arm_kA.get();
+                leftArmTalonConfig.Slot0.kD = arm_kD.get();
+                leftArmTalonConfig.Slot0.kP = arm_kP.get();
+                leftArmTalonConfig.Slot0.kS = arm_kS.get();
+                leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
+                leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
+                leftArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
+                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                leftArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+
+                rightArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
+                rightArmTalonConfig.Slot0.kA = arm_kA.get();
+                rightArmTalonConfig.Slot0.kD = arm_kD.get();
+                rightArmTalonConfig.Slot0.kP = arm_kP.get();
+                rightArmTalonConfig.Slot0.kS = arm_kS.get();
+                rightArmTalonConfig.Slot0.kV = arm_kV.get();
+                rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
+                rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
+                rightArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
+                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                rightArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-                armTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                leftArmTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                
 
 
 
                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-                tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.25));
-                tryUntilOk(5, () -> armTalon.setPosition(0));
+                tryUntilOk(5, () -> leftArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.25));
+                tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(rightArmTalonConfig, 0.25));                
+                tryUntilOk(5, () -> leftArmTalon.setPosition(0));
+                tryUntilOk(5, () -> leftArmTalon.setPosition(0));
 
                 rollerVelocity = rollerTalon.getVelocity();
                 rollerAppliedVolts = rollerTalon.getMotorVoltage();
 
-                armPosition = armTalon.getPosition();
-                armVelocity = armTalon.getVelocity();
-                armAppliedVolts = armTalon.getMotorVoltage();
+                armPosition = leftArmTalon.getPosition();
+                armVelocity = leftArmTalon.getVelocity();
+                armAppliedVolts = leftArmTalon.getMotorVoltage();
                 
 
                 BaseStatusSignal.setUpdateFrequencyForAll(
@@ -123,7 +145,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                 armPosition,
                                 armVelocity,
                                 armAppliedVolts);
-                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, armTalon);
+                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, leftArmTalon);
         }
 
         @Override
@@ -136,13 +158,13 @@ public class IntakeIOTalonFX implements IntakeIO {
                                         rollerTalonConfig.Slot0.kP = roller_kP.get();
                                         rollerTalonConfig.Slot0.kS = roller_kS.get();
                                         rollerTalonConfig.Slot0.kV = roller_kV.get();
-                                        armTalonConfig.Slot0.kA = arm_kA.get();
-                                        armTalonConfig.Slot0.kD = arm_kD.get();
-                                        armTalonConfig.Slot0.kP = arm_kP.get();
-                                        armTalonConfig.Slot0.kS = arm_kS.get();
-                                        armTalonConfig.Slot0.kV = arm_kV.get();
+                                        leftArmTalonConfig.Slot0.kA = arm_kA.get();
+                                        leftArmTalonConfig.Slot0.kD = arm_kD.get();
+                                        leftArmTalonConfig.Slot0.kP = arm_kP.get();
+                                        leftArmTalonConfig.Slot0.kS = arm_kS.get();
+                                        leftArmTalonConfig.Slot0.kV = arm_kV.get();
                                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-                                        tryUntilOk(5, () -> armTalon.getConfigurator().apply(armTalonConfig, 0.05));
+                                        tryUntilOk(5, () -> leftArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
                                 },
                                 roller_kA,
                                 roller_kD,
@@ -182,17 +204,17 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         
         public void setArmVoltage(double voltage) {
-                armTalon.setControl(VoltageRequest.withOutput(voltage));
+                leftArmTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
         public void moveArmToPosition(double positionRotations){
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRotations);
                 // ArmFeedforward feedforward = new ArmFeedforward(arm_kS.get(), arm_kV.get(), arm_kA.get(), arm_kA.get());
                 // motionMagicVoltageRequest.FeedForward = feedforward.calculate(armPosition.getValueAsDouble(), 0);
-                armTalon.setControl(motionMagicVoltageRequest.withPosition(positionRotations));
+                leftArmTalon.setControl(motionMagicVoltageRequest.withPosition(positionRotations));
         }
         public void setArmEncoderPosition(double positionRotations){
-                armTalon.setPosition(positionRotations);
+                leftArmTalon.setPosition(positionRotations);
 
         }
 
