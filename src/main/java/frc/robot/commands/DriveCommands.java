@@ -34,8 +34,8 @@ public class DriveCommands {
   private static final double DEADBAND = 0.1;
   // TODO: return PID for align controller, we should decrease kP/increase kD to mitigate overshooting
   //       check discord for suggestions of constants
-  private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 12.0);
-  private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.4);
+  private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 6.0);
+  private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.2);
   private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity",
       TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
   private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber(

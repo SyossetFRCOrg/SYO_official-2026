@@ -18,7 +18,9 @@
     {"x":{"exp":"607.8 in", "val":15.438119999999998}, "y":{"exp":"237.69 in", "val":6.037325999999999}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":28, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"607.8 in", "val":15.438119999999998}, "y":{"exp":"80 in", "val":2.032}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":62, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"43.42 in", "val":1.102868}, "y":{"exp":"80 in", "val":2.032}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":28, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
-    {"x":{"exp":"43.42 in", "val":1.102868}, "y":{"exp":"237.69 in", "val":6.037325999999999}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+    {"x":{"exp":"43.42 in", "val":1.102868}, "y":{"exp":"237.69 in", "val":6.037325999999999}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BLUEHUB.x", "val":4.6298604011535645}, "y":{"exp":"BLUEHUB.y", "val":4.021708965301514}, "heading":{"exp":"BLUEHUB.heading", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"REDHUB.x", "val":11.917}, "y":{"exp":"REDHUB.y", "val":4.021}, "heading":{"exp":"REDHUB.heading", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
     {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
     {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
