@@ -9,8 +9,6 @@ public class IntakeConstants {
     public static final double intakePosition = 0.0; 
     public static final double upPosition = 1.0; //TODO Find
 
-
-    //TODO  to be tuned
     public static final double roller_kP = 100;
     public static final double roller_kD = 0;
     public static final double roller_kS = 0;
