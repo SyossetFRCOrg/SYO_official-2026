@@ -28,8 +28,8 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final TalonFX rollerTalon;
         private static TalonFXConfiguration rollerTalonConfig = new TalonFXConfiguration();
 
-        private final TalonFX leftArmTalon;
         private final TalonFX rightArmTalon;
+        private final TalonFX leftArmTalon;
         private static TalonFXConfiguration leftArmTalonConfig = new TalonFXConfiguration();
         private static TalonFXConfiguration rightArmTalonConfig = new TalonFXConfiguration();
 
@@ -69,10 +69,10 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         public IntakeIOTalonFX() {
                 rollerTalon = new TalonFX(IntakeConstants.rollerMotorID, IntakeConstants.canbus);
-                leftArmTalon = new TalonFX(IntakeConstants.leftArmMotorID, IntakeConstants.canbus);
                 rightArmTalon = new TalonFX(IntakeConstants.rightArmMotorID, IntakeConstants.canbus);
+                leftArmTalon = new TalonFX(IntakeConstants.leftArmMotorID, IntakeConstants.canbus);
 
-                rightArmTalon.setControl(new Follower(leftArmTalon.getDeviceID(), MotorAlignmentValue.Opposed));
+                leftArmTalon.setControl(new Follower(rightArmTalon.getDeviceID(), MotorAlignmentValue.Opposed));
 
 
                 //TODO tune these values and switch over to motion magic
@@ -125,17 +125,17 @@ public class IntakeIOTalonFX implements IntakeIO {
 
 
                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-                tryUntilOk(5, () -> leftArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.25));
-                tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(rightArmTalonConfig, 0.25));                
-                tryUntilOk(5, () -> leftArmTalon.setPosition(0));
-                tryUntilOk(5, () -> leftArmTalon.setPosition(0));
+                tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.25));
+                tryUntilOk(5, () -> leftArmTalon.getConfigurator().apply(rightArmTalonConfig, 0.25));                
+                tryUntilOk(5, () -> rightArmTalon.setPosition(0));
+                tryUntilOk(5, () -> rightArmTalon.setPosition(0));
 
                 rollerVelocity = rollerTalon.getVelocity();
                 rollerAppliedVolts = rollerTalon.getMotorVoltage();
 
-                armPosition = leftArmTalon.getPosition();
-                armVelocity = leftArmTalon.getVelocity();
-                armAppliedVolts = leftArmTalon.getMotorVoltage();
+                armPosition = rightArmTalon.getPosition();
+                armVelocity = rightArmTalon.getVelocity();
+                armAppliedVolts = rightArmTalon.getMotorVoltage();
                 
 
                 BaseStatusSignal.setUpdateFrequencyForAll(
@@ -145,7 +145,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                 armPosition,
                                 armVelocity,
                                 armAppliedVolts);
-                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, leftArmTalon);
+                ParentDevice.optimizeBusUtilizationForAll(rollerTalon, rightArmTalon);
         }
 
         @Override
@@ -164,7 +164,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                         leftArmTalonConfig.Slot0.kS = arm_kS.get();
                                         leftArmTalonConfig.Slot0.kV = arm_kV.get();
                                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-                                        tryUntilOk(5, () -> leftArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
+                                        tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
                                 },
                                 roller_kA,
                                 roller_kD,
@@ -204,17 +204,17 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         
         public void setArmVoltage(double voltage) {
-                leftArmTalon.setControl(VoltageRequest.withOutput(voltage));
+                rightArmTalon.setControl(VoltageRequest.withOutput(voltage));
         }
 
         public void moveArmToPosition(double positionRotations){
                 final MotionMagicVoltage motionMagicVoltageRequest = new MotionMagicVoltage(positionRotations);
                 // ArmFeedforward feedforward = new ArmFeedforward(arm_kS.get(), arm_kV.get(), arm_kA.get(), arm_kA.get());
                 // motionMagicVoltageRequest.FeedForward = feedforward.calculate(armPosition.getValueAsDouble(), 0);
-                leftArmTalon.setControl(motionMagicVoltageRequest.withPosition(positionRotations));
+                rightArmTalon.setControl(motionMagicVoltageRequest.withPosition(positionRotations));
         }
         public void setArmEncoderPosition(double positionRotations){
-                leftArmTalon.setPosition(positionRotations);
+                rightArmTalon.setPosition(positionRotations);
 
         }
 
