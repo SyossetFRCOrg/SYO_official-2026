@@ -162,8 +162,10 @@ public class RobotContainer {
                 
                 //TODO Placeholder button. DO NOT DEPLOY 
                 Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
-                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
-                FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+                FerryShotOnBButtonAndLefTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d()));
+                //.alongWith(new InstantCommand(() -> shooter.setFerry(true)))));
+                FerryShotOnBButtonAndLefTrigger.onFalse((new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
+                //.alongWith(new InstantCommand(() -> shooter.setFerry(false))));
 
 
 
