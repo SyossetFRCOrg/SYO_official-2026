@@ -260,6 +260,30 @@ class AutoFactory {
     return c;
   }
 
+  Command DummyShoot(Location Start) {
+    PathPlannerPath StartToDummyShoot;
+    if (Start.equals(Location.FLSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FLDUMMYSHOOT.getAllianceName());
+    else if (Start.equals(Location.LSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.LSTART.getAllianceName());
+    else if (Start.equals(Location.RSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.RSTART.getAllianceName());
+    else if (Start.equals(Location.FRSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FRSTART.getAllianceName());
+    else
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.S1.getAllianceName());
+    
+    preloadTrajectoryClass(StartToDummyShoot);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDummyShoot));
+    c.addCommands(follow(StartToDummyShoot));
+    c.addCommands(Commands.waitSeconds(1));
+    c.addCommands(stationaryAAShoot());
+
+    return c;
+  }
+
   private Command stationaryAAShoot() {
     return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
