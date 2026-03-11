@@ -2,6 +2,8 @@ package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
@@ -122,6 +124,7 @@ class AutoFactory {
     preloadTrajectoryClass(S3ToLStart);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
+    Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
     c.addCommands(resetPose(StartToDepot));
     c.addCommands(follow(StartToDepot));
     c.addCommands(Commands.waitSeconds(4));
@@ -277,7 +280,7 @@ class AutoFactory {
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDummyShoot));
-    c.addCommands(follow(StartToDummyShoot));
+    // c.addCommands(follow(StartToDummyShoot));
     c.addCommands(Commands.waitSeconds(1));
     c.addCommands(stationaryAAShoot());
 

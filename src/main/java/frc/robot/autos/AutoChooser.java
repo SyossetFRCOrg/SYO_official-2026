@@ -49,7 +49,7 @@ public class AutoChooser extends SendableChooser<Auto> {
 
     new AutoProgram(Auto.FLSTART_DEPOT_S3_LSTART, "FLSTART_DEPOT_S3_LSTART", autoFactory -> autoFactory.Depot_S3_LStart(Location.FLSTART)),
     new AutoProgram(Auto.LSTART_DEPOT_S3_LSTART, "LSTART_DEPOT_S3_LSTART", autoFactory -> autoFactory.Depot_S3_LStart(Location.LSTART)),
-    new AutoProgram(Auto.MIDSTART_DEPOT_S3_LSTART,"FLSTART_DEPOT_S3_LSTART", autoFactory -> autoFactory.Depot_S3_LStart(Location.MIDSTART)),
+    new AutoProgram(Auto.MIDSTART_DEPOT_S3_LSTART,"MIDSTART_DEPOT_S3_LSTART", autoFactory -> autoFactory.Depot_S3_LStart(Location.MIDSTART)),
     new AutoProgram(Auto.FRSTART_OUTPOST_S2_RSTART, "FRSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RSTART, "RSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART)),
