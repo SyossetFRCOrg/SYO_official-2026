@@ -63,11 +63,11 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RTRENCH, "MIDSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.MIDSTART)),
     new AutoProgram(Auto.LSTART_OUTPOST_S2_RTRENCH, "LSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.LSTART)),
 
-    new AutoProgram(Auto.DUMMYSHOOT, "FLDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FLSTART)),
-    new AutoProgram(Auto.DUMMYSHOOT, "LDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.LSTART)),
-    new AutoProgram(Auto.DUMMYSHOOT, "MIDDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.MIDSTART)),
-    new AutoProgram(Auto.DUMMYSHOOT, "RDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.RSTART)),
-    new AutoProgram(Auto.DUMMYSHOOT, "FRDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FRSTART))
+    new AutoProgram(Auto.FLDUMMYSHOOT, "FLDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FLSTART)),
+    new AutoProgram(Auto.LDUMMYSHOOT, "LDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.LSTART)),
+    new AutoProgram(Auto.MIDDUMMYSHOOT, "MIDDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.MIDSTART)),
+    new AutoProgram(Auto.RDUMMYSHOOT, "RDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.RSTART)),
+    new AutoProgram(Auto.FRDUMMYSHOOT, "FRDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FRSTART))
 
   );
 

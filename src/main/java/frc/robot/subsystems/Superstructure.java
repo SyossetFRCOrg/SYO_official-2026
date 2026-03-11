@@ -193,7 +193,7 @@ public class Superstructure extends SubsystemBase {
   {
     return DriveCommands.joystickDriveFacingPose(
         drive, () -> 0.0, () -> 0.0, targetPose)
-        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE).andThen(
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTING).andThen(
           Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING)));
   }
 

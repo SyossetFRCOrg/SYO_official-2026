@@ -265,11 +265,11 @@ class AutoFactory {
     if (Start.equals(Location.FLSTART))
       StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FLDUMMYSHOOT.getAllianceName());
     else if (Start.equals(Location.LSTART))
-      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.LSTART.getAllianceName());
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.LDUMMYSHOOT.getAllianceName());
     else if (Start.equals(Location.RSTART))
-      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.RSTART.getAllianceName());
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.RDUMMYSHOOT.getAllianceName());
     else if (Start.equals(Location.FRSTART))
-      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FRSTART.getAllianceName());
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FRDUMMYSHOOT.getAllianceName());
     else
       StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.S1.getAllianceName());
     

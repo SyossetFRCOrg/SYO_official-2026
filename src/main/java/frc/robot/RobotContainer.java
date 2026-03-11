@@ -94,7 +94,7 @@ public class RobotContainer {
                 usbCam = CameraServer.startAutomaticCapture(0);
                 usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 usbCam.setResolution(1280, 720);
-                usbCam.setFPS(24);
+                usbCam.setFPS(30);
                 usbCam.setPixelFormat(PixelFormat.kMJPEG);
                 
         }
