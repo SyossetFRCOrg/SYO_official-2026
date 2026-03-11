@@ -94,7 +94,7 @@ public class RobotContainer {
                 usbCam = CameraServer.startAutomaticCapture(0);
                 usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 usbCam.setResolution(1280, 720);
-                usbCam.setFPS(60);
+                usbCam.setFPS(24);
                 usbCam.setPixelFormat(PixelFormat.kMJPEG);
                 
         }
@@ -193,10 +193,10 @@ public class RobotContainer {
                 
                 Trigger ApplyArmVoltageIn = new Trigger(() -> buttonboard.getRawButton(6));
                 ApplyArmVoltageIn.onTrue(superstructure.SetArmVoltage(-3));
-                ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
+                // ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
                 Trigger ApplyArmVoltageOut = new Trigger(() -> buttonboard.getRawButton(5));
                 ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(3));
-                ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
+                // ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
 
                 Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8));
                 resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
