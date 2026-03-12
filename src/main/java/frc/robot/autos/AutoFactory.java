@@ -14,6 +14,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
@@ -120,13 +121,14 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLStart = loadSegment(Location.S3.getAllianceName(), Location.LSTART.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLStart);
+    // preloadTrajectoryClass(DepotToS3);
+    // preloadTrajectoryClass(S3ToLStart);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
     c.addCommands(resetPose(StartToDepot));
-    c.addCommands(follow(StartToDepot));
+    c.addCommands(putArmDown());
+    c.addCommands(intakeWhileFollowing(StartToDepot));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(stationaryAAShoot());
@@ -316,6 +318,10 @@ class AutoFactory {
   private Command intakeWhileFollowing(PathPlannerPath path) {
     return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING))
         .andThen(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.DRIVING));
+  }
+
+  private Command putArmDown() {
+    return superstructure.MoveArmToPosition(1.3);
   }
 
   // Auto init helpers

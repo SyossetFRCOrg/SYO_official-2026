@@ -120,7 +120,7 @@ public class RobotContainer {
                 // StopClimbOnXAndLeftTrigger.onTrue(Commands.runOnce(() -> climber.setDesiredSubstate(Climber.Substate.STOPPED)));
 
                  // kinda stupid but it works
-                double tempSpeed = 0.35;
+                double tempSpeed = 0.55;
 
                 // x y flipped 4funsies
                 drive.setDefaultCommand(
@@ -187,16 +187,17 @@ public class RobotContainer {
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(10));
+                MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(1.2));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
-                MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(0));
+                MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(-0.05));
+                MoveIntakeArmIn.onFalse(superstructure.MoveArmToPosition(1.3));
                 
                 Trigger ApplyArmVoltageIn = new Trigger(() -> buttonboard.getRawButton(6));
                 ApplyArmVoltageIn.onTrue(superstructure.SetArmVoltage(-3));
-                // ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
+                ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
                 Trigger ApplyArmVoltageOut = new Trigger(() -> buttonboard.getRawButton(5));
-                ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(3));
-                // ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
+                ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(8));
+                ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
 
                 Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8));
                 resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
