@@ -10,8 +10,7 @@ public class Shooter extends SubsystemBase {
     public enum Substate {
         STOPPED,
         PREPARING,
-        ACTIVE,
-        FERRY
+        ACTIVE
     }
 
     public Shooter(ShooterIO shooterIO) {
@@ -23,13 +22,15 @@ public class Shooter extends SubsystemBase {
     private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    private static double shooterVelocity = 70, shooterChange = 0;
+    private static double shooterVelocity = 70, shooterChange = 10;
 
 
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
+
+    private boolean isFerry = false;
  
 
 
@@ -38,7 +39,6 @@ public class Shooter extends SubsystemBase {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
             case ACTIVE -> motorsReady() && currentSubstate != Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
-            case FERRY -> Substate.FERRY;
         };
     }
 
@@ -61,22 +61,29 @@ public class Shooter extends SubsystemBase {
             case STOPPED: 
                 shooterIO.setVelocityVoltage(0);
                 break;
-            case ACTIVE, PREPARING, FERRY:
+            case ACTIVE, PREPARING:
                 shooterIO.setVelocityVoltage(shooterVelocity + shooterChange);
                 break;
-            }
+        }
     }
 
     public void setCalculatedShooterVoltage(double distance)
     {
         if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
         {
-            // shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            //Add this for ferry
+            
+            // if (isFerry)
+            // {
+            //     shooterVelocity = ShooterConstants.ferrySpeed;
+            // }
+            // else 
+            // {
+            //     shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            // };
         }
-        else if(currentSubstate == Substate.FERRY)
-        {
-           // shooterVelocity = ShooterConstants.shooterSpeedMapFerrying.get(distance);
-        }
+
     }
 
     public boolean motorsReady()
@@ -86,5 +93,9 @@ public class Shooter extends SubsystemBase {
 
     public void adjustShooterVoltage(double amount) {
         shooterChange += amount;
+    }
+
+    public void setFerry(boolean isFerry) {
+        this.isFerry = isFerry;
     }
 }

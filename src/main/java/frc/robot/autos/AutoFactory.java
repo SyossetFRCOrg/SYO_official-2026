@@ -2,6 +2,8 @@ package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
@@ -122,6 +124,7 @@ class AutoFactory {
     preloadTrajectoryClass(S3ToLStart);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
+    Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
     c.addCommands(resetPose(StartToDepot));
     c.addCommands(follow(StartToDepot));
     c.addCommands(Commands.waitSeconds(4));
@@ -256,6 +259,30 @@ class AutoFactory {
     c.addCommands(follow(RTrenchToS2));
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S2ToRTrench));
+
+    return c;
+  }
+
+  Command DummyShoot(Location Start) {
+    PathPlannerPath StartToDummyShoot;
+    if (Start.equals(Location.FLSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FLDUMMYSHOOT.getAllianceName());
+    else if (Start.equals(Location.LSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.LDUMMYSHOOT.getAllianceName());
+    else if (Start.equals(Location.RSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.RDUMMYSHOOT.getAllianceName());
+    else if (Start.equals(Location.FRSTART))
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.FRDUMMYSHOOT.getAllianceName());
+    else
+      StartToDummyShoot = loadSegment(Start.getAllianceName(), Location.S1.getAllianceName());
+    
+    preloadTrajectoryClass(StartToDummyShoot);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToDummyShoot));
+    // c.addCommands(follow(StartToDummyShoot));
+    c.addCommands(Commands.waitSeconds(1));
+    c.addCommands(stationaryAAShoot());
 
     return c;
   }

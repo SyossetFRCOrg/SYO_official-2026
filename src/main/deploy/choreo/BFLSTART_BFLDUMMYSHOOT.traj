@@ -1,0 +1,68 @@
+{
+ "name":"BFLSTART_BFLDUMMYSHOOT",
+ "version":3,
+ "snapshot":{
+  "waypoints":[
+    {"x":3.65, "y":7.400298595428467, "heading":0.0, "intervals":10, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":3.65, "y":7.400298595428467, "heading":-1.2653230835541254, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+  "constraints":[
+    {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":"first", "to":"last", "data":{"type":"KeepInRectangle", "props":{"x":0.0, "y":0.0, "w":16.541, "h":8.0692}}, "enabled":false}],
+  "targetDt":0.05
+ },
+ "params":{
+  "waypoints":[
+    {"x":{"exp":"BFLSTART.x", "val":3.65}, "y":{"exp":"BFLSTART.y", "val":7.400298595428467}, "heading":{"exp":"BFLSTART.heading", "val":0.0}, "intervals":10, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BFLDUMMYSHOOT.x", "val":3.65}, "y":{"exp":"BFLDUMMYSHOOT.y", "val":7.400298595428467}, "heading":{"exp":"BFLDUMMYSHOOT.heading", "val":-1.2653230835541254}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
+  "constraints":[
+    {"from":"first", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":"last", "to":null, "data":{"type":"StopPoint", "props":{}}, "enabled":true},
+    {"from":"first", "to":"last", "data":{"type":"KeepInRectangle", "props":{"x":{"exp":"0 m", "val":0.0}, "y":{"exp":"0 m", "val":0.0}, "w":{"exp":"16.541 m", "val":16.541}, "h":{"exp":"8.0692 m", "val":8.0692}}}, "enabled":false}],
+  "targetDt":{
+   "exp":"0.05 s",
+   "val":0.05
+  }
+ },
+ "trajectory":{
+  "config":{
+   "frontLeft":{
+    "x":0.358775,
+    "y":0.206375
+   },
+   "backLeft":{
+    "x":-0.206375,
+    "y":0.358775
+   },
+   "mass":57.60623099,
+   "inertia":6.0,
+   "gearing":5.27,
+   "radius":0.0508,
+   "vmax":628.3185307179587,
+   "tmax":1.2,
+   "cof":0.1,
+   "bumper":{
+    "front":0.3474466,
+    "side":0.50409094,
+    "back":0.3474466
+   },
+   "differentialTrackWidth":0.5588
+  },
+  "sampleType":"Swerve",
+  "waypoints":[0.0,1.15674],
+  "samples":[
+    {"t":0.0, "x":3.65, "y":7.4003, "heading":0.0, "vx":0.0, "vy":0.0, "omega":0.0, "ax":0.07164, "ay":-0.0398, "alpha":-3.79273, "fx":[10.39069,11.0387,-9.63806,-7.6642], "fy":[-9.542,8.78757,10.30349,-11.84204]},
+    {"t":0.11567, "x":3.65048, "y":7.40003, "heading":0.0, "vx":0.00829, "vy":-0.0046, "omega":-0.43872, "ax":0.06567, "ay":-0.03661, "alpha":-3.79144, "fx":[10.36395,10.95773,-9.66648,-7.87212], "fy":[-9.56824,8.88642,10.275,-11.7022]},
+    {"t":0.23135, "x":3.65188, "y":7.39925, "heading":-0.05075, "vx":0.01588, "vy":-0.00884, "omega":-0.87729, "ax":0.04446, "ay":-0.03047, "alpha":-3.78818, "fx":[9.72049,11.15905,-9.26146,-9.05669], "fy":[-10.21608,8.62857,10.63858,-10.80645]},
+    {"t":0.34702, "x":3.65401, "y":7.39803, "heading":-0.15223, "vx":0.02103, "vy":-0.01236, "omega":-1.31549, "ax":-0.00054, "ay":-0.01338, "alpha":-3.77446, "fx":[8.08765,11.50124,-8.49184,-11.12824], "fy":[-11.53958,8.15731,11.25646,-8.64472]},
+    {"t":0.4627, "x":3.65644, "y":7.39651, "heading":-0.3044, "vx":0.02096, "vy":-0.01391, "omega":-1.7521, "ax":-0.16857, "ay":0.0655, "alpha":-3.61517, "fx":[1.38532,10.67136,-8.03251,-13.73495], "fy":[-13.94795,9.16701,11.56488,-3.01071]},
+    {"t":0.57837, "x":3.65774, "y":7.39534, "heading":-0.50707, "vx":0.00147, "vy":-0.00633, "omega":-2.17028, "ax":-0.18912, "ay":0.14365, "alpha":3.60642, "fx":[-6.5564,-14.05967,0.60982,9.112], "fy":[12.4487,-0.79809,-14.05054,10.67502]},
+    {"t":0.69405, "x":3.65664, "y":7.39557, "heading":-0.75812, "vx":-0.02041, "vy":0.01028, "omega":-1.75311, "ax":-0.00899, "ay":0.0362, "alpha":3.78013, "fx":[-0.62829,-14.09601,0.22216,13.98415], "fy":[14.07927,0.37226,-14.09829,1.73232]},
+    {"t":0.80972, "x":3.65422, "y":7.397, "heading":-0.96091, "vx":-0.02145, "vy":0.01447, "omega":-1.31585, "ax":0.04099, "ay":-0.01047, "alpha":3.79133, "fx":[3.97095,-13.89697,-1.58534,13.87236], "fy":[13.52947,2.41548,-14.01651,-2.53174]},
+    {"t":0.92539, "x":3.65201, "y":7.3986, "heading":-1.11311, "vx":-0.01671, "vy":0.01326, "omega":-0.87729, "ax":0.06616, "ay":-0.04508, "alpha":3.79287, "fx":[7.17825,-13.49298,-3.03431,13.1603], "fy":[12.14029,4.11774,-13.77804,-5.07672]},
+    {"t":1.04107, "x":3.65052, "y":7.39983, "heading":-1.21459, "vx":-0.00906, "vy":0.00804, "omega":-0.43855, "ax":0.0783, "ay":-0.06954, "alpha":3.79123, "fx":[9.08622,-13.08186,-3.99117,12.49712], "fy":[10.78956,5.28341,-13.53317,-6.54572]},
+    {"t":1.15674, "x":3.65, "y":7.4003, "heading":-1.26532, "vx":0.0, "vy":0.0, "omega":0.0, "ax":0.0, "ay":0.0, "alpha":0.0, "fx":[0.0,0.0,0.0,0.0], "fy":[0.0,0.0,0.0,0.0]}],
+  "splits":[0]
+ },
+ "events":[]
+}

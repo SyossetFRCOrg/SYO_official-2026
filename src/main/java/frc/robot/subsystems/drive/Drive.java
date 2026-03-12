@@ -167,7 +167,7 @@ public class Drive extends SubsystemBase {
         this::getChassisSpeeds,
         this::runVelocity,
         new PPHolonomicDriveController(
-            new PIDConstants(3.0, 0.0, 0.0), new PIDConstants(3.0, 0.0, 0.0)),
+            new PIDConstants(2.0, 0.0, 0.0), new PIDConstants(3.0, 0.0, 0.0)),
         PP_CONFIG,
         () -> FieldConstants.getAlliance() == Alliance.Red,
         this);
@@ -465,7 +465,7 @@ public class Drive extends SubsystemBase {
   
   public double getHubDistance()
   {
-    return ((Double)getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation()).in(Meter));
+    return ((Double)getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation()).in(Meter)) - 0.602304; // Offset for new hub pose?
   }
 
   public Distance getFerryDistance()
