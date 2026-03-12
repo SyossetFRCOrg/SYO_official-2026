@@ -94,7 +94,7 @@ public class RobotContainer {
                 usbCam = CameraServer.startAutomaticCapture(0);
                 usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
                 usbCam.setResolution(1280, 720);
-                usbCam.setFPS(30);
+                usbCam.setFPS(60);
                 usbCam.setPixelFormat(PixelFormat.kMJPEG);
                 
         }
@@ -162,10 +162,8 @@ public class RobotContainer {
                 
                 //TODO Placeholder button. DO NOT DEPLOY 
                 Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
-                FerryShotOnBButtonAndLefTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d()));
-                //.alongWith(new InstantCommand(() -> shooter.setFerry(true)))));
-                FerryShotOnBButtonAndLefTrigger.onFalse((new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
-                //.alongWith(new InstantCommand(() -> shooter.setFerry(false))));
+                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
 
 
@@ -190,15 +188,7 @@ public class RobotContainer {
                 MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(10));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
                 MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(0));
-                
-                Trigger ApplyArmVoltageIn = new Trigger(() -> buttonboard.getRawButton(6));
-                ApplyArmVoltageIn.onTrue(superstructure.SetArmVoltage(-3));
-                // ApplyArmVoltageIn.onFalse(superstructure.SetArmVoltage(0));
-                Trigger ApplyArmVoltageOut = new Trigger(() -> buttonboard.getRawButton(5));
-                ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(3));
-                // ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
-
-                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8));
+                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(6));
                 resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
 
         }
