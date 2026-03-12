@@ -17,18 +17,19 @@ public class IntakeConstants {
     public static final double roller_kA = 0;
 
 
-    public static final double arm_kP = 4.8;
-    public static final double arm_kD = 0.1;
-    public static final double arm_kS = 0.25;
-    public static final double arm_kV = 0.12;
-    public static final double arm_kA = 0.01;
+    public static final double arm_kP = 1.5;
+    public static final double arm_kD = 0.0;
+    public static final double arm_kS = 0.0;
+    public static final double arm_kV = 0.0;
+    public static final double arm_kA = 0.0;
+    public static final double arm_kG =  0.3;
 
     public static final double rollerMaxAcceleration = 0.1;
     public static final double rollerMaxJerk = 0.1;
 
 
-    public static final double armMotionMagicCruiseVelocity = 70;
-    public static final double armMaxAcceleration = 70;
+    public static final double armMotionMagicCruiseVelocity = 80;
+    public static final double armMaxAcceleration = 80;
     public static final double armMaxJerk = 1600;
 
 

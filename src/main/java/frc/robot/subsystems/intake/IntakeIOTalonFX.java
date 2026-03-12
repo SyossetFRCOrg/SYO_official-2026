@@ -10,8 +10,10 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
 import edu.wpi.first.math.filter.Debouncer;
@@ -46,6 +48,7 @@ public class IntakeIOTalonFX implements IntakeIO {
         private static final LoggedTunableNumber arm_kS = new LoggedTunableNumber("Intake/Gains/arm_kS", IntakeConstants.arm_kS);
         private static final LoggedTunableNumber arm_kV = new LoggedTunableNumber("Intake/Gains/arm_kV", IntakeConstants.arm_kV);
         private static final LoggedTunableNumber arm_kA = new LoggedTunableNumber("Intake/Gains/arm_kA", IntakeConstants.arm_kA);
+        private static final LoggedTunableNumber arm_kG = new LoggedTunableNumber("Intake/Gains/arm_kG", IntakeConstants.arm_kG);
 
 
         private static final LoggedTunableNumber rollerMotionMagicAcceleration = new LoggedTunableNumber( "Intake/rollerMaxAcceleration", IntakeConstants.rollerMaxAcceleration);
@@ -96,6 +99,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 leftArmTalonConfig.Slot0.kP = arm_kP.get();
                 leftArmTalonConfig.Slot0.kS = arm_kS.get();
                 leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                leftArmTalonConfig.Slot0.kG = arm_kG.get();
                 leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
                 leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
                 leftArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
@@ -110,6 +114,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rightArmTalonConfig.Slot0.kP = arm_kP.get();
                 rightArmTalonConfig.Slot0.kS = arm_kS.get();
                 rightArmTalonConfig.Slot0.kV = arm_kV.get();
+                rightArmTalonConfig.Slot0.kG = arm_kG.get();
                 rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
                 rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
                 rightArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
@@ -120,7 +125,8 @@ public class IntakeIOTalonFX implements IntakeIO {
 
                 rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 leftArmTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-               
+                leftArmTalonConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
+                leftArmTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
 
 
@@ -163,6 +169,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                                         leftArmTalonConfig.Slot0.kP = arm_kP.get();
                                         leftArmTalonConfig.Slot0.kS = arm_kS.get();
                                         leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                                        leftArmTalonConfig.Slot0.kG = arm_kG.get();
                                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
                                         tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
                                 },

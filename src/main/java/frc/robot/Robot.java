@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.autos.AutoChooser;
+import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.drive.Drive;
 
 import org.littletonrobotics.junction.LogFileUtil;
@@ -124,9 +125,8 @@ public class Robot extends LoggedRobot {
     // if (autonomousCommand != null) {
     // autonomousCommand.schedule();
     // }
+    robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
-    System.out.println(autoChooser.getSelectedCommand());
-
     FieldConstants.setAlliance(DriverStation.getAlliance().get());
   }
 
@@ -148,6 +148,7 @@ public class Robot extends LoggedRobot {
       autonomousCommand.cancel();
     }
     FieldConstants.setAlliance(DriverStation.getAlliance().get());
+    robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
   }
 
   @Override

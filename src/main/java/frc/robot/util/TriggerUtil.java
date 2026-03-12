@@ -29,6 +29,7 @@ public class TriggerUtil {
 
                 if (pressed) {
                   command.schedule();
+                  // CommandScheduler.getInstance().schedule(command);
                 } else if (m_pressedLast) {
                   command.cancel();
                 }
