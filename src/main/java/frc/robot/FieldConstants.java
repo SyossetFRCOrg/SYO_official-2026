@@ -14,7 +14,7 @@ import lombok.*;
 
 public class FieldConstants {
     // https://firstfrc.blob.core.windows.net/frc2026/FieldAssets/2026-field-dimension-dwgs.pdf All April tag poses are derived from Welded measurements
-    // MAY BE POTENTIALLY PROLBEM ALL ANGLE 0. 
+    // MAY BE POTENTIALLY PROLBEM ALL ANGLE 0.
 
     // Measured from central april tag facing driver station
     public static final Pose3d redHubPose = new Pose3d(Units.Inches.of(492.88),Units.Inches.of(158.84), Units.Inches.of(44.25), Rotation3d.kZero);
