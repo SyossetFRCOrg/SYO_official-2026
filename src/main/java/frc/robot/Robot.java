@@ -31,8 +31,8 @@ public class Robot extends LoggedRobot {
   private final RobotContainer robotContainer;
 
   public Robot() {
-    robotContainer = new RobotContainer();
     FieldConstants.setAlliance(DriverStation.getAlliance().get());
+    robotContainer = new RobotContainer();
     switch (Constants.currentMode) {
       case REAL:
         // Running on a real robot, log to a USB stick ("/U/logs")
@@ -126,6 +126,7 @@ public class Robot extends LoggedRobot {
     // autonomousCommand.schedule();
     // }
     robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
+    robotContainer.getSuperstructure().getShooter().setShooterChangeVelocity(0);
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
     FieldConstants.setAlliance(DriverStation.getAlliance().get());
   }

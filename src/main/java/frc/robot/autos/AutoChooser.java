@@ -63,6 +63,13 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RTRENCH, "MIDSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.MIDSTART)),
     new AutoProgram(Auto.LSTART_OUTPOST_S2_RTRENCH, "LSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.LSTART)),
 
+    new AutoProgram(Auto.FLSTART_S3_DEPOT_S3, "FLSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.FLSTART)),
+    new AutoProgram(Auto.LSTART_S3_DEPOT_S3, "LSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.LSTART)),
+
+    new AutoProgram(Auto.FRSTART_S3_DEPOT_S3, "FRSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.FRSTART)),
+    new AutoProgram(Auto.RSTART_S3_DEPOT_S3, "RSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.RSTART)),
+
+
     new AutoProgram(Auto.FLDUMMYSHOOT, "FLDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FLSTART)),
     new AutoProgram(Auto.LDUMMYSHOOT, "LDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.LSTART)),
     new AutoProgram(Auto.MIDDUMMYSHOOT, "MIDDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.MIDSTART)),

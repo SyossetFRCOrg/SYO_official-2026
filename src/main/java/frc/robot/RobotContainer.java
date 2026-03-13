@@ -120,7 +120,7 @@ public class RobotContainer {
                 // StopClimbOnXAndLeftTrigger.onTrue(Commands.runOnce(() -> climber.setDesiredSubstate(Climber.Substate.STOPPED)));
 
                  // kinda stupid but it works
-                double tempSpeed = 0.55;
+                double tempSpeed = 0.35;
 
                 // x y flipped 4funsies
                 drive.setDefaultCommand(
@@ -174,20 +174,20 @@ public class RobotContainer {
                 AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
                 Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
-                IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(1)));
+                IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(1)));
 
                 Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
-                DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-1)));
+                DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(-1)));
 
                 Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
-                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(0.1)));
+                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
 
                 Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
-                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterVoltage(-0.1)));
+                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(10)));
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
-                MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(1.2));
+                MoveIntakeArmOut.onTrue(superstructure.MoveArmToPosition(1.5));
                 Trigger MoveIntakeArmIn = new Trigger(() -> buttonboard.getRightTriggerAxis() > 0.5);
                 MoveIntakeArmIn.onTrue(superstructure.MoveArmToPosition(-0.05));
                 MoveIntakeArmIn.onFalse(superstructure.MoveArmToPosition(1.3));

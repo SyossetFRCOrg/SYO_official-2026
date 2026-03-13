@@ -22,13 +22,14 @@ public class Shooter extends SubsystemBase {
     private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    private static double shooterVelocity = 70, shooterChange = 10;
+    private static double shooterVelocity = 70, shooterChange = 0;
 
 
     private @Getter Substate currentSubstate = Substate.STOPPED;
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
+    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 3);
 
     private boolean isFerry = false;
  
@@ -38,7 +39,7 @@ public class Shooter extends SubsystemBase {
        return switch (desiredSubstate) {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
-            case ACTIVE -> motorsReady() && currentSubstate != Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
+            case ACTIVE -> motorsReady() || currentSubstate == Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
         };
     }
 
@@ -71,7 +72,7 @@ public class Shooter extends SubsystemBase {
     {
         if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
         {
-            // shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
             //Add this for ferry
             
             // if (isFerry)
@@ -88,11 +89,27 @@ public class Shooter extends SubsystemBase {
 
     public boolean motorsReady()
     {
-        return Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/) < shootingEpsilon.get();
+        return (leftShooterReady() ? 1:0) + (centerShooterReady() ? 1:0) + (rightShooterReady() ? 1:0) >= shooterCheck.get();
     }
 
-    public void adjustShooterVoltage(double amount) {
+    public boolean leftShooterReady() {
+        return Math.abs(inputs.leftVelocityRotPerSec - (shooterVelocity + shooterChange)) < shootingEpsilon.get();
+    }
+
+    public boolean centerShooterReady() {
+        return Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange)) < shootingEpsilon.get();
+    }
+
+    public boolean rightShooterReady() {
+        return Math.abs(inputs.rightVelocityRotPerSec - (shooterVelocity + shooterChange)) < shootingEpsilon.get();
+    }
+
+    public void adjustShooterChangeVelocity(double amount) {
         shooterChange += amount;
+    }
+
+    public void setShooterChangeVelocity(double amount){
+        shooterChange = amount;
     }
 
     public void setFerry(boolean isFerry) {

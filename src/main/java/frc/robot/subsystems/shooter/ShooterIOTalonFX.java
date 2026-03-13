@@ -115,11 +115,11 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalon = new TalonFX(ShooterConstants.rightMotorID, ShooterConstants.canbus);
                
 
-                leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                leftTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
                 leftTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                centerTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                centerTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
                 centerTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
                 rightTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
                 leftTalonConfig.Slot0.kP = left_kP.get();
