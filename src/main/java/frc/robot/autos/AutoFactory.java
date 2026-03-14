@@ -190,10 +190,10 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     
     c.addCommands(resetPose(StartToS3));
-    c.addCommands(stationaryAAShoot());
+    c.addCommands(stationaryAAShoot().raceWith(Commands.waitSeconds(3)));
     c.addCommands(follow(StartToS3));
     c.addCommands(Commands.waitSeconds(2));
-    c.addCommands(putArmDown());
+    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(2.5)));
     c.addCommands(intakeWhileFollowing(S3ToDepot));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
