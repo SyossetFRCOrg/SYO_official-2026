@@ -81,6 +81,7 @@ public class Robot extends LoggedRobot {
 
     SmartDashboard.putData(field);
     SmartDashboard.putData(CommandScheduler.getInstance());
+    
 
 
     autoChooser = AutoChooser.create(

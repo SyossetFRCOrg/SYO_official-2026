@@ -169,6 +169,7 @@ public class VisionIOLimelight implements VisionIO {
   }
 
   /** Parses the 3D pose from a Limelight botpose array. */
+  @SuppressWarnings("unused")
   private static Pose3d parsePose(double[] rawLLArray) {
     return new Pose3d(
         rawLLArray[0],

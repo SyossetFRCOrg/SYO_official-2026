@@ -11,7 +11,6 @@ import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.PixelFormat;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -46,6 +45,7 @@ import lombok.Getter;
  */
 public class RobotContainer {
         // Subsystems
+        @SuppressWarnings("unused")
         private final Vision vision;
         private final @Getter Drive drive;
         private final @Getter Indexer indexer;
@@ -160,10 +160,10 @@ public class RobotContainer {
                 IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
                 IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
                 
-                //TODO Placeholder button. DO NOT DEPLOY 
-                Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
-                FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
-                FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+                // //TODO Placeholder button. DO NOT DEPLOY 
+                // Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);
+                // FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                // FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
 
 

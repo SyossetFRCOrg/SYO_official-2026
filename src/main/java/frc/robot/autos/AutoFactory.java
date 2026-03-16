@@ -11,7 +11,6 @@ import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -24,9 +23,9 @@ import edu.wpi.first.wpilibj.XboxController;
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({ "UnusedMethod", "UnusedVariable", "EmptyBlockTag" })
 class AutoFactory {
-  private final DriverStation.Alliance alliance;
+  // private final DriverStation.Alliance alliance;
 
-  private final RobotContainer robotContainer;
+  // private final RobotContainer robotContainer;
   private final Drive drive;
   private final Superstructure superstructure;
   private boolean trajectoriesLoaded = false;
@@ -37,12 +36,10 @@ class AutoFactory {
    * @param robotContainer The {@link RobotContainer}
    */
   AutoFactory(
-      final DriverStation.Alliance alliance,
-      final RobotContainer robotContainer,
       final Drive drive,
       final Superstructure superstructure) {
-    this.alliance = alliance;
-    this.robotContainer = robotContainer;
+    // this.alliance = alliance;
+    // this.robotContainer = robotContainer;
     this.drive = drive;
     this.superstructure = superstructure;
   }
@@ -318,10 +315,12 @@ class AutoFactory {
     return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
 
+  @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
+  @SuppressWarnings("unused")
   private Command alignToTower(Location towerLocation) {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     
@@ -346,7 +345,7 @@ class AutoFactory {
   }
 
   private Command putArmDown() {
-    return superstructure.MoveArmToPosition(1.3);
+    return superstructure.MoveArmToPosition(1.4);
   }
 
   // Auto init helpers
@@ -376,6 +375,7 @@ class AutoFactory {
   // }
 
   // Path following
+  @SuppressWarnings("unused")
   private Command follow(final Location start, final Location end) {
     return follow(loadSegment(start.getAllianceName(), end.getAllianceName()));
   }
@@ -395,6 +395,7 @@ class AutoFactory {
 
     if (!trajectoriesLoaded) {
       trajectoriesLoaded = true;
+      @SuppressWarnings("unused")
       var trajectory = new PathPlannerTrajectory(
           firstSegment, drive.getChassisSpeeds(), drive.getPose().getRotation(), null);
     }

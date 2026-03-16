@@ -31,6 +31,7 @@ public class Shooter extends SubsystemBase {
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
     private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 3);
 
+    @SuppressWarnings("unused")
     private boolean isFerry = false;
  
 

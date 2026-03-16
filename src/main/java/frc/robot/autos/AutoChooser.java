@@ -92,7 +92,7 @@ public class AutoChooser extends SendableChooser<Auto> {
             .map(
                 alliance ->
                     Map.entry(
-                        alliance, new AutoFactory(alliance, robotContainer, drive, superstructure)))
+                        alliance, new AutoFactory(drive, superstructure)))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     var programs =
         AUTO_PROGRAMS.stream()
