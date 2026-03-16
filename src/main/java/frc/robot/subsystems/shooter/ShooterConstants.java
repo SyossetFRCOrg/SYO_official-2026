@@ -49,7 +49,6 @@ public class ShooterConstants {
         new InterpolatingDoubleTreeMap();
     public static InterpolatingDoubleTreeMap timeOfFlightMapScoring =
         new InterpolatingDoubleTreeMap();
-
     public static InterpolatingDoubleTreeMap shooterSpeedMapFerrying =
         new InterpolatingDoubleTreeMap();
 

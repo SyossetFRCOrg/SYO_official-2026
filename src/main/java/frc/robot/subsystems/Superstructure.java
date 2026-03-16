@@ -130,7 +130,7 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case INTAKING:
-        indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.ACTIVE);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;

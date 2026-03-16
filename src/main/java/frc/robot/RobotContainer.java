@@ -140,10 +140,34 @@ public class RobotContainer {
                                                 FieldConstants.getAlliance() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
-                Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightTriggerAxis() > 0.5);
+                Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightBumperButton());
 
-                IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING));
-                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                                .alongWith(superstructure.MoveArmToPosition(1.5)));
+                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
+                                .alongWith(superstructure.MoveArmToPosition(0)));
+
+                Trigger AutoAlignPreShooting  = new Trigger(() -> 
+                                                (controller.getYButton() && 
+                                                !DriveCommands.isAimedAtTarget(drive, 
+                                                () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
+                                                .getTranslation().getAngle().plus(Rotation2d.k180deg))));
+                
+                AutoAlignPreShooting.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE)
+                                .alongWith(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())));
+                AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+
+                Trigger AutoAlignThenShootTrigger = new Trigger(() -> 
+                                                (controller.getYButton() && 
+                                                DriveCommands.isAimedAtTarget(drive, 
+                                                () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
+                                                .getTranslation().getAngle().plus(Rotation2d.k180deg))));
+                AutoAlignThenShootTrigger.onTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
+                                .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+
+
 
                 Trigger ShootOnBButton = new Trigger(
                                 () -> (controller.getBButton() && !(controller.getRawButton(5))));
@@ -165,9 +189,14 @@ public class RobotContainer {
                 // FerryShotOnBButtonAndLefTrigger.whileTrue((superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
                 // FerryShotOnBButtonAndLefTrigger.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
-                Trigger AlignHubOnRightBumper = new Trigger(() -> controller.getRawButton(6));
-                AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())); 
-                AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+                // Trigger AlignHubOnRightBumper = new Trigger(() -> controller.getRawButton(6));
+                // AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())); 
+                // AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+
+                Trigger WheelRadiusCharacterization = new Trigger(() -> buttonboard.getRawButton(4));
+                WheelRadiusCharacterization.whileTrue(DriveCommands.wheelRadiusCharacterization(drive));
+                WheelRadiusCharacterization.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
 
                 Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard
                 IncreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(1)));
@@ -175,11 +204,11 @@ public class RobotContainer {
                 Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
                 DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(-1)));
 
-                Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
-                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
+                // Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
+                // IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
 
-                Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
-                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(10)));
+                // Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
+                // DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(10)));
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);

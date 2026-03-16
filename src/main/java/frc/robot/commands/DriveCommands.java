@@ -31,6 +31,8 @@ public class DriveCommands {
   private static final double DEADBAND = 0.1;
   // TODO: return PID for align controller, we should decrease kP/increase kD to mitigate overshooting
   //       check discord for suggestions of constants
+  private static final LoggedTunableNumber ROTATION_TOLERANCE = new LoggedTunableNumber("AlignDrive/rotationTolerance",
+      4); // degrees
   private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 6.0);
   private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.2);
   private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity",
@@ -153,6 +155,12 @@ public class DriveCommands {
 
         // Reset PID controller when command starts
         .beforeStarting(() -> angleController.reset(drive.getRotation().getRadians()));
+  }
+
+  public static boolean isAimedAtTarget(Drive drive, Supplier<Rotation2d> rotationSupplier) {
+    return Math.abs(drive.getRotation().minus(rotationSupplier.get()).getDegrees()) 
+              < ROTATION_TOLERANCE.get() ? true : false;
+
   }
 
   public static Command joystickDriveFacingPose(Drive drive, DoubleSupplier xSupplier, DoubleSupplier ySupplier,

@@ -112,6 +112,7 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledPeriodic() {
     autoChooser.update();
+    FieldConstants.setAlliance(DriverStation.getAlliance().get());
   }
 
   /**
@@ -129,7 +130,7 @@ public class Robot extends LoggedRobot {
     robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
     robotContainer.getSuperstructure().getShooter().setShooterChangeVelocity(0);
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
-    FieldConstants.setAlliance(DriverStation.getAlliance().get());
+    
   }
 
   @Override
@@ -149,7 +150,7 @@ public class Robot extends LoggedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    FieldConstants.setAlliance(DriverStation.getAlliance().get());
+    // FieldConstants.setAlliance(DriverStation.getAlliance().get());
     robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
   }
 

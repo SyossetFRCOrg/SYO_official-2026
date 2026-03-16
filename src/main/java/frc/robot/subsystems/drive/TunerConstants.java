@@ -210,7 +210,7 @@ public class TunerConstants {
                             * kWheelRadius.in(Inches)
                             * 2
                             * Math.PI)
-            .maxLinearAcceleration(25)
+            .maxLinearAcceleration(15)
             .maxAngularVelocity(4.5 * Math.PI) // test out units - rad/s? was 12.0
             .maxAngularAcceleration(3 * Math.PI) // was 6.0
             .build();
