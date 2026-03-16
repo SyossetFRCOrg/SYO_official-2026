@@ -102,7 +102,7 @@ public class Superstructure extends SubsystemBase {
     return switch (desiredSuperState) {
       case SHOOTINGPREPARE -> SuperState.SHOOTINGPREPARE;
       case SHOOTINGWHILEINDEXEROUT -> SuperState.SHOOTINGWHILEINDEXEROUT;
-      case SHOOTING -> (ready || currentSuperState==SuperState.SHOOTING) 
+      case SHOOTING -> (ready || currentSuperState == SuperState.SHOOTING) 
                         ? SuperState.SHOOTING : SuperState.SHOOTINGPREPARE;
       case INTAKING -> SuperState.INTAKING;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING -> SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING;
@@ -180,8 +180,7 @@ public class Superstructure extends SubsystemBase {
   {
     return DriveCommands.joystickDriveFacingPose(
         drive, () -> 0.0, () -> 0.0, targetPose)
-        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTING).andThen(
-          Commands.waitSeconds(3), setDesiredSuperStateCommand(SuperState.DRIVING)));
+        .alongWith(setDesiredSuperStateCommand(SuperState.SHOOTING));
   }
 
   // flip x and y cuz it works. bad fix
@@ -191,9 +190,9 @@ public class Superstructure extends SubsystemBase {
         .alongWith(new InstantCommand(() -> {
           RobotState.getInstance().setAutoAiming(true);
           Logger.recordOutput("RobotState/isAutoAiming", RobotState.getInstance().isAutoAiming());
-        
         }));
   }
+  
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }
