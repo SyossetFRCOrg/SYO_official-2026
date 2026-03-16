@@ -4,7 +4,6 @@ import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
-
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
@@ -18,12 +17,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.subsystems.drive.TunerConstants;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.subsystems.indexer.Indexer;
 import frc.robot.subsystems.indexer.IndexerIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
@@ -164,7 +163,8 @@ public class RobotContainer {
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
                 AutoAlignThenShootTrigger.onTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
                                 .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
-                AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
+                                                .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
 
 
 
@@ -175,7 +175,7 @@ public class RobotContainer {
                 ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger ShootWhileIndexerOutOnBButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getBButton()));
+                Trigger ShootWhileIndexerOutOnBButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getYButton()));
 
                 ShootWhileIndexerOutOnBButtonAndLeftBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
 

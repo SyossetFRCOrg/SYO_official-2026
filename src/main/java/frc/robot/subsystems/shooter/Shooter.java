@@ -29,7 +29,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
-    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 3);
+    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 2);
 
     @SuppressWarnings("unused")
     private boolean isFerry = false;

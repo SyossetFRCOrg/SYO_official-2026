@@ -14,6 +14,6 @@ public class IndexerConstants {
     public static final double maxAcceleration = 0.1;
     public static final double maxJerk = 0.1;
 
-    public static final CANBus canbus = new CANBus("*");
+    public static final CANBus canbus = new CANBus("SuperStructure");
     
 }
