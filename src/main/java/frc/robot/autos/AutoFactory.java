@@ -407,7 +407,7 @@ class AutoFactory {
     PathPlannerPath path;
 
     try {
-      path = PathPlannerPath.fromChoreoTrajectory(name);
+      path = PathPlannerPath.fromPathFile(name);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
@@ -422,7 +422,7 @@ class AutoFactory {
   private PathPlannerPath loadSegment(String pathName) {
     PathPlannerPath path;
     try {
-      path = PathPlannerPath.fromChoreoTrajectory(pathName);
+      path = PathPlannerPath.fromPathFile(pathName);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
