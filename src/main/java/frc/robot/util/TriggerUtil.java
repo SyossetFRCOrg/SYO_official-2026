@@ -28,8 +28,7 @@ public class TriggerUtil {
                 boolean pressed = trigger.getAsBoolean();
 
                 if (pressed) {
-                  command.schedule();
-                  // CommandScheduler.getInstance().schedule(command);
+                  CommandScheduler.getInstance().schedule(command);
                 } else if (m_pressedLast) {
                   command.cancel();
                 }

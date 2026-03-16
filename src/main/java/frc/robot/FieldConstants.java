@@ -13,7 +13,7 @@ public class FieldConstants {
     // MAY BE POTENTIALLY PROLBEM ALL ANGLE 0.
 
     // Measured from central april tag facing driver station
-    public static final Pose3d redHubPose = new Pose3d(Units.Meters.of(11.917),Units.Meters.of(4.021), Units.Inches.of(44.25), Rotation3d.kZero);
+    public static final Pose3d redHubPose = new Pose3d(Units.Meters.of(12.20),Units.Meters.of(4.037), Units.Inches.of(44.25), Rotation3d.kZero);
     public static final Pose3d redOutpostPose = new Pose3d(Units.Inches.of(650.92), Units.Inches.of(291.47), Units.Inches.of(21.75), Rotation3d.kZero);
     public static final Pose3d redTowerPose = new Pose3d(Units.Inches.of(650.90), Units.Inches.of(170.22), Units.Inches.of(21.75), Rotation3d.kZero);
 

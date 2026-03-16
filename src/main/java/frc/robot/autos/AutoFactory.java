@@ -11,10 +11,8 @@ import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
@@ -25,9 +23,9 @@ import edu.wpi.first.wpilibj.XboxController;
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({ "UnusedMethod", "UnusedVariable", "EmptyBlockTag" })
 class AutoFactory {
-  private final DriverStation.Alliance alliance;
+  // private final DriverStation.Alliance alliance;
 
-  private final RobotContainer robotContainer;
+  // private final RobotContainer robotContainer;
   private final Drive drive;
   private final Superstructure superstructure;
   private boolean trajectoriesLoaded = false;
@@ -38,12 +36,10 @@ class AutoFactory {
    * @param robotContainer The {@link RobotContainer}
    */
   AutoFactory(
-      final DriverStation.Alliance alliance,
-      final RobotContainer robotContainer,
       final Drive drive,
       final Superstructure superstructure) {
-    this.alliance = alliance;
-    this.robotContainer = robotContainer;
+    // this.alliance = alliance;
+    // this.robotContainer = robotContainer;
     this.drive = drive;
     this.superstructure = superstructure;
   }
@@ -121,8 +117,8 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLStart = loadSegment(Location.S3.getAllianceName(), Location.LSTART.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    // preloadTrajectoryClass(DepotToS3);
-    // preloadTrajectoryClass(S3ToLStart);
+    preloadTrajectoryClass(DepotToS3);
+    preloadTrajectoryClass(S3ToLStart);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
@@ -148,7 +144,8 @@ class AutoFactory {
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToOutpost));
-    c.addCommands(follow(StartToOutpost));
+    c.addCommands(putArmDown());
+    c.addCommands(intakeWhileFollowing(StartToOutpost));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(OutpostToS2));
     c.addCommands(stationaryAAShoot());
@@ -168,11 +165,36 @@ class AutoFactory {
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDepot));
-    c.addCommands(follow(StartToDepot));
+    c.addCommands(putArmDown());
+    c.addCommands(intakeWhileFollowing(StartToDepot));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S3ToLTrench));
+
+    return c;
+  }
+
+  Command S3_Depot_S3(Location Start) {
+    PathPlannerPath StartToS3 = loadSegment(Start.getAllianceName(), Location.S3.getAllianceName());
+    PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
+
+    preloadTrajectoryClass(StartToS3);
+    // preloadTrajectoryClass(S3ToDepot);
+    // preloadTrajectoryClass(DepotToS3);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    
+    c.addCommands(resetPose(StartToS3));
+    c.addCommands(stationaryAAShoot().raceWith(Commands.waitSeconds(3)));
+    c.addCommands(follow(StartToS3));
+    c.addCommands(Commands.waitSeconds(2));
+    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(2.5)));
+    c.addCommands(intakeWhileFollowing(S3ToDepot));
+    c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(stationaryAAShoot());
 
     return c;
   }
@@ -293,10 +315,12 @@ class AutoFactory {
     return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
 
+  @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
     return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
   }
 
+  @SuppressWarnings("unused")
   private Command alignToTower(Location towerLocation) {
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     
@@ -321,7 +345,7 @@ class AutoFactory {
   }
 
   private Command putArmDown() {
-    return superstructure.MoveArmToPosition(1.3);
+    return superstructure.MoveArmToPosition(1.4);
   }
 
   // Auto init helpers
@@ -351,6 +375,7 @@ class AutoFactory {
   // }
 
   // Path following
+  @SuppressWarnings("unused")
   private Command follow(final Location start, final Location end) {
     return follow(loadSegment(start.getAllianceName(), end.getAllianceName()));
   }
@@ -370,6 +395,7 @@ class AutoFactory {
 
     if (!trajectoriesLoaded) {
       trajectoriesLoaded = true;
+      @SuppressWarnings("unused")
       var trajectory = new PathPlannerTrajectory(
           firstSegment, drive.getChassisSpeeds(), drive.getPose().getRotation(), null);
     }

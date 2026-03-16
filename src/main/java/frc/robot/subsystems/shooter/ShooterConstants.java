@@ -4,7 +4,6 @@ import com.ctre.phoenix6.CANBus;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
-//TODO adjust these values
 public class ShooterConstants {
 
     public static final int leftMotorID = 17;
@@ -54,20 +53,28 @@ public class ShooterConstants {
     public static InterpolatingDoubleTreeMap shooterSpeedMapFerrying =
         new InterpolatingDoubleTreeMap();
 
-    //TODO Interpolation
+    //TODO Retune with new values in cafeteria
     static {
-        shooterSpeedMapScoring.put(0.0,0.0);
         shooterSpeedMapScoring.put(2.95, 76.0);
-        shooterSpeedMapScoring.put(2.11,67.0);
-        shooterSpeedMapScoring.put(3.43,79.0);
-        shooterSpeedMapScoring.put(1.94,66.0);
-        shooterSpeedMapScoring.put(1.7,65.0);
-        shooterSpeedMapScoring.put(4.28,96.0);
-        shooterSpeedMapScoring.put(2.03,67.0);
-        shooterSpeedMapScoring.put(3.17,82.0);
-        shooterSpeedMapScoring.put(3.48,78.0);
+        shooterSpeedMapScoring.put(2.11, 67.0);
+        shooterSpeedMapScoring.put(3.43, 79.0);
+        shooterSpeedMapScoring.put(1.94, 66.0);
+        shooterSpeedMapScoring.put(1.70, 65.0);
+        shooterSpeedMapScoring.put(4.28, 96.0);
+        shooterSpeedMapScoring.put(2.03, 67.0);
+        shooterSpeedMapScoring.put(3.17, 82.0);
+        shooterSpeedMapScoring.put(3.48, 78.0);
         shooterSpeedMapScoring.put(2.51, 72.0);
         shooterSpeedMapScoring.put(2.9, 70.0);
+        shooterSpeedMapScoring.put(2.95, 77.0);
+        shooterSpeedMapScoring.put(2.67, 74.0);
+        shooterSpeedMapScoring.put(2.6, 74.0);
+        shooterSpeedMapScoring.put(2.71, 72.0);
+        shooterSpeedMapScoring.put(2.844, 79.7);
+        shooterSpeedMapScoring.put(2.74, 78.97);
+        shooterSpeedMapScoring.put(2.24, 72.25);
+        shooterSpeedMapScoring.put(1.73, 67.18);
+        shooterSpeedMapScoring.put(1.46, 65.0);
         
     }
 

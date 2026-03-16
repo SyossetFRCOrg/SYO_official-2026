@@ -38,6 +38,9 @@ import frc.robot.subsystems.drive.Drive;
  */
 public class AutoChooser extends SendableChooser<Auto> {
   private static final List<AutoProgram> AUTO_PROGRAMS = List.of(
+
+  //TODO Juniors should check every single auton path, using sim should allow for testing
+
     new AutoProgram(Auto.IDLE, "IDLE", AutoFactory::createIdleCommand),
     new AutoProgram(Auto.TEST, "TEST", autoFactory -> autoFactory.testPath()),
     new AutoProgram(Auto.FLSTART_DEPOT_S3_TOWERLEFT, "FLSTART_DEPOT_S3_TOWERLEFT", autoFactory -> autoFactory.Depot_S3_TowerLeft(Location.FLSTART)),
@@ -53,7 +56,6 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.FRSTART_OUTPOST_S2_RSTART, "FRSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RSTART, "RSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART)),
-  //TODO CHECK AUTON NAMES ARE RIGHT FOR EVERYTHING
     new AutoProgram(Auto.FLSTART_DEPOT_S3_LTRENCH, "FLSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.FLSTART)),
     new AutoProgram(Auto.LSTART_DEPOT_S3_LTRENCH, "LSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.LSTART)),
     new AutoProgram(Auto.MIDSTART_DEPOT_S3_LTRENCH, "MIDSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.MIDSTART)),
@@ -62,6 +64,13 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RTRENCH, "RSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RTRENCH, "MIDSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.MIDSTART)),
     new AutoProgram(Auto.LSTART_OUTPOST_S2_RTRENCH, "LSTART_OUTPOST_S2_RTRENCH", autoFactory -> autoFactory.Outpost_S2_RTrench(Location.LSTART)),
+
+    new AutoProgram(Auto.FLSTART_S3_DEPOT_S3, "FLSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.FLSTART)),
+    new AutoProgram(Auto.LSTART_S3_DEPOT_S3, "LSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.LSTART)),
+
+    new AutoProgram(Auto.FRSTART_S3_DEPOT_S3, "FRSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.FRSTART)),
+    new AutoProgram(Auto.RSTART_S3_DEPOT_S3, "RSTART_S3_DEPOT_S3", autofactory -> autofactory.S3_Depot_S3(Location.RSTART)),
+
 
     new AutoProgram(Auto.FLDUMMYSHOOT, "FLDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FLSTART)),
     new AutoProgram(Auto.LDUMMYSHOOT, "LDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.LSTART)),
@@ -85,7 +94,7 @@ public class AutoChooser extends SendableChooser<Auto> {
             .map(
                 alliance ->
                     Map.entry(
-                        alliance, new AutoFactory(alliance, robotContainer, drive, superstructure)))
+                        alliance, new AutoFactory(drive, superstructure)))
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     var programs =
         AUTO_PROGRAMS.stream()

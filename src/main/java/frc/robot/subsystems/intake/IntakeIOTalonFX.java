@@ -36,7 +36,6 @@ public class IntakeIOTalonFX implements IntakeIO {
         private static TalonFXConfiguration rightArmTalonConfig = new TalonFXConfiguration();
 
 
-        // TODO tune these values
         private static final LoggedTunableNumber roller_kP = new LoggedTunableNumber("Intake/Gains/roller_kP", IntakeConstants.roller_kP);
         private static final LoggedTunableNumber roller_kD = new LoggedTunableNumber("Intake/Gains/roller_kD", IntakeConstants.roller_kD);
         private static final LoggedTunableNumber roller_kS = new LoggedTunableNumber("Intake/Gains/roller_kS", IntakeConstants.roller_kS);
@@ -78,7 +77,6 @@ public class IntakeIOTalonFX implements IntakeIO {
                 leftArmTalon.setControl(new Follower(rightArmTalon.getDeviceID(), MotorAlignmentValue.Opposed));
 
 
-                //TODO tune these values and switch over to motion magic
                 rollerTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
                 rollerTalonConfig.Slot0.kA = roller_kA.get();
                 rollerTalonConfig.Slot0.kD = roller_kD.get();

@@ -81,6 +81,7 @@ public class Robot extends LoggedRobot {
 
     SmartDashboard.putData(field);
     SmartDashboard.putData(CommandScheduler.getInstance());
+    
 
 
     autoChooser = AutoChooser.create(
@@ -126,6 +127,7 @@ public class Robot extends LoggedRobot {
     // autonomousCommand.schedule();
     // }
     robotContainer.getSuperstructure().setDesiredSuperStateCommand(SuperState.DRIVING);
+    robotContainer.getSuperstructure().getShooter().setShooterChangeVelocity(0);
     autoChooser.getSelectedCommand().ifPresent(CommandScheduler.getInstance()::schedule);
     FieldConstants.setAlliance(DriverStation.getAlliance().get());
   }
