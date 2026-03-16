@@ -4,7 +4,6 @@ import com.ctre.phoenix6.CANBus;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 
-//TODO adjust these values
 public class ShooterConstants {
 
     public static final int leftMotorID = 17;
@@ -54,7 +53,7 @@ public class ShooterConstants {
     public static InterpolatingDoubleTreeMap shooterSpeedMapFerrying =
         new InterpolatingDoubleTreeMap();
 
-    //TODO Interpolation
+    //TODO Retune with new values in cafeteria
     static {
         shooterSpeedMapScoring.put(2.95, 76.0);
         shooterSpeedMapScoring.put(2.11, 67.0);

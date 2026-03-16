@@ -162,23 +162,10 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
-      case CLIMBUP: // TODO for climbup and climbdown, should we stop everything else? if not, we may just be able to set the climber directly
-        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
-        intake.setDesiredSubstate(Intake.Substate.STOPPED);
-        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        // climber.setDesiredSubstate(Climber.Substate.UP);
-        break;
-      case CLIMBDOWN:
-        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
-        intake.setDesiredSubstate(Intake.Substate.STOPPED);
-        shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
-        // climber.setDesiredSubstate(Climber.Substate.DOWN);
-        break;
       default: break;
     }
   }
 
-  // TODO update with 2026 state checker
   /** Transition check */
   private boolean ready(SuperState state) {
     return switch (state) {

@@ -38,6 +38,9 @@ import frc.robot.subsystems.drive.Drive;
  */
 public class AutoChooser extends SendableChooser<Auto> {
   private static final List<AutoProgram> AUTO_PROGRAMS = List.of(
+
+  //TODO Juniors should check every single auton path, using sim should allow for testing
+
     new AutoProgram(Auto.IDLE, "IDLE", AutoFactory::createIdleCommand),
     new AutoProgram(Auto.TEST, "TEST", autoFactory -> autoFactory.testPath()),
     new AutoProgram(Auto.FLSTART_DEPOT_S3_TOWERLEFT, "FLSTART_DEPOT_S3_TOWERLEFT", autoFactory -> autoFactory.Depot_S3_TowerLeft(Location.FLSTART)),
@@ -53,7 +56,6 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.FRSTART_OUTPOST_S2_RSTART, "FRSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.FRSTART)),
     new AutoProgram(Auto.RSTART_OUTPOST_S2_RSTART, "RSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.RSTART)),
     new AutoProgram(Auto.MIDSTART_OUTPOST_S2_RSTART,"MIDSTART_OUTPOST_S2_RSTART", autoFactory -> autoFactory.Outpost_S2_RStart(Location.MIDSTART)),
-  //TODO CHECK AUTON NAMES ARE RIGHT FOR EVERYTHING
     new AutoProgram(Auto.FLSTART_DEPOT_S3_LTRENCH, "FLSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.FLSTART)),
     new AutoProgram(Auto.LSTART_DEPOT_S3_LTRENCH, "LSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.LSTART)),
     new AutoProgram(Auto.MIDSTART_DEPOT_S3_LTRENCH, "MIDSTART_DEPOT_S3_LTRENCH", autoFactory -> autoFactory.Depot_S3_LTrench(Location.MIDSTART)),

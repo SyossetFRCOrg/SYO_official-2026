@@ -11,7 +11,7 @@ public class VisionConstants {
   // AprilTag layout
   public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
 
-  //TODO rename these
+  //TODO double check limelight configurations, names got randomly reset at comp?
   // Camera names, must match names configured on coprocessor
   public static String camera0Name = "limelight-left";
 

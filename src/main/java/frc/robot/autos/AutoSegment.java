@@ -10,5 +10,4 @@ import com.pathplanner.lib.path.PathPlannerPath;
  * @param name The segment's name
  * @param path The {@link PathPlannerPath} for the segment
  */
-@SuppressWarnings("javadoc")
 public record AutoSegment(Location start, Location end, String name, PathPlannerPath path) {}
