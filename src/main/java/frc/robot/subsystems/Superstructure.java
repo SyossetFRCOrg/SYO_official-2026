@@ -187,13 +187,9 @@ public class Superstructure extends SubsystemBase {
   // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveFacingPose(
-        drive, () -> 0.5 * -controller.getLeftY(), () -> 0.5 * -controller.getLeftX(), targetPose)
-        .alongWith(new InstantCommand(() -> {
-          RobotState.getInstance().setAutoAiming(true);
-          Logger.recordOutput("RobotState/isAutoAiming", RobotState.getInstance().isAutoAiming());
+        drive, () -> 0.5 * -controller.getLeftY(), () -> 0.5 * -controller.getLeftX(), targetPose);
+        }
         
-        }));
-  }
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }
