@@ -79,8 +79,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToTowerLeft = loadSegment(Location.S3.getAllianceName(), Location.TOWERLEFT.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToTowerLeft);
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDepot));
     c.addCommands(intakeWhileFollowing(StartToDepot));
@@ -98,8 +96,6 @@ class AutoFactory {
     PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST.getAllianceName(), Location.S2.getAllianceName());
     PathPlannerPath S2ToTowerRight = loadSegment(Location.S2.getAllianceName(), Location.TOWERRIGHT.getAllianceName());
     preloadTrajectoryClass(StartToOutpost);
-    preloadTrajectoryClass(OutpostToS2);
-    preloadTrajectoryClass(S2ToTowerRight);
 
     c.addCommands(resetPose(StartToOutpost));
     c.addCommands(follow(StartToOutpost));
@@ -117,8 +113,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLStart = loadSegment(Location.S3.getAllianceName(), Location.LSTART.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLStart);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
@@ -139,9 +133,6 @@ class AutoFactory {
     PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST.getAllianceName(), Location.S2.getAllianceName());
     PathPlannerPath S2ToRStart = loadSegment(Location.S2.getAllianceName(), Location.RSTART.getAllianceName());
     preloadTrajectoryClass(StartToOutpost);
-    preloadTrajectoryClass(OutpostToS2);
-    preloadTrajectoryClass(S2ToRStart);
-
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToOutpost));
     c.addCommands(putArmDown());
@@ -160,8 +151,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLTrench = loadSegment(Location.S3.getAllianceName(), Location.LTRENCH.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLTrench);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDepot));
@@ -181,8 +170,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToS3);
-    // preloadTrajectoryClass(S3ToDepot);
-    // preloadTrajectoryClass(DepotToS3);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     
@@ -209,10 +196,8 @@ class AutoFactory {
     preloadTrajectoryClass(StartToOutpost);
     c.addCommands(resetPose(StartToOutpost));
     c.addCommands(follow(StartToOutpost));
-    // preloadTrajectoryClass(OutpostToS2);
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(OutpostToS2));
-    // preloadTrajectoryClass(S2ToRTrench);
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S2ToRTrench));
     
@@ -231,11 +216,7 @@ class AutoFactory {
     PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLTrench);
-    preloadTrajectoryClass(LTrenchToND);
-    preloadTrajectoryClass(NDToLTrench);
-    preloadTrajectoryClass(LTrenchToS3);
+   
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDepot));
@@ -264,11 +245,7 @@ class AutoFactory {
     PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH.getAllianceName(), Location.S2.getAllianceName());
 
     preloadTrajectoryClass(StartToOutpost);
-    preloadTrajectoryClass(OutpostToS2);
-    preloadTrajectoryClass(S2ToRTrench);
-    preloadTrajectoryClass(RTrenchToNF);
-    preloadTrajectoryClass(NFToRTrench);
-    preloadTrajectoryClass(RTrenchToS2);
+
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToOutpost));
