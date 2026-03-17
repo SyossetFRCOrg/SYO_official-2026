@@ -55,21 +55,11 @@ public class VisionIOLimelight implements VisionIO {
   public void updateInputs(VisionIOInputs inputs) {
 
     // If the robot is disabled it will take in any of the april tags
-    if (DriverStation.isDisabled()) {
-      LimelightHelpers.SetFiducialIDFiltersOverride(
-          name,
-          new int[] {
-              0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
-              24, 25, 26, 27, 28, 29, 30, 31, 32 });
-    } else {
-      int[] nums;
-      if (DriverStation.getAlliance().get() == Alliance.Red) {
-        nums = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22 };
-      } else {
-        nums = new int[] { 1, 2, 3, 4, 5, 6, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32 };
-      }
-      LimelightHelpers.SetFiducialIDFiltersOverride(name, nums);
-    }
+    LimelightHelpers.SetFiducialIDFiltersOverride(
+        name,
+        new int[] {
+            0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23,
+            24, 25, 26, 27, 28, 29, 30, 31, 32 });
 
     latencySubscriber = LimelightHelpers.getLatency_Pipeline(name);
     txSubscriber = LimelightHelpers.getTX(name);

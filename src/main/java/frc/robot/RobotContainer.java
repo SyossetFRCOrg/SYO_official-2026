@@ -142,26 +142,25 @@ public class RobotContainer {
                 Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightBumperButton());
 
                 IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
-                                .alongWith(superstructure.MoveArmToPosition(1.5)));
-                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
-                                .alongWith(superstructure.MoveArmToPosition(0)));
-
+                                .alongWith(superstructure.MoveArmToPosition(1.35)));
+                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                
                 Trigger AutoAlignPreShooting  = new Trigger(() -> 
                                                 (controller.getYButton() && 
                                                 !DriveCommands.isAimedAtTarget(drive, 
                                                 () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
-                
+                AutoAlignPreShooting.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(true)));
                 AutoAlignPreShooting.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE)
                                 .alongWith(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())));
-                AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+                AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)));
 
                 Trigger AutoAlignThenShootTrigger = new Trigger(() -> 
                                                 (controller.getYButton() && 
                                                 DriveCommands.isAimedAtTarget(drive, 
                                                 () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
-                AutoAlignThenShootTrigger.onTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
+                AutoAlignThenShootTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
                                 .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
                 AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
                                                 .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
@@ -169,11 +168,12 @@ public class RobotContainer {
 
 
 
-                Trigger ShootOnBButton = new Trigger(
-                                () -> (controller.getBButton() && !(controller.getRawButton(5))));
 
-                ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                // Trigger ShootOnBButton = new Trigger(
+                //                 () -> (controller.getBButton() && !(controller.getRawButton(5))));
+
+                // ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+                // ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger ShootWhileIndexerOutOnBButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getYButton()));
 

@@ -2,21 +2,28 @@ package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
 
+import java.lang.reflect.Field;
+
 import org.littletonrobotics.junction.Logger;
 
+import com.ctre.phoenix6.swerve.SwerveModuleConstants.DriveMotorArrangement;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Superstructure;
+import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.drive.Drive;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -187,14 +194,17 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     
     c.addCommands(resetPose(StartToS3));
-    c.addCommands(stationaryAAShoot().raceWith(Commands.waitSeconds(3)));
-    c.addCommands(follow(StartToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(5));
     c.addCommands(Commands.waitSeconds(2));
-    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(2.5)));
-    c.addCommands(intakeWhileFollowing(S3ToDepot));
+    c.addCommands(follow(StartToS3));
+    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(3.5)));
+    c.addCommands(intakeWhileFollowing(S3ToDepot).raceWith(Commands.waitSeconds(5)));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
-    c.addCommands(stationaryAAShoot());
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
+    // c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
     return c;
   }
@@ -315,9 +325,13 @@ class AutoFactory {
     return superstructure.AutonStationaryAimShooting(() -> FieldConstants.getHubPose().toPose2d());
   }
 
+  private Command shooting(double timeout){
+    return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).raceWith(Commands.waitSeconds(timeout));
+  }
+
   @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
-    return superstructure.AimShooting(new XboxController(0), () -> targetPose).withTimeout(2.0);
+    return superstructure.AimShooting(new XboxController(0), () -> targetPose);
   }
 
   @SuppressWarnings("unused")
@@ -340,8 +354,7 @@ class AutoFactory {
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {
-    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING))
-        .andThen(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.DRIVING));
+    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING).alongWith(superstructure.MoveArmToPosition(1.4)));
   }
 
   private Command putArmDown() {
@@ -407,7 +420,7 @@ class AutoFactory {
     PathPlannerPath path;
 
     try {
-      path = PathPlannerPath.fromPathFile(name);
+      path = PathPlannerPath.fromChoreoTrajectory(name);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
@@ -422,7 +435,7 @@ class AutoFactory {
   private PathPlannerPath loadSegment(String pathName) {
     PathPlannerPath path;
     try {
-      path = PathPlannerPath.fromPathFile(pathName);
+      path = PathPlannerPath.fromChoreoTrajectory(pathName);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
