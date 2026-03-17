@@ -194,13 +194,13 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     
     c.addCommands(resetPose(StartToS3));
+    c.addCommands(follow(StartToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     c.addCommands(shooting(5));
-    c.addCommands(Commands.waitSeconds(2));
-    c.addCommands(follow(StartToS3));
-    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(3.5)));
+    // c.addCommands(Commands.waitSeconds(2));
+    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(1.5)));
     c.addCommands(intakeWhileFollowing(S3ToDepot).raceWith(Commands.waitSeconds(5)));
-    c.addCommands(Commands.waitSeconds(4));
+    // c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     c.addCommands(shooting(4));
@@ -420,7 +420,7 @@ class AutoFactory {
     PathPlannerPath path;
 
     try {
-      path = PathPlannerPath.fromChoreoTrajectory(name);
+      path = PathPlannerPath.fromPathFile(name);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
@@ -435,7 +435,7 @@ class AutoFactory {
   private PathPlannerPath loadSegment(String pathName) {
     PathPlannerPath path;
     try {
-      path = PathPlannerPath.fromChoreoTrajectory(pathName);
+      path = PathPlannerPath.fromPathFile(pathName);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;

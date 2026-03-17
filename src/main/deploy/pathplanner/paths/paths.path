@@ -1,0 +1,747 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.675,
+        "y": 7.290696022727272
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.674999999999998,
+        "y": 7.290696022727272
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 14.82389,
+        "y": 4.003377914428711
+      },
+      "prevControl": {
+        "x": 15.77307861005868,
+        "y": 4.003377914428711
+      },
+      "nextControl": {
+        "x": 13.94089,
+        "y": 4.003377914428711
+      },
+      "isLocked": false,
+      "linkedName": "RS1"
+    },
+    {
+      "anchor": {
+        "x": 14.543252944946289,
+        "y": 6.37339973449707
+      },
+      "prevControl": {
+        "x": 14.732208561403883,
+        "y": 6.53709388530623
+      },
+      "nextControl": {
+        "x": 14.354297328488697,
+        "y": 6.209705583687913
+      },
+      "isLocked": false,
+      "linkedName": "RS2"
+    },
+    {
+      "anchor": {
+        "x": 14.841279029846191,
+        "y": 1.2076035737991333
+      },
+      "prevControl": {
+        "x": 15.02147071713314,
+        "y": 1.034309154290937
+      },
+      "nextControl": {
+        "x": 14.661087342559243,
+        "y": 1.3808979933073295
+      },
+      "isLocked": false,
+      "linkedName": "RS3"
+    },
+    {
+      "anchor": {
+        "x": 15.465716361999512,
+        "y": 3.322173833847046
+      },
+      "prevControl": {
+        "x": 18.359549577314674,
+        "y": 3.3221738338470455
+      },
+      "nextControl": {
+        "x": 12.57188314668435,
+        "y": 3.3221738338470463
+      },
+      "isLocked": false,
+      "linkedName": "RTOWERLEFT"
+    },
+    {
+      "anchor": {
+        "x": 15.479907989501953,
+        "y": 5.337401866912842
+      },
+      "prevControl": {
+        "x": 15.229907989501953,
+        "y": 5.337401866912842
+      },
+      "nextControl": {
+        "x": 15.729907989501953,
+        "y": 5.337401866912842
+      },
+      "isLocked": false,
+      "linkedName": "RTOWERRIGHT"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 0.6824869874148569,
+        "y": 4.0
+      },
+      "nextControl": {
+        "x": 6.6175130125851425,
+        "y": 4.0
+      },
+      "isLocked": false,
+      "linkedName": "BMIDSTART"
+    },
+    {
+      "anchor": {
+        "x": 0.3656969666481018,
+        "y": 0.6541252136230469
+      },
+      "prevControl": {
+        "x": 0.11569696664810164,
+        "y": 0.6541252136230469
+      },
+      "nextControl": {
+        "x": 0.615696966648102,
+        "y": 0.6541252136230469
+      },
+      "isLocked": false,
+      "linkedName": "BOUTPOST"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 2.544701099395752
+      },
+      "prevControl": {
+        "x": 3.516311783306826,
+        "y": 2.333448973448108
+      },
+      "nextControl": {
+        "x": 3.7836882166931733,
+        "y": 2.7559532253433954
+      },
+      "isLocked": false,
+      "linkedName": "BRDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 3.7805952380952377,
+        "y": 2.6255357142857143
+      },
+      "prevControl": {
+        "x": 3.5305952380952377,
+        "y": 2.6255357142857143
+      },
+      "nextControl": {
+        "x": 4.030595238095238,
+        "y": 2.6255357142857143
+      },
+      "isLocked": false,
+      "linkedName": "BRSTART"
+    },
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 0.6601023077964783
+      },
+      "prevControl": {
+        "x": 4.0,
+        "y": 0.410102307796478
+      },
+      "nextControl": {
+        "x": 4.0,
+        "y": 0.9101023077964783
+      },
+      "isLocked": true,
+      "linkedName": "BRTRENCH"
+    },
+    {
+      "anchor": {
+        "x": 1.73728,
+        "y": 4.0
+      },
+      "prevControl": {
+        "x": 1.48728,
+        "y": 4.0
+      },
+      "nextControl": {
+        "x": 1.98728,
+        "y": 4.0
+      },
+      "isLocked": false,
+      "linkedName": "BS1"
+    },
+    {
+      "anchor": {
+        "x": 2.4034934043884277,
+        "y": 1.5841411352157593
+      },
+      "prevControl": {
+        "x": 2.236877250621458,
+        "y": 1.3977569693005674
+      },
+      "nextControl": {
+        "x": 2.5701095581553974,
+        "y": 1.7705253011309512
+      },
+      "isLocked": false,
+      "linkedName": "BS2"
+    },
+    {
+      "anchor": {
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": {
+        "x": 2.3600681799623016,
+        "y": 5.851715930102761
+      },
+      "nextControl": {
+        "x": 2.75944293114881,
+        "y": 5.550884069897239
+      },
+      "isLocked": false,
+      "linkedName": "BS3"
+    },
+    {
+      "anchor": {
+        "x": 1.6011458333333333,
+        "y": 4.178556547619048
+      },
+      "prevControl": {
+        "x": 1.6011458333333333,
+        "y": 4.491571502119245
+      },
+      "nextControl": {
+        "x": 1.6011458333333333,
+        "y": 3.8655415931188513
+      },
+      "isLocked": false,
+      "linkedName": "BTOWERLEFT"
+    },
+    {
+      "anchor": {
+        "x": 1.6148780584335327,
+        "y": 3.9289209842681885
+      },
+      "prevControl": {
+        "x": 1.6146789774734447,
+        "y": 4.178920905001719
+      },
+      "nextControl": {
+        "x": 1.6150771393936207,
+        "y": 3.678921063534658
+      },
+      "isLocked": false,
+      "linkedName": " BTOWERMIDLEFT"
+    },
+    {
+      "anchor": {
+        "x": 1.5983787775039673,
+        "y": 3.585521697998047
+      },
+      "prevControl": {
+        "x": 1.598254697689214,
+        "y": 3.8355216672064443
+      },
+      "nextControl": {
+        "x": 1.5985028573187205,
+        "y": 3.3355217287896495
+      },
+      "isLocked": false,
+      "linkedName": "BTOWERMIDRIGHT"
+    },
+    {
+      "anchor": {
+        "x": 1.643303632736206,
+        "y": 3.1729423999786377
+      },
+      "prevControl": {
+        "x": 1.643104551776118,
+        "y": 3.422942320712168
+      },
+      "nextControl": {
+        "x": 1.643502713696294,
+        "y": 2.9229424792451075
+      },
+      "isLocked": false,
+      "linkedName": "BTOWERRIGHT"
+    },
+    {
+      "anchor": {
+        "x": 8.27,
+        "y": 2.3
+      },
+      "prevControl": {
+        "x": 8.233750834938592,
+        "y": 2.0526419638816016
+      },
+      "nextControl": {
+        "x": 8.306249165061406,
+        "y": 2.5473580361183985
+      },
+      "isLocked": false,
+      "linkedName": "NF"
+    },
+    {
+      "anchor": {
+        "x": 8.67,
+        "y": 6.12
+      },
+      "prevControl": {
+        "x": 10.346038009701283,
+        "y": 5.932505745811536
+      },
+      "nextControl": {
+        "x": 6.993961990298718,
+        "y": 6.307494254188463
+      },
+      "isLocked": false,
+      "linkedName": "NG"
+    },
+    {
+      "anchor": {
+        "x": 8.67,
+        "y": 2.09
+      },
+      "prevControl": {
+        "x": 8.552072131323023,
+        "y": 1.8695617596937733
+      },
+      "nextControl": {
+        "x": 8.787927868676977,
+        "y": 2.3104382403062265
+      },
+      "isLocked": false,
+      "linkedName": "NJ"
+    },
+    {
+      "anchor": {
+        "x": 16.005304412841795,
+        "y": 2.1016836166381836
+      },
+      "prevControl": {
+        "x": 16.560852205252854,
+        "y": 2.0150351354682607
+      },
+      "nextControl": {
+        "x": 15.449756620430737,
+        "y": 2.1883320978081064
+      },
+      "isLocked": false,
+      "linkedName": "RDEPOT"
+    },
+    {
+      "anchor": {
+        "x": 11.917,
+        "y": 4.021
+      },
+      "prevControl": {
+        "x": 13.67116736197999,
+        "y": 3.699637212195001
+      },
+      "nextControl": {
+        "x": 10.16283263802001,
+        "y": 4.3423627878049995
+      },
+      "isLocked": false,
+      "linkedName": "REDHUB"
+    },
+    {
+      "anchor": {
+        "x": 12.91,
+        "y": 0.64
+      },
+      "prevControl": {
+        "x": 12.748209975513966,
+        "y": 0.38761822174949706
+      },
+      "nextControl": {
+        "x": 13.071790024486035,
+        "y": 0.892381778250503
+      },
+      "isLocked": false,
+      "linkedName": "RFLDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 12.91,
+        "y": 0.64
+      },
+      "prevControl": {
+        "x": 12.392247105681738,
+        "y": -0.11762169655992993
+      },
+      "nextControl": {
+        "x": 13.42775289431826,
+        "y": 1.3976216965599302
+      },
+      "isLocked": false,
+      "linkedName": "RFLSTART"
+    },
+    {
+      "anchor": {
+        "x": 12.9,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 13.183869516314983,
+        "y": 7.347000183066749
+      },
+      "nextControl": {
+        "x": 12.616130483685017,
+        "y": 7.452999816933252
+      },
+      "isLocked": false,
+      "linkedName": "RFRDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 12.9,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 12.930862512992094,
+        "y": 8.816805845683412
+      },
+      "nextControl": {
+        "x": 12.869137487007906,
+        "y": 5.983194154316589
+      },
+      "isLocked": false,
+      "linkedName": "RFRSTART"
+    },
+    {
+      "anchor": {
+        "x": 12.9,
+        "y": 2.3
+      },
+      "prevControl": {
+        "x": 13.704831873344297,
+        "y": 1.9788762465016083
+      },
+      "nextControl": {
+        "x": 12.095168126655704,
+        "y": 2.6211237534983916
+      },
+      "isLocked": false,
+      "linkedName": "RLDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 12.9,
+        "y": 2.3
+      },
+      "prevControl": {
+        "x": 13.289024133449747,
+        "y": 2.2574706392948776
+      },
+      "nextControl": {
+        "x": 12.510975866550254,
+        "y": 2.342529360705122
+      },
+      "isLocked": false,
+      "linkedName": "RLSTART"
+    },
+    {
+      "anchor": {
+        "x": 12.26,
+        "y": 7.41
+      },
+      "prevControl": {
+        "x": 12.778964052166794,
+        "y": 7.280409891546981
+      },
+      "nextControl": {
+        "x": 11.741035947833206,
+        "y": 7.5395901084530195
+      },
+      "isLocked": false,
+      "linkedName": "RLTRENCH"
+    },
+    {
+      "anchor": {
+        "x": 12.9,
+        "y": 4.02
+      },
+      "prevControl": {
+        "x": 15.371911415838094,
+        "y": 2.84087964949316
+      },
+      "nextControl": {
+        "x": 10.428088584161907,
+        "y": 5.199120350506838
+      },
+      "isLocked": false,
+      "linkedName": "RMIDSTART"
+    },
+    {
+      "anchor": {
+        "x": 15.62,
+        "y": 7.38
+      },
+      "prevControl": {
+        "x": 15.397384191062553,
+        "y": 7.493763797453874
+      },
+      "nextControl": {
+        "x": 15.842615808937445,
+        "y": 7.266236202546126
+      },
+      "isLocked": false,
+      "linkedName": "ROUTPOST"
+    },
+    {
+      "anchor": {
+        "x": 12.91,
+        "y": 5.56
+      },
+      "prevControl": {
+        "x": 12.708467879788586,
+        "y": 5.707935136201958
+      },
+      "nextControl": {
+        "x": 13.111532120211415,
+        "y": 5.412064863798041
+      },
+      "isLocked": false,
+      "linkedName": "RRDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 12.91,
+        "y": 5.56
+      },
+      "prevControl": {
+        "x": 14.729254059755648,
+        "y": 5.68640845578473
+      },
+      "nextControl": {
+        "x": 11.090745940244352,
+        "y": 5.433591544215269
+      },
+      "isLocked": false,
+      "linkedName": "RRSTART"
+    },
+    {
+      "anchor": {
+        "x": 8.715,
+        "y": 0.53
+      },
+      "prevControl": {
+        "x": 9.90275837851594,
+        "y": 0.6631355434151152
+      },
+      "nextControl": {
+        "x": 7.527241621484059,
+        "y": 0.39686445658488523
+      },
+      "isLocked": false,
+      "linkedName": "RRTRENCH"
+    },
+    {
+      "anchor": {
+        "x": 0.9226888888888891,
+        "y": 5.7013
+      },
+      "prevControl": {
+        "x": 0.7004805343117614,
+        "y": 5.586742384992854
+      },
+      "nextControl": {
+        "x": 1.144897243466017,
+        "y": 5.815857615007146
+      },
+      "isLocked": false,
+      "linkedName": "BDEPOT"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 3.864161647408966,
+        "y": 7.618167185871174
+      },
+      "nextControl": {
+        "x": 3.4358383525910337,
+        "y": 7.181832814128827
+      },
+      "isLocked": false,
+      "linkedName": "BFLDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 7.4
+      },
+      "prevControl": {
+        "x": 3.1272960217883123,
+        "y": 7.8641906855967
+      },
+      "nextControl": {
+        "x": 4.172703978211688,
+        "y": 6.935809314403301
+      },
+      "isLocked": false,
+      "linkedName": "BFLSTART"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 0.92
+      },
+      "prevControl": {
+        "x": 3.357566529794767,
+        "y": 1.3073083419324734
+      },
+      "nextControl": {
+        "x": 3.942433470205233,
+        "y": 0.5326916580675265
+      },
+      "isLocked": false,
+      "linkedName": "BFRDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 0.92
+      },
+      "prevControl": {
+        "x": 3.2856069960427496,
+        "y": -0.2886659256724563
+      },
+      "nextControl": {
+        "x": 4.014393003957251,
+        "y": 2.1286659256724563
+      },
+      "isLocked": false,
+      "linkedName": "BFRSTART"
+    },
+    {
+      "anchor": {
+        "x": 3.65,
+        "y": 5.7
+      },
+      "prevControl": {
+        "x": 3.3080943503402556,
+        "y": 4.990076032954084
+      },
+      "nextControl": {
+        "x": 3.9919056496597443,
+        "y": 6.409923967045916
+      },
+      "isLocked": false,
+      "linkedName": "BLDUMMYSHOOT"
+    },
+    {
+      "anchor": {
+        "x": 3.4270111111111112,
+        "y": 6.110566666666666
+      },
+      "prevControl": {
+        "x": 3.078078163233396,
+        "y": 6.439785837549957
+      },
+      "nextControl": {
+        "x": 3.7759440589888267,
+        "y": 5.7813474957833755
+      },
+      "isLocked": false,
+      "linkedName": "BLSTART"
+    },
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 7.44
+      },
+      "prevControl": {
+        "x": 3.6532630828154007,
+        "y": 7.444486940280413
+      },
+      "nextControl": {
+        "x": 4.346736917184599,
+        "y": 7.435513059719588
+      },
+      "isLocked": false,
+      "linkedName": "BLTRENCH"
+    },
+    {
+      "anchor": {
+        "x": 4.63,
+        "y": 4.02
+      },
+      "prevControl": {
+        "x": 4.370076823223802,
+        "y": 4.560965762343812
+      },
+      "nextControl": {
+        "x": 4.889923176776198,
+        "y": 3.4790342376561876
+      },
+      "isLocked": false,
+      "linkedName": "BLUEHUB"
+    },
+    {
+      "anchor": {
+        "x": 3.938778409090909,
+        "y": 5.61546875
+      },
+      "prevControl": {
+        "x": 3.579801136363636,
+        "y": 6.532855113636362
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 20,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -61.504361381755054
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 129.06258390051846
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.559755555555556,
+        "y": 5.7013
+      },
+      "isLocked": false,
+      "linkedName": "BS3"
+    },
+    {
+      "anchor": {
+        "x": 3.4270111111111112,
+        "y": 6.110566666666666
+      },
+      "prevControl": {
+        "x": 2.4270111111111112,
+        "y": 6.110566666666666
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BLSTART"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -56.30993247402036
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -45.0
+  },
+  "useDefaultConstraints": true
+}

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 14.841279029846191,
+        "y": 1.2076035737991333
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 15.841279029846191,
+        "y": 1.2076035737991333
+      },
+      "isLocked": false,
+      "linkedName": "RS3"
+    },
+    {
+      "anchor": {
+        "x": 16.005304412841795,
+        "y": 2.1016836166381836
+      },
+      "prevControl": {
+        "x": 15.005304412841795,
+        "y": 2.1016836166381836
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RDEPOT"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

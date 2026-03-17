@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.9798251388125951,
+        "y": 4.845678073556083
+      },
+      "isLocked": false,
+      "linkedName": "BS3"
+    },
+    {
+      "anchor": {
+        "x": 1.6148780584335327,
+        "y": 3.9289209842681885
+      },
+      "prevControl": {
+        "x": 2.0448660714285714,
+        "y": 4.622276785714287
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": " BTOWERMIDLEFT"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -45.0
+  },
+  "useDefaultConstraints": true
+}
