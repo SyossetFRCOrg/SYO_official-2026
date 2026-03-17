@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8507366071428573,
-        "y": 5.9534375
+        "x": 3.65,
+        "y": 7.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.075967066206587,
-        "y": 5.8449421530493515
+        "x": 4.65,
+        "y": 7.4
       },
       "isLocked": false,
-      "linkedName": "BDEPOT"
+      "linkedName": "BFLSTART"
     },
     {
       "anchor": {
-        "x": 2.4034934043884277,
-        "y": 1.5841411352157593
+        "x": 2.592170000076294,
+        "y": 5.614929962158203
       },
       "prevControl": {
-        "x": 2.2268112461284963,
-        "y": 1.8963136500644109
+        "x": 1.592170000076294,
+        "y": 5.614929962158203
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BS2"
+      "linkedName": "BS3"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 48.80593611828628
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
