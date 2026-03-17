@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveCommands;
@@ -331,7 +332,7 @@ class AutoFactory {
 
   @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
-    return superstructure.AimShooting(new XboxController(0), () -> targetPose);
+    return superstructure.AimShooting(new XboxController(0), () -> targetPose).alongWith(superstructure.MoveArmToPosition(0).raceWith(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).raceWith(new WaitCommand(0.6)))).repeatedly();
   }
 
   @SuppressWarnings("unused")

@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Superstructure;
@@ -162,7 +163,9 @@ public class RobotContainer {
                                                 () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
                 AutoAlignThenShootTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
-                                .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                                .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING))
+                                .alongWith(superstructure.MoveArmToPosition(0)
+                                .raceWith(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).raceWith(new WaitCommand(0.6)))).repeatedly());
                 AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
                                                 .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
 
@@ -172,12 +175,12 @@ public class RobotContainer {
                 Trigger ShootOnBButton = new Trigger(
                                 () -> (controller.getBButton() && !(controller.getRawButton(5))));
 
-                ShootOnBButton.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+                ShootOnBButton.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.MoveArmToPosition(0).raceWith(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).raceWith(new WaitCommand(0.6)))).repeatedly());
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger ShootWhileIndexerOutOnBButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getYButton()));
+                Trigger ShootWhileIndexerOutOnYButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getYButton()));
 
-                ShootWhileIndexerOutOnBButtonAndLeftBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
+                ShootWhileIndexerOutOnYButtonAndLeftBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
 
                 Trigger IntakeAndIndexWithoutShootingTrigger = new Trigger(() -> (controller.getXButton()));
 
