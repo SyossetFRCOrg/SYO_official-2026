@@ -1,6 +1,8 @@
 package frc.robot.subsystems.shooter;
 
 import org.littletonrobotics.junction.Logger;
+
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.LoggedTunableNumber;
 import lombok.Getter;
@@ -73,17 +75,17 @@ public class Shooter extends SubsystemBase {
     {
         if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
         {
-            shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
-            //Add this for ferry
+            //shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
             
-            // if (isFerry)
-            // {
-            //     shooterVelocity = ShooterConstants.ferrySpeed;
-            // }
-            // else 
-            // {
-            //     shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
-            // };
+            if (isFerry)
+            {
+                //shooterVelocity = ShooterConstants.constantFerrySpeed;
+                shooterVelocity = ShooterConstants.shooterSpeedMapFerrying.get(distance);
+            }
+            else 
+            {
+                shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            };
         }
 
     }
@@ -115,5 +117,9 @@ public class Shooter extends SubsystemBase {
 
     public void setFerry(boolean isFerry) {
         this.isFerry = isFerry;
+    }
+
+    public boolean getFerry() {
+        return isFerry;
     }
 }

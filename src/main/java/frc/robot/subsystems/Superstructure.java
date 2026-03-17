@@ -139,12 +139,12 @@ public class Superstructure extends SubsystemBase {
         indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.STOPPED);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        shooter.setCalculatedShooterVoltage(drive.getHubDistance());
+        shooter.setCalculatedShooterVoltage(shooter.getFerry() ? drive.getFerryDistance() : drive.getHubDistance());
         break;
       case SHOOTINGWHILEINDEXEROUT:
         indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
-        shooter.setCalculatedShooterVoltage(drive.getHubDistance());
+        shooter.setCalculatedShooterVoltage(shooter.getFerry() ? drive.getFerryDistance() : drive.getHubDistance());
         break;
       case INTAKINGANDINDEXINGWITHOUTSHOOTING:
         indexer.setDesiredSubstate(Indexer.Substate.INDEXING);

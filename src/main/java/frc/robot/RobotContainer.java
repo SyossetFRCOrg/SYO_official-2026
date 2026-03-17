@@ -13,6 +13,7 @@ import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -192,6 +193,30 @@ public class RobotContainer {
                 // Trigger AlignHubOnRightBumper = new Trigger(() -> controller.getRawButton(6));
                 // AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())); 
                 // AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
+
+                Trigger AlignFerryPreShooting  = new Trigger(() -> 
+                                                (controller.getBButton() && 
+                                                !DriveCommands.isAimedAtTarget(drive, 
+                                                () -> drive.getPose().relativeTo(FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())
+                                                .getTranslation().getAngle().plus(Rotation2d.k180deg))));
+                AutoAlignPreShooting.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(true)));
+                AutoAlignPreShooting.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE)
+                                .alongWith(superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())));
+                AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)));
+                
+                Trigger AlignFerryThenShoot = new Trigger(() -> 
+                                                (controller.getBButton() && 
+                                                DriveCommands.isAimedAtTarget(drive, 
+                                                () -> drive.getPose().relativeTo(FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())
+                                                .getTranslation().getAngle().plus(Rotation2d.k180deg))));
+                AutoAlignThenShootTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getFerryPose(drive.getPose().getTranslation()).toPose2d())
+                                .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
+                AutoAlignThenShootTrigger.onTrue(Commands.runOnce(() -> shooter.setFerry(true)));
+                AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
+                                                .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)))
+                                                .alongWith(Commands.runOnce(() -> shooter.setFerry(false)))
+                                                );
+                                                
 
                 Trigger WheelRadiusCharacterization = new Trigger(() -> buttonboard.getRawButton(4));
                 WheelRadiusCharacterization.whileTrue(DriveCommands.wheelRadiusCharacterization(drive));
