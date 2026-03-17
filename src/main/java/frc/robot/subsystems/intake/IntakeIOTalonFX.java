@@ -125,6 +125,7 @@ public class IntakeIOTalonFX implements IntakeIO {
                 leftArmTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 leftArmTalonConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
                 leftArmTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                rightArmTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
 
 

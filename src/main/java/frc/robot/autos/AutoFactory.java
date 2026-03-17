@@ -411,7 +411,7 @@ class AutoFactory {
       trajectoriesLoaded = true;
       @SuppressWarnings("unused")
       var trajectory = new PathPlannerTrajectory(
-          firstSegment, drive.getChassisSpeeds(), drive.getPose().getRotation(), null);
+          firstSegment, drive.getChassisSpeeds(), drive.getPose().getRotation(), Drive.PP_CONFIG);
     }
   }
 
@@ -420,6 +420,7 @@ class AutoFactory {
     var name = "%S_%S".formatted(start, end);
     PathPlannerPath path;
 
+  
     try {
       path = PathPlannerPath.fromPathFile(name);
     } catch (Exception e) {
