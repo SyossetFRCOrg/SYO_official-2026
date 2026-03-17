@@ -189,7 +189,12 @@ public class Superstructure extends SubsystemBase {
     return DriveCommands.joystickDriveFacingPose(
         drive, () -> 0.5 * -controller.getLeftY(), () -> 0.5 * -controller.getLeftX(), targetPose);
         }
-        
+  
+  // flip x and y cuz it works. bad fix
+  public Command AimShooting(Supplier<Pose2d> targetPose) {
+    return DriveCommands.joystickDriveFacingPose(
+        drive, () -> 0,() -> 0, targetPose);
+        }
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }

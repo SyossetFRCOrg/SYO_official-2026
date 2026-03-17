@@ -167,7 +167,7 @@ public class DriveCommands {
       Supplier<Pose2d> pose) {
     // Face the hub while maintaining drive controls
     return joystickDriveAtAngle(
-        drive, xSupplier, ySupplier, () -> drive.getPose().transformBy(new Transform2d(0, -0.02382, new Rotation2d())).relativeTo(pose.get())
+        drive, xSupplier, ySupplier, () -> drive.getPose().transformBy(new Transform2d(-0.05, 0.05382, new Rotation2d())).relativeTo(pose.get())
             .getTranslation().getAngle().plus(Rotation2d.k180deg));
   }
 

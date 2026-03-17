@@ -101,9 +101,9 @@ public class IntakeIOTalonFX implements IntakeIO {
                 leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
                 leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
                 leftArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
-                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
                 leftArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
                 leftArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rightArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
@@ -116,9 +116,9 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
                 rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
                 rightArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
-                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
                 rightArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
                 rightArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
