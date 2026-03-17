@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.91,
-        "y": 5.56
+        "x": 13.496176061806077,
+        "y": 4.912744034959096
       },
       "isLocked": false,
       "linkedName": "RRSTART"
@@ -20,8 +20,8 @@
         "y": 2.1016836166381836
       },
       "prevControl": {
-        "x": 15.005304412841795,
-        "y": 2.1016836166381836
+        "x": 15.787890943448165,
+        "y": 2.3378148116988147
       },
       "nextControl": null,
       "isLocked": false,

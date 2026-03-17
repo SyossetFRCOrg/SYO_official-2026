@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.9,
-        "y": 2.3
+        "x": 13.812257276485632,
+        "y": 2.2445924538144753
       },
       "isLocked": false,
       "linkedName": "RLSTART"
@@ -20,8 +20,8 @@
         "y": 2.1016836166381836
       },
       "prevControl": {
-        "x": 15.005304412841795,
-        "y": 2.1016836166381836
+        "x": 14.87534939510781,
+        "y": 2.1758393293762954
       },
       "nextControl": null,
       "isLocked": false,

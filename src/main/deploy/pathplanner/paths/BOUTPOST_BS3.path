@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3656969666481018,
-        "y": 0.6541252136230469
+        "x": 0.576764385723242,
+        "y": 0.9356029028963664
       },
       "isLocked": false,
       "linkedName": "BOUTPOST"
@@ -20,8 +20,8 @@
         "y": 5.7013
       },
       "prevControl": {
-        "x": 1.5597555555555558,
-        "y": 5.7013
+        "x": 2.3949112219618285,
+        "y": 5.513346958838012
       },
       "nextControl": null,
       "isLocked": false,

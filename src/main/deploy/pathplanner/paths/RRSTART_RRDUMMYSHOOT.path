@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 13.91,
-        "y": 5.56
+        "x": 13.084869481842594,
+        "y": 5.738663550619881
       },
       "isLocked": false,
       "linkedName": "RRSTART"
@@ -20,8 +20,8 @@
         "y": 5.56
       },
       "prevControl": {
-        "x": 11.91,
-        "y": 5.56
+        "x": 12.71579954788166,
+        "y": 5.359673037181979
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -123.83800961550374
   },
   "reversed": false,
   "folder": null,

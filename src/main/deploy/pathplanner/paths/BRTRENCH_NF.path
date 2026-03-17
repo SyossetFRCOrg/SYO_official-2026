@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.0,
-        "y": 0.6601023077964783
+        "x": 4.975689179471004,
+        "y": 1.0135847780285316
       },
       "isLocked": false,
       "linkedName": "BRTRENCH"
@@ -20,8 +20,8 @@
         "y": 2.3
       },
       "prevControl": {
-        "x": 7.27,
-        "y": 2.3
+        "x": 7.269400109632958,
+        "y": 1.911273156531905
       },
       "nextControl": null,
       "isLocked": false,

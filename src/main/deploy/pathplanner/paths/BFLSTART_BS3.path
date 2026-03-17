@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.65,
-        "y": 7.4
+        "x": 3.8908325328675066,
+        "y": 7.467079736974896
       },
       "isLocked": false,
       "linkedName": "BFLSTART"
@@ -20,8 +20,8 @@
         "y": 5.7013
       },
       "prevControl": {
-        "x": 1.5597555555555558,
-        "y": 5.7013
+        "x": 2.3832874385945537,
+        "y": 5.512505345052189
       },
       "nextControl": null,
       "isLocked": false,
