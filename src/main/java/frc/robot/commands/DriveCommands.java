@@ -19,6 +19,7 @@ import frc.robot.RobotState;
 import frc.robot.subsystems.drive.TunerConstants;
 import frc.robot.util.LoggedTunableNumber;
 import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.DriveConstants;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -31,18 +32,18 @@ public class DriveCommands {
   private static final double DEADBAND = 0.1;
   // TODO: return PID for align controller, we should decrease kP/increase kD to mitigate overshooting
   //       check discord for suggestions of constants
-  private static final LoggedTunableNumber ROTATION_TOLERANCE = new LoggedTunableNumber("AlignDrive/rotationTolerance",
-      7.5); // degrees
-  private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 10.0);
-  private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.2);
-  private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity",
-      TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
-  private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber(
-      "AlignDrive/angleMaxAcceleration", TunerConstants.driveConfig.maxAngularAcceleration() * 1.5);
-  private static final double FF_START_DELAY = 2.0; // Secs
-  private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
-  private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
-  private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
+  // private static final LoggedTunableNumber ROTATION_TOLERANCE = new LoggedTunableNumber("AlignDrive/rotationTolerance",
+  //     7.5); // degrees
+  // private static final LoggedTunableNumber ANGLE_KP = new LoggedTunableNumber("AlignDrive/angle_kP", 10.0);
+  // private static final LoggedTunableNumber ANGLE_KD = new LoggedTunableNumber("AlignDrive/angle_kD", 0.2);
+  // private static final LoggedTunableNumber ANGLE_MAX_VELOCITY = new LoggedTunableNumber("AlignDrive/angleMaxVelocity",
+  //     TunerConstants.driveConfig.maxAngularVelocity() * 1.5);
+  // private static final LoggedTunableNumber ANGLE_MAX_ACCELERATION = new LoggedTunableNumber(
+  //     "AlignDrive/angleMaxAcceleration", TunerConstants.driveConfig.maxAngularAcceleration() * 1.5);
+  // private static final double FF_START_DELAY = 2.0; // Secs
+  // private static final double FF_RAMP_RATE = 0.1; // Volts/Sec
+  // private static final double WHEEL_RADIUS_MAX_VELOCITY = 0.25; // Rad/Sec
+  // private static final double WHEEL_RADIUS_RAMP_RATE = 0.05; // Rad/Sec^2
 
   private DriveCommands() {
   }
@@ -116,19 +117,19 @@ public class DriveCommands {
 
     // Create PID controller
     ProfiledPIDController angleController = new ProfiledPIDController(
-        ANGLE_KP.get(),
+        DriveConstants.ANGLE_KP,
         0.0,
-        ANGLE_KD.get(),
-        new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+        DriveConstants.ANGLE_KD,
+        new TrapezoidProfile.Constraints(DriveConstants.ANGLE_MAX_VELOCITY, DriveConstants.ANGLE_MAX_ACCELERATION));
 
     angleController.enableContinuousInput(-Math.PI, Math.PI);
     angleController.setTolerance(Units.degreesToRadians(2));
     // Construct command
     return Commands.run(
         () -> {
-          angleController.setPID(ANGLE_KP.get(), 0.0, ANGLE_KD.get());
+          angleController.setPID(DriveConstants.ANGLE_KP, 0.0, DriveConstants.ANGLE_KD);
           angleController
-              .setConstraints(new TrapezoidProfile.Constraints(ANGLE_MAX_VELOCITY.get(), ANGLE_MAX_ACCELERATION.get()));
+              .setConstraints(new TrapezoidProfile.Constraints(DriveConstants.ANGLE_MAX_VELOCITY, DriveConstants.ANGLE_MAX_ACCELERATION));
 
           // Get linear velocity
           Translation2d linearVelocity = getLinearVelocityFromJoysticks(xSupplier.getAsDouble(),
@@ -159,7 +160,7 @@ public class DriveCommands {
 
   public static boolean isAimedAtTarget(Drive drive, Supplier<Rotation2d> rotationSupplier) {
     return Math.abs(drive.getRotation().minus(rotationSupplier.get()).getDegrees()) 
-              < ROTATION_TOLERANCE.get() ? true : false;
+              < DriveConstants.ROTATION_TOLERANCE ? true : false;
 
   }
 
@@ -196,7 +197,7 @@ public class DriveCommands {
               drive.runCharacterization(0.0);
             },
             drive)
-            .withTimeout(FF_START_DELAY),
+            .withTimeout(DriveConstants.FF_START_DELAY),
 
         // Start timer
         Commands.runOnce(timer::restart),
@@ -204,7 +205,7 @@ public class DriveCommands {
         // Accelerate and gather data
         Commands.run(
             () -> {
-              double voltage = timer.get() * FF_RAMP_RATE;
+              double voltage = timer.get() * DriveConstants.FF_RAMP_RATE;
               drive.runCharacterization(voltage);
               velocitySamples.add(drive.getFFCharacterizationVelocity());
               voltageSamples.add(voltage);
@@ -237,7 +238,7 @@ public class DriveCommands {
 
   /** Measures the robot's wheel radius by spinning in a circle. */
   public static Command wheelRadiusCharacterization(Drive drive) {
-    SlewRateLimiter limiter = new SlewRateLimiter(WHEEL_RADIUS_RAMP_RATE);
+    SlewRateLimiter limiter = new SlewRateLimiter(DriveConstants.WHEEL_RADIUS_RAMP_RATE);
     WheelRadiusCharacterizationState state = new WheelRadiusCharacterizationState();
 
     return Commands.parallel(
@@ -252,7 +253,7 @@ public class DriveCommands {
             // Turn in place, accelerating up to full speed
             Commands.run(
                 () -> {
-                  double speed = limiter.calculate(WHEEL_RADIUS_MAX_VELOCITY);
+                  double speed = limiter.calculate(DriveConstants.WHEEL_RADIUS_MAX_VELOCITY);
                   drive.runVelocity(new ChassisSpeeds(0.0, 0.0, speed));
                 },
                 drive)),
