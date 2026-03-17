@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7805952380952377,
-        "y": 2.6255357142857143
+        "x": 2.592170000076294,
+        "y": 5.614929962158203
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.780595238095238,
-        "y": 2.625535714285714
+        "x": 2.240625,
+        "y": 4.511346726190476
       },
       "isLocked": false,
-      "linkedName": "BRSTART"
+      "linkedName": "BS3"
     },
     {
       "anchor": {
-        "x": 0.8507366071428573,
-        "y": 5.9534375
+        "x": 1.6011458333333333,
+        "y": 4.178556547619048
       },
       "prevControl": {
-        "x": -0.14926339285714274,
-        "y": 5.9534375
+        "x": 2.038340773809524,
+        "y": 4.6810044642857145
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BDEPOT"
+      "linkedName": "BTOWERLEFT"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.57293869768348
   },
   "reversed": false,
   "folder": null,

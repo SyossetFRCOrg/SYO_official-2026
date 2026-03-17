@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7805952380952377,
-        "y": 2.6255357142857143
+        "x": 8.27,
+        "y": 2.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.780595238095238,
-        "y": 2.625535714285714
+        "x": 9.27,
+        "y": 2.3
       },
       "isLocked": false,
-      "linkedName": "BRSTART"
+      "linkedName": "NF"
     },
     {
       "anchor": {
-        "x": 0.8507366071428573,
-        "y": 5.9534375
+        "x": 4.0,
+        "y": 0.6601023077964783
       },
       "prevControl": {
-        "x": -0.14926339285714274,
-        "y": 5.9534375
+        "x": 3.0,
+        "y": 0.6601023077964783
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BDEPOT"
+      "linkedName": "BRTRENCH"
     }
   ],
   "rotationTargets": [],
