@@ -78,7 +78,7 @@ public class Shooter extends SubsystemBase {
     {
         if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
         {
-            // shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
             //Add this for ferry
             
             // if (isFerry)

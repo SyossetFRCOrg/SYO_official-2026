@@ -59,7 +59,7 @@ public class RobotContainer {
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
         
-        private final UsbCamera usbCam;
+        // private final UsbCamera usbCam;
 
         /**
          * The container for the robot. Contains subsystems, IO devices, and commands.
@@ -91,11 +91,11 @@ public class RobotContainer {
                 // Configure the button bindings
                 configureButtonBindings();
 
-                usbCam = CameraServer.startAutomaticCapture(0);
-                usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-                usbCam.setResolution(1280, 720);
-                usbCam.setFPS(60);
-                usbCam.setPixelFormat(PixelFormat.kMJPEG);
+                // usbCam = CameraServer.startAutomaticCapture(0);
+                // usbCam.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+                // usbCam.setResolution(1280, 720);
+                // usbCam.setFPS(60);
+                // usbCam.setPixelFormat(PixelFormat.kMJPEG);
                 
         }
 
@@ -143,9 +143,10 @@ public class RobotContainer {
                 Trigger IntakeOnRightBumper = new Trigger(() -> controller.getRightBumperButton());
 
                 IntakeOnRightBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
-                                .alongWith(superstructure.SetArmVoltage(0.5)));
+                                .alongWith(superstructure.MoveArmToPosition(1.4)));
+                // IntakeOnRightBumper.whileTrue(superstructure.SetArmVoltage(0.5));
                 IntakeOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
-                                .alongWith(superstructure.MoveArmToPosition(0)).alongWith(superstructure.SetArmVoltage(0)));
+                                .alongWith(superstructure.MoveArmToPosition(0)));
                 
                 Trigger AutoAlignPreShooting  = new Trigger(() -> 
                                                 (controller.getYButton() && 

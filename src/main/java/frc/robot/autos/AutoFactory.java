@@ -1,6 +1,7 @@
 package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
+import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
 
 import java.lang.reflect.Field;
 
@@ -275,9 +276,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToLCenter);
-    // preloadTrajectoryClass(LCenterToS3);
-    // preloadTrajectoryClass(S3ToDepot);
-    // preloadTrajectoryClass(DepotToS3);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToLCenter));
@@ -297,7 +295,35 @@ class AutoFactory {
 
     return c;
   }
+  Command LCenter_LBump_S3_Depot_S3(Location Start) {
+    PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.S3.getAllianceName());
+    // PathPlannerPath LBumpToS3 = loadSegment(Location.LSTART.getAllianceName(), Location.S3.getAllianceName());
+    PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
+    preloadTrajectoryClass(StartToLCenter);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToLCenter));
+    // c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    // c.addCommands(shooting(1.5));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+    c.addCommands(intakeWhileFollowing(StartToLCenter));
+    c.addCommands(follow(LCenterToS3));
+    // c.addCommands(follow(LBumpToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
+    c.addCommands(intakeWhileFollowing(S3ToDepot).withDeadline(Commands.waitSeconds(2.5)));
+    // c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+    return c;
+
+  }
   Command Outpost_S2_RTrench_RCenter_RTrench_S2_RTrench(Location Start) {
     // Load trajectories
     PathPlannerPath StartToOutpost = loadSegment(Start.getAllianceName(), Location.OUTPOST.getAllianceName());
@@ -360,12 +386,12 @@ class AutoFactory {
   }
 
   private Command shooting(double timeout){
-    return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.AimShooting(() -> FieldConstants.getHubPose().toPose2d())).withDeadline(Commands.waitSeconds(timeout));
+    return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.MoveArmToPosition(0).withDeadline(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(new WaitCommand(0.6)))).repeatedly().alongWith(superstructure.AimShooting(() -> FieldConstants.getHubPose().toPose2d())).withDeadline(Commands.waitSeconds(timeout));
   }
 
   @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
-    return superstructure.AimShooting(() -> targetPose).alongWith(superstructure.MoveArmToPosition(0).withDeadline(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(new WaitCommand(0.6)))).repeatedly();
+    return superstructure.AimShooting(() -> targetPose);
   }
 
   @SuppressWarnings("unused")

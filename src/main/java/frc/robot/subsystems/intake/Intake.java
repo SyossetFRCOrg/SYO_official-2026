@@ -69,7 +69,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void moveArmToPosition(double positionRads){
-        intakeIO.moveArmToPosition(positionRads);
+        intakeIO.moveArmToPosition(positionRads * (9.0/5.0));
     }
     public void setArmEncoderPosition(double positionRotations){
         intakeIO.setArmEncoderPosition(positionRotations);

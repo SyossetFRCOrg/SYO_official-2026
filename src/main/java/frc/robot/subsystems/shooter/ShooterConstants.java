@@ -54,26 +54,13 @@ public class ShooterConstants {
 
     //TODO Retune with new values in cafeteria
     static {
-        shooterSpeedMapScoring.put(2.95, 76.0);
-        shooterSpeedMapScoring.put(2.11, 67.0);
-        shooterSpeedMapScoring.put(3.43, 79.0);
-        shooterSpeedMapScoring.put(1.94, 66.0);
-        shooterSpeedMapScoring.put(1.70, 65.0);
-        shooterSpeedMapScoring.put(4.28, 96.0);
-        shooterSpeedMapScoring.put(2.03, 67.0);
-        shooterSpeedMapScoring.put(3.17, 82.0);
-        shooterSpeedMapScoring.put(3.48, 78.0);
-        shooterSpeedMapScoring.put(2.51, 72.0);
-        shooterSpeedMapScoring.put(2.9, 70.0);
-        shooterSpeedMapScoring.put(2.95, 77.0);
-        shooterSpeedMapScoring.put(2.67, 74.0);
-        shooterSpeedMapScoring.put(2.6, 74.0);
-        shooterSpeedMapScoring.put(2.71, 72.0);
-        shooterSpeedMapScoring.put(2.844, 79.7);
-        shooterSpeedMapScoring.put(2.74, 78.97);
-        shooterSpeedMapScoring.put(2.24, 72.25);
-        shooterSpeedMapScoring.put(1.73, 67.18);
-        shooterSpeedMapScoring.put(1.46, 65.0);
+        shooterSpeedMapScoring.put(3.18, 72.0);
+        shooterSpeedMapScoring.put(3.73, 79.0);
+        shooterSpeedMapScoring.put(3.70, 78.0);
+        shooterSpeedMapScoring.put(2.83, 71.0);
+        shooterSpeedMapScoring.put(3.5, 74.0);
+        shooterSpeedMapScoring.put(2.67, 70.0);
+        shooterSpeedMapScoring.put(4.0, 80.0);
         
     }
 

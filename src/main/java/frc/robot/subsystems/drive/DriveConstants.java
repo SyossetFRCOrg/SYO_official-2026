@@ -25,7 +25,7 @@ public class DriveConstants {
 
 
     // DriveCommands LoggedTunableNumbers moved
-    public static final double ROTATION_TOLERANCE = 7.5; // degrees
+    public static final double ROTATION_TOLERANCE = 5.5; // degrees
     public static final double ANGLE_KP = 10.0;
     public static final double ANGLE_KD = 0.2;
     public static final double ANGLE_MAX_VELOCITY = TunerConstants.driveConfig.maxAngularVelocity() * 1.5;

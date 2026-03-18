@@ -62,7 +62,6 @@ public class IntakeIOTalonFX implements IntakeIO {
         private final StatusSignal<AngularVelocity> rollerVelocity;
         private final StatusSignal<Voltage> rollerAppliedVolts;
 
-
         private final StatusSignal<Angle> armPosition;
         private final StatusSignal<AngularVelocity> armVelocity;
         private final StatusSignal<Voltage> armAppliedVolts;
@@ -101,9 +100,9 @@ public class IntakeIOTalonFX implements IntakeIO {
                 leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = IntakeConstants.armMotionMagicCruiseVelocity;
                 leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = IntakeConstants.armMaxAcceleration;
                 leftArmTalonConfig.MotionMagic.MotionMagicJerk = IntakeConstants.armMaxJerk;
-                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
+                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
                 leftArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
+                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 70;
                 leftArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rightArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
@@ -116,9 +115,9 @@ public class IntakeIOTalonFX implements IntakeIO {
                 rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = IntakeConstants.armMotionMagicCruiseVelocity;
                 rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = IntakeConstants.armMaxAcceleration;
                 rightArmTalonConfig.MotionMagic.MotionMagicJerk = IntakeConstants.armMaxJerk;
-                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
+                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
                 rightArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
+                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 70;
                 rightArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
