@@ -155,37 +155,37 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         @Override
         public void updateInputs(IntakeIOInputs inputs) {
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 rollerTalonConfig.Slot0.kA = roller_kA.get();
-        //                                 rollerTalonConfig.Slot0.kD = roller_kD.get();
-        //                                 rollerTalonConfig.Slot0.kP = roller_kP.get();
-        //                                 rollerTalonConfig.Slot0.kS = roller_kS.get();
-        //                                 rollerTalonConfig.Slot0.kV = roller_kV.get();
-        //                                 leftArmTalonConfig.Slot0.kA = arm_kA.get();
-        //                                 leftArmTalonConfig.Slot0.kD = arm_kD.get();
-        //                                 leftArmTalonConfig.Slot0.kP = arm_kP.get();
-        //                                 leftArmTalonConfig.Slot0.kS = arm_kS.get();
-        //                                 leftArmTalonConfig.Slot0.kV = arm_kV.get();
-        //                                 leftArmTalonConfig.Slot0.kG = arm_kG.get();
-        //                                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-        //                                 tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
-        //                         },
-        //                         roller_kA,
-        //                         roller_kD,
-        //                         roller_kP,
-        //                         roller_kS,
-        //                         roller_kV);
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
-        //                                 rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
-        //                                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-        //                         },
-        //                         rollerMotionMagicAcceleration,
-        //                         rollerMotionMagicJerk);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.Slot0.kA = roller_kA.get();
+                //                         rollerTalonConfig.Slot0.kD = roller_kD.get();
+                //                         rollerTalonConfig.Slot0.kP = roller_kP.get();
+                //                         rollerTalonConfig.Slot0.kS = roller_kS.get();
+                //                         rollerTalonConfig.Slot0.kV = roller_kV.get();
+                //                         leftArmTalonConfig.Slot0.kA = arm_kA.get();
+                //                         leftArmTalonConfig.Slot0.kD = arm_kD.get();
+                //                         leftArmTalonConfig.Slot0.kP = arm_kP.get();
+                //                         leftArmTalonConfig.Slot0.kS = arm_kS.get();
+                //                         leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                //                         leftArmTalonConfig.Slot0.kG = arm_kG.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
+                //                         tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
+                //                 },
+                //                 roller_kA,
+                //                 roller_kD,
+                //                 roller_kP,
+                //                 roller_kS,
+                //                 roller_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
+                //                         rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
+                //                 },
+                //                 rollerMotionMagicAcceleration,
+                //                 rollerMotionMagicJerk);
 
                 var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
                 var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);

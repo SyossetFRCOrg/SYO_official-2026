@@ -41,7 +41,8 @@ public class Superstructure extends SubsystemBase {
     SHOOTINGPREPARE,
     SHOOTINGWHILEINDEXEROUT,
     INTAKINGANDINDEXINGWITHOUTSHOOTING,
-    AUTOALIGNING
+    AUTOALIGNING,
+    CLEANING
   }
 
   private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
@@ -106,6 +107,7 @@ public class Superstructure extends SubsystemBase {
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
       case CLIMBUP -> SuperState.CLIMBUP;
       case CLIMBDOWN -> SuperState.CLIMBDOWN;
+      case CLEANING -> SuperState.CLEANING;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -159,6 +161,10 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
+      case CLEANING:
+        indexer.setDesiredSubstate(Indexer.Substate.CLEANING);
+        intake.setDesiredSubstate(Intake.Substate.CLEANING);
+        shooter.setDesiredSubstate(Shooter.Substate.CLEANING);
       default: break;
     }
   }
@@ -168,7 +174,7 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case  INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN -> true;
+      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN, CLEANING -> true;
       default -> false;
     };
   }

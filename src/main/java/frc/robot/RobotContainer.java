@@ -183,10 +183,10 @@ public class RobotContainer {
 
                 ShootWhileIndexerOutOnYButtonAndLeftBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
 
-                Trigger IntakeAndIndexWithoutShootingTrigger = new Trigger(() -> (controller.getXButton()));
+                Trigger CleaningStateTrigger = new Trigger(() -> (controller.getXButton()));
 
-                IntakeAndIndexWithoutShootingTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKINGANDINDEXINGWITHOUTSHOOTING));
-                IntakeAndIndexWithoutShootingTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                CleaningStateTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.CLEANING));
+                CleaningStateTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
                 
                 // //TODO Placeholder button. DO NOT DEPLOY 
                 // Trigger FerryShotOnBButtonAndLefTrigger = new Trigger(() -> controller.getBButton() && controller.getLeftTriggerAxis() > 0.5);

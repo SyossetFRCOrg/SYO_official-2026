@@ -95,34 +95,34 @@ public class IndexerIOTalonFX implements IndexerIO {
   @Override
   public void updateInputs(IndexerIOInputs inputs) {
     
-  //   LoggedTunableNumber.ifChanged(
-  //       hashCode(),
-  //       () -> {
-  //         talonConfig.Slot0.kA = kA.get();
-  //         talonConfig.Slot0.kD = kD.get();
-  //         // talonConfig.Slot0.kG = kG.get();
-  //         talonConfig.Slot0.kP = kP.get();
-  //         talonConfig.Slot0.kS = kS.get();
-  //         talonConfig.Slot0.kV = kV.get();
-  //         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-  //       },
-  //       kA,
-  //       kD,
-  //       // kG,
-  //       kP,
-  //       kS,
-  //       kV);
-  //   LoggedTunableNumber.ifChanged(
-  //       hashCode(),
-  //       () -> {
-  //         talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-  //         // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
-  //         // motionMagicVelocity.get();
-  //         talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-  //         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-  //       },
-  //       motionMagicAcceleration,
-  //       motionMagicJerk);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.Slot0.kA = kA.get();
+    //       talonConfig.Slot0.kD = kD.get();
+    //       // talonConfig.Slot0.kG = kG.get();
+    //       talonConfig.Slot0.kP = kP.get();
+    //       talonConfig.Slot0.kS = kS.get();
+    //       talonConfig.Slot0.kV = kV.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     kA,
+    //     kD,
+    //     // kG,
+    //     kP,
+    //     kS,
+    //     kV);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+    //       // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
+    //       // motionMagicVelocity.get();
+    //       talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     motionMagicAcceleration,
+    //     motionMagicJerk);
     var talonStatus = BaseStatusSignal.refreshAll(
         indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
 
