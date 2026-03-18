@@ -1,5 +1,5 @@
 {
- "name":"BNA_BS3",
+ "name":"BNA_BLBUMP",
  "version":3,
  "snapshot":{
   "waypoints":[
@@ -17,7 +17,7 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"BNA.x", "val":7.488361358642578}, "y":{"exp":"BNA.y", "val":4.948663234710693}, "heading":{"exp":"BNA.heading", "val":1.7004988639508087}, "intervals":27, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BNA.x", "val":7.795208930969238}, "y":{"exp":"BNA.y", "val":4.844740390777588}, "heading":{"exp":"BNA.heading", "val":1.5053169483293762}, "intervals":27, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"6.467510223388672 m", "val":6.467510223388672}, "y":{"exp":"5.5724077224731445 m", "val":5.5724077224731445}, "heading":{"exp":"-79.83043132027042 mrad", "val":-0.07983043132027043}, "intervals":28, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"3.064056158065796 m", "val":3.064056158065796}, "y":{"exp":"5.577714920043945 m", "val":5.577714920043945}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":21, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"2.1007447242736816 m", "val":2.1007447242736816}, "y":{"exp":"5.150680065155029 m", "val":5.150680065155029}, "heading":{"exp":"BS3.heading", "val":-0.6455823843048172}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],

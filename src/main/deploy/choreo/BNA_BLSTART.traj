@@ -15,7 +15,7 @@
  },
  "params":{
   "waypoints":[
-    {"x":{"exp":"BNA.x", "val":7.488361358642578}, "y":{"exp":"BNA.y", "val":4.948663234710693}, "heading":{"exp":"BNA.heading", "val":1.7004988639508087}, "intervals":29, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
+    {"x":{"exp":"BNA.x", "val":7.795208930969238}, "y":{"exp":"BNA.y", "val":4.844740390777588}, "heading":{"exp":"BNA.heading", "val":1.5053169483293762}, "intervals":29, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"6.162542343139648 m", "val":6.162542343139648}, "y":{"exp":"BLSTART.y", "val":5.7008209228515625}, "heading":{"exp":"0 deg", "val":0.0}, "intervals":22, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false},
     {"x":{"exp":"BLSTART.x", "val":3.65}, "y":{"exp":"BLSTART.y", "val":5.7008209228515625}, "heading":{"exp":"BLSTART.heading", "val":0.0}, "intervals":40, "split":false, "fixTranslation":true, "fixHeading":true, "overrideIntervals":false}],
   "constraints":[
