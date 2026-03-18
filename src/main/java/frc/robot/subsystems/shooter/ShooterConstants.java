@@ -1,8 +1,13 @@
 package frc.robot.subsystems.shooter;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Scanner;
+
 import com.ctre.phoenix6.CANBus;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.wpilibj.Filesystem;
 
 public class ShooterConstants {
 
@@ -55,6 +60,7 @@ public class ShooterConstants {
 
     //TODO Retune with new values in cafeteria
     static {
+        // Base point -> DO NOT DELETE; NOT SAVED IN ROBORIO
         shooterSpeedMapScoring.put(2.95, 76.0);
         shooterSpeedMapScoring.put(2.11, 67.0);
         shooterSpeedMapScoring.put(3.43, 79.0);
@@ -75,7 +81,36 @@ public class ShooterConstants {
         shooterSpeedMapScoring.put(2.24, 72.25);
         shooterSpeedMapScoring.put(1.73, 67.18);
         shooterSpeedMapScoring.put(1.46, 65.0);
-        
+        try {
+            readShooterPoints();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // ftp://roboRIO-TEAM-frc.local to get file
+    public static void readShooterPoints() throws IOException {
+        File file = new File(Filesystem.getOperatingDirectory(), "shooter_points.txt");
+        if (!file.exists()) {
+            file.mkdirs();
+            System.out.println("Failed to transfer data points -- file not found!");
+            return;
+        }
+        Scanner sc = new Scanner(file);
+        while (sc.hasNext()) {
+            String[] data = sc.nextLine().split(",");
+            double[] point = {0, 0};
+            try {
+                point[0] = Double.parseDouble(data[0]);
+                point[1] = Double.parseDouble(data[1]);
+            } catch (Exception e) {
+                System.out.println("Data point failed to transfer!");
+                e.printStackTrace();
+                continue;
+            }
+            shooterSpeedMapScoring.put(point[0], point[1]);
+        }
+        sc.close();
     }
 
     public static final double ferrySpeed = 80.0;

@@ -116,4 +116,8 @@ public class Shooter extends SubsystemBase {
     public void setFerry(boolean isFerry) {
         this.isFerry = isFerry;
     }
+
+    public double getCurrentVelocity() {
+        return shooterVelocity + shooterChange;
+    }
 }

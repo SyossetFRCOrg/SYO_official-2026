@@ -4,6 +4,10 @@ import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 import static frc.robot.subsystems.vision.VisionConstants.camera2Name;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
@@ -12,6 +16,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.PixelFormat;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -175,11 +180,22 @@ public class RobotContainer {
                 Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
                 DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(-1)));
 
-                Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
-                IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
+                // Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
+                // IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
 
-                Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
-                DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(10)));
+                // Trigger DecreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to bottom left button
+                // DecreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(10)));
+
+                // 2nd to top left
+                Trigger AddVelocityData = new Trigger(() -> buttonboard.getRawButton(4));
+                AddVelocityData.onTrue(Commands.runOnce(() -> {
+                        try {
+                                addDataPoint(shooter.getCurrentVelocity(), drive.getHubDistance());
+                        } catch (IOException e) {
+                                System.out.println("Failed to add data point");
+                                e.printStackTrace();
+                        }
+                }));
 
                 //TODO: match Intake states/command to trigger
                 Trigger MoveIntakeArmOut = new Trigger(() -> buttonboard.getLeftTriggerAxis() > 0.5);
@@ -201,5 +217,15 @@ public class RobotContainer {
 
         public Superstructure getSuperstructure() {
                 return superstructure;
+        }
+
+        public void addDataPoint(double velocity, double meters) throws IOException {
+                File file = new File(Filesystem.getOperatingDirectory(), "shooter_points.txt");
+                if (!file.exists()) 
+                        file.mkdirs();
+                FileWriter writer = new FileWriter(file);
+                writer.append(meters + "," + velocity);
+                writer.close();
+                System.out.println("Added data: " + meters + ", " + velocity);
         }
 }
