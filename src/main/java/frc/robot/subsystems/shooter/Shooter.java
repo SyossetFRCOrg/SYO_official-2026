@@ -10,7 +10,8 @@ public class Shooter extends SubsystemBase {
     public enum Substate {
         STOPPED,
         PREPARING,
-        ACTIVE
+        ACTIVE,
+        CLEANING
     }
 
     public Shooter(ShooterIO shooterIO) {
@@ -41,6 +42,7 @@ public class Shooter extends SubsystemBase {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
             case ACTIVE -> motorsReady() || currentSubstate == Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
+            case CLEANING -> Substate.CLEANING;
         };
     }
 
@@ -65,6 +67,9 @@ public class Shooter extends SubsystemBase {
                 break;
             case ACTIVE, PREPARING:
                 shooterIO.setVelocityVoltage(shooterVelocity + shooterChange);
+                break;
+            case CLEANING:
+                shooterIO.setVelocityVoltage(shooterVelocity*0.2);
                 break;
         }
     }
