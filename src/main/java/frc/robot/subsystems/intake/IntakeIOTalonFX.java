@@ -153,56 +153,56 @@ public class IntakeIOTalonFX implements IntakeIO {
                 ParentDevice.optimizeBusUtilizationForAll(rollerTalon, rightArmTalon);
         }
 
-        // @Override
-        // public void updateInputs(IntakeIOInputs inputs) {
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 rollerTalonConfig.Slot0.kA = roller_kA.get();
-        //                                 rollerTalonConfig.Slot0.kD = roller_kD.get();
-        //                                 rollerTalonConfig.Slot0.kP = roller_kP.get();
-        //                                 rollerTalonConfig.Slot0.kS = roller_kS.get();
-        //                                 rollerTalonConfig.Slot0.kV = roller_kV.get();
-        //                                 leftArmTalonConfig.Slot0.kA = arm_kA.get();
-        //                                 leftArmTalonConfig.Slot0.kD = arm_kD.get();
-        //                                 leftArmTalonConfig.Slot0.kP = arm_kP.get();
-        //                                 leftArmTalonConfig.Slot0.kS = arm_kS.get();
-        //                                 leftArmTalonConfig.Slot0.kV = arm_kV.get();
-        //                                 leftArmTalonConfig.Slot0.kG = arm_kG.get();
-        //                                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-        //                                 tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
-        //                         },
-        //                         roller_kA,
-        //                         roller_kD,
-        //                         roller_kP,
-        //                         roller_kS,
-        //                         roller_kV);
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
-        //                                 rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
-        //                                 tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-        //                         },
-        //                         rollerMotionMagicAcceleration,
-        //                         rollerMotionMagicJerk);
+        @Override
+        public void updateInputs(IntakeIOInputs inputs) {
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.Slot0.kA = roller_kA.get();
+                //                         rollerTalonConfig.Slot0.kD = roller_kD.get();
+                //                         rollerTalonConfig.Slot0.kP = roller_kP.get();
+                //                         rollerTalonConfig.Slot0.kS = roller_kS.get();
+                //                         rollerTalonConfig.Slot0.kV = roller_kV.get();
+                //                         leftArmTalonConfig.Slot0.kA = arm_kA.get();
+                //                         leftArmTalonConfig.Slot0.kD = arm_kD.get();
+                //                         leftArmTalonConfig.Slot0.kP = arm_kP.get();
+                //                         leftArmTalonConfig.Slot0.kS = arm_kS.get();
+                //                         leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                //                         leftArmTalonConfig.Slot0.kG = arm_kG.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
+                //                         tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
+                //                 },
+                //                 roller_kA,
+                //                 roller_kD,
+                //                 roller_kP,
+                //                 roller_kS,
+                //                 roller_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
+                //                         rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
+                //                 },
+                //                 rollerMotionMagicAcceleration,
+                //                 rollerMotionMagicJerk);
 
-        //         var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
-        //         var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
+                var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
+                var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
 
-        //         inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
-        //         inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
+                inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
+                inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
 
-        //         inputs.rollerVelocityRadPerSec = Units
-        //                         .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
-        //         inputs.rollerAppliedVolts = rollerAppliedVolts.getValueAsDouble();
+                inputs.rollerVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
+                inputs.rollerAppliedVolts = rollerAppliedVolts.getValueAsDouble();
 
-        //         inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
-        //         inputs.armVelocityRadPerSec = Units
-        //                         .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
-        //         inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
+                inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
+                inputs.armVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
+                inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
 
-        // }
+        }
 
         public void setRollerVoltage(double voltage) {
                 rollerTalon.setControl(VoltageRequest.withOutput((voltage)));

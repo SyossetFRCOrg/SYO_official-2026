@@ -92,47 +92,47 @@ public class IndexerIOTalonFX implements IndexerIO {
  *
  * @param inputs The loggable input container to populate.
  */
-  // @Override
-  // public void updateInputs(IndexerIOInputs inputs) {
+  @Override
+  public void updateInputs(IndexerIOInputs inputs) {
     
-  //   LoggedTunableNumber.ifChanged(
-  //       hashCode(),
-  //       () -> {
-  //         talonConfig.Slot0.kA = kA.get();
-  //         talonConfig.Slot0.kD = kD.get();
-  //         // talonConfig.Slot0.kG = kG.get();
-  //         talonConfig.Slot0.kP = kP.get();
-  //         talonConfig.Slot0.kS = kS.get();
-  //         talonConfig.Slot0.kV = kV.get();
-  //         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-  //       },
-  //       kA,
-  //       kD,
-  //       // kG,
-  //       kP,
-  //       kS,
-  //       kV);
-  //   LoggedTunableNumber.ifChanged(
-  //       hashCode(),
-  //       () -> {
-  //         talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-  //         // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
-  //         // motionMagicVelocity.get();
-  //         talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-  //         tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-  //       },
-  //       motionMagicAcceleration,
-  //       motionMagicJerk);
-  //   var talonStatus = BaseStatusSignal.refreshAll(
-  //       indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.Slot0.kA = kA.get();
+    //       talonConfig.Slot0.kD = kD.get();
+    //       // talonConfig.Slot0.kG = kG.get();
+    //       talonConfig.Slot0.kP = kP.get();
+    //       talonConfig.Slot0.kS = kS.get();
+    //       talonConfig.Slot0.kV = kV.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     kA,
+    //     kD,
+    //     // kG,
+    //     kP,
+    //     kS,
+    //     kV);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+    //       // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
+    //       // motionMagicVelocity.get();
+    //       talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     motionMagicAcceleration,
+    //     motionMagicJerk);
+    var talonStatus = BaseStatusSignal.refreshAll(
+        indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
 
-  //   inputs.connected = indexerConnectedDebounce.calculate(talonStatus.isOK());
+    inputs.connected = indexerConnectedDebounce.calculate(talonStatus.isOK());
 
-  //   inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
-  //   inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
-  //   inputs.currentAmps = indexerCurrent.getValueAsDouble();
-  //   // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
-  // }
+    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
+    inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
+    inputs.currentAmps = indexerCurrent.getValueAsDouble();
+    // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
+  }
 
   public void setVoltage(double voltage) {
     talon.setControl(VoltageRequest.withOutput((voltage)));

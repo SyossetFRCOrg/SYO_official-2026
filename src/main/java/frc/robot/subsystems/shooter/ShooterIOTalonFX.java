@@ -208,102 +208,102 @@ public class ShooterIOTalonFX implements ShooterIO {
                 ParentDevice.optimizeBusUtilizationForAll(rightTalon);
         }
 
-        // @Override
-        // public void updateInputs(ShooterIOInputs inputs) {
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 leftTalonConfig.Slot0.kA = left_kA.get();
-        //                                 leftTalonConfig.Slot0.kD = left_kD.get();
-        //                                 // talonConfig.Slot0.kG = kG.get();
-        //                                 leftTalonConfig.Slot0.kP = left_kP.get();
-        //                                 leftTalonConfig.Slot0.kS = left_kS.get();
-        //                                 leftTalonConfig.Slot0.kV = left_kV.get();
-        //                                 tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
-        //                         },
-        //                         left_kA,
-        //                         left_kD,
-        //                         // kG,
-        //                         left_kP,
-        //                         left_kS,
-        //                         left_kV);
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 centerTalonConfig.Slot0.kA = center_kA.get();
-        //                                 centerTalonConfig.Slot0.kD = center_kD.get();
-        //                                 // talonConfig.Slot0.kG = kG.get();
-        //                                 centerTalonConfig.Slot0.kP = center_kP.get();
-        //                                 centerTalonConfig.Slot0.kS = center_kS.get();
-        //                                 centerTalonConfig.Slot0.kV = center_kV.get();
-        //                                 tryUntilOk(5, () -> centerTalon.getConfigurator().apply(centerTalonConfig,
-        //                                                 0.25));
-        //                         },
-        //                         center_kA,
-        //                         center_kD,
-        //                         // kG,
-        //                         center_kP,
-        //                         center_kS,
-        //                         center_kV);
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 rightTalonConfig.Slot0.kA = right_kA.get();
-        //                                 rightTalonConfig.Slot0.kD = right_kD.get();
-        //                                 // talonConfig.Slot0.kG = kG.get();
-        //                                 rightTalonConfig.Slot0.kP = right_kP.get();
-        //                                 rightTalonConfig.Slot0.kS = right_kS.get();
-        //                                 rightTalonConfig.Slot0.kV = right_kV.get();
-        //                                 tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
-        //                         },
-        //                         right_kA,
-        //                         right_kD,
-        //                         // kG,
-        //                         right_kP,
-        //                         right_kS,
-        //                         right_kV);
-        //         LoggedTunableNumber.ifChanged(
-        //                         hashCode(),
-        //                         () -> {
-        //                                 leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration
-        //                                                 .get();
-        //                                 leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
-        //                                 tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
-        //                         },
-        //                         leftMotionMagicAcceleration,
-        //                         leftMotionMagicJerk);
-        //         var leftTalonStatus = BaseStatusSignal.refreshAll(
-        //                         leftShooterVelocity, leftShooterAppliedVolts, leftShooterCurrent,
-        //                         leftShooterTorqueCurrent);
+        @Override
+        public void updateInputs(ShooterIOInputs inputs) {
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         leftTalonConfig.Slot0.kA = left_kA.get();
+                //                         leftTalonConfig.Slot0.kD = left_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         leftTalonConfig.Slot0.kP = left_kP.get();
+                //                         leftTalonConfig.Slot0.kS = left_kS.get();
+                //                         leftTalonConfig.Slot0.kV = left_kV.get();
+                //                         tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                //                 },
+                //                 left_kA,
+                //                 left_kD,
+                //                 // kG,
+                //                 left_kP,
+                //                 left_kS,
+                //                 left_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         centerTalonConfig.Slot0.kA = center_kA.get();
+                //                         centerTalonConfig.Slot0.kD = center_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         centerTalonConfig.Slot0.kP = center_kP.get();
+                //                         centerTalonConfig.Slot0.kS = center_kS.get();
+                //                         centerTalonConfig.Slot0.kV = center_kV.get();
+                //                         tryUntilOk(5, () -> centerTalon.getConfigurator().apply(centerTalonConfig,
+                //                                         0.25));
+                //                 },
+                //                 center_kA,
+                //                 center_kD,
+                //                 // kG,
+                //                 center_kP,
+                //                 center_kS,
+                //                 center_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rightTalonConfig.Slot0.kA = right_kA.get();
+                //                         rightTalonConfig.Slot0.kD = right_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         rightTalonConfig.Slot0.kP = right_kP.get();
+                //                         rightTalonConfig.Slot0.kS = right_kS.get();
+                //                         rightTalonConfig.Slot0.kV = right_kV.get();
+                //                         tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
+                //                 },
+                //                 right_kA,
+                //                 right_kD,
+                //                 // kG,
+                //                 right_kP,
+                //                 right_kS,
+                //                 right_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration
+                //                                         .get();
+                //                         leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
+                //                         tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                //                 },
+                //                 leftMotionMagicAcceleration,
+                //                 leftMotionMagicJerk);
+                var leftTalonStatus = BaseStatusSignal.refreshAll(
+                                leftShooterVelocity, leftShooterAppliedVolts, leftShooterCurrent,
+                                leftShooterTorqueCurrent);
 
-        //         inputs.leftConnected = shooterConnectedDebounce.calculate(leftTalonStatus.isOK());
+                inputs.leftConnected = shooterConnectedDebounce.calculate(leftTalonStatus.isOK());
 
-        //         inputs.leftVelocityRotPerSec = leftShooterVelocity.getValue().in(RotationsPerSecond);
-        //         inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
-        //         inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
+                inputs.leftVelocityRotPerSec = leftShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.leftAppliedVolts = leftShooterAppliedVolts.getValueAsDouble();
+                inputs.leftCurrentAmps = leftShooterCurrent.getValueAsDouble();
 
-        //         var rightTalonStatus = BaseStatusSignal.refreshAll(
-        //                         rightShooterVelocity, rightShooterAppliedVolts, rightShooterCurrent,
-        //                         rightShooterTorqueCurrent);
+                var rightTalonStatus = BaseStatusSignal.refreshAll(
+                                rightShooterVelocity, rightShooterAppliedVolts, rightShooterCurrent,
+                                rightShooterTorqueCurrent);
 
-        //         inputs.rightConnected = shooterConnectedDebounce.calculate(rightTalonStatus.isOK());
+                inputs.rightConnected = shooterConnectedDebounce.calculate(rightTalonStatus.isOK());
 
-        //         inputs.rightVelocityRotPerSec = rightShooterVelocity.getValue().in(RotationsPerSecond);
-        //         inputs.rightAppliedVolts = rightShooterAppliedVolts.getValueAsDouble();
-        //         inputs.rightCurrentAmps = rightShooterCurrent.getValueAsDouble();
+                inputs.rightVelocityRotPerSec = rightShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.rightAppliedVolts = rightShooterAppliedVolts.getValueAsDouble();
+                inputs.rightCurrentAmps = rightShooterCurrent.getValueAsDouble();
 
-        //         var centerTalonStatus = BaseStatusSignal.refreshAll(
-        //                         centerShooterVelocity, centerShooterAppliedVolts, centerShooterCurrent,
-        //                         centerShooterTorqueCurrent);
+                var centerTalonStatus = BaseStatusSignal.refreshAll(
+                                centerShooterVelocity, centerShooterAppliedVolts, centerShooterCurrent,
+                                centerShooterTorqueCurrent);
 
-        //         inputs.centerConnected = shooterConnectedDebounce.calculate(centerTalonStatus.isOK());
+                inputs.centerConnected = shooterConnectedDebounce.calculate(centerTalonStatus.isOK());
 
-        //         inputs.centerVelocityRotPerSec = centerShooterVelocity.getValue().in(RotationsPerSecond);
+                inputs.centerVelocityRotPerSec = centerShooterVelocity.getValue().in(RotationsPerSecond);
 
-        //         inputs.centerAppliedVolts = centerShooterAppliedVolts.getValueAsDouble();
-        //         inputs.centerCurrentAmps = centerShooterCurrent.getValueAsDouble();
-        //         // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
-        // }
+                inputs.centerAppliedVolts = centerShooterAppliedVolts.getValueAsDouble();
+                inputs.centerCurrentAmps = centerShooterCurrent.getValueAsDouble();
+                // inputs.torqueCurrentAmps = shooterTorqueCurrent.getValueAsDouble();
+        }
 
         public void setVoltage(double voltage) {
                 // final VelocityVoltage velocityController = new VelocityVoltage(0);
