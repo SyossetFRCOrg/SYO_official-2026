@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.427011111111111,
-        "y": 6.110566666666666
+        "x": 3.676487050080023,
+        "y": 6.126745537936928
       },
       "isLocked": false,
       "linkedName": "BLSTART"
@@ -20,8 +20,8 @@
         "y": 5.7
       },
       "prevControl": {
-        "x": 2.65,
-        "y": 5.7
+        "x": 3.255002625708327,
+        "y": 5.901476928545344
       },
       "nextControl": null,
       "isLocked": false,

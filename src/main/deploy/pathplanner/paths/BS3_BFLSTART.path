@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.559755555555556,
-        "y": 5.7013
+        "x": 2.832911004076154,
+        "y": 5.9178606547119035
       },
       "isLocked": false,
       "linkedName": "BS3"
@@ -20,8 +20,8 @@
         "y": 7.4
       },
       "prevControl": {
-        "x": 2.65,
-        "y": 7.4
+        "x": 3.460188093121764,
+        "y": 7.237299539007267
       },
       "nextControl": null,
       "isLocked": false,

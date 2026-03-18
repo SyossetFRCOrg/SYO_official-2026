@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.65,
-        "y": 0.9199999999999999
+        "x": 3.899986744126668,
+        "y": 0.9225744438132828
       },
       "isLocked": false,
       "linkedName": "BFRSTART"
@@ -20,8 +20,8 @@
         "y": 0.92
       },
       "prevControl": {
-        "x": 2.65,
-        "y": 0.9199999999999999
+        "x": 3.3693047848707662,
+        "y": 0.9174006986740957
       },
       "nextControl": null,
       "isLocked": false,
