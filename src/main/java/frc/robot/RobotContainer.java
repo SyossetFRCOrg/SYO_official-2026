@@ -140,11 +140,11 @@ public class RobotContainer {
                                                 FieldConstants.getAlliance() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
-                Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightBumperButton());
+                Trigger IntakeOnRightBumper = new Trigger(() -> controller.getRightBumperButton());
 
-                IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
-                                .alongWith(superstructure.MoveArmToPosition(1.35)));
-                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
+                IntakeOnRightBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                                .alongWith(superstructure.SetArmVoltage(1.35)));
+                IntakeOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
                                 .alongWith(superstructure.MoveArmToPosition(0)));
                 
                 Trigger AutoAlignPreShooting  = new Trigger(() -> 

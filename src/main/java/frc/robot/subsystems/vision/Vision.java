@@ -60,7 +60,7 @@ public class Vision extends SubsystemBase {
   public void periodic() {
     for (int i = 0; i < io.length; i++) {
       io[i].updateInputs(inputs[i]);
-      Logger.processInputs("Vision/Camera" + Integer.toString(i), inputs[i]);
+      // Logger.processInputs("Vision/Camera" + Integer.toString(i), inputs[i]);
     }
 
     // Initialize logging values
@@ -266,17 +266,17 @@ public class Vision extends SubsystemBase {
           angularStdDev *= cameraStdDevFactors[cameraIndex];
         }
 
-        if (observation.type() == PoseObservationType.MEGATAG_1) {
-          Logger.recordOutput(
-              "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1StdDevs",
-              new double[] {linearStdDev, angularStdDev});
-        }
+        // if (observation.type() == PoseObservationType.MEGATAG_1) {
+        //   Logger.recordOutput(
+        //       "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1StdDevs",
+        //       new double[] {linearStdDev, angularStdDev});
+        // }
 
-        if (observation.type() == PoseObservationType.MEGATAG_2) {
-          Logger.recordOutput(
-              "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2StdDevs",
-              new double[] {linearStdDev, angularStdDev});
-        }
+        // if (observation.type() == PoseObservationType.MEGATAG_2) {
+        //   Logger.recordOutput(
+        //       "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2StdDevs",
+        //       new double[] {linearStdDev, angularStdDev});
+        // }
 
         // Send vision observation only if vision is enabled
         if (RobotState.getInstance().isAddingVision()) {
@@ -288,32 +288,32 @@ public class Vision extends SubsystemBase {
       }
 
       // Log camera datadata
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/TagPoses",
-          tagPoses.toArray(new Pose3d[tagPoses.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPoses",
-          robotPoses.toArray(new Pose3d[robotPoses.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesAccepted",
-          robotPosesAccepted.toArray(new Pose3d[robotPosesAccepted.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesRejected",
-          robotPosesRejected.toArray(new Pose3d[robotPosesRejected.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/TagPoses",
+      //     tagPoses.toArray(new Pose3d[tagPoses.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPoses",
+      //     robotPoses.toArray(new Pose3d[robotPoses.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesAccepted",
+      //     robotPosesAccepted.toArray(new Pose3d[robotPosesAccepted.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesRejected",
+      //     robotPosesRejected.toArray(new Pose3d[robotPosesRejected.size()]));
 
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesAccepted",
-          robotPosesAcceptedMT1.toArray(new Pose3d[robotPosesAcceptedMT1.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesRejected",
-          robotPosesRejectedMT1.toArray(new Pose3d[robotPosesRejectedMT1.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesAccepted",
+      //     robotPosesAcceptedMT1.toArray(new Pose3d[robotPosesAcceptedMT1.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesRejected",
+      //     robotPosesRejectedMT1.toArray(new Pose3d[robotPosesRejectedMT1.size()]));
 
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesAccepted",
-          robotPosesAcceptedMT2.toArray(new Pose3d[robotPosesAcceptedMT2.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesRejected",
-          robotPosesRejectedMT2.toArray(new Pose3d[robotPosesRejectedMT2.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesAccepted",
+      //     robotPosesAcceptedMT2.toArray(new Pose3d[robotPosesAcceptedMT2.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesRejected",
+      //     robotPosesRejectedMT2.toArray(new Pose3d[robotPosesRejectedMT2.size()]));
 
       allTagPoses.addAll(tagPoses);
       allRobotPoses.addAll(robotPoses);

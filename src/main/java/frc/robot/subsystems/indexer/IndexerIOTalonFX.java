@@ -92,8 +92,8 @@ public class IndexerIOTalonFX implements IndexerIO {
  *
  * @param inputs The loggable input container to populate.
  */
-  // @Override
-  // public void updateInputs(IndexerIOInputs inputs) {
+  @Override
+  public void updateInputs(IndexerIOInputs inputs) {
     
   //   LoggedTunableNumber.ifChanged(
   //       hashCode(),
@@ -123,16 +123,15 @@ public class IndexerIOTalonFX implements IndexerIO {
   //       },
   //       motionMagicAcceleration,
   //       motionMagicJerk);
-  //   var talonStatus = BaseStatusSignal.refreshAll(
-  //       indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
+    var talonStatus = BaseStatusSignal.refreshAll(
+        indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
 
-  //   inputs.connected = indexerConnectedDebounce.calculate(talonStatus.isOK());
+    inputs.connected = indexerConnectedDebounce.calculate(talonStatus.isOK());
 
-  //   inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
-  //   inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
-  //   inputs.currentAmps = indexerCurrent.getValueAsDouble();
-  //   // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
-  // }
+    inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
+    inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
+    inputs.currentAmps = indexerCurrent.getValueAsDouble();
+  }
 
   public void setVoltage(double voltage) {
     talon.setControl(VoltageRequest.withOutput((voltage)));

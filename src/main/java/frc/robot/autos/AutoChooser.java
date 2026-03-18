@@ -172,7 +172,6 @@ public class AutoChooser extends SendableChooser<Auto> {
     return DriverStation.getAlliance()
         .map(
             alliance -> {
-              System.out.printf("Running program %s/%s\n", alliance, selected);
 
               return commandCache.get(alliance).get(selected);
             });

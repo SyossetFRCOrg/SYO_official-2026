@@ -153,8 +153,8 @@ public class IntakeIOTalonFX implements IntakeIO {
                 ParentDevice.optimizeBusUtilizationForAll(rollerTalon, rightArmTalon);
         }
 
-        // @Override
-        // public void updateInputs(IntakeIOInputs inputs) {
+        @Override
+        public void updateInputs(IntakeIOInputs inputs) {
         //         LoggedTunableNumber.ifChanged(
         //                         hashCode(),
         //                         () -> {
@@ -187,22 +187,22 @@ public class IntakeIOTalonFX implements IntakeIO {
         //                         rollerMotionMagicAcceleration,
         //                         rollerMotionMagicJerk);
 
-        //         var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
-        //         var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
+                var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
+                var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);
 
-        //         inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
-        //         inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
+                inputs.rollerConnected = intakeConnectedDebounce.calculate(rollerTalonStatus.isOK());
+                inputs.armConnected = intakeConnectedDebounce.calculate(armTalonStatus.isOK());
 
-        //         inputs.rollerVelocityRadPerSec = Units
-        //                         .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
-        //         inputs.rollerAppliedVolts = rollerAppliedVolts.getValueAsDouble();
+                inputs.rollerVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(rollerVelocity.getValueAsDouble());
+                inputs.rollerAppliedVolts = rollerAppliedVolts.getValueAsDouble();
 
-        //         inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
-        //         inputs.armVelocityRadPerSec = Units
-        //                         .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
-        //         inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
+                inputs.armPosition = Units.rotationsToRadians(armPosition.getValueAsDouble());
+                inputs.armVelocityRadPerSec = Units
+                                .rotationsPerMinuteToRadiansPerSecond(armVelocity.getValueAsDouble());
+                inputs.armAppliedVolts = armAppliedVolts.getValueAsDouble();
 
-        // }
+        }
 
         public void setRollerVoltage(double voltage) {
                 rollerTalon.setControl(VoltageRequest.withOutput((voltage)));

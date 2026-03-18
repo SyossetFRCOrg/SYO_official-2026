@@ -64,9 +64,6 @@ public class Superstructure extends SubsystemBase {
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
     applyStates();
-    if (previousSuperState != currentSuperState) {
-      System.out.println("Superstructure State Changed from " + previousSuperState + "to " + currentSuperState);
-    }
   }
 
   public void logRoboStateValues() {
