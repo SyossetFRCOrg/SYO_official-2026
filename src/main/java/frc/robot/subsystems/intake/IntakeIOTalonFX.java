@@ -36,26 +36,26 @@ public class IntakeIOTalonFX implements IntakeIO {
         private static TalonFXConfiguration rightArmTalonConfig = new TalonFXConfiguration();
 
 
-        private static final LoggedTunableNumber roller_kP = new LoggedTunableNumber("Intake/Gains/roller_kP", IntakeConstants.roller_kP);
-        private static final LoggedTunableNumber roller_kD = new LoggedTunableNumber("Intake/Gains/roller_kD", IntakeConstants.roller_kD);
-        private static final LoggedTunableNumber roller_kS = new LoggedTunableNumber("Intake/Gains/roller_kS", IntakeConstants.roller_kS);
-        private static final LoggedTunableNumber roller_kV = new LoggedTunableNumber("Intake/Gains/roller_kV", IntakeConstants.roller_kV);
-        private static final LoggedTunableNumber roller_kA = new LoggedTunableNumber("Intake/Gains/roller_kA", IntakeConstants.roller_kA);
+        // private static final LoggedTunableNumber roller_kP = new LoggedTunableNumber("Intake/Gains/roller_kP", IntakeConstants.roller_kP);
+        // private static final LoggedTunableNumber roller_kD = new LoggedTunableNumber("Intake/Gains/roller_kD", IntakeConstants.roller_kD);
+        // private static final LoggedTunableNumber roller_kS = new LoggedTunableNumber("Intake/Gains/roller_kS", IntakeConstants.roller_kS);
+        // private static final LoggedTunableNumber roller_kV = new LoggedTunableNumber("Intake/Gains/roller_kV", IntakeConstants.roller_kV);
+        // private static final LoggedTunableNumber roller_kA = new LoggedTunableNumber("Intake/Gains/roller_kA", IntakeConstants.roller_kA);
 
-        private static final LoggedTunableNumber arm_kP = new LoggedTunableNumber("Intake/Gains/arm_kP", IntakeConstants.arm_kP);
-        private static final LoggedTunableNumber arm_kD = new LoggedTunableNumber("Intake/Gains/arm_kD", IntakeConstants.arm_kD);
-        private static final LoggedTunableNumber arm_kS = new LoggedTunableNumber("Intake/Gains/arm_kS", IntakeConstants.arm_kS);
-        private static final LoggedTunableNumber arm_kV = new LoggedTunableNumber("Intake/Gains/arm_kV", IntakeConstants.arm_kV);
-        private static final LoggedTunableNumber arm_kA = new LoggedTunableNumber("Intake/Gains/arm_kA", IntakeConstants.arm_kA);
-        private static final LoggedTunableNumber arm_kG = new LoggedTunableNumber("Intake/Gains/arm_kG", IntakeConstants.arm_kG);
+        // private static final LoggedTunableNumber arm_kP = new LoggedTunableNumber("Intake/Gains/arm_kP", IntakeConstants.arm_kP);
+        // private static final LoggedTunableNumber arm_kD = new LoggedTunableNumber("Intake/Gains/arm_kD", IntakeConstants.arm_kD);
+        // private static final LoggedTunableNumber arm_kS = new LoggedTunableNumber("Intake/Gains/arm_kS", IntakeConstants.arm_kS);
+        // private static final LoggedTunableNumber arm_kV = new LoggedTunableNumber("Intake/Gains/arm_kV", IntakeConstants.arm_kV);
+        // private static final LoggedTunableNumber arm_kA = new LoggedTunableNumber("Intake/Gains/arm_kA", IntakeConstants.arm_kA);
+        // private static final LoggedTunableNumber arm_kG = new LoggedTunableNumber("Intake/Gains/arm_kG", IntakeConstants.arm_kG);
 
 
-        private static final LoggedTunableNumber rollerMotionMagicAcceleration = new LoggedTunableNumber( "Intake/rollerMaxAcceleration", IntakeConstants.rollerMaxAcceleration);
-        private static final LoggedTunableNumber rollerMotionMagicJerk = new LoggedTunableNumber("Intake/rollerMaxJerk", IntakeConstants.rollerMaxJerk);
+        // private static final LoggedTunableNumber rollerMotionMagicAcceleration = new LoggedTunableNumber( "Intake/rollerMaxAcceleration", IntakeConstants.rollerMaxAcceleration);
+        // private static final LoggedTunableNumber rollerMotionMagicJerk = new LoggedTunableNumber("Intake/rollerMaxJerk", IntakeConstants.rollerMaxJerk);
 
-        private static final LoggedTunableNumber armMotionMagicCruiseVelocity = new LoggedTunableNumber( "Intake/armCruiseVelocity", IntakeConstants.armMotionMagicCruiseVelocity);
-        private static final LoggedTunableNumber armMotionMagicAcceleration = new LoggedTunableNumber( "Intake/armMaxAcceleration", IntakeConstants.armMaxAcceleration);
-        private static final LoggedTunableNumber armMotionMagicJerk = new LoggedTunableNumber("Intake/armMaxJerk", IntakeConstants.armMaxJerk);
+        // private static final LoggedTunableNumber armMotionMagicCruiseVelocity = new LoggedTunableNumber( "Intake/armCruiseVelocity", IntakeConstants.armMotionMagicCruiseVelocity);
+        // private static final LoggedTunableNumber armMotionMagicAcceleration = new LoggedTunableNumber( "Intake/armMaxAcceleration", IntakeConstants.armMaxAcceleration);
+        // private static final LoggedTunableNumber armMotionMagicJerk = new LoggedTunableNumber("Intake/armMaxJerk", IntakeConstants.armMaxJerk);
 
         
 
@@ -78,13 +78,13 @@ public class IntakeIOTalonFX implements IntakeIO {
 
 
                 rollerTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                rollerTalonConfig.Slot0.kA = roller_kA.get();
-                rollerTalonConfig.Slot0.kD = roller_kD.get();
-                rollerTalonConfig.Slot0.kP = roller_kP.get();
-                rollerTalonConfig.Slot0.kS = roller_kS.get();
-                rollerTalonConfig.Slot0.kV = roller_kV.get();
-                rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
-                rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
+                rollerTalonConfig.Slot0.kA = IntakeConstants.roller_kA;
+                rollerTalonConfig.Slot0.kD = IntakeConstants.roller_kD;
+                rollerTalonConfig.Slot0.kP = IntakeConstants.roller_kP;
+                rollerTalonConfig.Slot0.kS = IntakeConstants.roller_kS;
+                rollerTalonConfig.Slot0.kV = IntakeConstants.roller_kV;
+                rollerTalonConfig.MotionMagic.MotionMagicAcceleration = IntakeConstants.rollerMaxAcceleration;
+                rollerTalonConfig.MotionMagic.MotionMagicJerk = IntakeConstants.rollerMaxJerk;
                 rollerTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
                 rollerTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
                 rollerTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
@@ -92,39 +92,40 @@ public class IntakeIOTalonFX implements IntakeIO {
                 
 
                 leftArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                leftArmTalonConfig.Slot0.kA = arm_kA.get();
-                leftArmTalonConfig.Slot0.kD = arm_kD.get();
-                leftArmTalonConfig.Slot0.kP = arm_kP.get();
-                leftArmTalonConfig.Slot0.kS = arm_kS.get();
-                leftArmTalonConfig.Slot0.kV = arm_kV.get();
-                leftArmTalonConfig.Slot0.kG = arm_kG.get();
-                leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
-                leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
-                leftArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
-                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                leftArmTalonConfig.Slot0.kA = IntakeConstants.arm_kA;
+                leftArmTalonConfig.Slot0.kD = IntakeConstants.arm_kD;
+                leftArmTalonConfig.Slot0.kP = IntakeConstants.arm_kP;
+                leftArmTalonConfig.Slot0.kS = IntakeConstants.arm_kS;
+                leftArmTalonConfig.Slot0.kV = IntakeConstants.arm_kV;
+                leftArmTalonConfig.Slot0.kG = IntakeConstants.arm_kG;
+                leftArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = IntakeConstants.armMotionMagicCruiseVelocity;
+                leftArmTalonConfig.MotionMagic.MotionMagicAcceleration = IntakeConstants.armMaxAcceleration;
+                leftArmTalonConfig.MotionMagic.MotionMagicJerk = IntakeConstants.armMaxJerk;
+                leftArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
                 leftArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                leftArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
                 leftArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rightArmTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-                rightArmTalonConfig.Slot0.kA = arm_kA.get();
-                rightArmTalonConfig.Slot0.kD = arm_kD.get();
-                rightArmTalonConfig.Slot0.kP = arm_kP.get();
-                rightArmTalonConfig.Slot0.kS = arm_kS.get();
-                rightArmTalonConfig.Slot0.kV = arm_kV.get();
-                rightArmTalonConfig.Slot0.kG = arm_kG.get();
-                rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = armMotionMagicCruiseVelocity.get();
-                rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = armMotionMagicAcceleration.get();
-                rightArmTalonConfig.MotionMagic.MotionMagicJerk = armMotionMagicJerk.get();
-                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 60;
+                rightArmTalonConfig.Slot0.kA = IntakeConstants.arm_kA;
+                rightArmTalonConfig.Slot0.kD = IntakeConstants.arm_kD;
+                rightArmTalonConfig.Slot0.kP = IntakeConstants.arm_kP;
+                rightArmTalonConfig.Slot0.kS = IntakeConstants.arm_kS;
+                rightArmTalonConfig.Slot0.kV = IntakeConstants.arm_kV;
+                rightArmTalonConfig.Slot0.kG = IntakeConstants.arm_kG;
+                rightArmTalonConfig.MotionMagic.MotionMagicCruiseVelocity = IntakeConstants.armMotionMagicCruiseVelocity;
+                rightArmTalonConfig.MotionMagic.MotionMagicAcceleration = IntakeConstants.armMaxAcceleration;
+                rightArmTalonConfig.MotionMagic.MotionMagicJerk = IntakeConstants.armMaxJerk;
+                rightArmTalonConfig.CurrentLimits.StatorCurrentLimit = 90;
                 rightArmTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
+                rightArmTalonConfig.CurrentLimits.SupplyCurrentLimit = 65;
                 rightArmTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
                 rollerTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 leftArmTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
                 leftArmTalonConfig.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
                 leftArmTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+                rightArmTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
 
 
@@ -154,37 +155,37 @@ public class IntakeIOTalonFX implements IntakeIO {
 
         @Override
         public void updateInputs(IntakeIOInputs inputs) {
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        rollerTalonConfig.Slot0.kA = roller_kA.get();
-                                        rollerTalonConfig.Slot0.kD = roller_kD.get();
-                                        rollerTalonConfig.Slot0.kP = roller_kP.get();
-                                        rollerTalonConfig.Slot0.kS = roller_kS.get();
-                                        rollerTalonConfig.Slot0.kV = roller_kV.get();
-                                        leftArmTalonConfig.Slot0.kA = arm_kA.get();
-                                        leftArmTalonConfig.Slot0.kD = arm_kD.get();
-                                        leftArmTalonConfig.Slot0.kP = arm_kP.get();
-                                        leftArmTalonConfig.Slot0.kS = arm_kS.get();
-                                        leftArmTalonConfig.Slot0.kV = arm_kV.get();
-                                        leftArmTalonConfig.Slot0.kG = arm_kG.get();
-                                        tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
-                                        tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
-                                },
-                                roller_kA,
-                                roller_kD,
-                                roller_kP,
-                                roller_kS,
-                                roller_kV);
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
-                                        rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
-                                        tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
-                                },
-                                rollerMotionMagicAcceleration,
-                                rollerMotionMagicJerk);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.Slot0.kA = roller_kA.get();
+                //                         rollerTalonConfig.Slot0.kD = roller_kD.get();
+                //                         rollerTalonConfig.Slot0.kP = roller_kP.get();
+                //                         rollerTalonConfig.Slot0.kS = roller_kS.get();
+                //                         rollerTalonConfig.Slot0.kV = roller_kV.get();
+                //                         leftArmTalonConfig.Slot0.kA = arm_kA.get();
+                //                         leftArmTalonConfig.Slot0.kD = arm_kD.get();
+                //                         leftArmTalonConfig.Slot0.kP = arm_kP.get();
+                //                         leftArmTalonConfig.Slot0.kS = arm_kS.get();
+                //                         leftArmTalonConfig.Slot0.kV = arm_kV.get();
+                //                         leftArmTalonConfig.Slot0.kG = arm_kG.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.05));
+                //                         tryUntilOk(5, () -> rightArmTalon.getConfigurator().apply(leftArmTalonConfig, 0.05));
+                //                 },
+                //                 roller_kA,
+                //                 roller_kD,
+                //                 roller_kP,
+                //                 roller_kS,
+                //                 roller_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rollerTalonConfig.MotionMagic.MotionMagicAcceleration = rollerMotionMagicAcceleration.get();
+                //                         rollerTalonConfig.MotionMagic.MotionMagicJerk = rollerMotionMagicJerk.get();
+                //                         tryUntilOk(5, () -> rollerTalon.getConfigurator().apply(rollerTalonConfig, 0.25));
+                //                 },
+                //                 rollerMotionMagicAcceleration,
+                //                 rollerMotionMagicJerk);
 
                 var rollerTalonStatus = BaseStatusSignal.refreshAll(rollerVelocity, rollerAppliedVolts);
                 var armTalonStatus = BaseStatusSignal.refreshAll(armPosition, armVelocity,armAppliedVolts);

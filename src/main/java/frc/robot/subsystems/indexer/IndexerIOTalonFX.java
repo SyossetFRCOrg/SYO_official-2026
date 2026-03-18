@@ -27,17 +27,17 @@ public class IndexerIOTalonFX implements IndexerIO {
     private static TalonFXConfiguration talonConfig = new TalonFXConfiguration();
 
 
-    private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
-    private static final LoggedTunableNumber kD = new LoggedTunableNumber("Indexer/Gains/kD", IndexerConstants.kD);
-    private static final LoggedTunableNumber kS = new LoggedTunableNumber("Indexer/Gains/kS", IndexerConstants.kS);
-    private static final LoggedTunableNumber kV = new LoggedTunableNumber("Indexer/Gains/kV", IndexerConstants.kV);
-    private static final LoggedTunableNumber kA = new LoggedTunableNumber("Indexer/Gains/kA", IndexerConstants.kA);
+    // private static final LoggedTunableNumber kP = new LoggedTunableNumber("Indexer/Gains/kP", IndexerConstants.kP);
+    // private static final LoggedTunableNumber kD = new LoggedTunableNumber("Indexer/Gains/kD", IndexerConstants.kD);
+    // private static final LoggedTunableNumber kS = new LoggedTunableNumber("Indexer/Gains/kS", IndexerConstants.kS);
+    // private static final LoggedTunableNumber kV = new LoggedTunableNumber("Indexer/Gains/kV", IndexerConstants.kV);
+    // private static final LoggedTunableNumber kA = new LoggedTunableNumber("Indexer/Gains/kA", IndexerConstants.kA);
 
-    private static final LoggedTunableNumber motionMagicAcceleration = new LoggedTunableNumber(
-            "Indexer/maxAcceleration",
-            IndexerConstants.maxAcceleration);
-    private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Indexer/maxJerk",
-            IndexerConstants.maxJerk);
+    // private static final LoggedTunableNumber motionMagicAcceleration = new LoggedTunableNumber(
+    //         "Indexer/maxAcceleration",
+    //         IndexerConstants.maxAcceleration);
+    // private static final LoggedTunableNumber motionMagicJerk = new LoggedTunableNumber("Indexer/maxJerk",
+    //         IndexerConstants.maxJerk);
 
     private final StatusSignal<AngularVelocity> indexerVelocity;
     private final StatusSignal<Voltage> indexerAppliedVolts;
@@ -51,15 +51,15 @@ public class IndexerIOTalonFX implements IndexerIO {
 
     talonConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     talonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
-    talonConfig.Slot0.kA = kA.get();
-    talonConfig.Slot0.kD = kD.get();
+    talonConfig.Slot0.kA = IndexerConstants.kA;
+    talonConfig.Slot0.kD = IndexerConstants.kD;
 
-    talonConfig.Slot0.kP = kP.get();
-    talonConfig.Slot0.kS = kS.get();
-    talonConfig.Slot0.kV = kV.get();
+    talonConfig.Slot0.kP = IndexerConstants.kP;
+    talonConfig.Slot0.kS = IndexerConstants.kS;
+    talonConfig.Slot0.kV = IndexerConstants.kV;
 
-    talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-    talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+    talonConfig.MotionMagic.MotionMagicAcceleration = IndexerConstants.maxAcceleration;
+    talonConfig.MotionMagic.MotionMagicJerk = IndexerConstants.maxJerk;
 
     talonConfig.CurrentLimits.StatorCurrentLimit = 60;
     talonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
@@ -84,37 +84,45 @@ public class IndexerIOTalonFX implements IndexerIO {
     ParentDevice.optimizeBusUtilizationForAll(talon);
   }
 
+
+  /**
+ * Updates the indexer input signals and handles dynamic configuration changes.
+ * * <p>This method refreshes sensor data from the Talon FX and pushes any 
+ * updated PID or Motion Magic constants from the dashboard to the controller.
+ *
+ * @param inputs The loggable input container to populate.
+ */
   @Override
   public void updateInputs(IndexerIOInputs inputs) {
     
-    LoggedTunableNumber.ifChanged(
-        hashCode(),
-        () -> {
-          talonConfig.Slot0.kA = kA.get();
-          talonConfig.Slot0.kD = kD.get();
-          // talonConfig.Slot0.kG = kG.get();
-          talonConfig.Slot0.kP = kP.get();
-          talonConfig.Slot0.kS = kS.get();
-          talonConfig.Slot0.kV = kV.get();
-          tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-        },
-        kA,
-        kD,
-        // kG,
-        kP,
-        kS,
-        kV);
-    LoggedTunableNumber.ifChanged(
-        hashCode(),
-        () -> {
-          talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
-          // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
-          // motionMagicVelocity.get();
-          talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
-          tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
-        },
-        motionMagicAcceleration,
-        motionMagicJerk);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.Slot0.kA = kA.get();
+    //       talonConfig.Slot0.kD = kD.get();
+    //       // talonConfig.Slot0.kG = kG.get();
+    //       talonConfig.Slot0.kP = kP.get();
+    //       talonConfig.Slot0.kS = kS.get();
+    //       talonConfig.Slot0.kV = kV.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     kA,
+    //     kD,
+    //     // kG,
+    //     kP,
+    //     kS,
+    //     kV);
+    // LoggedTunableNumber.ifChanged(
+    //     hashCode(),
+    //     () -> {
+    //       talonConfig.MotionMagic.MotionMagicAcceleration = motionMagicAcceleration.get();
+    //       // talonConfig.MotionMagic.MotionMagicCruiseVelocity =
+    //       // motionMagicVelocity.get();
+    //       talonConfig.MotionMagic.MotionMagicJerk = motionMagicJerk.get();
+    //       tryUntilOk(5, () -> talon.getConfigurator().apply(talonConfig, 0.25));
+    //     },
+    //     motionMagicAcceleration,
+    //     motionMagicJerk);
     var talonStatus = BaseStatusSignal.refreshAll(
         indexerVelocity, indexerAppliedVolts, indexerCurrent, indexerTorqueCurrent);
 
@@ -123,7 +131,6 @@ public class IndexerIOTalonFX implements IndexerIO {
     inputs.velocityRadPerSec = Units.rotationsPerMinuteToRadiansPerSecond(indexerVelocity.getValueAsDouble());
     inputs.appliedVolts = indexerAppliedVolts.getValueAsDouble();
     inputs.currentAmps = indexerCurrent.getValueAsDouble();
-    // inputs.torqueCurrentAmps = indexerTorqueCurrent.getValueAsDouble();
   }
 
   public void setVoltage(double voltage) {

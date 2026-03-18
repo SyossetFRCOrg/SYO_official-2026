@@ -175,7 +175,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     //     Drive.ODOMETRY_FREQUENCY, drivePosition, turnPosition);
     //BaseStatusSignal.setUpdateFrequencyForAll(100, drivePosition, turnPosition);
     BaseStatusSignal.setUpdateFrequencyForAll(
-        250,
+        150,
         drivePosition, 
         turnPosition,
         driveVelocity,

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveCommands;
@@ -194,17 +195,17 @@ class AutoFactory {
     SequentialCommandGroup c = new SequentialCommandGroup();
     
     c.addCommands(resetPose(StartToS3));
-    c.addCommands(follow(StartToS3));
+    c.addCommands(follow(StartToS3).withDeadline(Commands.waitSeconds(2)));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
-    c.addCommands(shooting(5));
+    c.addCommands(shooting(4));
     // c.addCommands(Commands.waitSeconds(2));
-    c.addCommands(putArmDown().raceWith(Commands.waitSeconds(1.5)));
-    c.addCommands(intakeWhileFollowing(S3ToDepot).raceWith(Commands.waitSeconds(5)));
+    // c.addCommands(putArmDown().withDeadline(Commands.waitSeconds(1.5)));
+    c.addCommands(intakeWhileFollowing(S3ToDepot).withDeadline(Commands.waitSeconds(4)));
     // c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     c.addCommands(shooting(4));
-    // c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
     return c;
   }
@@ -236,15 +237,15 @@ class AutoFactory {
     PathPlannerPath StartToDepot = loadSegment(Start.getAllianceName(), Location.DEPOT.getAllianceName());
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLTrench = loadSegment(Location.S3.getAllianceName(), Location.LTRENCH.getAllianceName());
-    PathPlannerPath LTrenchToND = loadSegment(Location.LTRENCH.getAllianceName(), Location.ND.getAllianceName());
-    PathPlannerPath NDToLTrench = loadSegment(Location.ND.getAllianceName(), Location.LTRENCH.getAllianceName());
+    PathPlannerPath LTrenchToNA = loadSegment(Location.LTRENCH.getAllianceName(), Location.NA.getAllianceName());
+    PathPlannerPath NAToLTrench = loadSegment(Location.NA.getAllianceName(), Location.LTRENCH.getAllianceName());
     PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToDepot);
     preloadTrajectoryClass(DepotToS3);
     preloadTrajectoryClass(S3ToLTrench);
-    preloadTrajectoryClass(LTrenchToND);
-    preloadTrajectoryClass(NDToLTrench);
+    preloadTrajectoryClass(LTrenchToNA);
+    preloadTrajectoryClass(NAToLTrench);
     preloadTrajectoryClass(LTrenchToS3);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
@@ -254,12 +255,45 @@ class AutoFactory {
     c.addCommands(follow(DepotToS3));
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S3ToLTrench));
-    c.addCommands(follow(LTrenchToND));
+    c.addCommands(follow(LTrenchToNA));
     c.addCommands(Commands.waitSeconds(4));
-    c.addCommands(follow(NDToLTrench));
+    c.addCommands(follow(NAToLTrench));
     c.addCommands(follow(LTrenchToS3));
     c.addCommands(stationaryAAShoot());
     c.addCommands(follow(S3ToLTrench));
+
+    return c;
+  }
+
+
+
+  Command LCenter_LTrench_S3_Depot_S3(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.S3.getAllianceName());
+    PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
+    PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
+
+    preloadTrajectoryClass(StartToLCenter);
+    // preloadTrajectoryClass(LCenterToS3);
+    // preloadTrajectoryClass(S3ToDepot);
+    // preloadTrajectoryClass(DepotToS3);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToLCenter));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(3));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+    c.addCommands(intakeWhileFollowing(StartToLCenter));
+    c.addCommands(follow(LCenterToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));    
+    c.addCommands(intakeWhileFollowing(S3ToDepot).withDeadline(Commands.waitSeconds(4)));
+    // c.addCommands(Commands.waitSeconds(4));
+    c.addCommands(follow(DepotToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
     return c;
   }
@@ -326,12 +360,12 @@ class AutoFactory {
   }
 
   private Command shooting(double timeout){
-    return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).raceWith(Commands.waitSeconds(timeout));
+    return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.AimShooting(() -> FieldConstants.getHubPose().toPose2d())).withDeadline(Commands.waitSeconds(timeout));
   }
 
   @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
-    return superstructure.AimShooting(new XboxController(0), () -> targetPose);
+    return superstructure.AimShooting(() -> targetPose).alongWith(superstructure.MoveArmToPosition(0).withDeadline(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(new WaitCommand(0.6)))).repeatedly();
   }
 
   @SuppressWarnings("unused")
@@ -354,7 +388,7 @@ class AutoFactory {
   }
 
   private Command intakeWhileFollowing(PathPlannerPath path) {
-    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING).alongWith(superstructure.MoveArmToPosition(1.4)));
+    return follow(path).alongWith(superstructure.setDesiredSuperStateCommand(Superstructure.SuperState.INTAKING).alongWith(superstructure.MoveArmToPosition(1.55)));
   }
 
   private Command putArmDown() {
@@ -419,8 +453,9 @@ class AutoFactory {
     var name = "%S_%S".formatted(start, end);
     PathPlannerPath path;
 
+  
     try {
-      path = PathPlannerPath.fromPathFile(name);
+      path = PathPlannerPath.fromChoreoTrajectory(name);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;
@@ -435,7 +470,7 @@ class AutoFactory {
   private PathPlannerPath loadSegment(String pathName) {
     PathPlannerPath path;
     try {
-      path = PathPlannerPath.fromPathFile(pathName);
+      path = PathPlannerPath.fromChoreoTrajectory(pathName);
     } catch (Exception e) {
       e.printStackTrace();
       path = null;

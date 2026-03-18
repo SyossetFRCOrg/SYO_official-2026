@@ -10,7 +10,8 @@ import lombok.Setter;
 public class Intake extends SubsystemBase {
     public enum Substate {
         STOPPED,
-        ACTIVE
+        ACTIVE,
+        CLEANING
     }
 
     public Intake(IntakeIO intakeIO) {
@@ -52,6 +53,9 @@ public class Intake extends SubsystemBase {
                 break;
             case ACTIVE:
                 setRollerVoltage(intakeSpeed.get());
+                break;
+            case CLEANING:
+                setRollerVoltage(intakeSpeed.get() * 0.4);
                 break;
         }
     }

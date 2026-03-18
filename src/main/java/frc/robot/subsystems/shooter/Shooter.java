@@ -10,7 +10,8 @@ public class Shooter extends SubsystemBase {
     public enum Substate {
         STOPPED,
         PREPARING,
-        ACTIVE
+        ACTIVE,
+        CLEANING
     }
 
     public Shooter(ShooterIO shooterIO) {
@@ -29,7 +30,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
-    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 2);
+    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 3);
 
     @SuppressWarnings("unused")
     private boolean isFerry = false;
@@ -41,6 +42,7 @@ public class Shooter extends SubsystemBase {
             case STOPPED -> Substate.STOPPED;
             case PREPARING -> Substate.PREPARING;
             case ACTIVE -> motorsReady() || currentSubstate == Substate.ACTIVE ? Substate.ACTIVE : Substate.PREPARING;
+            case CLEANING -> Substate.CLEANING;
         };
     }
 
@@ -66,6 +68,9 @@ public class Shooter extends SubsystemBase {
             case ACTIVE, PREPARING:
                 shooterIO.setVelocityVoltage(shooterVelocity + shooterChange);
                 break;
+            case CLEANING:
+                shooterIO.setVelocityVoltage(shooterVelocity*0.2);
+                break;
         }
     }
 
@@ -73,7 +78,7 @@ public class Shooter extends SubsystemBase {
     {
         if(currentSubstate == Substate.ACTIVE || currentSubstate == Substate.PREPARING)
         {
-            shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
+            // shooterVelocity = ShooterConstants.shooterSpeedMapScoring.get(distance);
             //Add this for ferry
             
             // if (isFerry)

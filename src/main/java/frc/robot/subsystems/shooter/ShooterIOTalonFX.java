@@ -37,59 +37,59 @@ public class ShooterIOTalonFX implements ShooterIO {
         private static TalonFXConfiguration centerTalonConfig = new TalonFXConfiguration();
         private static TalonFXConfiguration rightTalonConfig = new TalonFXConfiguration();
 
-        private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
-                        ShooterConstants.left_kP);
-        private static final LoggedTunableNumber left_kI = new LoggedTunableNumber("Shooter/Gains/left_kI",
-        ShooterConstants.left_kI);
-        private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
-                        ShooterConstants.left_kD);
-        private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS",
-                        ShooterConstants.left_kS);
-        private static final LoggedTunableNumber left_kV = new LoggedTunableNumber("Shooter/Gains/left_kV",
-                        ShooterConstants.left_kV);
-        private static final LoggedTunableNumber left_kA = new LoggedTunableNumber("Shooter/Gains/left_kA",
-                        ShooterConstants.left_kA);
+        // private static final LoggedTunableNumber left_kP = new LoggedTunableNumber("Shooter/Gains/left_kP",
+        //                 ShooterConstants.left_kP);
+        // private static final LoggedTunableNumber left_kI = new LoggedTunableNumber("Shooter/Gains/left_kI",
+        // ShooterConstants.left_kI);
+        // private static final LoggedTunableNumber left_kD = new LoggedTunableNumber("Shooter/Gains/left_kD",
+        //                 ShooterConstants.left_kD);
+        // private static final LoggedTunableNumber left_kS = new LoggedTunableNumber("Shooter/Gains/left_kS",
+        //                 ShooterConstants.left_kS);
+        // private static final LoggedTunableNumber left_kV = new LoggedTunableNumber("Shooter/Gains/left_kV",
+        //                 ShooterConstants.left_kV);
+        // private static final LoggedTunableNumber left_kA = new LoggedTunableNumber("Shooter/Gains/left_kA",
+        //                 ShooterConstants.left_kA);
 
-        private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP",
-                        ShooterConstants.center_kP);
-                        private static final LoggedTunableNumber center_kI = new LoggedTunableNumber("Shooter/Gains/center_kI",
-        ShooterConstants.center_kI);
-        private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD",
-                        ShooterConstants.center_kD);
-        private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS",
-                        ShooterConstants.center_kS);
-        private static final LoggedTunableNumber center_kV = new LoggedTunableNumber("Shooter/Gains/center_kV",
-                        ShooterConstants.center_kV);
-        private static final LoggedTunableNumber center_kA = new LoggedTunableNumber("Shooter/Gains/center_kA",
-                        ShooterConstants.center_kA);
+        // private static final LoggedTunableNumber center_kP = new LoggedTunableNumber("Shooter/Gains/center_kP",
+        //                 ShooterConstants.center_kP);
+        //                 private static final LoggedTunableNumber center_kI = new LoggedTunableNumber("Shooter/Gains/center_kI",
+        // ShooterConstants.center_kI);
+        // private static final LoggedTunableNumber center_kD = new LoggedTunableNumber("Shooter/Gains/center_kD",
+        //                 ShooterConstants.center_kD);
+        // private static final LoggedTunableNumber center_kS = new LoggedTunableNumber("Shooter/Gains/center_kS",
+        //                 ShooterConstants.center_kS);
+        // private static final LoggedTunableNumber center_kV = new LoggedTunableNumber("Shooter/Gains/center_kV",
+        //                 ShooterConstants.center_kV);
+        // private static final LoggedTunableNumber center_kA = new LoggedTunableNumber("Shooter/Gains/center_kA",
+        //                 ShooterConstants.center_kA);
 
-        private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP",
-                        ShooterConstants.right_kP);
-                        private static final LoggedTunableNumber right_kI = new LoggedTunableNumber("Shooter/Gains/right_kI",
-        ShooterConstants.right_kI);
-        private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD",
-                        ShooterConstants.right_kD);
-        private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS",
-                        ShooterConstants.right_kS);
-        private static final LoggedTunableNumber right_kV = new LoggedTunableNumber("Shooter/Gains/right_kV",
-                        ShooterConstants.right_kV);
-        private static final LoggedTunableNumber right_kA = new LoggedTunableNumber("Shooter/Gains/right_kA",
-                        ShooterConstants.right_kA);
+        // private static final LoggedTunableNumber right_kP = new LoggedTunableNumber("Shooter/Gains/right_kP",
+        //                 ShooterConstants.right_kP);
+        //                 private static final LoggedTunableNumber right_kI = new LoggedTunableNumber("Shooter/Gains/right_kI",
+        // ShooterConstants.right_kI);
+        // private static final LoggedTunableNumber right_kD = new LoggedTunableNumber("Shooter/Gains/right_kD",
+        //                 ShooterConstants.right_kD);
+        // private static final LoggedTunableNumber right_kS = new LoggedTunableNumber("Shooter/Gains/right_kS",
+        //                 ShooterConstants.right_kS);
+        // private static final LoggedTunableNumber right_kV = new LoggedTunableNumber("Shooter/Gains/right_kV",
+        //                 ShooterConstants.right_kV);
+        // private static final LoggedTunableNumber right_kA = new LoggedTunableNumber("Shooter/Gains/right_kA",
+        //                 ShooterConstants.right_kA);
 
-        private static final LoggedTunableNumber leftMotionMagicAcceleration = new LoggedTunableNumber(
-                        "Shooter/leftMaxAcceleration", ShooterConstants.leftMaxAcceleration);
-        private static final LoggedTunableNumber leftMotionMagicJerk = new LoggedTunableNumber("Shooter/leftMaxJerk",
-                        ShooterConstants.leftMaxJerk);
+        // private static final LoggedTunableNumber leftMotionMagicAcceleration = new LoggedTunableNumber(
+        //                 "Shooter/leftMaxAcceleration", ShooterConstants.leftMaxAcceleration);
+        // private static final LoggedTunableNumber leftMotionMagicJerk = new LoggedTunableNumber("Shooter/leftMaxJerk",
+        //                 ShooterConstants.leftMaxJerk);
 
-        private static final LoggedTunableNumber centerMotionMagicAcceleration = new LoggedTunableNumber(
-                        "Shooter/centerMaxAcceleration", ShooterConstants.centerMaxAcceleration);
-        private static final LoggedTunableNumber centerMotionMagicJerk = new LoggedTunableNumber(
-                        "Shooter/centerMaxJerk", ShooterConstants.centerMaxJerk);
+        // private static final LoggedTunableNumber centerMotionMagicAcceleration = new LoggedTunableNumber(
+        //                 "Shooter/centerMaxAcceleration", ShooterConstants.centerMaxAcceleration);
+        // private static final LoggedTunableNumber centerMotionMagicJerk = new LoggedTunableNumber(
+        //                 "Shooter/centerMaxJerk", ShooterConstants.centerMaxJerk);
 
-        private static final LoggedTunableNumber rightMotionMagicAcceleration = new LoggedTunableNumber(
-                        "Shooter/rightMaxAcceleration", ShooterConstants.rightMaxAcceleration);
-        private static final LoggedTunableNumber rightMotionMagicJerk = new LoggedTunableNumber("Shooter/rightMaxJerk",
-                        ShooterConstants.rightMaxJerk);
+        // private static final LoggedTunableNumber rightMotionMagicAcceleration = new LoggedTunableNumber(
+        //                 "Shooter/rightMaxAcceleration", ShooterConstants.rightMaxAcceleration);
+        // private static final LoggedTunableNumber rightMotionMagicJerk = new LoggedTunableNumber("Shooter/rightMaxJerk",
+        //                 ShooterConstants.rightMaxJerk);
 
         private final StatusSignal<AngularVelocity> leftShooterVelocity;
         private final StatusSignal<Voltage> leftShooterAppliedVolts;
@@ -122,33 +122,33 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
                 rightTalonConfig.Slot0.StaticFeedforwardSign = StaticFeedforwardSignValue.UseVelocitySign;
 
-                leftTalonConfig.Slot0.kP = left_kP.get();
-                leftTalonConfig.Slot0.kI = left_kI.get();
-                leftTalonConfig.Slot0.kD = left_kD.get();
-                leftTalonConfig.Slot0.kS = left_kS.get();
-                leftTalonConfig.Slot0.kV = left_kV.get();
-                leftTalonConfig.Slot0.kA = left_kA.get();
+                leftTalonConfig.Slot0.kP = ShooterConstants.left_kP;
+                leftTalonConfig.Slot0.kI = ShooterConstants.left_kI;
+                leftTalonConfig.Slot0.kD = ShooterConstants.left_kD;
+                leftTalonConfig.Slot0.kS = ShooterConstants.left_kS;
+                leftTalonConfig.Slot0.kV = ShooterConstants.left_kV;
+                leftTalonConfig.Slot0.kA = ShooterConstants.left_kA;
 
-                centerTalonConfig.Slot0.kP = center_kP.get();
-                centerTalonConfig.Slot0.kI = center_kI.get();
-                centerTalonConfig.Slot0.kD = center_kD.get();
-                centerTalonConfig.Slot0.kS = center_kS.get();
-                centerTalonConfig.Slot0.kV = center_kV.get();
-                centerTalonConfig.Slot0.kA = center_kA.get();
+                centerTalonConfig.Slot0.kP = ShooterConstants.center_kP;
+                centerTalonConfig.Slot0.kI = ShooterConstants.center_kI;
+                centerTalonConfig.Slot0.kD = ShooterConstants.center_kD;
+                centerTalonConfig.Slot0.kS = ShooterConstants.center_kS;
+                centerTalonConfig.Slot0.kV = ShooterConstants.center_kV;
+                centerTalonConfig.Slot0.kA = ShooterConstants.center_kA;
                 
-                rightTalonConfig.Slot0.kP = right_kP.get();
-                rightTalonConfig.Slot0.kI = right_kI.get();
-                rightTalonConfig.Slot0.kD = right_kD.get();
-                rightTalonConfig.Slot0.kS = right_kS.get();
-                rightTalonConfig.Slot0.kV = right_kV.get();
-                rightTalonConfig.Slot0.kA = right_kA.get();
+                rightTalonConfig.Slot0.kP = ShooterConstants.right_kP;
+                rightTalonConfig.Slot0.kI = ShooterConstants.right_kI;
+                rightTalonConfig.Slot0.kD = ShooterConstants.right_kD;
+                rightTalonConfig.Slot0.kS = ShooterConstants.right_kS;
+                rightTalonConfig.Slot0.kV = ShooterConstants.right_kV;
+                rightTalonConfig.Slot0.kA = ShooterConstants.right_kA;
 
-                leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration.get();
-                leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
-                centerTalonConfig.MotionMagic.MotionMagicAcceleration = centerMotionMagicAcceleration.get();
-                centerTalonConfig.MotionMagic.MotionMagicJerk = centerMotionMagicJerk.get();
-                rightTalonConfig.MotionMagic.MotionMagicAcceleration = rightMotionMagicAcceleration.get();
-                rightTalonConfig.MotionMagic.MotionMagicJerk = rightMotionMagicJerk.get();
+                leftTalonConfig.MotionMagic.MotionMagicAcceleration = ShooterConstants.leftMaxAcceleration;
+                leftTalonConfig.MotionMagic.MotionMagicJerk = ShooterConstants.leftMaxJerk;
+                centerTalonConfig.MotionMagic.MotionMagicAcceleration = ShooterConstants.centerMaxAcceleration;
+                centerTalonConfig.MotionMagic.MotionMagicJerk = ShooterConstants.centerMaxJerk;
+                rightTalonConfig.MotionMagic.MotionMagicAcceleration = ShooterConstants.rightMaxAcceleration;
+                rightTalonConfig.MotionMagic.MotionMagicJerk = ShooterConstants.rightMaxJerk;
 
                 leftTalonConfig.CurrentLimits.StatorCurrentLimit = 120;
                 leftTalonConfig.CurrentLimits.StatorCurrentLimitEnable = true;
@@ -210,68 +210,68 @@ public class ShooterIOTalonFX implements ShooterIO {
 
         @Override
         public void updateInputs(ShooterIOInputs inputs) {
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        leftTalonConfig.Slot0.kA = left_kA.get();
-                                        leftTalonConfig.Slot0.kD = left_kD.get();
-                                        // talonConfig.Slot0.kG = kG.get();
-                                        leftTalonConfig.Slot0.kP = left_kP.get();
-                                        leftTalonConfig.Slot0.kS = left_kS.get();
-                                        leftTalonConfig.Slot0.kV = left_kV.get();
-                                        tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
-                                },
-                                left_kA,
-                                left_kD,
-                                // kG,
-                                left_kP,
-                                left_kS,
-                                left_kV);
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        centerTalonConfig.Slot0.kA = center_kA.get();
-                                        centerTalonConfig.Slot0.kD = center_kD.get();
-                                        // talonConfig.Slot0.kG = kG.get();
-                                        centerTalonConfig.Slot0.kP = center_kP.get();
-                                        centerTalonConfig.Slot0.kS = center_kS.get();
-                                        centerTalonConfig.Slot0.kV = center_kV.get();
-                                        tryUntilOk(5, () -> centerTalon.getConfigurator().apply(centerTalonConfig,
-                                                        0.25));
-                                },
-                                center_kA,
-                                center_kD,
-                                // kG,
-                                center_kP,
-                                center_kS,
-                                center_kV);
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        rightTalonConfig.Slot0.kA = right_kA.get();
-                                        rightTalonConfig.Slot0.kD = right_kD.get();
-                                        // talonConfig.Slot0.kG = kG.get();
-                                        rightTalonConfig.Slot0.kP = right_kP.get();
-                                        rightTalonConfig.Slot0.kS = right_kS.get();
-                                        rightTalonConfig.Slot0.kV = right_kV.get();
-                                        tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
-                                },
-                                right_kA,
-                                right_kD,
-                                // kG,
-                                right_kP,
-                                right_kS,
-                                right_kV);
-                LoggedTunableNumber.ifChanged(
-                                hashCode(),
-                                () -> {
-                                        leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration
-                                                        .get();
-                                        leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
-                                        tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
-                                },
-                                leftMotionMagicAcceleration,
-                                leftMotionMagicJerk);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         leftTalonConfig.Slot0.kA = left_kA.get();
+                //                         leftTalonConfig.Slot0.kD = left_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         leftTalonConfig.Slot0.kP = left_kP.get();
+                //                         leftTalonConfig.Slot0.kS = left_kS.get();
+                //                         leftTalonConfig.Slot0.kV = left_kV.get();
+                //                         tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                //                 },
+                //                 left_kA,
+                //                 left_kD,
+                //                 // kG,
+                //                 left_kP,
+                //                 left_kS,
+                //                 left_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         centerTalonConfig.Slot0.kA = center_kA.get();
+                //                         centerTalonConfig.Slot0.kD = center_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         centerTalonConfig.Slot0.kP = center_kP.get();
+                //                         centerTalonConfig.Slot0.kS = center_kS.get();
+                //                         centerTalonConfig.Slot0.kV = center_kV.get();
+                //                         tryUntilOk(5, () -> centerTalon.getConfigurator().apply(centerTalonConfig,
+                //                                         0.25));
+                //                 },
+                //                 center_kA,
+                //                 center_kD,
+                //                 // kG,
+                //                 center_kP,
+                //                 center_kS,
+                //                 center_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         rightTalonConfig.Slot0.kA = right_kA.get();
+                //                         rightTalonConfig.Slot0.kD = right_kD.get();
+                //                         // talonConfig.Slot0.kG = kG.get();
+                //                         rightTalonConfig.Slot0.kP = right_kP.get();
+                //                         rightTalonConfig.Slot0.kS = right_kS.get();
+                //                         rightTalonConfig.Slot0.kV = right_kV.get();
+                //                         tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
+                //                 },
+                //                 right_kA,
+                //                 right_kD,
+                //                 // kG,
+                //                 right_kP,
+                //                 right_kS,
+                //                 right_kV);
+                // LoggedTunableNumber.ifChanged(
+                //                 hashCode(),
+                //                 () -> {
+                //                         leftTalonConfig.MotionMagic.MotionMagicAcceleration = leftMotionMagicAcceleration
+                //                                         .get();
+                //                         leftTalonConfig.MotionMagic.MotionMagicJerk = leftMotionMagicJerk.get();
+                //                         tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                //                 },
+                //                 leftMotionMagicAcceleration,
+                //                 leftMotionMagicJerk);
                 var leftTalonStatus = BaseStatusSignal.refreshAll(
                                 leftShooterVelocity, leftShooterAppliedVolts, leftShooterCurrent,
                                 leftShooterTorqueCurrent);
