@@ -265,7 +265,7 @@ class AutoFactory {
   Command LCenter_LTrench_S3_Depot_S3(Location Start) {
     // Load trajectories
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
-    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.S3.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LTRENCH.getAllianceName()); // Goes to S3 but uses Trench name to denote how it gets there
     PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
@@ -280,11 +280,11 @@ class AutoFactory {
     c.addCommands(follow(LCenterToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     c.addCommands(shooting(4));    
-    c.addCommands(intakeWhileFollowing(S3ToDepot).withDeadline(Commands.waitSeconds(4)));
+    c.addCommands(intakeWhileFollowing(S3ToDepot));
     // c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
-    c.addCommands(shooting(4));
+    c.addCommands(shooting(5));
     c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
     return c;

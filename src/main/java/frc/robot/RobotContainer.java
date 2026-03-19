@@ -145,8 +145,7 @@ public class RobotContainer {
                 IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
                                 .alongWith(superstructure.MoveArmToPosition(1.4)));
                 // IntakeOnRightBumper.whileTrue(superstructure.SetArmVoltage(0.5));
-                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
-                                .alongWith(superstructure.MoveArmToPosition(0)));
+                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
                 
                 Trigger AutoAlignPreShooting  = new Trigger(() -> 
                                                 (controller.getRightBumper() && 
