@@ -140,16 +140,16 @@ public class RobotContainer {
                                                 FieldConstants.getAlliance() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
-                Trigger IntakeOnRightBumper = new Trigger(() -> controller.getRightBumperButton());
+                Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightTriggerAxis() > 0.5);
 
-                IntakeOnRightBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
                                 .alongWith(superstructure.MoveArmToPosition(1.4)));
                 // IntakeOnRightBumper.whileTrue(superstructure.SetArmVoltage(0.5));
-                IntakeOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
+                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
                                 .alongWith(superstructure.MoveArmToPosition(0)));
                 
                 Trigger AutoAlignPreShooting  = new Trigger(() -> 
-                                                (controller.getYButton() && 
+                                                (controller.getRightBumper() && 
                                                 !DriveCommands.isAimedAtTarget(drive, 
                                                 () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
@@ -159,7 +159,7 @@ public class RobotContainer {
                 AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)));
 
                 Trigger AutoAlignThenShootTrigger = new Trigger(() -> 
-                                                (controller.getYButton() && 
+                                                (controller.getRightBumper() && 
                                                 DriveCommands.isAimedAtTarget(drive, 
                                                 () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d())
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
@@ -180,7 +180,7 @@ public class RobotContainer {
                 ShootOnBButton.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.MoveArmToPosition(0).withDeadline(Commands.waitSeconds(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(Commands.waitSeconds(0.6)))).repeatedly());
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
-                Trigger ShootWhileIndexerOutOnYButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getYButton()));
+                Trigger ShootWhileIndexerOutOnYButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getRightBumper()));
 
                 ShootWhileIndexerOutOnYButtonAndLeftBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
                 ShootWhileIndexerOutOnYButtonAndLeftBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
@@ -199,9 +199,9 @@ public class RobotContainer {
                 // AlignHubOnRightBumper.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())); 
                 // AlignHubOnRightBumper.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)));
 
-                Trigger WheelRadiusCharacterization = new Trigger(() -> buttonboard.getRawButton(4));
-                WheelRadiusCharacterization.whileTrue(DriveCommands.wheelRadiusCharacterization(drive));
-                WheelRadiusCharacterization.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                // Trigger WheelRadiusCharacterization = new Trigger(() -> buttonboard.getRawButton(4));
+                // WheelRadiusCharacterization.whileTrue(DriveCommands.wheelRadiusCharacterization(drive));
+                // WheelRadiusCharacterization.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
 
                 Trigger IncreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(3)); // Top left button on buttonboard

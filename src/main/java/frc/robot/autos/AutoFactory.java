@@ -1,13 +1,9 @@
 package frc.robot.autos;
 
 import static edu.wpi.first.wpilibj2.command.Commands.runOnce;
-import static edu.wpi.first.wpilibj2.command.Commands.waitSeconds;
-
-import java.lang.reflect.Field;
 
 import org.littletonrobotics.junction.Logger;
 
-import com.ctre.phoenix6.swerve.SwerveModuleConstants.DriveMotorArrangement;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.trajectory.PathPlannerTrajectory;
@@ -18,7 +14,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.FieldConstants;
@@ -27,7 +22,6 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.Superstructure.SuperState;
 import frc.robot.subsystems.drive.Drive;
-import edu.wpi.first.wpilibj.XboxController;
 
 /** A factory for creating autonomous programs for a given {@link Auto} */
 @SuppressWarnings({ "UnusedMethod", "UnusedVariable", "EmptyBlockTag" })
@@ -279,8 +273,8 @@ class AutoFactory {
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToLCenter));
-    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
-    c.addCommands(shooting(3));
+    // c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    // c.addCommands(shooting(3));
     c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
     c.addCommands(intakeWhileFollowing(StartToLCenter));
     c.addCommands(follow(LCenterToS3));
@@ -297,8 +291,7 @@ class AutoFactory {
   }
   Command LCenter_LBump_S3_Depot_S3(Location Start) {
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
-    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.S3.getAllianceName());
-    // PathPlannerPath LBumpToS3 = loadSegment(Location.LSTART.getAllianceName(), Location.S3.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LBUMP.getAllianceName()); //Goes to S3 but we pass in LBU
     PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
@@ -306,6 +299,7 @@ class AutoFactory {
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToLCenter));
+    //We removed this so we get to the neutral zone before we shoot so that we can avoid other teams messing with fuel
     // c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     // c.addCommands(shooting(1.5));
     c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
