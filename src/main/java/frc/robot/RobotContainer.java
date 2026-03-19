@@ -156,7 +156,7 @@ public class RobotContainer {
                 AutoAlignPreShooting.onTrue(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(true)));
                 AutoAlignPreShooting.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGPREPARE)
                                 .alongWith(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())));
-                AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)));
+                // AutoAlignPreShooting.onFalse(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false)).alongWith(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)));
 
                 Trigger AutoAlignThenShootTrigger = new Trigger(() -> 
                                                 (controller.getRightBumper() && 
