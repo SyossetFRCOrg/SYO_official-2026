@@ -56,11 +56,14 @@ public class ShooterConstants {
     static {
         shooterSpeedMapScoring.put(3.18, 72.0);
         shooterSpeedMapScoring.put(3.73, 79.0);
-        shooterSpeedMapScoring.put(3.70, 78.0);
+        shooterSpeedMapScoring.put(3.7, 78.0);
         shooterSpeedMapScoring.put(2.83, 71.0);
         shooterSpeedMapScoring.put(3.5, 74.0);
         shooterSpeedMapScoring.put(2.67, 70.0);
         shooterSpeedMapScoring.put(4.0, 80.0);
+        shooterSpeedMapScoring.put(3.17, 72.0);
+        shooterSpeedMapScoring.put(2.45, 66.0);
+        shooterSpeedMapScoring.put(3.3, 72.0);
         
     }
 

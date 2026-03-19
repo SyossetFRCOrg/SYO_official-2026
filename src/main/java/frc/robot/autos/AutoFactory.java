@@ -291,7 +291,7 @@ class AutoFactory {
   }
   Command LCenter_LBump_S3_Depot_S3(Location Start) {
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
-    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LBUMP.getAllianceName()); //Goes to S3 but we pass in LBU
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LBUMP.getAllianceName()); //Goes to S3 but we pass in LBUMP to denote our exit path
     PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
@@ -308,7 +308,7 @@ class AutoFactory {
     // c.addCommands(follow(LBumpToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
     c.addCommands(shooting(4));
-    c.addCommands(intakeWhileFollowing(S3ToDepot).withDeadline(Commands.waitSeconds(2.5)));
+    c.addCommands(intakeWhileFollowing(S3ToDepot));
     // c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
     c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
