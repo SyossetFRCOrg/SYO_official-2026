@@ -5,16 +5,10 @@ import frc.robot.FieldConstants;
 
 public enum Location {
 
-  // Field (Neutral) Locations Relative to blue side
+  // Field (Neutral) Locations
   NA("BNA", "RNA"),
   NB("BNB", "RNB"),
   NC("BNC", "RNC"),
-  ND("BND", "RND"),
-  NE("BNE", "RNE"), 
-  NF("BNF", "RNF"),
-  NG("BNG", "RNG"),
-  NH("BNH", "RNH"),
-  NI("BNI", "RNI"),
 
   DEPOT("BDEPOT", "RDEPOT"),
   OUTPOST("BOUTPOST", "ROUTPOST"),

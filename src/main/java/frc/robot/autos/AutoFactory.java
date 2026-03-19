@@ -318,38 +318,38 @@ class AutoFactory {
     return c;
 
   }
-  Command Outpost_S2_RTrench_RCenter_RTrench_S2_RTrench(Location Start) {
-    // Load trajectories
-    PathPlannerPath StartToOutpost = loadSegment(Start.getAllianceName(), Location.OUTPOST.getAllianceName());
-    PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST.getAllianceName(), Location.S2.getAllianceName());
-    PathPlannerPath S2ToRTrench = loadSegment(Location.S2.getAllianceName(), Location.RTRENCH.getAllianceName());
-    PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH.getAllianceName(), Location.NF.getAllianceName());
-    PathPlannerPath NFToRTrench = loadSegment(Location.NF.getAllianceName(), Location.RTRENCH.getAllianceName());
-    PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH.getAllianceName(), Location.S2.getAllianceName());
+  // Command Outpost_S2_RTrench_RCenter_RTrench_S2_RTrench(Location Start) {
+  //   // Load trajectories
+  //   PathPlannerPath StartToOutpost = loadSegment(Start.getAllianceName(), Location.OUTPOST.getAllianceName());
+  //   PathPlannerPath OutpostToS2 = loadSegment(Location.OUTPOST.getAllianceName(), Location.S2.getAllianceName());
+  //   PathPlannerPath S2ToRTrench = loadSegment(Location.S2.getAllianceName(), Location.RTRENCH.getAllianceName());
+  //   PathPlannerPath RTrenchToNF = loadSegment(Location.RTRENCH.getAllianceName(), Location.NF.getAllianceName());
+  //   PathPlannerPath NFToRTrench = loadSegment(Location.NF.getAllianceName(), Location.RTRENCH.getAllianceName());
+  //   PathPlannerPath RTrenchToS2 = loadSegment(Location.RTRENCH.getAllianceName(), Location.S2.getAllianceName());
 
-    preloadTrajectoryClass(StartToOutpost);
-    preloadTrajectoryClass(OutpostToS2);
-    preloadTrajectoryClass(S2ToRTrench);
-    preloadTrajectoryClass(RTrenchToNF);
-    preloadTrajectoryClass(NFToRTrench);
-    preloadTrajectoryClass(RTrenchToS2);
+  //   preloadTrajectoryClass(StartToOutpost);
+  //   preloadTrajectoryClass(OutpostToS2);
+  //   preloadTrajectoryClass(S2ToRTrench);
+  //   preloadTrajectoryClass(RTrenchToNF);
+  //   preloadTrajectoryClass(NFToRTrench);
+  //   preloadTrajectoryClass(RTrenchToS2);
 
-    SequentialCommandGroup c = new SequentialCommandGroup();
-    c.addCommands(resetPose(StartToOutpost));
-    c.addCommands(follow(StartToOutpost));
-    c.addCommands(Commands.waitSeconds(4));
-    c.addCommands(follow(OutpostToS2));
-    c.addCommands(stationaryAAShoot());
-    c.addCommands(follow(S2ToRTrench));
-    c.addCommands(follow(RTrenchToNF));
-    c.addCommands(Commands.waitSeconds(4));
-    c.addCommands(follow(NFToRTrench));
-    c.addCommands(follow(RTrenchToS2));
-    c.addCommands(stationaryAAShoot());
-    c.addCommands(follow(S2ToRTrench));
+  //   SequentialCommandGroup c = new SequentialCommandGroup();
+  //   c.addCommands(resetPose(StartToOutpost));
+  //   c.addCommands(follow(StartToOutpost));
+  //   c.addCommands(Commands.waitSeconds(4));
+  //   c.addCommands(follow(OutpostToS2));
+  //   c.addCommands(stationaryAAShoot());
+  //   c.addCommands(follow(S2ToRTrench));
+  //   c.addCommands(follow(RTrenchToNF));
+  //   c.addCommands(Commands.waitSeconds(4));
+  //   c.addCommands(follow(NFToRTrench));
+  //   c.addCommands(follow(RTrenchToS2));
+  //   c.addCommands(stationaryAAShoot());
+  //   c.addCommands(follow(S2ToRTrench));
 
-    return c;
-  }
+  //   return c;
+  // }
 
   Command DummyShoot(Location Start) {
     PathPlannerPath StartToDummyShoot;
