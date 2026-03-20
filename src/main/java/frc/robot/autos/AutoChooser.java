@@ -79,7 +79,10 @@ public class AutoChooser extends SendableChooser<Auto> {
     new AutoProgram(Auto.FRDUMMYSHOOT, "FRDUMMYSHOOT", autoFactory -> autoFactory.DummyShoot(Location.FRSTART)),
 
     new AutoProgram(Auto.FLSTART_NA_S3_DEPOT_S3, "FLSTART_NA_S3_DEPOT_S3", autoFactory -> autoFactory.LCenter_LTrench_S3_Depot_S3(Location.FLSTART)),
-    new AutoProgram(Auto.LSTART_NA_S3_DEPOT_S3, "LSTART_NA_S3_DEPOT_S3", autoFactory -> autoFactory.LCenter_LBump_S3_Depot_S3(Location.LSTART))
+    new AutoProgram(Auto.LSTART_NA_S3_DEPOT_S3, "LSTART_NA_S3_DEPOT_S3", autoFactory -> autoFactory.LCenter_LBump_S3_Depot_S3(Location.LSTART)),
+
+    new AutoProgram(Auto.FRSTART_NC_S2, "FRSTART_NC_S2", autoFactory -> autoFactory.RCenter_RTrench_S2(Location.FRSTART)),
+    new AutoProgram(Auto.RSTART_NC_S2, "RSTART_NC_S2", autoFactory -> autoFactory.RCenter_RBump_S2(Location.RSTART))
   );
 
   /**

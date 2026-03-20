@@ -289,7 +289,54 @@ class AutoFactory {
 
     return c;
   }
+
+  Command RCenter_RTrench_S2(Location Start) {
+    // Load trajectories
+    PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NC.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RTRENCH.getAllianceName()); // Goes to S3 but uses Trench name to denote how it gets there
+
+    preloadTrajectoryClass(StartToLCenter);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToLCenter));
+    // c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    // c.addCommands(shooting(3));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+    c.addCommands(intakeWhileFollowing(StartToLCenter));
+    c.addCommands(follow(LCenterToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));    
+
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+    return c;
+  }
+
   Command LCenter_LBump_S3_Depot_S3(Location Start) {
+    PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NC.getAllianceName());
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RBUMP.getAllianceName()); //Goes to S3 but we pass in LBUMP to denote our exit path
+
+    preloadTrajectoryClass(StartToLCenter);
+
+    SequentialCommandGroup c = new SequentialCommandGroup();
+    c.addCommands(resetPose(StartToLCenter));
+    //We removed this so we get to the neutral zone before we shoot so that we can avoid other teams messing with fuel
+    // c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    // c.addCommands(shooting(1.5));
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+    c.addCommands(intakeWhileFollowing(StartToLCenter));
+    c.addCommands(follow(LCenterToS3));
+    // c.addCommands(follow(LBumpToS3));
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
+  
+    c.addCommands(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+
+    return c;
+
+  }
+
+  Command RCenter_RBump_S2(Location Start) {
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
     PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LBUMP.getAllianceName()); //Goes to S3 but we pass in LBUMP to denote our exit path
     PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
