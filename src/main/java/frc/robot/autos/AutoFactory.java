@@ -120,9 +120,7 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLStart = loadSegment(Location.S3.getAllianceName(), Location.LSTART.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLStart);
-
+   
     SequentialCommandGroup c = new SequentialCommandGroup();
     Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
     c.addCommands(resetPose(StartToDepot));
@@ -130,7 +128,8 @@ class AutoFactory {
     c.addCommands(intakeWhileFollowing(StartToDepot));
     c.addCommands(Commands.waitSeconds(4));
     c.addCommands(follow(DepotToS3));
-    c.addCommands(stationaryAAShoot());
+    c.addCommands(alignToPose(FieldConstants.getHubPose().toPose2d()).until(() -> DriveCommands.isAimedAtTarget(drive, () -> drive.getPose().relativeTo(FieldConstants.getHubPose().toPose2d()).getTranslation().getAngle().plus(Rotation2d.k180deg))));
+    c.addCommands(shooting(4));
     c.addCommands(follow(S3ToLStart));
 
     return c;
