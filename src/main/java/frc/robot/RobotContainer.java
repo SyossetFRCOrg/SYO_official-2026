@@ -164,9 +164,11 @@ public class RobotContainer {
                                                 .getTranslation().getAngle().plus(Rotation2d.k180deg))));
                 AutoAlignThenShootTrigger.whileTrue(superstructure.AimShooting(controller, () -> FieldConstants.getHubPose().toPose2d())
                                 .alongWith(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)));
-                                
-                AutoAlignThenShootTrigger.whileTrue(superstructure.MoveArmToPosition(0)
-                                .withDeadline(Commands.waitSeconds(0.6)).andThen(superstructure.MoveArmToPosition(1.3).withDeadline(Commands.waitSeconds(0.6))).repeatedly());
+                
+
+                //No longer automatically 
+                // AutoAlignThenShootTrigger.whileTrue(superstructure.MoveArmToPosition(0)
+                //                 .withDeadline(Commands.waitSeconds(0.6)).andThen(superstructure.MoveArmToPosition(1.3).withDeadline(Commands.waitSeconds(0.6))).repeatedly());
                 AutoAlignThenShootTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING)
                                                 .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
 
@@ -176,7 +178,7 @@ public class RobotContainer {
                 Trigger ShootOnBButton = new Trigger(
                                 () -> (controller.getBButton() && !(controller.getRawButton(5))));
 
-                ShootOnBButton.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.MoveArmToPosition(0).withDeadline(Commands.waitSeconds(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(Commands.waitSeconds(0.6)))).repeatedly());
+                ShootOnBButton.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
                 ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger ShootWhileIndexerOutOnYButtonAndLeftBumper = new Trigger(() -> (controller.getRawButton(5) && controller.getRightBumper()));
