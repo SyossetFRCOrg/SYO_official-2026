@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.FieldConstants;
 import frc.robot.RobotContainer;
+
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Superstructure;
 import frc.robot.subsystems.Superstructure.SuperState;
@@ -292,7 +293,7 @@ class AutoFactory {
   Command RCenter_RTrench_S2(Location Start) {
     // Load trajectories
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NC.getAllianceName());
-    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RTRENCH.getAllianceName()); // Goes to S3 but uses Trench name to denote how it gets there
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RTRENCH.getAllianceName()); // Goes to S2 but uses Trench name to denote how it gets there
 
     preloadTrajectoryClass(StartToLCenter);
 
@@ -311,9 +312,9 @@ class AutoFactory {
     return c;
   }
 
-  Command LCenter_LBump_S3_Depot_S3(Location Start) {
+  Command RCenter_RBump_S2(Location Start) {
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NC.getAllianceName());
-    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RBUMP.getAllianceName()); //Goes to S3 but we pass in LBUMP to denote our exit path
+    PathPlannerPath LCenterToS3 = loadSegment(Location.NC.getAllianceName(), Location.RBUMP.getAllianceName()); //Goes to S2 but we pass in LBUMP to denote our exit path
 
     preloadTrajectoryClass(StartToLCenter);
 
@@ -335,7 +336,7 @@ class AutoFactory {
 
   }
 
-  Command RCenter_RBump_S2(Location Start) {
+  Command LCenter_LBump_S3_Depot_S3(Location Start) {
     PathPlannerPath StartToLCenter = loadSegment(Start.getAllianceName(), Location.NA.getAllianceName());
     PathPlannerPath LCenterToS3 = loadSegment(Location.NA.getAllianceName(), Location.LBUMP.getAllianceName()); //Goes to S3 but we pass in LBUMP to denote our exit path
     PathPlannerPath S3ToDepot = loadSegment(Location.S3.getAllianceName(), Location.DEPOT.getAllianceName());
@@ -429,7 +430,6 @@ class AutoFactory {
     return superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).alongWith(superstructure.MoveArmToPosition(0).withDeadline(new WaitCommand(0.6)).andThen(superstructure.MoveArmToPosition(1).withDeadline(new WaitCommand(0.6)))).repeatedly().alongWith(superstructure.AimShooting(() -> FieldConstants.getHubPose().toPose2d())).withDeadline(Commands.waitSeconds(timeout));
   }
 
-  @SuppressWarnings("unused")
   private Command alignToPose(Pose2d targetPose) {
     return superstructure.AimShooting(() -> targetPose);
   }

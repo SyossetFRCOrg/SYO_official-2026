@@ -18,7 +18,6 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.units.measure.Current;
 import edu.wpi.first.units.measure.Voltage;
-import frc.robot.util.LoggedTunableNumber;
 
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static frc.robot.util.PhoenixUtil.*;
@@ -317,6 +316,6 @@ public class ShooterIOTalonFX implements ShooterIO {
         {
                 leftTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
                 centerTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
-                rightTalon.setControl(velocityVoltageRequest.withVelocity(velocity));
+                rightTalon.setControl(velocityVoltageRequest.withVelocity(velocity != 0 ? velocity + 2 : velocity));
         }
 }

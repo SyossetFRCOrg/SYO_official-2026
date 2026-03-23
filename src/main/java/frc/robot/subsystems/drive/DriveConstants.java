@@ -2,7 +2,6 @@ package frc.robot.subsystems.drive;
 import edu.wpi.first.units.Units;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.Distance;
-import frc.robot.util.LoggedTunableNumber;
 
 import static edu.wpi.first.units.Units.Degrees;
 

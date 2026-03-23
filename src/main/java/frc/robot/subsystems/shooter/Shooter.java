@@ -23,7 +23,7 @@ public class Shooter extends SubsystemBase {
     private final ShooterIO shooterIO;
     private final ShooterIOInputsAutoLogged inputs = new ShooterIOInputsAutoLogged();
 
-    private static double shooterVelocity = 70, shooterChange = 0;
+    private static double shooterVelocity = 70, shooterChange = 5;
 
 
     private @Getter Substate currentSubstate = Substate.STOPPED;

@@ -47,6 +47,7 @@ public class Superstructure extends SubsystemBase {
 
   private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
   private static @Getter @Setter SuperState currentSuperState = SuperState.DRIVING;
+  @SuppressWarnings("unused")
   private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,

@@ -50,7 +50,6 @@ import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.FieldConstants;
 import frc.robot.RobotState;
-import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
@@ -59,6 +58,7 @@ import lombok.Getter;
 public class Drive extends SubsystemBase {
 
   private double currentTime;
+  @SuppressWarnings("unused")
   private double dt;
 
   private ChassisSpeeds previousChassisSpeeds = new ChassisSpeeds();
