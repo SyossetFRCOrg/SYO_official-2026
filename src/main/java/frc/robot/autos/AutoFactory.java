@@ -117,11 +117,7 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
     PathPlannerPath S3ToLStart = loadSegment(Location.S3.getAllianceName(), Location.LSTART.getAllianceName());
     preloadTrajectoryClass(StartToDepot);
-<<<<<<< HEAD
-
-=======
    
->>>>>>> MehmetBranch
     SequentialCommandGroup c = new SequentialCommandGroup();
     Logger.recordOutput("Segment", "%S_%S".formatted(Start.getAllianceName(), Location.DEPOT.getAllianceName()));
     c.addCommands(resetPose(StartToDepot));
@@ -228,15 +224,11 @@ class AutoFactory {
     PathPlannerPath LTrenchToS3 = loadSegment(Location.LTRENCH.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToDepot);
-<<<<<<< HEAD
-   
-=======
-    preloadTrajectoryClass(DepotToS3);
-    preloadTrajectoryClass(S3ToLTrench);
-    preloadTrajectoryClass(LTrenchToNA);
-    preloadTrajectoryClass(NAToLTrench);
-    preloadTrajectoryClass(LTrenchToS3);
->>>>>>> MehmetBranch
+    // preloadTrajectoryClass(DepotToS3);
+    // preloadTrajectoryClass(S3ToLTrench);
+    // preloadTrajectoryClass(LTrenchToNA);
+    // preloadTrajectoryClass(NAToLTrench);
+    // preloadTrajectoryClass(LTrenchToS3);
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToDepot));
@@ -256,10 +248,6 @@ class AutoFactory {
   }
 
 
-<<<<<<< HEAD
-    preloadTrajectoryClass(StartToOutpost);
-
-=======
 
   Command LCenter_LTrench_S3_Depot_S3(Location Start) {
     // Load trajectories
@@ -269,7 +257,6 @@ class AutoFactory {
     PathPlannerPath DepotToS3 = loadSegment(Location.DEPOT.getAllianceName(), Location.S3.getAllianceName());
 
     preloadTrajectoryClass(StartToLCenter);
->>>>>>> MehmetBranch
 
     SequentialCommandGroup c = new SequentialCommandGroup();
     c.addCommands(resetPose(StartToLCenter));
