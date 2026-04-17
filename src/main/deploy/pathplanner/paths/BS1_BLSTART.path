@@ -8,20 +8,34 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 2.73728,
         "y": 4.0
+=======
+        "x": 1.9878688014376618,
+        "y": 4.1055894384979545
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BS1"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 3.539159226190476,
         "y": 5.588020833333334
       },
       "prevControl": {
         "x": 2.539159226190476,
         "y": 5.588020833333334
+=======
+        "x": 3.4270111111111112,
+        "y": 6.110566666666666
+      },
+      "prevControl": {
+        "x": 1.9584568064308214,
+        "y": 4.824244013445428
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +56,11 @@
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+    "rotation": -56.30993247402036
+>>>>>>> MehmetBranch
   },
   "reversed": false,
   "folder": null,

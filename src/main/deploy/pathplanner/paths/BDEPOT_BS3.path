@@ -3,25 +3,34 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.8507366071428573,
-        "y": 5.9534375
+        "x": 0.8256787932564325,
+        "y": 5.914188110026618
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8507366071428573,
-        "y": 5.9534375
+        "x": 1.9033471172648122,
+        "y": 5.8699062718867445
       },
       "isLocked": false,
       "linkedName": "BDEPOT"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 2.592170000076294,
         "y": 5.614929962158203
       },
       "prevControl": {
         "x": 1.592170000076294,
         "y": 5.614929962158203
+=======
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": {
+        "x": 1.4560443383012784,
+        "y": 5.748055859492456
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +51,11 @@
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+    "rotation": -45.0
+>>>>>>> MehmetBranch
   },
   "reversed": false,
   "folder": null,

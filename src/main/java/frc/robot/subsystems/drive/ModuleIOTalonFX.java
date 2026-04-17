@@ -86,7 +86,7 @@ public class ModuleIOTalonFX implements ModuleIO {
           constants) {
     this.constants = constants;
 
-    CANBus canbus = new CANBus("*");
+    CANBus canbus = new CANBus("DriveTrain");
     driveTalon = new TalonFX(constants.DriveMotorId, canbus);
     turnTalon = new TalonFX(constants.SteerMotorId, canbus);
     cancoder = new CANcoder(constants.EncoderId, canbus);
@@ -175,7 +175,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     //     Drive.ODOMETRY_FREQUENCY, drivePosition, turnPosition);
     //BaseStatusSignal.setUpdateFrequencyForAll(100, drivePosition, turnPosition);
     BaseStatusSignal.setUpdateFrequencyForAll(
-        250,
+        150,
         drivePosition, 
         turnPosition,
         driveVelocity,

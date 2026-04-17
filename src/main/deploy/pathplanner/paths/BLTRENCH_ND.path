@@ -8,14 +8,28 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 5.0,
         "y": 7.44
+=======
+<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/BLTRENCH_NG_NJ_BRTRENCH.path
+        "x": 5.0,
+        "y": 7.44
+========
+        "x": 5.1720987022856075,
+        "y": 7.332764780127929
+>>>>>>>> MehmetBranch:src/main/deploy/pathplanner/paths/BLTRENCH_ND.path
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BLTRENCH"
     },
     {
       "anchor": {
+<<<<<<< HEAD
+=======
+<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/BLTRENCH_NG_NJ_BRTRENCH.path
+>>>>>>> MehmetBranch
         "x": 8.67,
         "y": 6.12
       },
@@ -23,9 +37,71 @@
         "x": 7.67,
         "y": 6.12
       },
+<<<<<<< HEAD
       "nextControl": null,
       "isLocked": false,
       "linkedName": "NG"
+=======
+      "nextControl": {
+        "x": 9.67,
+        "y": 6.12
+========
+        "x": 6.249973380656611,
+        "y": 7.290381543921917
+      },
+      "prevControl": {
+        "x": 6.025333550854201,
+        "y": 7.4000945644178655
+      },
+      "nextControl": {
+        "x": 7.244687463780882,
+        "y": 6.804567934263231
+>>>>>>>> MehmetBranch:src/main/deploy/pathplanner/paths/BLTRENCH_ND.path
+      },
+      "isLocked": false,
+      "linkedName": "NG"
+    },
+    {
+      "anchor": {
+        "x": 8.67,
+<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/BLTRENCH_NG_NJ_BRTRENCH.path
+        "y": 2.09
+      },
+      "prevControl": {
+        "x": 7.9844308035714295,
+        "y": 2.2764136904761907
+      },
+      "nextControl": {
+        "x": 9.355569196428572,
+        "y": 1.903586309523809
+      },
+      "isLocked": false,
+      "linkedName": "NJ"
+    },
+    {
+      "anchor": {
+        "x": 4.0,
+        "y": 0.6601023077964783
+      },
+      "prevControl": {
+        "x": 2.9170070684523814,
+        "y": 0.638673736367906
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BRTRENCH"
+========
+        "y": 6.12
+      },
+      "prevControl": {
+        "x": 7.704834250241446,
+        "y": 6.603759422556721
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "NG"
+>>>>>>>> MehmetBranch:src/main/deploy/pathplanner/paths/BLTRENCH_ND.path
+>>>>>>> MehmetBranch
     }
   ],
   "rotationTargets": [],
@@ -42,7 +118,15 @@
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/BLTRENCH_NG_NJ_BRTRENCH.path
+    "rotation": 0.0
+========
+    "rotation": -89.83041202266743
+>>>>>>>> MehmetBranch:src/main/deploy/pathplanner/paths/BLTRENCH_ND.path
+>>>>>>> MehmetBranch
   },
   "reversed": false,
   "folder": null,

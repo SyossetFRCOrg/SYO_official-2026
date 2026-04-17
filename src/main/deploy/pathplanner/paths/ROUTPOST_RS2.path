@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 16.619999999999997,
         "y": 7.38
+=======
+        "x": 16.364844864604244,
+        "y": 7.479502651828443
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "ROUTPOST"
@@ -20,8 +25,13 @@
         "y": 6.37339973449707
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 13.543252944946289,
         "y": 6.37339973449707
+=======
+        "x": 14.28185210116781,
+        "y": 6.326198593218908
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

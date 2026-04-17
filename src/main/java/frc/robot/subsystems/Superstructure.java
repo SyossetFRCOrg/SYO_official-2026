@@ -41,11 +41,13 @@ public class Superstructure extends SubsystemBase {
     SHOOTINGPREPARE,
     SHOOTINGWHILEINDEXEROUT,
     INTAKINGANDINDEXINGWITHOUTSHOOTING,
-    AUTOALIGNING
+    AUTOALIGNING,
+    CLEANING
   }
 
   private static @Getter @Setter SuperState desiredSuperState = SuperState.DRIVING;
   private static @Getter @Setter SuperState currentSuperState = SuperState.DRIVING;
+  @SuppressWarnings("unused")
   private static SuperState previousSuperState = SuperState.DRIVING;
 
   public Superstructure(RobotContainer container, Drive drive, Indexer indexer, Intake intake,
@@ -64,9 +66,6 @@ public class Superstructure extends SubsystemBase {
     currentSuperState = handleStateTransitions();
     logRoboStateValues();
     applyStates();
-    if (previousSuperState != currentSuperState) {
-      System.out.println("Superstructure State Changed from " + previousSuperState + "to " + currentSuperState);
-    }
   }
 
   public void logRoboStateValues() {
@@ -109,6 +108,7 @@ public class Superstructure extends SubsystemBase {
       case AUTOALIGNING -> SuperState.AUTOALIGNING;
       case CLIMBUP -> SuperState.CLIMBUP;
       case CLIMBDOWN -> SuperState.CLIMBDOWN;
+      case CLEANING -> SuperState.CLEANING;
       default -> ready ? desiredSuperState : currentSuperState;
     };
   }
@@ -130,7 +130,7 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
       case INTAKING:
-        indexer.setDesiredSubstate(Indexer.Substate.REVERSING);
+        indexer.setDesiredSubstate(Indexer.Substate.STOPPED);
         intake.setDesiredSubstate(Intake.Substate.ACTIVE);
         shooter.setDesiredSubstate(Shooter.Substate.STOPPED);
         break;
@@ -162,6 +162,10 @@ public class Superstructure extends SubsystemBase {
         shooter.setDesiredSubstate(Shooter.Substate.ACTIVE);
         shooter.setCalculatedShooterVoltage(drive.getPose().getTranslation().getDistance(FieldConstants.getHubPose().getTranslation().toTranslation2d()));
         break;
+      case CLEANING:
+        indexer.setDesiredSubstate(Indexer.Substate.CLEANING);
+        intake.setDesiredSubstate(Intake.Substate.CLEANING);
+        shooter.setDesiredSubstate(Shooter.Substate.CLEANING);
       default: break;
     }
   }
@@ -171,7 +175,7 @@ public class Superstructure extends SubsystemBase {
     return switch (state) {
       case SHOOTING -> shooter.getCurrentSubstate() == Shooter.Substate.ACTIVE;
       case  INTAKING -> intake.getCurrentSubstate() == Intake.Substate.ACTIVE;
-      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN -> true;
+      case STOPPED, DRIVING, CLIMBUP, CLIMBDOWN, CLEANING -> true;
       default -> false;
     };
   }
@@ -186,6 +190,7 @@ public class Superstructure extends SubsystemBase {
   // flip x and y cuz it works. bad fix
   public Command AimShooting(XboxController controller, Supplier<Pose2d> targetPose) {
     return DriveCommands.joystickDriveFacingPose(
+<<<<<<< HEAD
         drive, () -> 0.5 * -controller.getLeftY(), () -> 0.5 * -controller.getLeftX(), targetPose)
         .alongWith(new InstantCommand(() -> {
           RobotState.getInstance().setAutoAiming(true);
@@ -193,6 +198,16 @@ public class Superstructure extends SubsystemBase {
         }));
   }
   
+=======
+        drive, () -> 0.5 * -controller.getLeftY(), () -> 0.5 * -controller.getLeftX(), targetPose);
+        }
+  
+  // flip x and y cuz it works. bad fix
+  public Command AimShooting(Supplier<Pose2d> targetPose) {
+    return DriveCommands.joystickDriveFacingPose(
+        drive, () -> 0,() -> 0, targetPose);
+        }
+>>>>>>> MehmetBranch
   public Command SetArmVoltage(double voltage){
     return new InstantCommand(() -> intake.setArmVoltage(voltage));
   }

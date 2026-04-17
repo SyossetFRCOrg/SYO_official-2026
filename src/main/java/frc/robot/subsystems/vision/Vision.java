@@ -60,7 +60,7 @@ public class Vision extends SubsystemBase {
   public void periodic() {
     for (int i = 0; i < io.length; i++) {
       io[i].updateInputs(inputs[i]);
-      Logger.processInputs("Vision/Camera" + Integer.toString(i), inputs[i]);
+      // Logger.processInputs("Vision/Camera" + Integer.toString(i), inputs[i]);
     }
 
     // Initialize logging values
@@ -118,9 +118,9 @@ public class Vision extends SubsystemBase {
                 || (Math.abs(drive.getChassisSpeeds().omegaRadiansPerSecond) > (Math.PI * 3.0 / 4.0)
                     && observation.type()
                         == PoseObservationType.MEGATAG_2) // reject if omega too high
-                || (observation.averageTagDistance() < .45
-                    && observation.type()
-                        == PoseObservationType.MEGATAG_1) // instability for MT1 when too near
+                // || (observation.averageTagDistance() < .45
+                //     && observation.type()
+                //         == PoseObservationType.MEGATAG_1) // instability for MT1 when too near
                 || (observation.type() == PoseObservationType.MEGATAG_2
                     && DriverStation.isDisabled());
 
@@ -161,21 +161,14 @@ public class Vision extends SubsystemBase {
         // occasional
         // nonsense
         // negligible.
-        if (observation
-                .pose()
-                .toPose2d()
-                .getTranslation()
-                .getDistance(drive.getPose().getTranslation())
-            > .5) {
-          linearstdDevFactor *= 5;
-        }
+        
         if (observation
                 .pose()
                 .toPose2d()
                 .getTranslation()
                 .getDistance(drive.getPose().getTranslation())
             > 1) {
-          linearstdDevFactor *= 5;
+          linearstdDevFactor *= 3;
         }
         if (observation
                 .pose()
@@ -183,73 +176,66 @@ public class Vision extends SubsystemBase {
                 .getTranslation()
                 .getDistance(drive.getPose().getTranslation())
             > 1.5) {
-          linearstdDevFactor *= 5;
+          linearstdDevFactor *= 3;
         }
-        if (observation
-                .pose()
-                .toPose2d()
-                .getTranslation()
-                .getDistance(drive.getPose().getTranslation())
-            > 2) {
-          linearstdDevFactor *= 10;
-        }
+       
 
-        // same for rotational corrections.
-        // However, also increase linear StdDev because the way MT1 works, if it returns a
-        // rotation
-        // that is very off, it takes the translation with it as well. This should already be
-        // compensated for
-        // in the translational adjustments, but this is for more safety
-        if (observation
-                .pose()
-                .toPose2d()
-                .getRotation()
-                .minus(drive.getPose().getRotation())
-                .getDegrees()
-            > 10) {
-          thetastdDevFactor *= 5;
-          linearstdDevFactor *= 5;
-        }
-        if (observation
-                .pose()
-                .toPose2d()
-                .getRotation()
-                .minus(drive.getPose().getRotation())
-                .getDegrees()
-            > 15) {
-          thetastdDevFactor *= 5;
-          linearstdDevFactor *= 5;
-        }
-        if (observation
-                .pose()
-                .toPose2d()
-                .getRotation()
-                .minus(drive.getPose().getRotation())
-                .getDegrees()
-            > 20) {
-          thetastdDevFactor *= 5;
-          // linearstdDevFactor *= 5;
-        }
-        if (observation
-                .pose()
-                .toPose2d()
-                .getRotation()
-                .minus(drive.getPose().getRotation())
-                .getDegrees()
-            > 25) {
-          thetastdDevFactor *= 5;
-          // linearstdDevFactor *= 5;
-        }
-        if (observation
-                .pose()
-                .toPose2d()
-                .getRotation()
-                .minus(drive.getPose().getRotation())
-                .getDegrees()
-            > 30) {
-          thetastdDevFactor *= 5;
-          // linearstdDevFactor *= 5;
-        }
+        // // same for rotational corrections.
+        // // However, also increase linear StdDev because the way MT1 works, if it returns a
+        // // rotation
+        // // that is very off, it takes the translation with it as well. This should already be
+        // // compensated for
+        // // in the translational adjustments, but this is for more safety
+        // if (observation
+        //         .pose()
+        //         .toPose2d()
+        //         .getRotation()
+        //         .minus(drive.getPose().getRotation())
+        //         .getDegrees()
+        //     > 10) {
+        //   thetastdDevFactor *= 5;
+        //   linearstdDevFactor *= 5;
+        // }
+        // if (observation
+        //         .pose()
+        //         .toPose2d()
+        //         .getRotation()
+        //         .minus(drive.getPose().getRotation())
+        //         .getDegrees()
+        //     > 15) {
+        //   thetastdDevFactor *= 5;
+        //   linearstdDevFactor *= 5;
+        // }
+        // if (observation
+        //         .pose()
+        //         .toPose2d()
+        //         .getRotation()
+        //         .minus(drive.getPose().getRotation())
+        //         .getDegrees()
+        //     > 20) {
+        //   thetastdDevFactor *= 5;
+        //   // linearstdDevFactor *= 5;
+        // }
+        // if (observation
+        //         .pose()
+        //         .toPose2d()
+        //         .getRotation()
+        //         .minus(drive.getPose().getRotation())
+        //         .getDegrees()
+        //     > 25) {
+        //   thetastdDevFactor *= 5;
+        //   // linearstdDevFactor *= 5;
+        // }
+        // if (observation
+        //         .pose()
+        //         .toPose2d()
+        //         .getRotation()
+        //         .minus(drive.getPose().getRotation())
+        //         .getDegrees()
+        //     > 30) {
+        //   thetastdDevFactor *= 5;
+        //   // linearstdDevFactor *= 5;
+        // }
 
         // for some reason mt2 is also somewhat jumpy near the tag, which messes up auto align
         // since
@@ -257,10 +243,9 @@ public class Vision extends SubsystemBase {
         // pose itself jumps so often. This should smooth it out while still not directly
         // neglecting
         // the new pose inputs.
-        if (observation.type() == PoseObservationType.MEGATAG_2 && observation.averageTagDistance() < 1) {
+        if (observation.type() == PoseObservationType.MEGATAG_1 && observation.averageTagDistance() < 1) {
           thetastdDevFactor *= 4000000;
         }
-        // TODO: investigate this ^^^ is our mt2 alg still tweaking?
 
         double linearStdDev = linearStdDevBaseline * linearstdDevFactor;
         double angularStdDev = angularStdDevBaseline * thetastdDevFactor;
@@ -281,17 +266,17 @@ public class Vision extends SubsystemBase {
           angularStdDev *= cameraStdDevFactors[cameraIndex];
         }
 
-        if (observation.type() == PoseObservationType.MEGATAG_1) {
-          Logger.recordOutput(
-              "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1StdDevs",
-              new double[] {linearStdDev, angularStdDev});
-        }
+        // if (observation.type() == PoseObservationType.MEGATAG_1) {
+        //   Logger.recordOutput(
+        //       "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1StdDevs",
+        //       new double[] {linearStdDev, angularStdDev});
+        // }
 
-        if (observation.type() == PoseObservationType.MEGATAG_2) {
-          Logger.recordOutput(
-              "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2StdDevs",
-              new double[] {linearStdDev, angularStdDev});
-        }
+        // if (observation.type() == PoseObservationType.MEGATAG_2) {
+        //   Logger.recordOutput(
+        //       "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2StdDevs",
+        //       new double[] {linearStdDev, angularStdDev});
+        // }
 
         // Send vision observation only if vision is enabled
         if (RobotState.getInstance().isAddingVision()) {
@@ -303,32 +288,32 @@ public class Vision extends SubsystemBase {
       }
 
       // Log camera datadata
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/TagPoses",
-          tagPoses.toArray(new Pose3d[tagPoses.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPoses",
-          robotPoses.toArray(new Pose3d[robotPoses.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesAccepted",
-          robotPosesAccepted.toArray(new Pose3d[robotPosesAccepted.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesRejected",
-          robotPosesRejected.toArray(new Pose3d[robotPosesRejected.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/TagPoses",
+      //     tagPoses.toArray(new Pose3d[tagPoses.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPoses",
+      //     robotPoses.toArray(new Pose3d[robotPoses.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesAccepted",
+      //     robotPosesAccepted.toArray(new Pose3d[robotPosesAccepted.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/RobotPosesRejected",
+      //     robotPosesRejected.toArray(new Pose3d[robotPosesRejected.size()]));
 
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesAccepted",
-          robotPosesAcceptedMT1.toArray(new Pose3d[robotPosesAcceptedMT1.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesRejected",
-          robotPosesRejectedMT1.toArray(new Pose3d[robotPosesRejectedMT1.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesAccepted",
+      //     robotPosesAcceptedMT1.toArray(new Pose3d[robotPosesAcceptedMT1.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT1RobotPosesRejected",
+      //     robotPosesRejectedMT1.toArray(new Pose3d[robotPosesRejectedMT1.size()]));
 
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesAccepted",
-          robotPosesAcceptedMT2.toArray(new Pose3d[robotPosesAcceptedMT2.size()]));
-      Logger.recordOutput(
-          "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesRejected",
-          robotPosesRejectedMT2.toArray(new Pose3d[robotPosesRejectedMT2.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesAccepted",
+      //     robotPosesAcceptedMT2.toArray(new Pose3d[robotPosesAcceptedMT2.size()]));
+      // Logger.recordOutput(
+      //     "Vision/Camera" + Integer.toString(cameraIndex) + "/MT2RobotPosesRejected",
+      //     robotPosesRejectedMT2.toArray(new Pose3d[robotPosesRejectedMT2.size()]));
 
       allTagPoses.addAll(tagPoses);
       allRobotPoses.addAll(robotPoses);

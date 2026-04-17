@@ -3,6 +3,7 @@
   "waypoints": [
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 2.592170000076294,
         "y": 5.614929962158203
       },
@@ -10,6 +11,15 @@
       "nextControl": {
         "x": 2.0122395833333333,
         "y": 4.7593080357142865
+=======
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.8569173073877234,
+        "y": 4.650173850678575
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BS3"
@@ -20,8 +30,13 @@
         "y": 3.9289209842681885
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 2.0448660714285714,
         "y": 4.622276785714287
+=======
+        "x": 2.2289392626590643,
+        "y": 5.014855840789912
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +63,11 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+    "rotation": -45.0
+>>>>>>> MehmetBranch
   },
   "useDefaultConstraints": true
 }

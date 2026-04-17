@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 17.005304412841795,
         "y": 2.1016836166381836
+=======
+        "x": 16.246033709314748,
+        "y": 2.1691328999526616
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "RDEPOT"
@@ -20,8 +25,13 @@
         "y": 6.37339973449707
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 13.543252944946289,
         "y": 6.37339973449707
+=======
+        "x": 14.431199107043573,
+        "y": 6.596881137327982
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

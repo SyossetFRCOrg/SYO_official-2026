@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 1.3656969666481018,
         "y": 0.6541252136230469
+=======
+        "x": 0.6008227238394818,
+        "y": 0.8194207553851228
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BOUTPOST"
@@ -20,8 +25,13 @@
         "y": 4.0
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 0.7372800000000002,
         "y": 4.0
+=======
+        "x": 1.5747295934072179,
+        "y": 3.8100595742962513
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

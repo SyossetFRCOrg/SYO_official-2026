@@ -3,6 +3,7 @@
   "waypoints": [
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 2.592170000076294,
         "y": 5.614929962158203
       },
@@ -10,18 +11,52 @@
       "nextControl": {
         "x": 3.592170000076294,
         "y": 5.614929962158203
+=======
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.94049238494676,
+        "y": 5.645710420765209
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BS3"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 0.8507366071428573,
         "y": 5.9534375
       },
       "prevControl": {
         "x": -0.14926339285714274,
         "y": 5.9534375
+=======
+        "x": 1.799688888888889,
+        "y": 5.7013
+      },
+      "prevControl": {
+        "x": 2.3301424403129394,
+        "y": 5.685557910831438
+      },
+      "nextControl": {
+        "x": 1.3832221231922042,
+        "y": 5.713659342196389
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.8256787932564325,
+        "y": 5.914188110026618
+      },
+      "prevControl": {
+        "x": 1.654700699558469,
+        "y": 5.838313869037638
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,7 +83,13 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
   },
   "useDefaultConstraints": true
+=======
+    "rotation": -45.0
+  },
+  "useDefaultConstraints": false
+>>>>>>> MehmetBranch
 }

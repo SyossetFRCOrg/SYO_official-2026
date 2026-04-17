@@ -8,20 +8,49 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 15.82389,
         "y": 4.003377914428711
+=======
+        "x": 15.03024844720497,
+        "y": 4.610425909494232
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "RS1"
     },
     {
       "anchor": {
+<<<<<<< HEAD
+=======
+        "x": 13.863300798580303,
+        "y": 6.646548358473824
+      },
+      "prevControl": {
+        "x": 14.618129810555136,
+        "y": 5.7484611223462405
+      },
+      "nextControl": {
+        "x": 13.10847178660547,
+        "y": 7.544635594601408
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+>>>>>>> MehmetBranch
         "x": 12.26,
         "y": 7.41
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 11.26,
         "y": 7.41
+=======
+        "x": 12.73659272404614,
+        "y": 7.419148181011535
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

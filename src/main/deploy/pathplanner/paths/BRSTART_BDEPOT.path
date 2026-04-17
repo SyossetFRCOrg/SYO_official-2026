@@ -8,20 +8,34 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 4.780595238095238,
         "y": 2.625535714285714
+=======
+        "x": 4.030389925416264,
+        "y": 2.615405848235722
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BRSTART"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 0.8507366071428573,
         "y": 5.9534375
       },
       "prevControl": {
         "x": -0.14926339285714274,
         "y": 5.9534375
+=======
+        "x": 0.8256787932564325,
+        "y": 5.914188110026618
+      },
+      "prevControl": {
+        "x": 0.4052798619518492,
+        "y": 6.278324266775255
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

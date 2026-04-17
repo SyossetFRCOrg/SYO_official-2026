@@ -10,7 +10,8 @@ import lombok.Setter;
 public class Intake extends SubsystemBase {
     public enum Substate {
         STOPPED,
-        ACTIVE
+        ACTIVE,
+        CLEANING
     }
 
     public Intake(IntakeIO intakeIO) {
@@ -53,6 +54,9 @@ public class Intake extends SubsystemBase {
             case ACTIVE:
                 setRollerVoltage(intakeSpeed.get());
                 break;
+            case CLEANING:
+                setRollerVoltage(intakeSpeed.get() * 0.4);
+                break;
         }
     }
 
@@ -65,7 +69,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void moveArmToPosition(double positionRads){
-        intakeIO.moveArmToPosition(positionRads);
+        intakeIO.moveArmToPosition(positionRads * (9.0/5.0));
     }
     public void setArmEncoderPosition(double positionRotations){
         intakeIO.setArmEncoderPosition(positionRotations);

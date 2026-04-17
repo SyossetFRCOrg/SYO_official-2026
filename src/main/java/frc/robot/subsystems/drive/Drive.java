@@ -50,7 +50,6 @@ import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.FieldConstants;
 import frc.robot.RobotState;
-import frc.robot.util.GeomUtil;
 import frc.robot.util.LocalADStarAK;
 import frc.robot.util.swerve.SwerveSetpoint;
 import frc.robot.util.swerve.SwerveSetpointGenerator;
@@ -59,12 +58,13 @@ import lombok.Getter;
 public class Drive extends SubsystemBase {
 
   private double currentTime;
+  @SuppressWarnings("unused")
   private double dt;
 
   private ChassisSpeeds previousChassisSpeeds = new ChassisSpeeds();
 
   // TunerConstants doesn't include these constants, so they are declared locally
-  static final double ODOMETRY_FREQUENCY = new CANBus("*").isNetworkFD() ? 250.0 : 100.0;
+  static final double ODOMETRY_FREQUENCY = new CANBus("DriveTrain").isNetworkFD() ? 250.0 : 100.0;
   public static final double DRIVE_BASE_RADIUS = Math.max(
       Math.max(
           Math.hypot(TunerConstants.FrontLeft.LocationX, TunerConstants.FrontLeft.LocationY),
@@ -164,7 +164,7 @@ public class Drive extends SubsystemBase {
         this::getChassisSpeeds,
         this::runVelocity,
         new PPHolonomicDriveController(
-            new PIDConstants(2.0, 0.0, 0.0), new PIDConstants(3.0, 0.0, 0.0)),
+            new PIDConstants(7.0, 0.0, 0.0), new PIDConstants(7.0, 0.0, 0.0)),
         PP_CONFIG,
         () -> FieldConstants.getAlliance() == Alliance.Red,
         this);
@@ -265,34 +265,34 @@ public class Drive extends SubsystemBase {
     currentTime = Timer.getFPGATimestamp();
     // the following serves as global translational acceleration limiting
 
-    Translation2d prevSpeedsTranslation = GeomUtil.toTranslation2d(previousChassisSpeeds);
+    // Translation2d prevSpeedsTranslation = GeomUtil.toTranslation2d(previousChassisSpeeds);
     // GeomUtil.toTranslation2d(getChassisSpeeds());
 
-    Translation2d desiredSpeedsTranslation = GeomUtil.toTranslation2d(speeds);
+    // Translation2d desiredSpeedsTranslation = GeomUtil.toTranslation2d(speeds);
 
-    Translation2d TranslationDelta = desiredSpeedsTranslation.minus(prevSpeedsTranslation);
+    // // Translation2d TranslationDelta = desiredSpeedsTranslation.minus(prevSpeedsTranslation);
 
-    double maxTranslationDeltaPerLoopRatio = TranslationDelta
-        .getNorm() /* magnitude of difference of current and desired velocity vectors */
-        / (RobotState.getInstance().getModuleLimits().maxDriveAcceleration() * dt);
+    // // double maxTranslationDeltaPerLoopRatio = TranslationDelta
+    // //     .getNorm() /* magnitude of difference of current and desired velocity vectors */
+    // //     / (RobotState.getInstance().getModuleLimits().maxDriveAcceleration() * dt);
 
-    if (maxTranslationDeltaPerLoopRatio > 1) {
-      // have to make it so that it approaches prevSpeedsTranslation in a
-      // 1/maxTranslationDeltaPerSecRatio ratio,
-      // meant to reduce the delta so that we do not hit the tipping point.
-      TranslationDelta = TranslationDelta.div(
-          Math.sqrt(maxTranslationDeltaPerLoopRatio)); // it works, do the math yourself.
-    }
+    // // if (maxTranslationDeltaPerLoopRatio > 1) {
+    // //   // have to make it so that it approaches prevSpeedsTranslation in a
+    // //   // 1/maxTranslationDeltaPerSecRatio ratio,
+    // //   // meant to reduce the delta so that we do not hit the tipping point.
+    // //   TranslationDelta = TranslationDelta.div(
+    // //       Math.sqrt(maxTranslationDeltaPerLoopRatio)); // it works, do the math yourself.
+    // // }
 
-    desiredSpeedsTranslation = prevSpeedsTranslation.plus(TranslationDelta);
-    speeds.vxMetersPerSecond = desiredSpeedsTranslation.getX();
-    speeds.vyMetersPerSecond = desiredSpeedsTranslation.getY();
-    // Calculate module setpoints
-    ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, dt);
+    // // desiredSpeedsTranslation = prevSpeedsTranslation;
+    // speeds.vxMetersPerSecond = desiredSpeedsTranslation.getX();
+    // speeds.vyMetersPerSecond = desiredSpeedsTranslation.getY();
+    // // Calculate module setpoints
+    ChassisSpeeds discreteSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
     // SwerveModuleState[] setpointStates =
     // kinematics.toSwerveModuleStates(discreteSpeeds);
     currentSetpoint = setpointGenerator.generateSetpoint(
-        TunerConstants.moduleLimitsFree, currentSetpoint, discreteSpeeds, dt);
+        TunerConstants.moduleLimitsFree, currentSetpoint, discreteSpeeds, 0.02);
     SwerveDriveKinematics.desaturateWheelSpeeds(
         currentSetpoint.moduleStates(),
         RobotState.getInstance().getModuleLimits().maxDriveVelocity());
@@ -462,7 +462,7 @@ public class Drive extends SubsystemBase {
   
   public double getHubDistance()
   {
-    return ((Double)getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation()).in(Meter)) - 0.602304; // Offset for new hub pose?
+    return ((Double)getShotDistance(FieldConstants.getHubPose().toPose2d().getTranslation()).in(Meter)); // Offset for new hub pose?
   }
 
   public Distance getFerryDistance()

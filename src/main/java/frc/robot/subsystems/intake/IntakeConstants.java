@@ -33,5 +33,5 @@ public class IntakeConstants {
     public static final double armMaxJerk = 1600;
 
 
-    public static final CANBus canbus = new CANBus("*");
+    public static final CANBus canbus = new CANBus("SuperStructure");
 }

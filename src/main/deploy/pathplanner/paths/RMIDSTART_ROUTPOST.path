@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 13.9,
         "y": 4.02
+=======
+        "x": 13.190198841551998,
+        "y": 4.217342236108915
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "RMIDSTART"
@@ -20,8 +25,13 @@
         "y": 7.38
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 14.62,
         "y": 7.38
+=======
+        "x": 15.34592499490436,
+        "y": 7.116523578273569
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

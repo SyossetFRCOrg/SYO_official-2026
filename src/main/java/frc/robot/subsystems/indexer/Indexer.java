@@ -15,7 +15,8 @@ public class Indexer extends SubsystemBase {
   public enum Substate {
         STOPPED,
         INDEXING,
-        REVERSING
+        REVERSING,
+        CLEANING
     }
 
 
@@ -57,6 +58,9 @@ public class Indexer extends SubsystemBase {
                 break;
             case REVERSING: 
                 indexerIO.setVoltage(-indexerSpeed.get());
+                break;
+            case CLEANING:
+                indexerIO.setVoltage(indexerSpeed.get() * 0.3);
                 break;
 
         }

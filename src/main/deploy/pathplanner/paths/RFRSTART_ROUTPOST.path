@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 13.9,
         "y": 7.4
+=======
+        "x": 13.950977428157422,
+        "y": 7.37270556716068
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "RFRSTART"
@@ -20,8 +25,13 @@
         "y": 7.38
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 14.62,
         "y": 7.38
+=======
+        "x": 14.560873622882259,
+        "y": 7.395252227013939
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

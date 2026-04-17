@@ -8,8 +8,13 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 2.73728,
         "y": 4.0
+=======
+        "x": 1.9476150868955506,
+        "y": 4.208296859445223
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BS1"
@@ -20,8 +25,13 @@
         "y": 7.44
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 3.0,
         "y": 7.44
+=======
+        "x": 3.803291229488159,
+        "y": 7.1621524506151015
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

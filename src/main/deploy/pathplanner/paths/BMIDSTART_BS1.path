@@ -3,6 +3,7 @@
   "waypoints": [
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 3.65,
         "y": 4.0
       },
@@ -10,6 +11,15 @@
       "nextControl": {
         "x": 4.153082968535426,
         "y": 3.9913027759039488
+=======
+        "x": 3.6344010647737353,
+        "y": 4.03902395740905
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.149479266384539,
+        "y": 4.039053685156131
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BMIDSTART"
@@ -20,8 +30,13 @@
         "y": 4.0
       },
       "prevControl": {
+<<<<<<< HEAD
         "x": 1.351621371775644,
         "y": 4.007924458258633
+=======
+        "x": 1.2781891753821069,
+        "y": 3.995411572652814
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,

@@ -3,6 +3,7 @@
   "waypoints": [
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 2.592170000076294,
         "y": 5.614929962158203
       },
@@ -10,18 +11,36 @@
       "nextControl": {
         "x": 3.592170000076294,
         "y": 5.614929962158203
+=======
+        "x": 2.559755555555556,
+        "y": 5.7013
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.3586440930537393,
+        "y": 6.105818524102096
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BS3"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 3.539159226190476,
         "y": 5.588020833333334
       },
       "prevControl": {
         "x": 2.539159226190476,
         "y": 5.588020833333334
+=======
+        "x": 3.4270111111111112,
+        "y": 6.110566666666666
+      },
+      "prevControl": {
+        "x": 3.215949228324285,
+        "y": 5.976578302864133
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +61,21 @@
   },
   "goalEndState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+    "rotation": -56.30993247402036
+>>>>>>> MehmetBranch
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
+<<<<<<< HEAD
     "rotation": 0.0
+=======
+    "rotation": -45.0
+>>>>>>> MehmetBranch
   },
   "useDefaultConstraints": true
 }

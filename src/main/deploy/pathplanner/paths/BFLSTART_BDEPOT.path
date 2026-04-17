@@ -8,20 +8,34 @@
       },
       "prevControl": null,
       "nextControl": {
+<<<<<<< HEAD
         "x": 4.65,
         "y": 7.4
+=======
+        "x": 4.036026398054214,
+        "y": 7.643049467629127
+>>>>>>> MehmetBranch
       },
       "isLocked": false,
       "linkedName": "BFLSTART"
     },
     {
       "anchor": {
+<<<<<<< HEAD
         "x": 0.8507366071428573,
         "y": 5.9534375
       },
       "prevControl": {
         "x": -0.14926339285714274,
         "y": 5.9534375
+=======
+        "x": 0.8256787932564325,
+        "y": 5.914188110026618
+      },
+      "prevControl": {
+        "x": 0.5438442594814668,
+        "y": 5.740302020566341
+>>>>>>> MehmetBranch
       },
       "nextControl": null,
       "isLocked": false,
