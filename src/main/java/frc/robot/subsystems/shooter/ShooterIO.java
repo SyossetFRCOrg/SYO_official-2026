@@ -11,11 +11,6 @@ public interface ShooterIO {
         public double leftAppliedVolts = 0.0;
         public double leftCurrentAmps = 0.0;
 
-        public boolean centerConnected = false;
-        public double centerVelocityRotPerSec = 0.0;
-        public double centerAppliedVolts = 0.0;
-        public double centerCurrentAmps = 0.0;
-
         public boolean rightConnected = false;
         public double rightVelocityRotPerSec = 0.0;
         public double rightAppliedVolts = 0.0;

@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
     private @Setter Substate desiredSubstate = Substate.STOPPED;
 
     private final LoggedTunableNumber shootingEpsilon = new LoggedTunableNumber("Shooter/epsilon", 2);
-    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 3);
+    private final LoggedTunableNumber shooterCheck = new LoggedTunableNumber("Shooter/check", 2);
 
     @SuppressWarnings("unused")
     private boolean isFerry = false;
@@ -53,7 +53,7 @@ public class Shooter extends SubsystemBase {
         Logger.recordOutput("Shooter/CurrentSubstate", currentSubstate.toString());
         Logger.recordOutput("Shooter/DesiredSubstate", desiredSubstate.toString());
         Logger.recordOutput("Shooter/MotorsReady", motorsReady());
-        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
+        Logger.recordOutput("Shooter/Difference", Math.abs(inputs.leftVelocityRotPerSec - (shooterVelocity + shooterChange) /*shooterVoltages.get(Substate.ACTIVE).get()*/));
         Logger.recordOutput("Shooter/InputtedVelocity",  shooterVelocity + shooterChange);
         Logger.recordOutput("Shooter/VelocityChange", shooterChange);
         currentSubstate = handleShooterTransitions();
@@ -86,15 +86,11 @@ public class Shooter extends SubsystemBase {
 
     public boolean motorsReady()
     {
-        return (leftShooterReady() ? 1:0) + (centerShooterReady() ? 1:0) + (rightShooterReady() ? 1:0) >= shooterCheck.get();
+        return (leftShooterReady() ? 1:0) + (rightShooterReady() ? 1:0) >= shooterCheck.get();
     }
 
     public boolean leftShooterReady() {
         return Math.abs(inputs.leftVelocityRotPerSec - (shooterVelocity + shooterChange)) < shootingEpsilon.get();
-    }
-
-    public boolean centerShooterReady() {
-        return Math.abs(inputs.centerVelocityRotPerSec - (shooterVelocity + shooterChange)) < shootingEpsilon.get();
     }
 
     public boolean rightShooterReady() {
