@@ -139,12 +139,12 @@ public class ShooterIOTalonFX implements ShooterIO {
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimit = 50;
                 rightTalonConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
 
-                leftTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+                leftTalonConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
                 rightTalonConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
 
                 tryUntilOk(5, () -> leftTalon.getConfigurator().apply(leftTalonConfig, 0.25));
                 tryUntilOk(5, () -> leftTalon.setPosition(0.0, 0.25));
-                tryUntilOk(5, () -> rightTalon.getConfigurator().apply(leftTalonConfig, 0.25));
+                tryUntilOk(5, () -> rightTalon.getConfigurator().apply(rightTalonConfig, 0.25));
                 tryUntilOk(5, () -> rightTalon.setPosition(0.0, 0.25));
 
                 leftShooterVelocity = leftTalon.getVelocity();

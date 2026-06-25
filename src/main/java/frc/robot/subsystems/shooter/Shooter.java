@@ -84,6 +84,10 @@ public class Shooter extends SubsystemBase {
 
     }
 
+    public void setShooterVelocity(double velocity) {
+        shooterVelocity = velocity;
+    }
+
     public boolean motorsReady()
     {
         return (leftShooterReady() ? 1:0) + (rightShooterReady() ? 1:0) >= shooterCheck.get();

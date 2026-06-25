@@ -9,8 +9,11 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.subsystems.Superstructure;
@@ -53,6 +56,8 @@ public class RobotContainer {
         // Controllers
         private final XboxController controller = new XboxController(0);
         private final XboxController buttonboard = new XboxController(1);
+
+        private static double factor = 1;
         
         // private final UsbCamera usbCam;
 
@@ -137,11 +142,11 @@ public class RobotContainer {
                                                 FieldConstants.getAlliance() == Alliance.Blue ? Rotation2d.fromDegrees(0) : Rotation2d.fromDegrees(180))),drive)
                                                 .ignoringDisable(true));
 
-                Trigger IntakeOnRightTrigger = new Trigger(() -> controller.getRightTriggerAxis() > 0.5);
+                Trigger IntakeOnRightBumper = new Trigger(() -> controller.getRightBumperButton());
 
-                IntakeOnRightTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
+                IntakeOnRightBumper.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.INTAKING)
                                 .alongWith(superstructure.MoveArmToPosition(1.4)));
-                IntakeOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                IntakeOnRightBumper.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
                 
                 // Trigger AutoAlignPreShooting  = new Trigger(() -> 
                 //                                 (controller.getRightBumperButton() && 
@@ -169,20 +174,34 @@ public class RobotContainer {
                 //                                 .alongWith(new InstantCommand(() -> RobotState.getInstance().setAutoAiming(false))));
 
 
+                Trigger SlowTurnOnLeftTrigger = new Trigger(() -> (controller.getLeftTriggerAxis() > 0.5));
+                SlowTurnOnLeftTrigger.onTrue(Commands.runOnce(() -> factor = .4));
+                SlowTurnOnLeftTrigger.onFalse(Commands.runOnce(() -> factor = 1));
 
+                Trigger ShootOnRightTrigger = new Trigger(
+                                () -> (controller.getRightTriggerAxis() > 0.5 && !(controller.getRawButton(5))));
 
-                Trigger ShootOnBButton = new Trigger(
+                ShootOnRightTrigger.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING).andThen(new RepeatCommand(moveArmRepeatedly())));
+                ShootOnRightTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING).andThen(superstructure.MoveArmToPosition(1.5)));
+
+                Trigger SlowShootOnDPadUp = new Trigger(
+                                () -> (controller.getPOV() == 0 && !(controller.getRawButton(5))));
+
+                SlowShootOnDPadUp.whileTrue(Commands.runOnce(() -> shooter.setShooterVelocity(35)).andThen(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING)).andThen(new RepeatCommand(moveArmRepeatedly())));
+                SlowShootOnDPadUp.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING).andThen(superstructure.MoveArmToPosition(1.5)).andThen(Commands.runOnce(() -> shooter.setShooterVelocity(70))));
+
+                Trigger ShootOnBButtonWOArm = new Trigger(
                                 () -> (controller.getBButton() && !(controller.getRawButton(5))));
 
-                ShootOnBButton.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
-                ShootOnBButton.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
+                ShootOnBButtonWOArm.whileTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
+                ShootOnBButtonWOArm.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
 
                 Trigger ShootWhileIndexerOutOnBothBumpers = new Trigger(() -> ((controller.getRightBumperButton() || controller.getBButton()) && controller.getLeftBumperButton()));
 
                 ShootWhileIndexerOutOnBothBumpers.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTINGWHILEINDEXEROUT));
                 ShootWhileIndexerOutOnBothBumpers.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.SHOOTING));
 
-                Trigger CleaningStateTrigger = new Trigger(() -> (controller.getXButton()));
+                Trigger CleaningStateTrigger = new Trigger(() -> (controller.getAButton()));
 
                 CleaningStateTrigger.onTrue(superstructure.setDesiredSuperStateCommand(SuperState.CLEANING));
                 CleaningStateTrigger.onFalse(superstructure.setDesiredSuperStateCommand(SuperState.DRIVING));
@@ -207,6 +226,12 @@ public class RobotContainer {
                 Trigger DecreaseVelocityBy1 = new Trigger(() -> buttonboard.getRawButton(1)); // Bottom left button on buttonboard
                 DecreaseVelocityBy1.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(-1)));
 
+                Trigger IncreaseVelocityBy5 = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to Top left button on buttonboard
+                IncreaseVelocityBy5.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(5)));
+
+                Trigger DecreaseVelocityBy5 = new Trigger(() -> buttonboard.getRawButton(2)); // 2nd to Bottom left button on buttonboard
+                DecreaseVelocityBy5.onTrue(Commands.runOnce(() -> shooter.adjustShooterChangeVelocity(-5)));
+
                 // Trigger IncreaseVelocityByOneTenth = new Trigger(() -> buttonboard.getRawButton(4)); // 2nd to top left button
                 // IncreaseVelocityByOneTenth.onTrue(Commands.runOnce(() -> shooter.setShooterChangeVelocity(0)));
 
@@ -225,12 +250,20 @@ public class RobotContainer {
                 ApplyArmVoltageOut.onTrue(superstructure.SetArmVoltage(2));
                 ApplyArmVoltageOut.onFalse(superstructure.SetArmVoltage(0));
 
-                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8));
+                Trigger resetIntakePosition = new Trigger(() -> buttonboard.getRawButton(8)); // THIS IS START BUTTON
                 resetIntakePosition.onTrue(superstructure.SetArmEncoderPosition(0));
 
         }
 
         public Superstructure getSuperstructure() {
                 return superstructure;
+        }
+
+        public static double getFactor() {
+                return factor;
+        }
+
+        public Command moveArmRepeatedly() {
+                return superstructure.MoveArmToPosition(0.5).andThen(new WaitCommand(1)).andThen(superstructure.MoveArmToPosition(1.5)).andThen(new WaitCommand(1));
         }
 }
