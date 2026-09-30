@@ -86,9 +86,9 @@ public class DriveCommands {
           // Convert to field relative speeds & send command
           ChassisSpeeds speeds = new ChassisSpeeds(
               linearVelocity.getX()
-                  * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
+                  * RobotState.getInstance().getModuleLimits().maxDriveVelocity() * RobotContainer.getFactor(),
               linearVelocity.getY()
-                  * RobotState.getInstance().getModuleLimits().maxDriveVelocity(),
+                  * RobotState.getInstance().getModuleLimits().maxDriveVelocity() * RobotContainer.getFactor(),
               omega * TunerConstants.driveConfig.maxAngularVelocity());
           boolean isFlipped = FieldConstants.getAlliance() == Alliance.Red;
               
